@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import { View, Text } from 'react-native';
-import { createStackNavigator, createTabNavigator } from 'react-navigation';
+import { createStackNavigator, createMaterialTopTabNavigator } from 'react-navigation';
 import Modal from './src/Components/Modal.js'
 import Home from './src/Components/Home.js'
 import BasicComponents from './src/Components/Sample/BasicComponents.js'
 import UserInterface from './src/Components/Sample/UserInterface.js'
 import Detail from './src/Components/Detail.js'
 
-const MainStack = createTabNavigator(
+const MainStack = createMaterialTopTabNavigator(
     {
         Home: Home,
         Detail:  Detail,
@@ -15,7 +15,14 @@ const MainStack = createTabNavigator(
         UserInterface : UserInterface
     },
     {
-       initialRouteName : 'Home'
+       initialRouteName : 'Home',
+       navigationOptions: {
+         header: {
+             style: {
+               backgroundColor: '#484f4f'
+             }
+           }
+       }
     }
 );
 
