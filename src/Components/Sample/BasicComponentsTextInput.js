@@ -16,5 +16,5 @@ export default class basicComponentsTextInput extends Component {
             />
         )
     }
-
 }
+
