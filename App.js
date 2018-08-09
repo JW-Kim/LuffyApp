@@ -10,18 +10,16 @@ import Detail from './src/Components/Detail.js'
 const MainStack = createMaterialTopTabNavigator(
     {
         Home: Home,
-        Detail:  Detail,
+        Detail: Detail,
         BasicComponents : BasicComponents,
         UserInterface : UserInterface
     },
     {
        initialRouteName : 'Home',
-       navigationOptions: {
-         header: {
-             style: {
-               backgroundColor: '#484f4f'
-             }
-           }
+       tabBarOptions: {
+         style: {
+            backgroundColor: '#484f4f'
+          }
        }
     }
 );
