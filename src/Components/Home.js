@@ -31,9 +31,19 @@ export default class Home extends Component {
                             source={require('../../assets/images/B612_20180812_175712_313.jpg')}
                         />
                     </View>
-                  <Text style={{margin: 15}}>
-                    {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
-                  </Text>
+                    <View style={{margin: 15}}>
+                        <Text>기분 : 좋음</Text>
+                        <Text>건강 : 양호</Text>
+                        <Text>열 : 없음</Text>
+                        <Text>아침 식사 : 양호</Text>
+                        <Text>점심 식사 : 양호</Text>
+                        <Text>저녁 식사 : 양호</Text>
+                        <Text>배변 : 2회(11:45, 15:00), 좋지않음(설사)</Text>
+                        <Text>수면 :  23시 30분 ~ 08시 10분</Text>
+                    </View>
+                    <Text style={{margin: 15}}>
+                        {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
+                    </Text>
                 </Card>
                 <Card
                     containerStyle={{padding:0, paddingTop:15, paddingBottom:15}}
