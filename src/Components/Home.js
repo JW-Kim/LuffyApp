@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {View, Text, ScrollView, StyleSheet, Dimensions} from 'react-native';
-//import Icon from 'react-native-vector-icons/FontAwesome';
 import {Card, Icon, Button} from 'react-native-elements';
 import ActionButton from 'react-native-action-button';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import IonIcons from 'react-native-vector-icons/Ionicons';
 import Image from 'react-native-scalable-image';
 
 export default class Home extends Component {
@@ -114,14 +113,8 @@ export default class Home extends Component {
 
             </ScrollView>
             <ActionButton buttonColor="rgba(231,76,60,1)">
-              <ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => console.log("notes tapped!")}>
-                <Ionicons name="md-create" style={styles.actionButtonIcon} />
-              </ActionButton.Item>
-              <ActionButton.Item buttonColor='#3498db' title="Notifications" onPress={() => {}}>
-                <Ionicons name="md-notifications-off" style={styles.actionButtonIcon} />
-              </ActionButton.Item>
-              <ActionButton.Item buttonColor='#1abc9c' title="All Tasks" onPress={() => {}}>
-                <Ionicons name="md-done-all" style={styles.actionButtonIcon} />
+              <ActionButton.Item buttonColor='#1abc9c' title="새글 작성" onPress={() => {}}>
+                <IonIcons name="md-create" style={styles.actionButtonIcon} />
               </ActionButton.Item>
             </ActionButton>
         </View>
