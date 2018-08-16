@@ -22,7 +22,9 @@ export default class Home extends Component {
         <View>
             <ScrollView>
                 <Card
-                  title='오늘은 행복한 날'
+                    containerStyle={{padding:0, paddingTop:15, paddingBottom:15}}
+                    dividerStyle={{marginBottom:0}}
+                    title='2018.08.16  오늘은 행복한 날'
                 >
                     <View>
                         <Image
@@ -30,12 +32,14 @@ export default class Home extends Component {
                             source={require('../../assets/images/B612_20180812_175712_313.jpg')}
                         />
                     </View>
-                  <Text style={{marginBottom: 10}}>
+                  <Text style={{margin: 15}}>
                     {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
                   </Text>
                 </Card>
                 <Card
-                  title='오늘은 행복한 날'
+                    containerStyle={{padding:0, paddingTop:15, paddingBottom:15}}
+                    dividerStyle={{marginBottom:0}}
+                  title='2018.07.16  오늘은 행복한 날'
                 >
                     <View>
                         <Image
@@ -43,12 +47,14 @@ export default class Home extends Component {
                             source={require('../../assets/images/B612_20180814_195816_395.jpg')}
                         />
                     </View>
-                  <Text style={{marginBottom: 10}}>
+                  <Text style={{margin: 15}}>
                     {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
                   </Text>
                 </Card>
                 <Card
-                  title='오늘은 행복한 날'
+                    containerStyle={{padding:0, paddingTop:15, paddingBottom:15}}
+                    dividerStyle={{marginBottom:0}}
+                  title='2018.05.16  오늘은 행복한 날'
                 >
                     <View>
                         <Image
@@ -56,12 +62,14 @@ export default class Home extends Component {
                             source={require('../../assets/images/B612_20180810_195704_283.jpg')}
                         />
                     </View>
-                  <Text style={{marginBottom: 10}}>
+                  <Text style={{margin: 15}}>
                     {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
                   </Text>
                 </Card>
                 <Card
-                  title='오늘은 행복한 날'
+                    containerStyle={{padding:0, paddingTop:15, paddingBottom:15}}
+                    dividerStyle={{marginBottom:0}}
+                  title='2018.04.16  오늘은 행복한 날'
                 >
                     <View>
                         <Image
@@ -69,12 +77,14 @@ export default class Home extends Component {
                             source={require('../../assets/images/B612_20180812_161957_448.jpg')}
                         />
                     </View>
-                  <Text style={{marginBottom: 10}}>
+                  <Text style={{margin: 15}}>
                     {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
                   </Text>
                 </Card>
                 <Card
-                  title='오늘은 행복한 날'
+                    containerStyle={{padding:0, paddingTop:15, paddingBottom:15}}
+                    dividerStyle={{marginBottom:0}}
+                  title='2018.03.16  오늘은 행복한 날'
                 >
                     <View>
                         <Image
@@ -82,12 +92,14 @@ export default class Home extends Component {
                             source={require('../../assets/images/B612_20180816_154948_413.jpg')}
                         />
                     </View>
-                  <Text style={{marginBottom: 10}}>
+                  <Text style={{margin: 15}}>
                     {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
                   </Text>
                 </Card>
                 <Card
-                  title='오늘은 행복한 날'
+                    containerStyle={{padding:0, paddingTop:15, paddingBottom:15}}
+                    dividerStyle={{marginBottom:0}}
+                  title='2018.01.16  오늘은 행복한 날'
                 >
                     <View>
                         <Image
@@ -95,7 +107,7 @@ export default class Home extends Component {
                             source={require('../../assets/images/B612_20180816_191925_963.jpg')}
                         />
                     </View>
-                  <Text style={{marginBottom: 10}}>
+                  <Text style={{margin: 15}}>
                     {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
                   </Text>
                 </Card>
