@@ -27,18 +27,12 @@ export default class Home extends Component {
                     <View>
                         <Image
                             width={Dimensions.get('window').width}
-                            source={require('../../assets/images/92062_32711_1635.jpg')}
+                            source={require('../../assets/images/B612_20180812_175712_313.jpg')}
                         />
                     </View>
                   <Text style={{marginBottom: 10}}>
                     {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
                   </Text>
-                  <Button
-                    icon={<Icon name='code' color='#ffffff' />}
-                    backgroundColor='#03A9F4'
-                    fontFamily='Lato'
-                    buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                    title='VIEW NOW' />
                 </Card>
                 <Card
                   title='오늘은 행복한 날'
@@ -46,123 +40,66 @@ export default class Home extends Component {
                     <View>
                         <Image
                             width={Dimensions.get('window').width}
-                            source={require('../../assets/images/hyo1920.jpg')}
+                            source={require('../../assets/images/B612_20180814_195816_395.jpg')}
                         />
                     </View>
                   <Text style={{marginBottom: 10}}>
                     {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
                   </Text>
-                  <Button
-                    icon={<Icon name='code' color='#ffffff' />}
-                    backgroundColor='#03A9F4'
-                    fontFamily='Lato'
-                    buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                    title='VIEW NOW' />
                 </Card>
                 <Card
                   title='오늘은 행복한 날'
-                  image={require('../../assets/images/92062_32711_1635.jpg')}
-                  imageProps={{resizeMode:'cover'}}
                 >
+                    <View>
+                        <Image
+                            width={Dimensions.get('window').width}
+                            source={require('../../assets/images/B612_20180810_195704_283.jpg')}
+                        />
+                    </View>
                   <Text style={{marginBottom: 10}}>
                     {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
                   </Text>
-                  <Button
-                    icon={<Icon name='code' color='#ffffff' />}
-                    backgroundColor='#03A9F4'
-                    fontFamily='Lato'
-                    buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                    title='VIEW NOW' />
                 </Card>
                 <Card
                   title='오늘은 행복한 날'
-                  image={require('../../assets/images/92062_32711_1635.jpg')}
-                  imageProps={{resizeMode:'contain'}}
                 >
+                    <View>
+                        <Image
+                            width={Dimensions.get('window').width}
+                            source={require('../../assets/images/B612_20180812_161957_448.jpg')}
+                        />
+                    </View>
                   <Text style={{marginBottom: 10}}>
                     {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
                   </Text>
-                  <Button
-                    icon={<Icon name='code' color='#ffffff' />}
-                    backgroundColor='#03A9F4'
-                    fontFamily='Lato'
-                    buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                    title='VIEW NOW' />
                 </Card>
                 <Card
                   title='오늘은 행복한 날'
-                  image={require('../../assets/images/92062_32711_1635.jpg')}
-                  imageProps={{resizeMode:'stretch'}}
                 >
+                    <View>
+                        <Image
+                            width={Dimensions.get('window').width}
+                            source={require('../../assets/images/B612_20180816_154948_413.jpg')}
+                        />
+                    </View>
                   <Text style={{marginBottom: 10}}>
                     {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
                   </Text>
-                  <Button
-                    icon={<Icon name='code' color='#ffffff' />}
-                    backgroundColor='#03A9F4'
-                    fontFamily='Lato'
-                    buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                    title='VIEW NOW' />
                 </Card>
                 <Card
                   title='오늘은 행복한 날'
-                  image={require('../../assets/images/hyo1920.jpg')}
                 >
+                    <View>
+                        <Image
+                            width={Dimensions.get('window').width}
+                            source={require('../../assets/images/B612_20180816_191925_963.jpg')}
+                        />
+                    </View>
                   <Text style={{marginBottom: 10}}>
                     {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
                   </Text>
-                  <Button
-                    icon={<Icon name='code' color='#ffffff' />}
-                    backgroundColor='#03A9F4'
-                    fontFamily='Lato'
-                    buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                    title='VIEW NOW' />
                 </Card>
-                <Card
-                  title='오늘은 행복한 날'
-                  image={require('../../assets/images/hyo1920.jpg')}
-                  imageProps={{resizeMode:'cover'}}
-                >
-                  <Text style={{marginBottom: 10}}>
-                    {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
-                  </Text>
-                  <Button
-                    icon={<Icon name='code' color='#ffffff' />}
-                    backgroundColor='#03A9F4'
-                    fontFamily='Lato'
-                    buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                    title='VIEW NOW' />
-                </Card>
-                <Card
-                  title='오늘은 행복한 날'
-                  image={require('../../assets/images/hyo1920.jpg')}
-                  imageProps={{resizeMode:'contain'}}
-                >
-                  <Text style={{marginBottom: 10}}>
-                    {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
-                  </Text>
-                  <Button
-                    icon={<Icon name='code' color='#ffffff' />}
-                    backgroundColor='#03A9F4'
-                    fontFamily='Lato'
-                    buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                    title='VIEW NOW' />
-                </Card>
-                <Card
-                  title='오늘은 행복한 날'
-                  image={require('../../assets/images/hyo1920.jpg')}
-                  imageProps={{resizeMode:'stretch'}}
-                >
-                  <Text style={{marginBottom: 10}}>
-                    {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
-                  </Text>
-                  <Button
-                    icon={<Icon name='code' color='#ffffff' />}
-                    backgroundColor='#03A9F4'
-                    fontFamily='Lato'
-                    buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                    title='VIEW NOW' />
-                </Card>
+
             </ScrollView>
             <ActionButton buttonColor="rgba(231,76,60,1)">
               <ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => console.log("notes tapped!")}>
