@@ -36,23 +36,41 @@ export default class Home extends Component {
                         <View style={{flexDirection:'row', alignItems: 'center'}}>
                             <Text>기분 : </Text>
                             <Text style={styles.good}>좋음 </Text>
-                            <FontAwesomeIcons name="smile-o"/>
+                            <FontAwesomeIcons name="smile-o" color="#33cc33"/>
                         </View>
                         <View style={{flexDirection:'row', alignItems: 'center'}}>
                             <Text>건강 : </Text>
                             <Text style={styles.notBad}>보통 </Text>
-                            <FontAwesomeIcons name="meh-o"/>
+                            <FontAwesomeIcons name="meh-o" color="#ff8c00"/>
                         </View>
                         <View style={{flexDirection:'row', alignItems: 'center'}}>
                             <Text>열 : </Text>
                             <Text style={styles.bad}>있음(38도) </Text>
-                            <FontAwesomeIcons name="frown-o"/>
+                            <FontAwesomeIcons name="frown-o" color="#ff471a"/>
                         </View>
-                        <View  style={{flexDirection:'row'}}><Text>아침 식사 : </Text><Text>양호</Text></View>
-                        <View  style={{flexDirection:'row'}}><Text>점심 식사 : </Text><Text>양호</Text></View>
-                        <View  style={{flexDirection:'row'}}><Text>저녁 식사 : </Text><Text>양호</Text></View>
-                        <View  style={{flexDirection:'row'}}><Text>배변 : </Text><Text>2회(11:45, 15:00), 좋지않음(설사)</Text></View>
-                        <View  style={{flexDirection:'row'}}><Text>수면 : </Text><Text>23시 30분 ~ 08시 10분</Text></View>
+                        <View  style={{flexDirection:'row', alignItems: 'center'}}>
+                            <Text>아침 식사 : </Text>
+                            <Text>양호 </Text>
+                            <FontAwesomeIcons name="smile-o" color="#33cc33"/>
+                        </View>
+                        <View  style={{flexDirection:'row', alignItems: 'center'}}>
+                            <Text>점심 식사 : </Text>
+                            <Text>보통 </Text>
+                            <FontAwesomeIcons name="meh-o" color="#ff8c00"/>
+                        </View>
+                        <View  style={{flexDirection:'row', alignItems: 'center'}}>
+                            <Text>저녁 식사 : </Text>
+                            <Text>나쁨 </Text>
+                            <FontAwesomeIcons name="frown-o" color="#ff471a"/>
+                        </View>
+                        <View style={{flexDirection:'row'}}>
+                            <Text>배변 : </Text>
+                            <Text>2회(11:45, 15:00), 좋지않음(설사)</Text>
+                        </View>
+                        <View  style={{flexDirection:'row'}}>
+                            <Text>수면 : </Text>
+                            <Text>23시 30분 ~ 08시 10분</Text>
+                        </View>
                     </View>
                     <Text style={{margin: 15}}>
                         {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
@@ -153,15 +171,12 @@ const styles = StyleSheet.create({
   },
 
   good : {
-    color: 'green',
-    fontWeight: 'bold'
+    color: '#33cc33'
   },
   notBad : {
-    color: 'yellow',
-    fontWeight: 'bold'
+    color: '#ff8c00'
   },
   bad : {
-    color: 'red',
-    fontWeight: 'bold'
+    color: '#ff471a'
   }
 });
