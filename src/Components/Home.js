@@ -3,6 +3,7 @@ import {View, Text, ScrollView, StyleSheet, Dimensions} from 'react-native';
 import {Card, Icon, Button} from 'react-native-elements';
 import ActionButton from 'react-native-action-button';
 import IonIcons from 'react-native-vector-icons/Ionicons';
+import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
 import Image from 'react-native-scalable-image';
 
 export default class Home extends Component {
@@ -32,14 +33,26 @@ export default class Home extends Component {
                         />
                     </View>
                     <View style={{margin: 15}}>
-                        <Text>기분 : 좋음</Text>
-                        <Text>건강 : 양호</Text>
-                        <Text>열 : 없음</Text>
-                        <Text>아침 식사 : 양호</Text>
-                        <Text>점심 식사 : 양호</Text>
-                        <Text>저녁 식사 : 양호</Text>
-                        <Text>배변 : 2회(11:45, 15:00), 좋지않음(설사)</Text>
-                        <Text>수면 :  23시 30분 ~ 08시 10분</Text>
+                        <View style={{flexDirection:'row', alignItems: 'center'}}>
+                            <Text>기분 : </Text>
+                            <Text style={styles.good}>좋음 </Text>
+                            <FontAwesomeIcons name="smile-o"/>
+                        </View>
+                        <View style={{flexDirection:'row', alignItems: 'center'}}>
+                            <Text>건강 : </Text>
+                            <Text style={styles.notBad}>보통 </Text>
+                            <FontAwesomeIcons name="meh-o"/>
+                        </View>
+                        <View style={{flexDirection:'row', alignItems: 'center'}}>
+                            <Text>열 : </Text>
+                            <Text style={styles.bad}>있음(38도) </Text>
+                            <FontAwesomeIcons name="frown-o"/>
+                        </View>
+                        <View  style={{flexDirection:'row'}}><Text>아침 식사 : </Text><Text>양호</Text></View>
+                        <View  style={{flexDirection:'row'}}><Text>점심 식사 : </Text><Text>양호</Text></View>
+                        <View  style={{flexDirection:'row'}}><Text>저녁 식사 : </Text><Text>양호</Text></View>
+                        <View  style={{flexDirection:'row'}}><Text>배변 : </Text><Text>2회(11:45, 15:00), 좋지않음(설사)</Text></View>
+                        <View  style={{flexDirection:'row'}}><Text>수면 : </Text><Text>23시 30분 ~ 08시 10분</Text></View>
                     </View>
                     <Text style={{margin: 15}}>
                         {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
@@ -138,4 +151,17 @@ const styles = StyleSheet.create({
     height: 22,
     color: 'white',
   },
+
+  good : {
+    color: 'green',
+    fontWeight: 'bold'
+  },
+  notBad : {
+    color: 'yellow',
+    fontWeight: 'bold'
+  },
+  bad : {
+    color: 'red',
+    fontWeight: 'bold'
+  }
 });
