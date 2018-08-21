@@ -24,7 +24,7 @@ export default class Home extends Component {
                 <Card
                     containerStyle={{padding:0, paddingTop:15, paddingBottom:15}}
                     dividerStyle={{marginBottom:0}}
-                    title='2018.08.16  오늘은 행복한 날'
+                    title='2018.08.16 (월)'
                 >
                     <View>
                         <Image
@@ -35,17 +35,17 @@ export default class Home extends Component {
                     <View style={{margin: 15}}>
                         <View style={{flexDirection:'row', alignItems: 'center'}}>
                             <Text>기분 : </Text>
-                            <Text style={styles.good}>좋음 </Text>
+                            <Text>좋음 </Text>
                             <FontAwesomeIcons name="smile-o" color="#33cc33"/>
                         </View>
                         <View style={{flexDirection:'row', alignItems: 'center'}}>
                             <Text>건강 : </Text>
-                            <Text style={styles.notBad}>보통 </Text>
+                            <Text>보통 </Text>
                             <FontAwesomeIcons name="meh-o" color="#ff8c00"/>
                         </View>
                         <View style={{flexDirection:'row', alignItems: 'center'}}>
                             <Text>열 : </Text>
-                            <Text style={styles.bad}>있음(38도) </Text>
+                            <Text>있음(38도) </Text>
                             <FontAwesomeIcons name="frown-o" color="#ff471a"/>
                         </View>
                         <View  style={{flexDirection:'row', alignItems: 'center'}}>
@@ -63,16 +63,20 @@ export default class Home extends Component {
                             <Text>나쁨 </Text>
                             <FontAwesomeIcons name="frown-o" color="#ff471a"/>
                         </View>
-                        <View style={{flexDirection:'row'}}>
+                        <View style={{flexDirection:'row', alignItems: 'center'}}>
                             <Text>배변 : </Text>
-                            <Text>2회(11:45, 15:00), 좋지않음(설사)</Text>
+                            <Text>2회(11:45, 15:00), 좋지않음(설사) </Text>
+                            <FontAwesomeIcons name="frown-o" color="#ff471a"/>
                         </View>
                         <View  style={{flexDirection:'row'}}>
                             <Text>수면 : </Text>
                             <Text>23시 30분 ~ 08시 10분</Text>
                         </View>
                     </View>
-                    <Text style={{margin: 15}}>
+                    <Text style={styles.title}>
+                        {'오늘은 행복한 날'}
+                    </Text>
+                    <Text style={styles.content}>
                         {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
                     </Text>
                 </Card>
@@ -168,6 +172,20 @@ const styles = StyleSheet.create({
     fontSize: 20,
     height: 22,
     color: 'white',
+  },
+
+  title : {
+    marginLeft: 15,
+    marginTop : 0,
+    marginRight : 15,
+    marginBottom : 5,
+    fontSize : 15,
+    fontWeight : 'bold'
+  },
+
+  content : {
+    marginLeft : 15,
+    marginRight : 15
   },
 
   good : {
