@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import { createStackNavigator, createMaterialTopTabNavigator } from 'react-navigation';
 import Modal from './src/Components/Modal.js'
 import Home from './src/Components/Home.js'
+import DiaryDtl from './src/Components/DiaryDtl.js'
 import BasicComponents from './src/Components/Sample/BasicComponents.js'
 import UserInterface from './src/Components/Sample/UserInterface.js'
 import Detail from './src/Components/Detail.js'
@@ -32,6 +33,9 @@ const RootStack = createStackNavigator(
     MyModal: {
       screen: Modal,
     },
+    DiaryDtl : {
+      screen : DiaryDtl
+    }
   },
   {
     mode: 'modal',
