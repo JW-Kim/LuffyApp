@@ -5,6 +5,7 @@ import ActionButton from 'react-native-action-button';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
 import Image from 'react-native-scalable-image';
+import DiaryDtl from './DiaryDtl.js'
 
 export default class Home extends Component {
      static navigationOptions = {
@@ -15,6 +16,14 @@ export default class Home extends Component {
          }
        }
     }
+
+     state = {
+        modalVisible: false,
+      };
+
+      setModalVisible(visible) {
+        this.setState({modalVisible: visible});
+      }
 
 
   render(){
@@ -155,10 +164,9 @@ export default class Home extends Component {
                     {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
                   </Text>
                 </Card>
-
             </ScrollView>
             <ActionButton buttonColor="rgba(231,76,60,1)">
-              <ActionButton.Item buttonColor='#1abc9c' title="새글 작성" onPress={() => {}}>
+              <ActionButton.Item buttonColor='#1abc9c' title="새글 작성" onPress={() =>  this.props.navigation.navigate('DiaryDtl')}>
                 <IonIcons name="md-create" style={styles.actionButtonIcon} />
               </ActionButton.Item>
             </ActionButton>
