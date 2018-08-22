@@ -1,0 +1,19 @@
+import React, {Component} from 'react';
+import {View, Text, Button } from 'react-native';
+
+export default class DiaryDtl extends Component {
+
+  render(){
+    return(
+        <View>
+            <Text>DiaryDtl</Text>
+            <Button
+                title="Go to Home"
+                onPress={() =>
+                  this.props.navigation.navigate('Home')
+                }
+            />
+        </View>
+    )
+  }
+}
