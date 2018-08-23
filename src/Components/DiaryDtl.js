@@ -11,7 +11,7 @@ export default class DiaryDtl extends Component {
             <ModalHeader
                 title="일기 작성"
             ></ModalHeader>
-            <View style={{height:Dimensions.get('window').height-150, marginLeft:18, marginRight:18, marginTop:18, backgroundColor:'white'}}>
+            <View style={{height:Dimensions.get('window').height-148, marginLeft:18, marginRight:18, marginTop:18, backgroundColor:'white'}}>
                 <View>
                     <TextInput>
                     </TextInput>
@@ -34,8 +34,7 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
         borderWidth: 1,
         padding : 10,
-        marginLeft : 18,
-        marginRight : 18,
-        backgroundColor:'white'
+        marginTop : 18,
+        backgroundColor:'#d9e6f2'
     }
 })
