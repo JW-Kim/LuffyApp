@@ -22,147 +22,147 @@ export default class DiaryDtl extends Component {
             ></ModalHeader>
             <View style={{height:Dimensions.get('window').height-148, marginLeft:18, marginRight:18, marginTop:18, backgroundColor:'white'}}>
                 <ScrollView style={{padding : 10}}>
-                    <View style={{flexDirection: 'row', alignItems: 'center', paddingLeft:5}}>
+                    <View style={styles.checkContent}>
                         <Text style={{width: 70}}>기분</Text>
                         <CheckBox
                           title='좋음'
-                          containerStyle={{width:70, backgroundColor:'white', margin:0, borderWidth:0}}
+                          containerStyle={styles.checkBox}
                           checked={this.state.checked}
                         />
                         <CheckBox
                           title='보통'
-                           containerStyle={{width:70, backgroundColor:'white', margin:0, borderWidth:0}}
+                           containerStyle={styles.checkBox}
                           checked={this.state.checked}
                         />
                         <CheckBox
                           title='나쁨'
-                           containerStyle={{width:70, backgroundColor:'white', margin:0, borderWidth:0}}
+                           containerStyle={styles.checkBox}
                           checked={this.state.checked}
                         />
                     </View>
-                    <View style={{flexDirection: 'row', alignItems: 'center', paddingLeft:5}}>
+                    <View style={styles.checkContent}>
                         <Text style={{width: 70}}>건강</Text>
                         <CheckBox
                           title='좋음'
-                          containerStyle={{width:70, backgroundColor:'white', margin:0, borderWidth:0}}
+                          containerStyle={styles.checkBox}
                           checked={this.state.checked}
                         />
                         <CheckBox
                           title='보통'
-                           containerStyle={{width:70, backgroundColor:'white', margin:0, borderWidth:0}}
+                           containerStyle={styles.checkBox}
                           checked={this.state.checked}
                         />
                         <CheckBox
                           title='나쁨'
-                           containerStyle={{width:70, backgroundColor:'white', margin:0, borderWidth:0}}
+                          containerStyle={styles.checkBox}
                           checked={this.state.checked}
                         />
                     </View>
-                    <View style={{flexDirection: 'row', alignItems: 'center', paddingLeft:5}}>
+                    <View style={styles.checkContent}>
                         <Text style={{width: 70}}>열</Text>
                         <CheckBox
                           title='좋음'
-                          containerStyle={{width:70, backgroundColor:'white', margin:0, borderWidth:0}}
+                          containerStyle={styles.checkBox}
                           checked={this.state.checked}
                         />
                         <CheckBox
                           title='보통'
-                           containerStyle={{width:70, backgroundColor:'white', margin:0, borderWidth:0}}
+                          containerStyle={styles.checkBox}
                           checked={this.state.checked}
                         />
                         <CheckBox
                           title='나쁨'
-                           containerStyle={{width:70, backgroundColor:'white', margin:0, borderWidth:0}}
+                          containerStyle={styles.checkBox}
                           checked={this.state.checked}
                         />
                     </View>
-                    <View style={{flexDirection: 'row', alignItems: 'center', paddingLeft:5}}>
+                    <View style={styles.checkContent}>
                         <Text style={{width: 70}}>아침식사</Text>
                         <CheckBox
                           title='좋음'
-                          containerStyle={{width:70, backgroundColor:'white', margin:0, borderWidth:0}}
+                          containerStyle={styles.checkBox}
                           checked={this.state.checked}
                         />
                         <CheckBox
                           title='보통'
-                           containerStyle={{width:70, backgroundColor:'white', margin:0, borderWidth:0}}
+                          containerStyle={styles.checkBox}
                           checked={this.state.checked}
                         />
                         <CheckBox
                           title='나쁨'
-                           containerStyle={{width:70, backgroundColor:'white', margin:0, borderWidth:0}}
+                          containerStyle={styles.checkBox}
                           checked={this.state.checked}
                         />
                     </View>
-                    <View style={{flexDirection: 'row', alignItems: 'center', paddingLeft:5}}>
+                    <View style={styles.checkContent}>
                         <Text style={{width: 70}}>점심식사</Text>
                         <CheckBox
                           title='좋음'
-                          containerStyle={{width:70, backgroundColor:'white', margin:0, borderWidth:0}}
+                          containerStyle={styles.checkBox}
                           checked={this.state.checked}
                         />
                         <CheckBox
                           title='보통'
-                           containerStyle={{width:70, backgroundColor:'white', margin:0, borderWidth:0}}
+                          containerStyle={styles.checkBox}
                           checked={this.state.checked}
                         />
                         <CheckBox
                           title='나쁨'
-                           containerStyle={{width:70, backgroundColor:'white', margin:0, borderWidth:0}}
+                          containerStyle={styles.checkBox}
                           checked={this.state.checked}
                         />
                     </View>
-                    <View style={{flexDirection: 'row', alignItems: 'center', paddingLeft:5}}>
+                    <View style={styles.checkContent}>
                         <Text style={{width: 70}}>저녁식사</Text>
                         <CheckBox
                           title='좋음'
-                          containerStyle={{width:70, backgroundColor:'white', margin:0, borderWidth:0}}
+                          containerStyle={styles.checkBox}
                           checked={this.state.checked}
                         />
                         <CheckBox
                           title='보통'
-                           containerStyle={{width:70, backgroundColor:'white', margin:0, borderWidth:0}}
+                          containerStyle={styles.checkBox}
                           checked={this.state.checked}
                         />
                         <CheckBox
                           title='나쁨'
-                           containerStyle={{width:70, backgroundColor:'white', margin:0, borderWidth:0}}
+                          containerStyle={styles.checkBox}
                           checked={this.state.checked}
                         />
                     </View>
-                    <View style={{flexDirection: 'row', alignItems: 'center', paddingLeft:5}}>
+                    <View style={styles.checkContent}>
                         <Text style={{width: 70}}>배변</Text>
                         <CheckBox
                           title='좋음'
-                          containerStyle={{width:70, backgroundColor:'white', margin:0, borderWidth:0}}
+                          containerStyle={styles.checkBox}
                           checked={this.state.checked}
                         />
                         <CheckBox
                           title='보통'
-                           containerStyle={{width:70, backgroundColor:'white', margin:0, borderWidth:0}}
+                          containerStyle={styles.checkBox}
                           checked={this.state.checked}
                         />
                         <CheckBox
                           title='나쁨'
-                           containerStyle={{width:70, backgroundColor:'white', margin:0, borderWidth:0}}
+                          containerStyle={styles.checkBox}
                           checked={this.state.checked}
                         />
                     </View>
-                    <View style={{flexDirection: 'row', alignItems: 'center', paddingLeft:5}}>
+                    <View style={styles.checkContent}>
                         <Text style={{width: 70}}>수면</Text>
                         <CheckBox
                           title='좋음'
-                          containerStyle={{width:70, backgroundColor:'white', margin:0, borderWidth:0}}
+                          containerStyle={styles.checkBox}
                           checked={this.state.checked}
                         />
                         <CheckBox
                           title='보통'
-                           containerStyle={{width:70, backgroundColor:'white', margin:0, borderWidth:0}}
+                          containerStyle={styles.checkBox}
                           checked={this.state.checked}
                         />
                         <CheckBox
                           title='나쁨'
-                           containerStyle={{width:70, backgroundColor:'white', margin:0, borderWidth:0}}
+                          containerStyle={styles.checkBox}
                           checked={this.state.checked}
                         />
                     </View>
@@ -171,7 +171,7 @@ export default class DiaryDtl extends Component {
                         <TextInput style={{flex:1}}>
                         </TextInput>
                     </View>
-                    <View style={{flexDirection: 'row', alignItems: 'center', paddingLeft:5}}>
+                    <View style={styles.checkContent}>
                         <Text style={{width: 70}}>내용</Text>
                         <TextInput style={{flex:1}}
                             numberOfLines={10}
@@ -200,5 +200,19 @@ const styles = StyleSheet.create({
         padding : 10,
         marginTop : 18,
         backgroundColor:'#d9e6f2'
+    },
+
+    checkContent : {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingLeft:5,
+        justifyContent: 'space-between'
+    },
+    
+    checkBox : {
+        width:70, 
+        backgroundColor:'white', 
+        margin:0, 
+        borderWidth:0
     }
 })
