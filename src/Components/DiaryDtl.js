@@ -21,7 +21,7 @@ export default class DiaryDtl extends Component {
                 title="일기 작성"
             ></ModalHeader>
             <View style={{height:Dimensions.get('window').height-148, marginLeft:18, marginRight:18, marginTop:18, backgroundColor:'white'}}>
-                <ScrollView style={{padding : 10}}>
+                <ScrollView style={{padding : 20}}>
                     <View style={styles.checkContent}>
                         <Text style={{width: 70}}>기분</Text>
                         <CheckBox
@@ -60,21 +60,26 @@ export default class DiaryDtl extends Component {
                     </View>
                     <View style={styles.checkContent}>
                         <Text style={{width: 70}}>열</Text>
-                        <CheckBox
-                          title='좋음'
-                          containerStyle={styles.checkBox}
-                          checked={this.state.checked}
-                        />
-                        <CheckBox
-                          title='보통'
-                          containerStyle={styles.checkBox}
-                          checked={this.state.checked}
-                        />
-                        <CheckBox
-                          title='나쁨'
-                          containerStyle={styles.checkBox}
-                          checked={this.state.checked}
-                        />
+                        <View>
+                            <View style={{flexDirection:'row'}}>
+                                <CheckBox
+                                  title='좋음'
+                                  containerStyle={styles.checkBox}
+                                  checked={this.state.checked}
+                                />
+                                <CheckBox
+                                  title='보통'
+                                  containerStyle={styles.checkBox}
+                                  checked={this.state.checked}
+                                />
+                                <CheckBox
+                                  title='나쁨'
+                                  containerStyle={styles.checkBox}
+                                  checked={this.state.checked}
+                                />
+                            </View>
+                            <TextInput></TextInput>
+                        </View>
                     </View>
                     <View style={styles.checkContent}>
                         <Text style={{width: 70}}>아침식사</Text>
@@ -131,22 +136,31 @@ export default class DiaryDtl extends Component {
                         />
                     </View>
                     <View style={styles.checkContent}>
-                        <Text style={{width: 70}}>배변</Text>
-                        <CheckBox
-                          title='좋음'
-                          containerStyle={styles.checkBox}
-                          checked={this.state.checked}
-                        />
-                        <CheckBox
-                          title='보통'
-                          containerStyle={styles.checkBox}
-                          checked={this.state.checked}
-                        />
-                        <CheckBox
-                          title='나쁨'
-                          containerStyle={styles.checkBox}
-                          checked={this.state.checked}
-                        />
+                        <Text style={{width: 70}}>열</Text>
+                        <View>
+                            <View style={{flexDirection:'row'}}>
+                                <CheckBox
+                                  title='좋음'
+                                  containerStyle={styles.checkBox}
+                                  checked={this.state.checked}
+                                />
+                                <CheckBox
+                                  title='보통'
+                                  containerStyle={styles.checkBox}
+                                  checked={this.state.checked}
+                                />
+                                <CheckBox
+                                  title='나쁨'
+                                  containerStyle={styles.checkBox}
+                                  checked={this.state.checked}
+                                />
+                            </View>
+                            <View style={{flexDirection:'row', alignItems:'center'}}>
+                                <TextInput style={{flex:0.2, marginRight:3}}></TextInput>
+                                <Text style={{width:15, marginRight:10}}>회</Text>
+                                <TextInput style={{flex:0.9}}></TextInput>
+                            </View>
+                        </View>
                     </View>
                     <View style={styles.checkContent}>
                         <Text style={{width: 70}}>수면</Text>
@@ -166,7 +180,7 @@ export default class DiaryDtl extends Component {
                           checked={this.state.checked}
                         />
                     </View>
-                    <View style={{flexDirection: 'row', alignItems: 'center', paddingLeft:5, margintTop:10}}>
+                    <View style={{flexDirection: 'row', alignItems: 'center', paddingLeft:5, marginTop:20}}>
                         <Text style={{width: 70}}>제목</Text>
                         <TextInput style={{flex:1}}>
                         </TextInput>
