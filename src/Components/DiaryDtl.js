@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import {View, Text, Button, TextInput, StyleSheet, Dimensions, ScrollView} from 'react-native';
+import {View, Text, Button, TextInput, StyleSheet, Dimensions, ScrollView, TouchableOpacity} from 'react-native';
 import { CheckBox } from 'react-native-elements'
 import ModalHeader from './ModalHeader'
 import Icons from 'react-native-vector-icons/FontAwesome';
 import Image from 'react-native-scalable-image';
 import PhotoUpload from 'react-native-photo-upload'
+import ImagePicker from 'react-native-image-picker'
 
 export default class DiaryDtl extends Component {
 
@@ -12,9 +13,44 @@ export default class DiaryDtl extends Component {
     super(props);
     this.state = {
         checked : true,
-        feeling : 'good'
+        feeling : 'good',
+        avatarSource: null
+
     }
   }
+
+    selectPhotoTapped() {
+      const options = {
+        quality: 1.0,
+        maxWidth: 500,
+        maxHeight: 500,
+        storageOptions: {
+          skipBackup: true
+        }
+      };
+
+      ImagePicker.showImagePicker(options, (response) => {
+        console.log('Response = ', response);
+
+        if (response.didCancel) {
+          console.log('User cancelled photo picker');
+        }
+        else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        }
+        else if (response.customButton) {
+          console.log('User tapped custom button: ', response.customButton);
+        }
+        else {
+          //let source = { uri: response.uri };
+          let source = { uri: 'data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==' };
+
+          this.setState({
+            avatarSource: source
+          });
+        }
+      });
+    }
 
   render(){
     return(
@@ -207,26 +243,13 @@ export default class DiaryDtl extends Component {
             <View style={styles.eventIcons}>
                 <Icons name="image" color="#00cc00" size={30}/>
                 <Text style={{marginLeft:5}}> 사진 </Text>
-                <PhotoUpload
-                   onPhotoSelect={avatar => {
-                     if (avatar) {
-                       console.log('Image base64 string: ', avatar)
-                     }
-                   }}
-                 >
-                   <Image
-                     style={{
-                       paddingVertical: 30,
-                       width: 150,
-                       height: 150,
-                       borderRadius: 75
-                     }}
-                     resizeMode='cover'
-                     source={{
-                       uri: 'https://www.sparklabs.com/forum/styles/comboot/theme/images/default_avatar.jpg'
-                     }}
-                   />
-                 </PhotoUpload>
+                <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
+                    <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
+                      { this.state.avatarSource === null ? <Text>Select a Photo</Text> :
+                        <Image style={styles.avatar} source={this.state.avatarSource} />
+                      }
+                    </View>
+                </TouchableOpacity>
             </View>
         </View>
     )
@@ -257,5 +280,17 @@ const styles = StyleSheet.create({
         backgroundColor:'white', 
         margin:0, 
         borderWidth:0
+    },
+
+    avatar: {
+        borderRadius: 75,
+        width: 150,
+        height: 150
+    },
+
+    avatarContainer: {
+        borderColor: '#9B9B9B',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })
