@@ -3,6 +3,8 @@ import {View, Text, Button, TextInput, StyleSheet, Dimensions, ScrollView} from 
 import { CheckBox } from 'react-native-elements'
 import ModalHeader from './ModalHeader'
 import Icons from 'react-native-vector-icons/FontAwesome';
+import Image from 'react-native-scalable-image';
+import PhotoUpload from 'react-native-photo-upload'
 
 export default class DiaryDtl extends Component {
 
@@ -22,6 +24,11 @@ export default class DiaryDtl extends Component {
             ></ModalHeader>
             <View style={{height:Dimensions.get('window').height-148, marginLeft:18, marginRight:18, marginTop:18, backgroundColor:'white'}}>
                 <ScrollView style={{padding : 20}}>
+                    <View>
+                        <Image width={Dimensions.get('window').width}
+                            source={require('../../assets/images/B612_20180814_195816_395.jpg')}
+                        />
+                    </View>
                     <View style={styles.checkContent}>
                         <Text style={{width: 70}}>기분</Text>
                         <CheckBox
@@ -59,7 +66,9 @@ export default class DiaryDtl extends Component {
                         />
                     </View>
                     <View style={styles.checkContent}>
-                        <Text style={{width: 70}}>열</Text>
+                        <View style={{width:70, alignItems:'flex-start'}}>
+                             <Text style={{width: 70}}>열</Text>
+                        </View>
                         <View>
                             <View style={{flexDirection:'row'}}>
                                 <CheckBox
@@ -136,7 +145,7 @@ export default class DiaryDtl extends Component {
                         />
                     </View>
                     <View style={styles.checkContent}>
-                        <Text style={{width: 70}}>열</Text>
+                        <Text style={{width: 70}}>배변</Text>
                         <View>
                             <View style={{flexDirection:'row'}}>
                                 <CheckBox
@@ -198,6 +207,26 @@ export default class DiaryDtl extends Component {
             <View style={styles.eventIcons}>
                 <Icons name="image" color="#00cc00" size={30}/>
                 <Text style={{marginLeft:5}}> 사진 </Text>
+                <PhotoUpload
+                   onPhotoSelect={avatar => {
+                     if (avatar) {
+                       console.log('Image base64 string: ', avatar)
+                     }
+                   }}
+                 >
+                   <Image
+                     style={{
+                       paddingVertical: 30,
+                       width: 150,
+                       height: 150,
+                       borderRadius: 75
+                     }}
+                     resizeMode='cover'
+                     source={{
+                       uri: 'https://www.sparklabs.com/forum/styles/comboot/theme/images/default_avatar.jpg'
+                     }}
+                   />
+                 </PhotoUpload>
             </View>
         </View>
     )
