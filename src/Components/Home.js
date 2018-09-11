@@ -6,7 +6,8 @@ import {
     Text,
     ScrollView,
     StyleSheet,
-    Dimensions
+    Dimensions,
+    FlatList
 } from 'react-native';
 import {
     Card,
@@ -33,6 +34,7 @@ export default class Home extends Component {
         super(props);
         this.state = {
             modalVisible: false,
+            diaryList : []
 
         }
     }
@@ -40,8 +42,11 @@ export default class Home extends Component {
     componentDidMount() {
         fetch('http://70.30.207.203:8006/product/diary')
             .then((response) => response.json())
-            .then((responseJson) => {
-                console.log(responseJson)
+            .then((res) => {
+                console.log(res);
+                this.setState({
+                    diaryList : res.data
+                })
             })
             .catch((error) => {
                 console.error(error);
@@ -59,98 +64,65 @@ export default class Home extends Component {
         return (
             <View>
                 <ScrollView>
-                    <Card containerStyle={{padding:0, paddingTop:15, paddingBottom:15}} dividerStyle={{marginBottom:0}} title='2018.08.16 (월)'>
-                        <View>
-                            <Image width={Dimensions.get('window').width} source={require('../../assets/images/B612_20180812_175712_313.jpg')} />
-                        </View>
-                        <View style={{margin: 15}}>
-                            <View style={{flexDirection:'row', alignItems: 'center'}}>
-                                <Text>기분 : </Text>
-                                <Text>좋음 </Text>
-                                <FontAwesomeIcons name="smile-o" color="#33cc33" />
-                            </View>
-                            <View style={{flexDirection:'row', alignItems: 'center'}}>
-                                <Text>건강 : </Text>
-                                <Text>보통 </Text>
-                                <FontAwesomeIcons name="meh-o" color="#ff8c00" />
-                            </View>
-                            <View style={{flexDirection:'row', alignItems: 'center'}}>
-                                <Text>열 : </Text>
-                                <Text>있음(38도) </Text>
-                                <FontAwesomeIcons name="frown-o" color="#ff471a" />
-                            </View>
-                            <View style={{flexDirection:'row', alignItems: 'center'}}>
-                                <Text>아침 식사 : </Text>
-                                <Text>양호 </Text>
-                                <FontAwesomeIcons name="smile-o" color="#33cc33" />
-                            </View>
-                            <View style={{flexDirection:'row', alignItems: 'center'}}>
-                                <Text>점심 식사 : </Text>
-                                <Text>보통 </Text>
-                                <FontAwesomeIcons name="meh-o" color="#ff8c00" />
-                            </View>
-                            <View style={{flexDirection:'row', alignItems: 'center'}}>
-                                <Text>저녁 식사 : </Text>
-                                <Text>나쁨 </Text>
-                                <FontAwesomeIcons name="frown-o" color="#ff471a" />
-                            </View>
-                            <View style={{flexDirection:'row', alignItems: 'center'}}>
-                                <Text>배변 : </Text>
-                                <Text>2회(11:45, 15:00), 좋지않음(설사) </Text>
-                                <FontAwesomeIcons name="frown-o" color="#ff471a" />
-                            </View>
-                            <View style={{flexDirection:'row'}}>
-                                <Text>수면 : </Text>
-                                <Text>23시 30분 ~ 08시 10분</Text>
-                            </View>
-                        </View>
-                        <Text style={styles.title}>
-                            {'오늘은 행복한 날'}
-                        </Text>
-                        <Text style={styles.content}>
-                            {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
-                        </Text>
-                    </Card>
-                    <Card containerStyle={{padding:0, paddingTop:15, paddingBottom:15}} dividerStyle={{marginBottom:0}} title='2018.07.16  오늘은 행복한 날'>
-                        <View>
-                            <Image width={Dimensions.get('window').width} source={require('../../assets/images/B612_20180814_195816_395.jpg')} />
-                        </View>
-                        <Text style={{margin: 15}}>
-                            {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
-                        </Text>
-                    </Card>
-                    <Card containerStyle={{padding:0, paddingTop:15, paddingBottom:15}} dividerStyle={{marginBottom:0}} title='2018.05.16  오늘은 행복한 날'>
-                        <View>
-                            <Image width={Dimensions.get('window').width} source={require('../../assets/images/B612_20180810_195704_283.jpg')} />
-                        </View>
-                        <Text style={{margin: 15}}>
-                            {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
-                        </Text>
-                    </Card>
-                    <Card containerStyle={{padding:0, paddingTop:15, paddingBottom:15}} dividerStyle={{marginBottom:0}} title='2018.04.16  오늘은 행복한 날'>
-                        <View>
-                            <Image width={Dimensions.get('window').width} source={require('../../assets/images/B612_20180812_161957_448.jpg')} />
-                        </View>
-                        <Text style={{margin: 15}}>
-                            {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
-                        </Text>
-                    </Card>
-                    <Card containerStyle={{padding:0, paddingTop:15, paddingBottom:15}} dividerStyle={{marginBottom:0}} title='2018.03.16  오늘은 행복한 날'>
-                        <View>
-                            <Image width={Dimensions.get('window').width} source={require('../../assets/images/B612_20180816_154948_413.jpg')} />
-                        </View>
-                        <Text style={{margin: 15}}>
-                            {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
-                        </Text>
-                    </Card>
-                    <Card containerStyle={{padding:0, paddingTop:15, paddingBottom:15}} dividerStyle={{marginBottom:0}} title='2018.01.16  오늘은 행복한 날'>
-                        <View>
-                            <Image width={Dimensions.get('window').width} source={require('../../assets/images/B612_20180816_191925_963.jpg')} />
-                        </View>
-                        <Text style={{margin: 15}}>
-                            {'오늘은 재윤이 병원간날\n재윤이 너무 아픈날\n재윤이 화이팅!!!'}
-                        </Text>
-                    </Card>
+                    <FlatList
+                        data={this.state.diaryList}
+                        renderItem={({item}) =>
+                            <Card containerStyle={{padding:0, paddingTop:15, paddingBottom:15}} dividerStyle={{marginBottom:0}} title='2018.08.16 (월)'>
+                                <View>
+                                    <Image width={Dimensions.get('window').width} source={require('../../assets/images/B612_20180812_175712_313.jpg')} />
+                                </View>
+                                <View style={{margin: 15}}>
+                                    <View style={{flexDirection:'row', alignItems: 'center'}}>
+                                        <Text>기분 : </Text>
+                                        <Text>{item.feelingCd} </Text>
+                                        <FontAwesomeIcons name="smile-o" color="#33cc33" />
+                                    </View>
+                                    <View style={{flexDirection:'row', alignItems: 'center'}}>
+                                        <Text>건강 : </Text>
+                                        <Text>{item.healthCd} </Text>
+                                        <FontAwesomeIcons name="meh-o" color="#ff8c00" />
+                                    </View>
+                                    <View style={{flexDirection:'row', alignItems: 'center'}}>
+                                        <Text>열 : </Text>
+                                        <Text>있음(38도) </Text>
+                                        <FontAwesomeIcons name="frown-o" color="#ff471a" />
+                                    </View>
+                                    <View style={{flexDirection:'row', alignItems: 'center'}}>
+                                        <Text>아침 식사 : </Text>
+                                        <Text>{item.breakfastCd} </Text>
+                                        <FontAwesomeIcons name="smile-o" color="#33cc33" />
+                                    </View>
+                                    <View style={{flexDirection:'row', alignItems: 'center'}}>
+                                        <Text>점심 식사 : </Text>
+                                        <Text>{item.lunchCd} </Text>
+                                        <FontAwesomeIcons name="meh-o" color="#ff8c00" />
+                                    </View>
+                                    <View style={{flexDirection:'row', alignItems: 'center'}}>
+                                        <Text>저녁 식사 : </Text>
+                                        <Text>{item.dinnerCd} </Text>
+                                        <FontAwesomeIcons name="frown-o" color="#ff471a" />
+                                    </View>
+                                    <View style={{flexDirection:'row', alignItems: 'center'}}>
+                                        <Text>배변 : </Text>
+                                        <Text>{item.shitCnt}회, {item.shitCd}{item.shitDesc} </Text>
+                                        <FontAwesomeIcons name="frown-o" color="#ff471a" />
+                                    </View>
+                                    <View style={{flexDirection:'row'}}>
+                                        <Text>수면 : </Text>
+                                        <Text>{item.sleepStartDtm} ~ {item.sleepEndDtm}</Text>
+                                    </View>
+                                </View>
+                                <Text style={styles.title}>
+                                    {item.title}
+                                </Text>
+                                <Text style={styles.content}>
+                                    {item.content}
+                                </Text>
+                            </Card>
+
+                        }
+                    />
+
                 </ScrollView>
                 <ActionButton buttonColor="rgba(231,76,60,1)">
                     <ActionButton.Item buttonColor='#1abc9c' title="새글 작성" onPress={()=> this.props.navigation.navigate('DiaryDtl')}>
