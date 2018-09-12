@@ -19,6 +19,7 @@ import IonIcons from 'react-native-vector-icons/Ionicons';
 import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
 import Image from 'react-native-scalable-image';
 import DiaryDtl from './DiaryDtl.js'
+import HomeCodeTypeIcon from './HomeCodeTypeIcon.js'
 
 export default class Home extends Component {
     static navigationOptions = {
@@ -53,13 +54,6 @@ export default class Home extends Component {
             });
     }
 
-    setModalVisible(visible) {
-        this.setState({
-            modalVisible: visible
-        });
-    }
-
-
     render() {
         return (
             <View>
@@ -67,7 +61,7 @@ export default class Home extends Component {
                     <FlatList
                         data={this.state.diaryList}
                         renderItem={({item}) =>
-                            <Card containerStyle={{padding:0, paddingTop:15, paddingBottom:15}} dividerStyle={{marginBottom:0}} title='2018.08.16 (월)'>
+                            <Card containerStyle={{padding:0, paddingTop:15, paddingBottom:15}} dividerStyle={{marginBottom:0}} title={item.chgRegDtm}>
                                 <View>
                                     <Image width={Dimensions.get('window').width} source={require('../../assets/images/B612_20180812_175712_313.jpg')} />
                                 </View>
@@ -75,41 +69,41 @@ export default class Home extends Component {
                                     <View style={{flexDirection:'row', alignItems: 'center'}}>
                                         <Text>기분 : </Text>
                                         <Text>{item.feelingCd} </Text>
-                                        <FontAwesomeIcons name="smile-o" color="#33cc33" />
+                                        <HomeCodeTypeIcon code={item.feelingCd}></HomeCodeTypeIcon>
                                     </View>
                                     <View style={{flexDirection:'row', alignItems: 'center'}}>
                                         <Text>건강 : </Text>
                                         <Text>{item.healthCd} </Text>
-                                        <FontAwesomeIcons name="meh-o" color="#ff8c00" />
+                                        <HomeCodeTypeIcon code={item.healthCd}></HomeCodeTypeIcon>
                                     </View>
                                     <View style={{flexDirection:'row', alignItems: 'center'}}>
                                         <Text>열 : </Text>
-                                        <Text>있음(38도) </Text>
-                                        <FontAwesomeIcons name="frown-o" color="#ff471a" />
+                                        <Text>{item.feverCd} </Text>
+                                        <HomeCodeTypeIcon code={item.feverCd}></HomeCodeTypeIcon>
                                     </View>
                                     <View style={{flexDirection:'row', alignItems: 'center'}}>
                                         <Text>아침 식사 : </Text>
                                         <Text>{item.breakfastCd} </Text>
-                                        <FontAwesomeIcons name="smile-o" color="#33cc33" />
+                                        <HomeCodeTypeIcon code={item.breakfastCd}></HomeCodeTypeIcon>
                                     </View>
                                     <View style={{flexDirection:'row', alignItems: 'center'}}>
                                         <Text>점심 식사 : </Text>
                                         <Text>{item.lunchCd} </Text>
-                                        <FontAwesomeIcons name="meh-o" color="#ff8c00" />
+                                        <HomeCodeTypeIcon code={item.lunchCd}></HomeCodeTypeIcon>
                                     </View>
                                     <View style={{flexDirection:'row', alignItems: 'center'}}>
                                         <Text>저녁 식사 : </Text>
                                         <Text>{item.dinnerCd} </Text>
-                                        <FontAwesomeIcons name="frown-o" color="#ff471a" />
+                                        <HomeCodeTypeIcon code={item.dinnerCd}></HomeCodeTypeIcon>
                                     </View>
                                     <View style={{flexDirection:'row', alignItems: 'center'}}>
                                         <Text>배변 : </Text>
-                                        <Text>{item.shitCnt}회, {item.shitCd}{item.shitDesc} </Text>
-                                        <FontAwesomeIcons name="frown-o" color="#ff471a" />
+                                        <Text>{item.shitCnt}회, {item.shitCd}({item.shitDesc}) </Text>
+                                        <HomeCodeTypeIcon code={item.shitCd}></HomeCodeTypeIcon>
                                     </View>
                                     <View style={{flexDirection:'row'}}>
                                         <Text>수면 : </Text>
-                                        <Text>{item.sleepStartDtm} ~ {item.sleepEndDtm}</Text>
+                                        <Text>{item.sleepStartTime}시 ~ {item.sleepEndTime}시</Text>
                                     </View>
                                 </View>
                                 <Text style={styles.title}>
