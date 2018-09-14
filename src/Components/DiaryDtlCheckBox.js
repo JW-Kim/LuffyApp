@@ -32,6 +32,31 @@ export default class DiaryDtlCheckBox extends Component {
         })
      }
 
+     setGood(){
+         this.setState({
+             good : !this.state.good,
+             notBad : false,
+             bad : false
+         })
+         //this.props.setCode('good');
+     }
+
+     setNotBad(){
+          this.setState({
+              good : false,
+              notBad : !this.state.notBad,
+              bad : false
+          })
+     }
+
+     setBad(){
+          this.setState({
+              good : false,
+              notBad : false,
+              bad : !this.state.bad
+          })
+     }
+
     render(){
         return(
             <View style={{flex:1, flexDirection: 'row'}}>
@@ -42,6 +67,7 @@ export default class DiaryDtlCheckBox extends Component {
                     containerStyle={styles.checkBox}
                     checked={this.state.good}
                     textStyle={{fontSize: 15, fontWeight:'100'}}
+                    onPress={() => this.setGood(this)}
                 />
                 <CheckBox
                     title='보통'
@@ -50,6 +76,7 @@ export default class DiaryDtlCheckBox extends Component {
                     containerStyle={styles.checkBox}
                     checked={this.state.notBad}
                     textStyle={{fontSize: 15, fontWeight:'100'}}
+                    onPress={() => this.setNotBad(this)}
                 />
                 <CheckBox
                     title='나쁨'
@@ -58,6 +85,7 @@ export default class DiaryDtlCheckBox extends Component {
                     containerStyle={styles.checkBox}
                     checked={this.state.bad}
                     textStyle={{fontSize: 15, fontWeight:'100'}}
+                    onPress={() => this.setBad(this)}
                 />
             </View>
         )
