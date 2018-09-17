@@ -35,10 +35,16 @@ export default class DiaryDtl extends Component {
             dinnerCd : null,
             shitCd : null,
             avatarSource: null
-
         }
 
-        let setFeelingCd = this.setFeelingCd.bind(this)
+        let setFeelingCd = this.setFeelingCd.bind(this);
+        let setHealthCd = this.setHealthCd.bind(this);
+        let setFeverCd = this.setFeverCd.bind(this);
+        let setBreakfastCd = this.setBreakfastCd.bind(this);
+        let setLunchCd = this.setLunchCd.bind(this);
+        let setDinnerCd = this.setDinnerCd.bind(this);
+        let setShitCd = this.setShitCd.bind(this);
+
     }
 
     componentDidMount() {
@@ -84,46 +90,46 @@ export default class DiaryDtl extends Component {
         });
     }
 
-    setFeelingCd() {
+    setFeelingCd(type) {
+       this.setState({
+           feelingCd : type
+       })
+
+    }
+
+    setHealthCd(type) {
         this.setState({
-            feelingCd : 'good'
+            healthCd : type
         })
     }
 
-    setHealthCd() {
+    setFeverCd(type) {
         this.setState({
-            healthCd : 'bad'
+            feverCd : type
         })
     }
 
-    setFeverCd() {
+    setBreakfastCd(type) {
         this.setState({
-            feverCd : 'bad'
+            breakfastCd : type
         })
     }
 
-    setBreakfastCd() {
+    setLunchCd(type) {
         this.setState({
-            breakfastCd : 'bad'
+            lunchCd : type
         })
     }
 
-
-    setLunchCd() {
+    setDinnerCd(type) {
         this.setState({
-            lunchCd : 'bad'
+            dinnerCd : type
         })
     }
 
-    setDinnerCd() {
+    setShitCd(type) {
         this.setState({
-            dinnerCd : 'bad'
-        })
-    }
-
-    setShitCd() {
-        this.setState({
-            shitCd : 'bad'
+            shitCd : type
         })
     }
 
@@ -146,14 +152,14 @@ export default class DiaryDtl extends Component {
                         </View>
                         <View style={styles.checkContent}>
                             <Text style={{width: 70, fontSize: 15, fontWeight:'800'}}>건강</Text>
-                            <DiaryDtlCheckBox code={this.state.healthCd} setCode={this.setHealthCd}></DiaryDtlCheckBox>
+                            <DiaryDtlCheckBox code={this.state.healthCd} setCode={this.setHealthCd.bind(this)}></DiaryDtlCheckBox>
                         </View>
                         <View style={styles.checkContent}>
                             <View style={{width:70, alignItems:'flex-start'}}>
                                  <Text style={{width: 70, fontSize: 15, fontWeight:'800'}}>열</Text>
                             </View>
                             <View>
-                                <DiaryDtlCheckBox code={this.state.feverCd} setCode={this.setFeverCd}></DiaryDtlCheckBox>
+                                <DiaryDtlCheckBox code={this.state.feverCd} setCode={this.setFeverCd.bind(this)}></DiaryDtlCheckBox>
                                 <View style={{paddingLeft:10, paddingRight:20}}>
                                     <TextInput></TextInput>
                                 </View>
@@ -161,20 +167,20 @@ export default class DiaryDtl extends Component {
                         </View>
                         <View style={styles.checkContent}>
                             <Text style={{width: 70, fontSize: 15, fontWeight:'800'}}>아침식사</Text>
-                            <DiaryDtlCheckBox code={this.state.breakfastCd} setCode={this.setBreakfastCd}></DiaryDtlCheckBox>
+                            <DiaryDtlCheckBox code={this.state.breakfastCd} setCode={this.setBreakfastCd.bind(this)}></DiaryDtlCheckBox>
                         </View>
                         <View style={styles.checkContent}>
                             <Text style={{width: 70, fontSize: 15, fontWeight:'800'}}>점심식사</Text>
-                            <DiaryDtlCheckBox code={this.state.lunchCd} setCode={this.setLunchCd}></DiaryDtlCheckBox>
+                            <DiaryDtlCheckBox code={this.state.lunchCd} setCode={this.setLunchCd.bind(this)}></DiaryDtlCheckBox>
                         </View>
                         <View style={styles.checkContent}>
                             <Text style={{width: 70, fontSize: 15, fontWeight:'800'}}>저녁식사</Text>
-                            <DiaryDtlCheckBox code={this.state.dinnerCd} setCode={this.setDinnerCd}></DiaryDtlCheckBox>
+                            <DiaryDtlCheckBox code={this.state.dinnerCd} setCode={this.setDinnerCd.bind(this)}></DiaryDtlCheckBox>
                         </View>
                         <View style={styles.checkContent}>
                             <Text style={{width: 70, fontSize: 15, fontWeight:'800'}}>배변</Text>
                             <View>
-                                <DiaryDtlCheckBox code={this.state.shitCd} setCode={this.setShitCd}></DiaryDtlCheckBox>
+                                <DiaryDtlCheckBox code={this.state.shitCd} setCode={this.setShitCd.bind(this)}></DiaryDtlCheckBox>
                                 <View style={{flexDirection:'row', alignItems:'center', paddingLeft:10, paddingRight:20}}>
                                     <TextInput style={{flex:0.2, marginRight:3}}></TextInput>
                                     <Text style={{width:15, marginRight:10}}>회</Text>
