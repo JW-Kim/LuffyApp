@@ -20,41 +20,43 @@ export default class DiaryDtlCheckBox extends Component {
         }
     }
 
-     componentDidMount() {
-        let good = this.props.code == 'good' ? true : false;
-        let notBad = this.props.code == 'notBad' ? true : false;
-        let bad = this.props.code == 'bad' ? true : false;
+     componentWillMount () {
+          let good = this.props.code == 'good' ? true : false;
+          let notBad = this.props.code == 'notBad' ? true : false;
+          let bad = this.props.code == 'bad' ? true : false;
 
-        this.setState({
-            good : good,
-            notBad : notBad,
-            bad : bad
-        })
+          this.setState({
+              good : good,
+              notBad : notBad,
+              bad : bad
+          })
+     }
+
+     componentWillReceiveProps (props) {
+         let good = props.code == 'good' ? true : false;
+         let notBad = props.code == 'notBad' ? true : false;
+         let bad = props.code == 'bad' ? true : false;
+
+         this.setState({
+             good : good,
+             notBad : notBad,
+             bad : bad
+         })
+     }
+
+     setType(){
      }
 
      setGood(){
-         this.setState({
-             good : !this.state.good,
-             notBad : false,
-             bad : false
-         })
-         //this.props.setCode('good');
+         this.props.setCode('good');
      }
 
      setNotBad(){
-          this.setState({
-              good : false,
-              notBad : !this.state.notBad,
-              bad : false
-          })
+          this.props.setCode('notBad');
      }
 
      setBad(){
-          this.setState({
-              good : false,
-              notBad : false,
-              bad : !this.state.bad
-          })
+          this.props.setCode('bad');
      }
 
     render(){
