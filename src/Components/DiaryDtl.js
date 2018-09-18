@@ -34,6 +34,12 @@ export default class DiaryDtl extends Component {
             lunchCd : null,
             dinnerCd : null,
             shitCd : null,
+            shitCnt: 0,
+            shitDesc : '',
+            sleepStartTime : '',
+            sleepEndTime : '',
+            title:'',
+            content:'',
             avatarSource: null
         }
 
@@ -44,11 +50,43 @@ export default class DiaryDtl extends Component {
         let setLunchCd = this.setLunchCd.bind(this);
         let setDinnerCd = this.setDinnerCd.bind(this);
         let setShitCd = this.setShitCd.bind(this);
+        let insertDiary = this.insertDiary.bind(this);
 
     }
 
     componentDidMount() {
         fetch('http://70.30.207.203:8006/product/diary')
+            .then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson)
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    insertDiary() {
+        fetch('http://70.30.207.203:8006/product/diary',{
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                feelingCd : this.state.feelingCd == null ? '' : this.state.feelingCd,
+                healthCd: this.state.healthCd == null ? '' : this.state.healthCd,
+                feverCd: this.state.feverCd == null ? '' : this.state.feverCd,
+                breakfastCd : this.state.breakfastCd == null ? '' : this.state.breakfastCd,
+                lunchCd : this.state.lunchCd == null ? '' : this.state.lunchCd,
+                dinnerCd : this.state.dinnerCd == null ? '' : this.state.dinnerCd,
+                shitCd : this.state.shitCd == null ? '' : this.state.shitCd,
+                shitCnt: this.state.shitCnt == null ? 0 : this.state.shitCnt,
+                shitDesc : this.state.shitDesc == null ? '' : this.state.shitDesc,
+                sleepStartTime : this.state.sleepStartTime == null ? '' : this.state.sleepStartTime,
+                sleepEndTime : this.state.sleepEndTime == null ? '' : this.state.sleepEndTime,
+                title: this.state.title == null ? '' : this.state.title,
+                content: this.state.content == null ? '' : this.state.content
+            })
+        })
             .then((response) => response.json())
             .then((responseJson) => {
                 console.log(responseJson)
@@ -138,6 +176,8 @@ export default class DiaryDtl extends Component {
             <View style={{flex:1}}>
                 <ModalHeader
                     title="일기 작성"
+                    goEvent={this.insertDiary.bind(this)}
+                    buttonTitle={'글쓰기'}
                 ></ModalHeader>
                 <View style={{height:Dimensions.get('window').height-148, marginLeft:18, marginRight:18, marginTop:18, backgroundColor:'white'}}>
                     <ScrollView style={{padding : 20}}>
@@ -182,42 +222,38 @@ export default class DiaryDtl extends Component {
                             <View>
                                 <DiaryDtlCheckBox code={this.state.shitCd} setCode={this.setShitCd.bind(this)}></DiaryDtlCheckBox>
                                 <View style={{flexDirection:'row', alignItems:'center', paddingLeft:10, paddingRight:20}}>
-                                    <TextInput style={{flex:0.2, marginRight:3}}></TextInput>
+                                    <TextInput style={{flex:0.2, marginRight:3}}
+                                        onChangeText={(shitCnt) => this.setState({shitCnt})}
+                                        value={this.state.shitCnt}
+                                    ></TextInput>
                                     <Text style={{width:15, marginRight:10}}>회</Text>
-                                    <TextInput style={{flex:0.9}}></TextInput>
+                                    <TextInput style={{flex:0.9}}
+                                        onChangeText={(shitDesc) => this.setState({shitDesc})}
+                                        value={this.state.shitDesc}
+                                    ></TextInput>
                                 </View>
                             </View>
                         </View>
                         <View style={styles.checkContent}>
                             <Text style={{width: 70, fontSize: 15, fontWeight:'800'}}>수면</Text>
-                            <CheckBox
-                              title='좋음'
-                              size={20}
-                              checkedColor={'#33cc33'}
-                              containerStyle={styles.checkBox}
-                              checked={this.state.checked}
-                              textStyle={{fontSize: 15, fontWeight:'100'}}
-                            />
-                            <CheckBox
-                              title='보통'
-                              size={20}
-                              checkedColor={'#ff8c00'}
-                              containerStyle={styles.checkBox}
-                              checked={this.state.checked}
-                              textStyle={{fontSize: 15, fontWeight:'100'}}
-                            />
-                            <CheckBox
-                              title='나쁨'
-                              size={20}
-                              checkedColor={'#ff471a'}
-                              containerStyle={styles.checkBox}
-                              checked={this.state.checked}
-                              textStyle={{fontSize: 15, fontWeight:'100'}}
-                            />
+                            <TextInput
+                               onChangeText={(sleepStartTime) => this.setState({sleepStartTime})}
+                               value={this.state.sleepStartTime}
+                            >
+                            </TextInput>
+                            <Text>~</Text>
+                            <TextInput
+                               onChangeText={(sleepEndTime) => this.setState({sleepEndTime})}
+                               value={this.state.sleepEndTime}
+                            >
+                            </TextInput>
                         </View>
                         <View style={styles.title}>
                             <Text style={{width: 70, fontSize: 15, fontWeight:'800'}}>제목</Text>
-                            <TextInput style={{flex:1}}>
+                            <TextInput style={{flex:1}}
+                               onChangeText={(title) => this.setState({title})}
+                               value={this.state.title}
+                            >
                             </TextInput>
                         </View>
                         <View style={[styles.checkContent,{marginBottom:40, borderBottomWidth: 1}]}>
@@ -225,6 +261,8 @@ export default class DiaryDtl extends Component {
                             <TextInput style={{flex:1}}
                                 numberOfLines={10}
                                 multiline={true}
+                                onChangeText={(content) => this.setState({content})}
+                                value={this.state.content}
                             >
                             </TextInput>
                         </View>
