@@ -14,12 +14,26 @@ import {
 import {
     CheckBox
 } from 'react-native-elements'
+import Toast from 'react-native-toast-native';
 import ModalHeader from './ModalHeader'
 import Icons from 'react-native-vector-icons/FontAwesome';
 import Image from 'react-native-scalable-image';
 import PhotoUpload from 'react-native-photo-upload'
 import ImagePicker from 'react-native-image-picker'
 import DiaryDtlCheckBox from './DiaryDtlCheckBox.js'
+
+const toastStyle = {
+    backgroundColor: "#acacac",
+    width: 300,
+    height: 100,
+    color: "#ffffff",
+    fontSize: 15,
+    lineHeight: 2,
+    lines: 4,
+    borderRadius: 15,
+    fontWeight: "bold",
+    yOffset: 40
+}
 
 export default class DiaryDtl extends Component {
 
@@ -109,6 +123,9 @@ export default class DiaryDtl extends Component {
             })
                 .then((response) => response.json())
                 .then((responseJson) => {
+                    Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+                    this.props.navigation.state.refreshFnc();
+                    this.props.navigation.goBack();
                     console.log(responseJson)
                 })
                 .catch((error) => {
@@ -139,6 +156,10 @@ export default class DiaryDtl extends Component {
             })
                 .then((response) => response.json())
                 .then((responseJson) => {
+                    Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+                    let refreshFnc = this.props.navigation.getParam('refreshFnc');
+                    refreshFnc();
+                    this.props.navigation.goBack();
                     console.log(responseJson)
                 })
                 .catch((error) => {
