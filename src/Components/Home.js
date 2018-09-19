@@ -77,7 +77,7 @@ export default class Home extends Component {
                         data={this.state.diaryList}
                         renderItem={({item}) =>
                             <Card containerStyle={{padding:0, paddingTop:15, paddingBottom:15}} dividerStyle={{marginBottom:0}} title={item.headerTitle}>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('DiaryDtl', {type:'UPDATE', diaryId:item.diaryId})}>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('DiaryDtl', {type:'UPDATE', diaryId:item.diaryId, refreshFnc:this.selectDiaryList.bind(this)})}>
                                     <View>
                                         <Image width={Dimensions.get('window').width} source={require('../../assets/images/B612_20180812_175712_313.jpg')} />
                                     </View>
