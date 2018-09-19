@@ -27,20 +27,22 @@ export default class DiaryDtl extends Component {
         super(props);
         this.state = {
             checked: true,
-            feelingCd: 'good',
-            healthCd: 'notBad',
-            feverCd: 'bad',
-            breakfastCd : 'good',
+            feelingCd: null,
+            healthCd: null,
+            feverCd: null,
+            breakfastCd : null,
             lunchCd : null,
             dinnerCd : null,
             shitCd : null,
-            shitCnt: 0,
+            shitCnt: '0',
             shitDesc : '',
             sleepStartTime : '',
             sleepEndTime : '',
             title:'',
             content:'',
-            avatarSource: null
+            avatarSource: null,
+            type : this.props.navigation.getParam('type'),
+            diaryId: this.props.navigation.getParam('diaryId')
         }
 
         let setFeelingCd = this.setFeelingCd.bind(this);
@@ -55,45 +57,94 @@ export default class DiaryDtl extends Component {
     }
 
     componentDidMount() {
-        fetch('http://70.30.207.203:8006/product/diary')
-            .then((response) => response.json())
-            .then((responseJson) => {
-                console.log(responseJson)
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        if(this.state.type == 'UPDATE'){
+            fetch('http://70.30.207.203:8006/product/diary/'+this.state.diaryId)
+                .then((response) => response.json())
+                .then((res) => {
+                    this.setState({
+                        feelingCd: res.data.feelingCd,
+                        healthCd: res.data.healthCd,
+                        feverCd: res.data.feverCd,
+                        breakfastCd : res.data.breakfastCd,
+                        lunchCd : res.data.lunchCd,
+                        dinnerCd : res.data.dinnerCd,
+                        shitCd : res.data.shitCd,
+                        shitCnt: res.data.shitCnt,
+                        shitDesc : res.data.shitDesc,
+                        sleepStartTime : res.data.sleepStartTime,
+                        sleepEndTime : res.data.sleepEndTime,
+                        title: res.data.title,
+                        content: res.data.content
+                    })
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+
     }
 
     insertDiary() {
-        fetch('http://70.30.207.203:8006/product/diary',{
-            method : 'POST',
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                feelingCd : this.state.feelingCd == null ? '' : this.state.feelingCd,
-                healthCd: this.state.healthCd == null ? '' : this.state.healthCd,
-                feverCd: this.state.feverCd == null ? '' : this.state.feverCd,
-                breakfastCd : this.state.breakfastCd == null ? '' : this.state.breakfastCd,
-                lunchCd : this.state.lunchCd == null ? '' : this.state.lunchCd,
-                dinnerCd : this.state.dinnerCd == null ? '' : this.state.dinnerCd,
-                shitCd : this.state.shitCd == null ? '' : this.state.shitCd,
-                shitCnt: this.state.shitCnt == null ? 0 : this.state.shitCnt,
-                shitDesc : this.state.shitDesc == null ? '' : this.state.shitDesc,
-                sleepStartTime : this.state.sleepStartTime == null ? '' : this.state.sleepStartTime,
-                sleepEndTime : this.state.sleepEndTime == null ? '' : this.state.sleepEndTime,
-                title: this.state.title == null ? '' : this.state.title,
-                content: this.state.content == null ? '' : this.state.content
+        if(this.state.type == 'INSERT'){
+            fetch('http://70.30.207.203:8006/product/diary',{
+                method : 'POST',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    feelingCd : this.state.feelingCd == null ? '' : this.state.feelingCd,
+                    healthCd: this.state.healthCd == null ? '' : this.state.healthCd,
+                    feverCd: this.state.feverCd == null ? '' : this.state.feverCd,
+                    breakfastCd : this.state.breakfastCd == null ? '' : this.state.breakfastCd,
+                    lunchCd : this.state.lunchCd == null ? '' : this.state.lunchCd,
+                    dinnerCd : this.state.dinnerCd == null ? '' : this.state.dinnerCd,
+                    shitCd : this.state.shitCd == null ? '' : this.state.shitCd,
+                    shitCnt: this.state.shitCnt == null ? '0' : this.state.shitCnt,
+                    shitDesc : this.state.shitDesc == null ? '' : this.state.shitDesc,
+                    sleepStartTime : this.state.sleepStartTime == null ? '' : this.state.sleepStartTime,
+                    sleepEndTime : this.state.sleepEndTime == null ? '' : this.state.sleepEndTime,
+                    title: this.state.title == null ? '' : this.state.title,
+                    content: this.state.content == null ? '' : this.state.content
+                })
             })
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                console.log(responseJson)
+                .then((response) => response.json())
+                .then((responseJson) => {
+                    console.log(responseJson)
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+
+        }else if(this.state.type == 'UPDATE'){
+            fetch('http://70.30.207.203:8006/product/diary/'+this.state.diaryId ,{
+                method : 'POST',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    feelingCd : this.state.feelingCd == null ? '' : this.state.feelingCd,
+                    healthCd: this.state.healthCd == null ? '' : this.state.healthCd,
+                    feverCd: this.state.feverCd == null ? '' : this.state.feverCd,
+                    breakfastCd : this.state.breakfastCd == null ? '' : this.state.breakfastCd,
+                    lunchCd : this.state.lunchCd == null ? '' : this.state.lunchCd,
+                    dinnerCd : this.state.dinnerCd == null ? '' : this.state.dinnerCd,
+                    shitCd : this.state.shitCd == null ? '' : this.state.shitCd,
+                    shitCnt: this.state.shitCnt == null ? '0' : this.state.shitCnt,
+                    shitDesc : this.state.shitDesc == null ? '' : this.state.shitDesc,
+                    sleepStartTime : this.state.sleepStartTime == null ? '' : this.state.sleepStartTime,
+                    sleepEndTime : this.state.sleepEndTime == null ? '' : this.state.sleepEndTime,
+                    title: this.state.title == null ? '' : this.state.title,
+                    content: this.state.content == null ? '' : this.state.content
+                })
             })
-            .catch((error) => {
-                console.error(error);
-            });
+                .then((response) => response.json())
+                .then((responseJson) => {
+                    console.log(responseJson)
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
     }
 
     selectPhotoTapped() {
