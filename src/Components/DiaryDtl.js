@@ -14,7 +14,7 @@ import {
 import {
     CheckBox
 } from 'react-native-elements'
-import Toast from 'react-native-toast-native';
+//import Toast from 'react-native-toast-native';
 import ModalHeader from './ModalHeader'
 import Icons from 'react-native-vector-icons/FontAwesome';
 import Image from 'react-native-scalable-image';
@@ -72,7 +72,7 @@ export default class DiaryDtl extends Component {
 
     componentDidMount() {
         if(this.state.type == 'UPDATE'){
-            fetch('http://70.30.207.203:8006/product/diary/'+this.state.diaryId)
+            fetch('http://58.141.217.15:8080/product/diary/'+this.state.diaryId)
                 .then((response) => response.json())
                 .then((res) => {
                     this.setState({
@@ -100,7 +100,7 @@ export default class DiaryDtl extends Component {
 
     insertDiary() {
         if(this.state.type == 'INSERT'){
-            fetch('http://70.30.207.203:8006/product/diary',{
+            fetch('http://58.141.217.15:8080/product/diary',{
                 method : 'POST',
                 headers:{
                     'Content-Type': 'application/json'
@@ -123,7 +123,7 @@ export default class DiaryDtl extends Component {
             })
                 .then((response) => response.json())
                 .then((responseJson) => {
-                    Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+                 //   Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, toastStyle);
                     this.props.navigation.state.refreshFnc();
                     this.props.navigation.goBack();
                     console.log(responseJson)
@@ -133,7 +133,7 @@ export default class DiaryDtl extends Component {
                 });
 
         }else if(this.state.type == 'UPDATE'){
-            fetch('http://70.30.207.203:8006/product/diary/'+this.state.diaryId ,{
+            fetch('http://58.141.217.15:8080/product/diary/'+this.state.diaryId ,{
                 method : 'POST',
                 headers:{
                     'Content-Type': 'application/json'
@@ -156,7 +156,7 @@ export default class DiaryDtl extends Component {
             })
                 .then((response) => response.json())
                 .then((responseJson) => {
-                    Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+                //    Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, toastStyle);
                     let refreshFnc = this.props.navigation.getParam('refreshFnc');
                     refreshFnc();
                     this.props.navigation.goBack();

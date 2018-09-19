@@ -56,7 +56,7 @@ export default class Home extends Component {
     }
 
     selectDiaryList(){
-        fetch('http://70.30.207.203:8006/product/diary')
+        fetch('http://58.141.217.15:8080/product/diary')
             .then((response) => response.json())
             .then((res) => {
                 console.log(res);
@@ -75,6 +75,7 @@ export default class Home extends Component {
                 <ScrollView>
                     <FlatList
                         data={this.state.diaryList}
+                        keyExtractor={(item, index) => index.toString()}
                         renderItem={({item}) =>
                             <Card containerStyle={{padding:0, paddingTop:15, paddingBottom:15}} dividerStyle={{marginBottom:0}} title={item.headerTitle}>
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('DiaryDtl', {type:'UPDATE', diaryId:item.diaryId, refreshFnc:this.selectDiaryList.bind(this)})}>
