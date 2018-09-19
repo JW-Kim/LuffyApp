@@ -7,7 +7,9 @@ import {
     ScrollView,
     StyleSheet,
     Dimensions,
-    FlatList
+    FlatList,
+    TouchableOpacity,
+    BackHandler
 } from 'react-native';
 import {
     Card,
@@ -41,6 +43,19 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
+        BackHandler.addEventListener('handleBackPress', this.handleBackPress);
+        this.selectDiaryList();
+    }
+
+    componentWillUnmount(){
+        BackHandler.removeEventListener('handleBackPress', this.handleBackPress);
+    }
+
+    handleBackPress = () => {
+        this.selectDiaryList();
+    }
+
+    selectDiaryList(){
         fetch('http://70.30.207.203:8006/product/diary')
             .then((response) => response.json())
             .then((res) => {
@@ -62,56 +77,58 @@ export default class Home extends Component {
                         data={this.state.diaryList}
                         renderItem={({item}) =>
                             <Card containerStyle={{padding:0, paddingTop:15, paddingBottom:15}} dividerStyle={{marginBottom:0}} title={item.headerTitle}>
-                                <View>
-                                    <Image width={Dimensions.get('window').width} source={require('../../assets/images/B612_20180812_175712_313.jpg')} />
-                                </View>
-                                <View style={{margin: 15}}>
-                                    <View style={{flexDirection:'row', alignItems: 'center'}}>
-                                        <Text>기분 : </Text>
-                                        <Text>{item.feelingCd} </Text>
-                                        <HomeCodeTypeIcon code={item.feelingCd}></HomeCodeTypeIcon>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('DiaryDtl', {type:'UPDATE', diaryId:item.diaryId})}>
+                                    <View>
+                                        <Image width={Dimensions.get('window').width} source={require('../../assets/images/B612_20180812_175712_313.jpg')} />
                                     </View>
-                                    <View style={{flexDirection:'row', alignItems: 'center'}}>
-                                        <Text>건강 : </Text>
-                                        <Text>{item.healthCd} </Text>
-                                        <HomeCodeTypeIcon code={item.healthCd}></HomeCodeTypeIcon>
+                                    <View style={{margin: 15}}>
+                                        <View style={{flexDirection:'row', alignItems: 'center'}}>
+                                            <Text>기분 : </Text>
+                                            <Text>{item.feelingCd} </Text>
+                                            <HomeCodeTypeIcon code={item.feelingCd}></HomeCodeTypeIcon>
+                                        </View>
+                                        <View style={{flexDirection:'row', alignItems: 'center'}}>
+                                            <Text>건강 : </Text>
+                                            <Text>{item.healthCd} </Text>
+                                            <HomeCodeTypeIcon code={item.healthCd}></HomeCodeTypeIcon>
+                                        </View>
+                                        <View style={{flexDirection:'row', alignItems: 'center'}}>
+                                            <Text>열 : </Text>
+                                            <Text>{item.feverCd} </Text>
+                                            <HomeCodeTypeIcon code={item.feverCd}></HomeCodeTypeIcon>
+                                        </View>
+                                        <View style={{flexDirection:'row', alignItems: 'center'}}>
+                                            <Text>아침 식사 : </Text>
+                                            <Text>{item.breakfastCd} </Text>
+                                            <HomeCodeTypeIcon code={item.breakfastCd}></HomeCodeTypeIcon>
+                                        </View>
+                                        <View style={{flexDirection:'row', alignItems: 'center'}}>
+                                            <Text>점심 식사 : </Text>
+                                            <Text>{item.lunchCd} </Text>
+                                            <HomeCodeTypeIcon code={item.lunchCd}></HomeCodeTypeIcon>
+                                        </View>
+                                        <View style={{flexDirection:'row', alignItems: 'center'}}>
+                                            <Text>저녁 식사 : </Text>
+                                            <Text>{item.dinnerCd} </Text>
+                                            <HomeCodeTypeIcon code={item.dinnerCd}></HomeCodeTypeIcon>
+                                        </View>
+                                        <View style={{flexDirection:'row', alignItems: 'center'}}>
+                                            <Text>배변 : </Text>
+                                            <Text>{item.shitCnt}회, {item.shitCd}({item.shitDesc}) </Text>
+                                            <HomeCodeTypeIcon code={item.shitCd}></HomeCodeTypeIcon>
+                                        </View>
+                                        <View style={{flexDirection:'row'}}>
+                                            <Text>수면 : </Text>
+                                            <Text>{item.sleepStartTime}시 ~ {item.sleepEndTime}시</Text>
+                                        </View>
                                     </View>
-                                    <View style={{flexDirection:'row', alignItems: 'center'}}>
-                                        <Text>열 : </Text>
-                                        <Text>{item.feverCd} </Text>
-                                        <HomeCodeTypeIcon code={item.feverCd}></HomeCodeTypeIcon>
-                                    </View>
-                                    <View style={{flexDirection:'row', alignItems: 'center'}}>
-                                        <Text>아침 식사 : </Text>
-                                        <Text>{item.breakfastCd} </Text>
-                                        <HomeCodeTypeIcon code={item.breakfastCd}></HomeCodeTypeIcon>
-                                    </View>
-                                    <View style={{flexDirection:'row', alignItems: 'center'}}>
-                                        <Text>점심 식사 : </Text>
-                                        <Text>{item.lunchCd} </Text>
-                                        <HomeCodeTypeIcon code={item.lunchCd}></HomeCodeTypeIcon>
-                                    </View>
-                                    <View style={{flexDirection:'row', alignItems: 'center'}}>
-                                        <Text>저녁 식사 : </Text>
-                                        <Text>{item.dinnerCd} </Text>
-                                        <HomeCodeTypeIcon code={item.dinnerCd}></HomeCodeTypeIcon>
-                                    </View>
-                                    <View style={{flexDirection:'row', alignItems: 'center'}}>
-                                        <Text>배변 : </Text>
-                                        <Text>{item.shitCnt}회, {item.shitCd}({item.shitDesc}) </Text>
-                                        <HomeCodeTypeIcon code={item.shitCd}></HomeCodeTypeIcon>
-                                    </View>
-                                    <View style={{flexDirection:'row'}}>
-                                        <Text>수면 : </Text>
-                                        <Text>{item.sleepStartTime}시 ~ {item.sleepEndTime}시</Text>
-                                    </View>
-                                </View>
-                                <Text style={styles.title}>
-                                    {item.title}
-                                </Text>
-                                <Text style={styles.content}>
-                                    {item.content}
-                                </Text>
+                                    <Text style={styles.title}>
+                                        {item.title}
+                                    </Text>
+                                    <Text style={styles.content}>
+                                        {item.content}
+                                    </Text>
+                                </TouchableOpacity>
                             </Card>
 
                         }
@@ -119,7 +136,7 @@ export default class Home extends Component {
 
                 </ScrollView>
                 <ActionButton buttonColor="rgba(231,76,60,1)">
-                    <ActionButton.Item buttonColor='#1abc9c' title="새글 작성" onPress={()=> this.props.navigation.navigate('DiaryDtl')}>
+                    <ActionButton.Item buttonColor='#1abc9c' title="새글 작성" onPress={()=> this.props.navigation.navigate('DiaryDtl', {type:'INSERT'})}>
                         <IonIcons name="md-create" style={styles.actionButtonIcon} />
                     </ActionButton.Item>
                 </ActionButton>
