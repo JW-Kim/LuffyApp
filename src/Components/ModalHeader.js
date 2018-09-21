@@ -1,15 +1,19 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
+import {
+    Button
+} from 'react-native-elements'
 
 export default class ModalHeader extends Component {
 
   render(){
     return(
         <View style={styles.total}>
-            <View style={{width:30, backgroundColor : '#484f4f'}}></View>
+            <View style={{width:70, backgroundColor : '#484f4f'}}></View>
             <Text style={styles.titleText}>{this.props.title}</Text>
             <Button
-                style={{width:30}}
+                buttonStyle={{width:70, backgroundColor:'#fff', height:36}}
+                textStyle={{color:'#000'}}
                 onPress={() => this.props.goEvent(this)}
                 title={this.props.buttonTitle}
             />
