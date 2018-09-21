@@ -9,7 +9,8 @@ import {
     StyleSheet,
     Dimensions,
     ScrollView,
-    TouchableOpacity
+    TouchableOpacity,
+    KeyboardAvoidingView
 } from 'react-native';
 import {
     CheckBox
@@ -125,7 +126,8 @@ export default class DiaryDtl extends Component {
                 .then((response) => response.json())
                 .then((responseJson) => {
                     Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, toastStyle);
-                    this.props.navigation.state.refreshFnc();
+                    let refreshFnc = this.props.navigation.getParam('refreshFnc');
+                    refreshFnc();
                     this.props.navigation.goBack();
                     console.log(responseJson)
                 })
@@ -253,6 +255,7 @@ export default class DiaryDtl extends Component {
                     buttonTitle={'글쓰기'}
                 ></ModalHeader>
                 <View style={{height:Dimensions.get('window').height-148, marginLeft:18, marginRight:18, marginTop:18, backgroundColor:'white'}}>
+                    <KeyboardAvoidingView  behavior="padding" keyboardVerticalOffset={100}enabled>
                     <ScrollView style={{padding : 20}}>
                         <View style={{marginBottom:20}}>
                             <Image width={Dimensions.get('window').width}
@@ -340,6 +343,7 @@ export default class DiaryDtl extends Component {
                             </TextInput>
                         </View>
                     </ScrollView>
+                    </KeyboardAvoidingView>
                 </View>
                 <View style={styles.eventIcons}>
                     <Icons name="image" color="#00cc00" size={30}/>
