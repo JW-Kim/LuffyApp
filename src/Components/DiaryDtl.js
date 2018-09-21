@@ -74,7 +74,7 @@ export default class DiaryDtl extends Component {
 
     componentDidMount() {
         if(this.state.type == 'UPDATE'){
-            fetch('http://58.141.217.15:8080/product/diary/'+this.state.diaryId)
+            fetch('http://70.30.207.203:8006/product/diary/'+this.state.diaryId)
                 .then((response) => response.json())
                 .then((res) => {
                     this.setState({
@@ -102,7 +102,7 @@ export default class DiaryDtl extends Component {
 
     insertDiary() {
         if(this.state.type == 'INSERT'){
-            fetch('http://58.141.217.15:8080/product/diary',{
+            fetch('http://70.30.207.203:8006/product/diary',{
                 method : 'POST',
                 headers:{
                     'Content-Type': 'application/json'
@@ -136,7 +136,7 @@ export default class DiaryDtl extends Component {
                 });
 
         }else if(this.state.type == 'UPDATE'){
-            fetch('http://58.141.217.15:8080/product/diary/'+this.state.diaryId ,{
+            fetch('http://70.30.207.203:8006/product/diary/'+this.state.diaryId ,{
                 method : 'POST',
                 headers:{
                     'Content-Type': 'application/json'
@@ -312,17 +312,25 @@ export default class DiaryDtl extends Component {
                         </View>
                         <View style={styles.checkContent}>
                             <Text style={{width: 70, fontSize: 15, fontWeight:'800'}}>수면</Text>
-                            <TextInput
-                               onChangeText={(sleepStartTime) => this.setState({sleepStartTime})}
-                               value={this.state.sleepStartTime}
-                            >
-                            </TextInput>
-                            <Text>~</Text>
-                            <TextInput
-                               onChangeText={(sleepEndTime) => this.setState({sleepEndTime})}
-                               value={this.state.sleepEndTime}
-                            >
-                            </TextInput>
+                            <View style={{flex:0.4, flexDirection:'row', alignItems:'center'}}>
+                                <TextInput
+                                    style={{width:40}}
+                                    onChangeText={(sleepStartTime) => this.setState({sleepStartTime})}
+                                    value={this.state.sleepStartTime}
+                                >
+                                </TextInput>
+                                <Text>시</Text>
+                            </View>
+                            <Text style={{flex:0.2}}>~</Text>
+                            <View style={{flex:0.4, flexDirection:'row', alignItems:'center'}}>
+                                <TextInput
+                                    style={{width:40}}
+                                    onChangeText={(sleepEndTime) => this.setState({sleepEndTime})}
+                                    value={this.state.sleepEndTime}
+                                >
+                                </TextInput>
+                                <Text>시</Text>
+                            </View>
                         </View>
                         <View style={styles.title}>
                             <Text style={{width: 70, fontSize: 15, fontWeight:'800'}}>제목</Text>
