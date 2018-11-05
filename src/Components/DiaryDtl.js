@@ -74,7 +74,8 @@ export default class DiaryDtl extends Component {
 
     componentDidMount() {
         if(this.state.type == 'UPDATE'){
-            fetch('http://70.30.207.203:8006/product/diary/'+this.state.diaryId)
+            //fetch('http://58.141.217.15:8080/product/diary/'+this.state.diaryId)
+           fetch('http://70.30.207.203:8006/product/diary/'+this.state.diaryId)
                 .then((response) => response.json())
                 .then((res) => {
                     this.setState({
@@ -102,40 +103,62 @@ export default class DiaryDtl extends Component {
 
     insertDiary() {
         if(this.state.type == 'INSERT'){
-            fetch('http://70.30.207.203:8006/product/diary',{
-                method : 'POST',
-                headers:{
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    feelingCd : this.state.feelingCd == null ? '' : this.state.feelingCd,
-                    healthCd: this.state.healthCd == null ? '' : this.state.healthCd,
-                    feverCd: this.state.feverCd == null ? '' : this.state.feverCd,
-                    breakfastCd : this.state.breakfastCd == null ? '' : this.state.breakfastCd,
-                    lunchCd : this.state.lunchCd == null ? '' : this.state.lunchCd,
-                    dinnerCd : this.state.dinnerCd == null ? '' : this.state.dinnerCd,
-                    shitCd : this.state.shitCd == null ? '' : this.state.shitCd,
-                    shitCnt: this.state.shitCnt == null ? '0' : this.state.shitCnt,
-                    shitDesc : this.state.shitDesc == null ? '' : this.state.shitDesc,
-                    sleepStartTime : this.state.sleepStartTime == null ? '' : this.state.sleepStartTime,
-                    sleepEndTime : this.state.sleepEndTime == null ? '' : this.state.sleepEndTime,
-                    title: this.state.title == null ? '' : this.state.title,
-                    content: this.state.content == null ? '' : this.state.content
-                })
+            //1.파일 업로드
+            const data = new FormData();
+            data.append('name', 'file')
+            data.append('file', JSON.stringify({uri: 'data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==', type: 'image/jpeg', name: 'upload.jpg'}));
+
+            fetch('http://70.30.207.203:8006/product/file/upload', {
+              method: 'POST',
+              headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'multipart/form-data'
+              },
+              body: data
             })
-                .then((response) => response.json())
-                .then((responseJson) => {
-                    Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, toastStyle);
-                    let refreshFnc = this.props.navigation.getParam('refreshFnc');
-                    refreshFnc();
-                    this.props.navigation.goBack();
-                    console.log(responseJson)
+                .then(res => {
+    /*                //2.파일 정보
+                    //fetch('http://58.141.217.15:8080/product/diary',{
+                    fetch('http://70.30.207.203:8006/product/diary',{
+                        method : 'POST',
+                        headers:{
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            feelingCd : this.state.feelingCd == null ? '' : this.state.feelingCd,
+                            healthCd: this.state.healthCd == null ? '' : this.state.healthCd,
+                            feverCd: this.state.feverCd == null ? '' : this.state.feverCd,
+                            breakfastCd : this.state.breakfastCd == null ? '' : this.state.breakfastCd,
+                            lunchCd : this.state.lunchCd == null ? '' : this.state.lunchCd,
+                            dinnerCd : this.state.dinnerCd == null ? '' : this.state.dinnerCd,
+                            shitCd : this.state.shitCd == null ? '' : this.state.shitCd,
+                            shitCnt: this.state.shitCnt == null ? '0' : this.state.shitCnt,
+                            shitDesc : this.state.shitDesc == null ? '' : this.state.shitDesc,
+                            sleepStartTime : this.state.sleepStartTime == null ? '' : this.state.sleepStartTime,
+                            sleepEndTime : this.state.sleepEndTime == null ? '' : this.state.sleepEndTime,
+                            title: this.state.title == null ? '' : this.state.title,
+                            content: this.state.content == null ? '' : this.state.content
+                        })
+                    })
+                        .then((response) => response.json())
+                        .then((responseJson) => {
+                            Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+                            let refreshFnc = this.props.navigation.getParam('refreshFnc');
+                            refreshFnc();
+                            this.props.navigation.goBack();
+                            console.log(responseJson)
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });*/
                 })
                 .catch((error) => {
                     console.error(error);
                 });
 
+
         }else if(this.state.type == 'UPDATE'){
+            //fetch('http://58.141.217.15:8080/product/diary/'+this.state.diaryId ,{
             fetch('http://70.30.207.203:8006/product/diary/'+this.state.diaryId ,{
                 method : 'POST',
                 headers:{
@@ -191,10 +214,10 @@ export default class DiaryDtl extends Component {
             } else if (response.customButton) {
                 console.log('User tapped custom button: ', response.customButton);
             } else {
-                //let source = { uri: response.uri };
-                let source = {
+                let source = { uri: response.uri };
+/*                let source = {
                     uri: 'data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=='
-                };
+                };*/
 
                 this.setState({
                     avatarSource: source
@@ -258,9 +281,9 @@ export default class DiaryDtl extends Component {
                     <KeyboardAvoidingView  behavior="padding" keyboardVerticalOffset={100}enabled>
                     <ScrollView style={{padding : 20}}>
                         <View style={{marginBottom:20}}>
-                            <Image width={Dimensions.get('window').width}
-                                source={require('../../assets/images/B612_20180814_195816_395.jpg')}
-                            />
+                            { this.state.avatarSource === null ? <Text></Text> :
+                                <Image width={Dimensions.get('window').width} source={this.state.avatarSource} />
+                            }
                         </View>
                         <View style={styles.checkContent}>
                             <Text style={{width: 70, fontSize: 15, fontWeight:'800'}}>기분</Text>
@@ -353,17 +376,10 @@ export default class DiaryDtl extends Component {
                     </ScrollView>
                     </KeyboardAvoidingView>
                 </View>
-                <View style={styles.eventIcons}>
+                <TouchableOpacity style={styles.eventIcons} onPress={this.selectPhotoTapped.bind(this)}>
                     <Icons name="image" color="#00cc00" size={30}/>
                     <Text style={{marginLeft:5}}> 사진 </Text>
-                    <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
-                        <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
-                          { this.state.avatarSource === null ? <Text>Select a Photo</Text> :
-                            <Image style={styles.avatar} source={this.state.avatarSource} />
-                          }
-                        </View>
-                    </TouchableOpacity>
-                </View>
+                </TouchableOpacity>
             </View>
         )
 
