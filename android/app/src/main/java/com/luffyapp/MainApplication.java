@@ -10,6 +10,7 @@ import com.facebook.soloader.SoLoader;
 import com.rnfs.RNFSPackage;
 import com.toast.RCTToastPackage;
 import com.imagepicker.ImagePickerPackage;
+import com.yoloci.fileupload.FileUploadPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,7 +29,8 @@ public class MainApplication extends Application implements ReactApplication {
               new MainReactPackage(),
               new RNFSPackage(),
               new RCTToastPackage(),
-              new ImagePickerPackage()
+              new ImagePickerPackage(),
+              new FileUploadPackage()
       );
     }
 

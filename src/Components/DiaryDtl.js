@@ -21,6 +21,8 @@ import Icons from 'react-native-vector-icons/FontAwesome';
 import Image from 'react-native-scalable-image';
 import PhotoUpload from 'react-native-photo-upload'
 import ImagePicker from 'react-native-image-picker'
+import NativeModules from 'NativeModules'
+import _ from 'lodash'
 import DiaryDtlCheckBox from './DiaryDtlCheckBox.js'
 
 const toastStyle = {
@@ -57,6 +59,7 @@ export default class DiaryDtl extends Component {
             title:'',
             content:'',
             avatarSource: null,
+            base64:'',
             type : this.props.navigation.getParam('type'),
             diaryId: this.props.navigation.getParam('diaryId')
         }
@@ -74,8 +77,8 @@ export default class DiaryDtl extends Component {
 
     componentDidMount() {
         if(this.state.type == 'UPDATE'){
-            //fetch('http://58.141.217.15:8080/product/diary/'+this.state.diaryId)
-           fetch('http://70.30.207.203:8006/product/diary/'+this.state.diaryId)
+            fetch('http://58.141.217.15:8080/product/diary/'+this.state.diaryId)
+           //fetch('http://70.30.207.203:8006/product/diary/'+this.state.diaryId)
                 .then((response) => response.json())
                 .then((res) => {
                     this.setState({
@@ -101,65 +104,83 @@ export default class DiaryDtl extends Component {
 
     }
 
+    fileUpload(){
+        var cur = this;
+        return new Promise(function(resolve, reject){
+            NativeModules.FileUpload.upload({
+                    uploadUrl : 'http://58.141.217.15:8080/product/file/upload',
+                    method : 'POST',
+                    headers: {
+                        'Accept' : 'application/json'
+                    },
+                    fields : {
+                        'hello' : 'world'
+                    },
+                    files : [{
+                        name : 'image',
+                        filename : 'file',
+                        filepath : cur.state.avatarSource.uri,
+                        filetype : 'image/jpeg'
+                    }]
+
+                }, function(err, result){
+                    resolve(true)
+                })
+        })
+    }
+
+    insertDiaryInfo(){
+       //2.파일 정보
+       fetch('http://58.141.217.15:8080/product/diary',{
+       //fetch('http://70.30.207.203:8006/product/diary',{
+           method : 'POST',
+           headers:{
+               'Content-Type': 'application/json'
+           },
+           body: JSON.stringify({
+               feelingCd : this.state.feelingCd == null ? '' : this.state.feelingCd,
+               healthCd: this.state.healthCd == null ? '' : this.state.healthCd,
+               feverCd: this.state.feverCd == null ? '' : this.state.feverCd,
+               breakfastCd : this.state.breakfastCd == null ? '' : this.state.breakfastCd,
+               lunchCd : this.state.lunchCd == null ? '' : this.state.lunchCd,
+               dinnerCd : this.state.dinnerCd == null ? '' : this.state.dinnerCd,
+               shitCd : this.state.shitCd == null ? '' : this.state.shitCd,
+               shitCnt: this.state.shitCnt == null ? '0' : this.state.shitCnt,
+               shitDesc : this.state.shitDesc == null ? '' : this.state.shitDesc,
+               sleepStartTime : this.state.sleepStartTime == null ? '' : this.state.sleepStartTime,
+               sleepEndTime : this.state.sleepEndTime == null ? '' : this.state.sleepEndTime,
+               title: this.state.title == null ? '' : this.state.title,
+               content: this.state.content == null ? '' : this.state.content
+           })
+       })
+           .then((response) => response.json())
+           .then((responseJson) => {
+               Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+               let refreshFnc = this.props.navigation.getParam('refreshFnc');
+               refreshFnc();
+               this.props.navigation.goBack();
+               console.log(responseJson)
+           })
+           .catch((error) => {
+               console.error(error);
+           });
+    }
+
     insertDiary() {
+        var cur = this;
         if(this.state.type == 'INSERT'){
             //1.파일 업로드
-            const data = new FormData();
-            data.append('name', 'file')
-            data.append('file', JSON.stringify({uri: 'data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==', type: 'image/jpeg', name: 'upload.jpg'}));
-
-            fetch('http://70.30.207.203:8006/product/file/upload', {
-              method: 'POST',
-              headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'multipart/form-data'
-              },
-              body: data
-            })
-                .then(res => {
-    /*                //2.파일 정보
-                    //fetch('http://58.141.217.15:8080/product/diary',{
-                    fetch('http://70.30.207.203:8006/product/diary',{
-                        method : 'POST',
-                        headers:{
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            feelingCd : this.state.feelingCd == null ? '' : this.state.feelingCd,
-                            healthCd: this.state.healthCd == null ? '' : this.state.healthCd,
-                            feverCd: this.state.feverCd == null ? '' : this.state.feverCd,
-                            breakfastCd : this.state.breakfastCd == null ? '' : this.state.breakfastCd,
-                            lunchCd : this.state.lunchCd == null ? '' : this.state.lunchCd,
-                            dinnerCd : this.state.dinnerCd == null ? '' : this.state.dinnerCd,
-                            shitCd : this.state.shitCd == null ? '' : this.state.shitCd,
-                            shitCnt: this.state.shitCnt == null ? '0' : this.state.shitCnt,
-                            shitDesc : this.state.shitDesc == null ? '' : this.state.shitDesc,
-                            sleepStartTime : this.state.sleepStartTime == null ? '' : this.state.sleepStartTime,
-                            sleepEndTime : this.state.sleepEndTime == null ? '' : this.state.sleepEndTime,
-                            title: this.state.title == null ? '' : this.state.title,
-                            content: this.state.content == null ? '' : this.state.content
-                        })
+            if(!_.isNil(cur.state.avatarSource)){
+                cur.fileUpload()
+                    .then(function(res){
+                        cur.insertDiaryInfo();
                     })
-                        .then((response) => response.json())
-                        .then((responseJson) => {
-                            Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, toastStyle);
-                            let refreshFnc = this.props.navigation.getParam('refreshFnc');
-                            refreshFnc();
-                            this.props.navigation.goBack();
-                            console.log(responseJson)
-                        })
-                        .catch((error) => {
-                            console.error(error);
-                        });*/
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-
-
+            }else{
+                cur.insertDiaryInfo();
+            }
         }else if(this.state.type == 'UPDATE'){
-            //fetch('http://58.141.217.15:8080/product/diary/'+this.state.diaryId ,{
-            fetch('http://70.30.207.203:8006/product/diary/'+this.state.diaryId ,{
+            fetch('http://58.141.217.15:8080/product/diary/'+this.state.diaryId ,{
+            //fetch('http://70.30.207.203:8006/product/diary/'+this.state.diaryId ,{
                 method : 'POST',
                 headers:{
                     'Content-Type': 'application/json'
@@ -220,7 +241,8 @@ export default class DiaryDtl extends Component {
                 };*/
 
                 this.setState({
-                    avatarSource: source
+                    avatarSource: source,
+                    base64 : response.data
                 });
             }
         });

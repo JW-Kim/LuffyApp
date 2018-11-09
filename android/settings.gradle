@@ -11,4 +11,6 @@ project(':react-native-image-picker').projectDir = new File(rootProject.projectD
 include ':react-native-toast-native'
 project(':react-native-toast-native').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-toast-native/android')
 
+include ':react-native-fileupload'
+project(':react-native-fileupload').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fileupload/android')
 include ':app'
