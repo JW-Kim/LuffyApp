@@ -24,6 +24,7 @@ import ImagePicker from 'react-native-image-picker'
 import NativeModules from 'NativeModules'
 import _ from 'lodash'
 import DiaryDtlCheckBox from './DiaryDtlCheckBox.js'
+import Constants from '../Com/Constants.js'
 
 const toastStyle = {
     backgroundColor: "#acacac",
@@ -78,7 +79,7 @@ export default class DiaryDtl extends Component {
     componentDidMount() {
         if(this.state.type == 'UPDATE'){
 //            fetch('http://58.141.217.15:8080/product/diary/'+this.state.diaryId)
-           fetch('http://70.30.207.203:8006/product/diary/'+this.state.diaryId)
+           fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary/'+this.state.diaryId)
                 .then((response) => response.json())
                 .then((res) => {
                     this.setState({
@@ -107,7 +108,7 @@ export default class DiaryDtl extends Component {
     insertDiaryInfo(fileId){
        //2.파일 정보
 //       fetch('http://58.141.217.15:8080/product/diary',{
-       fetch('http://70.30.207.203:8006/product/diary',{
+       fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary',{
            method : 'POST',
            headers:{
                'Content-Type': 'application/json'
@@ -149,7 +150,7 @@ export default class DiaryDtl extends Component {
             if(!_.isNil(cur.state.avatarSource)){
                 NativeModules.FileUpload.upload({
 //                    uploadUrl : 'http://58.141.217.15:8080/product/file/upload',
-                    uploadUrl : 'http://70.30.207.203:8006/product/file/upload',
+                    uploadUrl : 'http://'+Constants.HOST+':'+Constants.PORT+'/product/file/upload',
                     method : 'POST',
                     headers: {
                         'Accept' : 'application/json'
@@ -172,7 +173,7 @@ export default class DiaryDtl extends Component {
             }
         }else if(this.state.type == 'UPDATE'){
 //            fetch('http://58.141.217.15:8080/product/diary/'+this.state.diaryId ,{
-            fetch('http://70.30.207.203:8006/product/diary/'+this.state.diaryId ,{
+            fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary/'+this.state.diaryId ,{
                 method : 'POST',
                 headers:{
                     'Content-Type': 'application/json'
