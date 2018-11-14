@@ -77,8 +77,8 @@ export default class DiaryDtl extends Component {
 
     componentDidMount() {
         if(this.state.type == 'UPDATE'){
-            fetch('http://58.141.217.15:8080/product/diary/'+this.state.diaryId)
-           //fetch('http://70.30.207.203:8006/product/diary/'+this.state.diaryId)
+//            fetch('http://58.141.217.15:8080/product/diary/'+this.state.diaryId)
+           fetch('http://70.30.207.203:8006/product/diary/'+this.state.diaryId)
                 .then((response) => response.json())
                 .then((res) => {
                     this.setState({
@@ -104,35 +104,10 @@ export default class DiaryDtl extends Component {
 
     }
 
-    fileUpload(){
-        var cur = this;
-        return new Promise(function(resolve, reject){
-            NativeModules.FileUpload.upload({
-                    uploadUrl : 'http://58.141.217.15:8080/product/file/upload',
-                    method : 'POST',
-                    headers: {
-                        'Accept' : 'application/json'
-                    },
-                    fields : {
-                        'hello' : 'world'
-                    },
-                    files : [{
-                        name : 'image',
-                        filename : 'file',
-                        filepath : cur.state.avatarSource.uri,
-                        filetype : 'image/jpeg'
-                    }]
-
-                }, function(err, result){
-                    resolve(true)
-                })
-        })
-    }
-
-    insertDiaryInfo(){
+    insertDiaryInfo(fileId){
        //2.파일 정보
-       fetch('http://58.141.217.15:8080/product/diary',{
-       //fetch('http://70.30.207.203:8006/product/diary',{
+//       fetch('http://58.141.217.15:8080/product/diary',{
+       fetch('http://70.30.207.203:8006/product/diary',{
            method : 'POST',
            headers:{
                'Content-Type': 'application/json'
@@ -150,7 +125,8 @@ export default class DiaryDtl extends Component {
                sleepStartTime : this.state.sleepStartTime == null ? '' : this.state.sleepStartTime,
                sleepEndTime : this.state.sleepEndTime == null ? '' : this.state.sleepEndTime,
                title: this.state.title == null ? '' : this.state.title,
-               content: this.state.content == null ? '' : this.state.content
+               content: this.state.content == null ? '' : this.state.content,
+               fileId : fileId == null ? '' : fileId
            })
        })
            .then((response) => response.json())
@@ -171,16 +147,32 @@ export default class DiaryDtl extends Component {
         if(this.state.type == 'INSERT'){
             //1.파일 업로드
             if(!_.isNil(cur.state.avatarSource)){
-                cur.fileUpload()
-                    .then(function(res){
-                        cur.insertDiaryInfo();
-                    })
+                NativeModules.FileUpload.upload({
+//                    uploadUrl : 'http://58.141.217.15:8080/product/file/upload',
+                    uploadUrl : 'http://70.30.207.203:8006/product/file/upload',
+                    method : 'POST',
+                    headers: {
+                        'Accept' : 'application/json'
+                    },
+                    fields : {
+                        'hello' : 'world'
+                    },
+                    files : [{
+                        name : 'image',
+                        filename : 'file',
+                        filepath : cur.state.avatarSource.uri,
+                        filetype : 'image/jpeg'
+                    }]
+
+                }, function(err, result){
+                      cur.insertDiaryInfo(JSON.parse(result.data).data.fileId);
+                })
             }else{
                 cur.insertDiaryInfo();
             }
         }else if(this.state.type == 'UPDATE'){
-            fetch('http://58.141.217.15:8080/product/diary/'+this.state.diaryId ,{
-            //fetch('http://70.30.207.203:8006/product/diary/'+this.state.diaryId ,{
+//            fetch('http://58.141.217.15:8080/product/diary/'+this.state.diaryId ,{
+            fetch('http://70.30.207.203:8006/product/diary/'+this.state.diaryId ,{
                 method : 'POST',
                 headers:{
                     'Content-Type': 'application/json'
