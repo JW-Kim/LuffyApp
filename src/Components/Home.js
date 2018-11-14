@@ -22,6 +22,7 @@ import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
 import Image from 'react-native-scalable-image';
 import DiaryDtl from './DiaryDtl.js'
 import HomeCodeTypeIcon from './HomeCodeTypeIcon.js'
+import Constants from '../Com/Constants.js'
 
 export default class Home extends Component {
     static navigationOptions = {
@@ -56,7 +57,9 @@ export default class Home extends Component {
     }
 
     selectDiaryList(){
-        fetch('http://58.141.217.15:8080/product/diary')
+        console.log('Constants', Constants)
+        fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary')
+        //fetch('http://58.141.217.15:8080/product/diary')
             .then((response) => response.json())
             .then((res) => {
                 console.log(res);
