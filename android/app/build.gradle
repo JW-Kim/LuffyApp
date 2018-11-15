@@ -145,6 +145,7 @@ dependencies {
     compile project(':react-native-image-picker')
     compile project(':react-native-toast-native')
     compile project(':react-native-fileupload')
+    compile project(':react-native-fetch-blob')
 }
 
 // Run this once to be able to run the application with BUCK
