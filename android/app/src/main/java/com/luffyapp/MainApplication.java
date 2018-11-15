@@ -11,6 +11,7 @@ import com.rnfs.RNFSPackage;
 import com.toast.RCTToastPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.yoloci.fileupload.FileUploadPackage;
+import com.RNFetchBlob.RNFetchBlobPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +31,8 @@ public class MainApplication extends Application implements ReactApplication {
               new RNFSPackage(),
               new RCTToastPackage(),
               new ImagePickerPackage(),
-              new FileUploadPackage()
+              new FileUploadPackage(),
+              new RNFetchBlobPackage()
       );
     }
 
