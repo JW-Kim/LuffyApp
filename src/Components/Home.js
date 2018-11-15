@@ -23,6 +23,7 @@ import Image from 'react-native-scalable-image';
 import DiaryDtl from './DiaryDtl.js'
 import HomeCodeTypeIcon from './HomeCodeTypeIcon.js'
 import Constants from '../Com/Constants.js'
+import ImageView from './ImageView.js'
 
 export default class Home extends Component {
     static navigationOptions = {
@@ -83,7 +84,7 @@ export default class Home extends Component {
                             <Card containerStyle={{padding:0, paddingTop:15, paddingBottom:15}} dividerStyle={{marginBottom:0}} title={item.headerTitle}>
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('DiaryDtl', {type:'UPDATE', diaryId:item.diaryId, refreshFnc:this.selectDiaryList.bind(this)})}>
                                     <View>
-                                        <Image width={Dimensions.get('window').width} source={require('../../assets/images/B612_20180812_175712_313.jpg')} />
+                                        <ImageView fileId={item.fileId} />
                                     </View>
                                     <View style={{margin: 15}}>
                                         <View style={{flexDirection:'row', alignItems: 'center'}}>
