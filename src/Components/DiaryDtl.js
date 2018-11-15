@@ -25,6 +25,7 @@ import NativeModules from 'NativeModules'
 import _ from 'lodash'
 import DiaryDtlCheckBox from './DiaryDtlCheckBox.js'
 import Constants from '../Com/Constants.js'
+import ImageView from './ImageView.js'
 
 const toastStyle = {
     backgroundColor: "#acacac",
@@ -82,6 +83,7 @@ export default class DiaryDtl extends Component {
            fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary/'+this.state.diaryId)
                 .then((response) => response.json())
                 .then((res) => {
+                    console.log('res', res)
                     this.setState({
                         feelingCd: res.data.feelingCd,
                         healthCd: res.data.healthCd,
@@ -207,6 +209,7 @@ export default class DiaryDtl extends Component {
                 cur.insertDiaryInfo();
             }
         }else if(this.state.type == 'UPDATE'){
+
             if(_.isNil(cur.state.fileId)){
                 NativeModules.FileUpload.upload({
                     uploadUrl : 'http://'+Constants.HOST+':'+Constants.PORT+'/product/file/upload',
@@ -225,7 +228,7 @@ export default class DiaryDtl extends Component {
                     }]
 
                 }, function(err, result){
-                      cur.updateDiaryInfo(JSON.parse(result.data).data.fileId);
+                        cur.updateDiaryInfo(JSON.parse(result.data).data.fileId);
                 })
 
             }else{
@@ -325,6 +328,9 @@ export default class DiaryDtl extends Component {
                         <View style={{marginBottom:20}}>
                             { this.state.avatarSource === null ? <Text></Text> :
                                 <Image width={Dimensions.get('window').width} source={this.state.avatarSource} />
+                            }
+                            { this.state.fileId === null ? <Text></Text> :
+                                <ImageView fileId={this.state.fileId}></ImageView>
                             }
                         </View>
                         <View style={styles.checkContent}>
