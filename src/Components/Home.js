@@ -58,19 +58,23 @@ export default class Home extends Component {
     }
 
     selectDiaryList(){
-        console.log('Constants', Constants)
-        fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary')
-        //fetch('http://58.141.217.15:8080/product/diary')
-            .then((response) => response.json())
-            .then((res) => {
-                console.log(res);
-                this.setState({
-                    diaryList : res.data
+        this.setState({
+            diaryList : []
+        }, () =>{
+            console.log('Constants', Constants)
+            fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary')
+            //fetch('http://58.141.217.15:8080/product/diary')
+                .then((response) => response.json())
+                .then((res) => {
+                    console.log(res);
+                    this.setState({
+                        diaryList : res.data
+                    })
                 })
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+                .catch((error) => {
+                    console.error(error);
+                });
+        })
     }
 
     render() {
