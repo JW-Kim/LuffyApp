@@ -9,7 +9,8 @@ import {
     Dimensions,
     FlatList,
     TouchableOpacity,
-    BackHandler
+    BackHandler,
+    AsyncStorage
 } from 'react-native';
 import {
     Card,
@@ -39,14 +40,22 @@ export default class Home extends Component {
         super(props);
         this.state = {
             modalVisible: false,
-            diaryList : []
+            diaryList : [],
+            token : null
 
         }
     }
 
     componentDidMount() {
-        BackHandler.addEventListener('handleBackPress', this.handleBackPress);
-        this.selectDiaryList();
+        AsyncStorage.getItem('access_token', (err, result) => {
+            this.setState({
+                token : result
+              }, () =>{
+                BackHandler.addEventListener('handleBackPress', this.handleBackPress);
+                this.selectDiaryList();
+              })
+        })
+
     }
 
     componentWillUnmount(){
@@ -62,8 +71,11 @@ export default class Home extends Component {
             diaryList : []
         }, () =>{
             console.log('Constants', Constants)
-            fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary')
-            //fetch('http://58.141.217.15:8080/product/diary')
+            fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary',{
+                 headers: {
+                     'Authorization': 'Bearer '+this.state.token,
+                 }
+            })
                 .then((response) => response.json())
                 .then((res) => {
                     console.log(res);
