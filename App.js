@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { View, Text } from 'react-native';
 import { createStackNavigator, createMaterialTopTabNavigator } from 'react-navigation';
 import Modal from './src/Components/Modal.js'
+import Login from './src/Components/Login.js'
 import Home from './src/Components/Home.js'
 import DiaryDtl from './src/Components/DiaryDtl.js'
 import BasicComponents from './src/Components/Sample/BasicComponents.js'
@@ -27,6 +28,9 @@ const MainStack = createMaterialTopTabNavigator(
 
 const RootStack = createStackNavigator(
   {
+    Login : {
+        screen : Login,
+    },
     Main: {
       screen: MainStack,
     },
@@ -38,6 +42,7 @@ const RootStack = createStackNavigator(
     }
   },
   {
+    initialRouteName : 'Login',
     mode: 'modal',
     headerMode: 'none',
   }
