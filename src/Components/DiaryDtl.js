@@ -10,7 +10,8 @@ import {
     Dimensions,
     ScrollView,
     TouchableOpacity,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    AsyncStorage
 } from 'react-native';
 import {
     CheckBox
@@ -79,33 +80,42 @@ export default class DiaryDtl extends Component {
     }
 
     componentDidMount() {
-        if(this.state.type == 'UPDATE'){
-           fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary/'+this.state.diaryId)
-                .then((response) => response.json())
-                .then((res) => {
-                    console.log('res', res)
-                    this.setState({
-                        feelingCd: res.data.feelingCd,
-                        healthCd: res.data.healthCd,
-                        feverCd: res.data.feverCd,
-                        breakfastCd : res.data.breakfastCd,
-                        lunchCd : res.data.lunchCd,
-                        dinnerCd : res.data.dinnerCd,
-                        shitCd : res.data.shitCd,
-                        shitCnt: res.data.shitCnt,
-                        shitDesc : res.data.shitDesc,
-                        sleepStartTime : res.data.sleepStartTime,
-                        sleepEndTime : res.data.sleepEndTime,
-                        title: res.data.title,
-                        content: res.data.content,
-                        fileId : res.data.fileId
-                    })
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        }
-
+        AsyncStorage.getItem('access_token', (err, result) => {
+            this.setState({
+                token : result
+              }, () =>{
+                if(this.state.type == 'UPDATE'){
+                   fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary/'+this.state.diaryId,{
+                        headers: {
+                            'Authorization': 'Bearer '+this.state.token
+                        }
+                   })
+                        .then((response) => response.json())
+                        .then((res) => {
+                            console.log('res', res)
+                            this.setState({
+                                feelingCd: res.data.feelingCd,
+                                healthCd: res.data.healthCd,
+                                feverCd: res.data.feverCd,
+                                breakfastCd : res.data.breakfastCd,
+                                lunchCd : res.data.lunchCd,
+                                dinnerCd : res.data.dinnerCd,
+                                shitCd : res.data.shitCd,
+                                shitCnt: res.data.shitCnt,
+                                shitDesc : res.data.shitDesc,
+                                sleepStartTime : res.data.sleepStartTime,
+                                sleepEndTime : res.data.sleepEndTime,
+                                title: res.data.title,
+                                content: res.data.content,
+                                fileId : res.data.fileId
+                            })
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
+                }
+              })
+        })
     }
 
     insertDiaryInfo(fileId){
@@ -113,7 +123,8 @@ export default class DiaryDtl extends Component {
        fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary',{
            method : 'POST',
            headers:{
-               'Content-Type': 'application/json'
+               'Content-Type': 'application/json',
+               'Authorization': 'Bearer '+this.state.token
            },
            body: JSON.stringify({
                feelingCd : this.state.feelingCd == null ? '' : this.state.feelingCd,
@@ -149,7 +160,8 @@ export default class DiaryDtl extends Component {
         fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary/'+this.state.diaryId ,{
             method : 'POST',
             headers:{
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+this.state.token
             },
             body: JSON.stringify({
                 feelingCd : this.state.feelingCd == null ? '' : this.state.feelingCd,
@@ -190,7 +202,8 @@ export default class DiaryDtl extends Component {
                     uploadUrl : 'http://'+Constants.HOST+':'+Constants.PORT+'/product/file/upload',
                     method : 'POST',
                     headers: {
-                        'Accept' : 'application/json'
+                        'Accept' : 'application/json',
+                        'Authorization': 'Bearer '+this.state.token
                     },
                     fields : {
                         'hello' : 'world'
@@ -215,7 +228,8 @@ export default class DiaryDtl extends Component {
                     uploadUrl : 'http://'+Constants.HOST+':'+Constants.PORT+'/product/file/upload',
                     method : 'POST',
                     headers: {
-                        'Accept' : 'application/json'
+                        'Accept' : 'application/json',
+                        'Authorization': 'Bearer '+this.state.token
                     },
                     fields : {
                         'hello' : 'world'
