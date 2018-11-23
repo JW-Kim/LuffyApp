@@ -41,7 +41,8 @@ export default class Home extends Component {
         this.state = {
             modalVisible: false,
             diaryList : [],
-            token : null
+            token : null,
+            noteId : null,
 
         }
     }
@@ -49,7 +50,8 @@ export default class Home extends Component {
     componentDidMount() {
         AsyncStorage.getItem('access_token', (err, result) => {
             this.setState({
-                token : result
+                token : result,
+                noteId : '1'
               }, () =>{
                 BackHandler.addEventListener('handleBackPress', this.handleBackPress);
                 this.selectDiaryList();
@@ -71,7 +73,7 @@ export default class Home extends Component {
             diaryList : []
         }, () =>{
             console.log('Constants', Constants)
-            fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary',{
+            fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary?noteId='+this.state.noteId,{
                  headers: {
                      'Authorization': 'Bearer '+this.state.token,
                  }
@@ -98,7 +100,7 @@ export default class Home extends Component {
                         keyExtractor={(item, index) => index.toString()}
                         renderItem={({item}) =>
                             <Card containerStyle={{padding:0, paddingTop:15, paddingBottom:15}} dividerStyle={{marginBottom:0}} title={item.headerTitle}>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('DiaryDtl', {type:'UPDATE', diaryId:item.diaryId, refreshFnc:this.selectDiaryList.bind(this)})}>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('DiaryDtl', {type:'UPDATE', diaryId:item.diaryId, noteId:item.noteId, refreshFnc:this.selectDiaryList.bind(this)})}>
                                     <View>
                                         <ImageView fileId={item.fileId} />
                                     </View>
@@ -157,7 +159,7 @@ export default class Home extends Component {
 
                 </ScrollView>
                 <ActionButton buttonColor="rgba(231,76,60,1)">
-                    <ActionButton.Item buttonColor='#1abc9c' title="새글 작성" onPress={()=> this.props.navigation.navigate('DiaryDtl', {type:'INSERT', refreshFnc:this.selectDiaryList.bind(this)})}>
+                    <ActionButton.Item buttonColor='#1abc9c' title="새글 작성" onPress={()=> this.props.navigation.navigate('DiaryDtl', {type:'INSERT', noteId:this.state.noteId, refreshFnc:this.selectDiaryList.bind(this)})}>
                         <IonIcons name="md-create" style={styles.actionButtonIcon} />
                     </ActionButton.Item>
                 </ActionButton>
