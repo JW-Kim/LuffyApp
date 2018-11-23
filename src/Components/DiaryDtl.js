@@ -65,6 +65,7 @@ export default class DiaryDtl extends Component {
             base64:'',
             type : this.props.navigation.getParam('type'),
             diaryId: this.props.navigation.getParam('diaryId'),
+            noteId: this.props.navigation.getParam('noteId'),
             fileId: null
         }
 
@@ -140,7 +141,8 @@ export default class DiaryDtl extends Component {
                sleepEndTime : this.state.sleepEndTime == null ? '' : this.state.sleepEndTime,
                title: this.state.title == null ? '' : this.state.title,
                content: this.state.content == null ? '' : this.state.content,
-               fileId : fileId == null ? '' : fileId
+               fileId : fileId == null ? null : fileId,
+               noteId : this.state.noteId == null ? '' : this.state.noteId
            })
        })
            .then((response) => response.json())
@@ -177,7 +179,7 @@ export default class DiaryDtl extends Component {
                 sleepEndTime : this.state.sleepEndTime == null ? '' : this.state.sleepEndTime,
                 title: this.state.title == null ? '' : this.state.title,
                 content: this.state.content == null ? '' : this.state.content,
-                fileId : fileId == null ? '' : fileId
+                fileId : fileId == null ? null : fileId
             })
         })
             .then((response) => response.json())
@@ -223,7 +225,7 @@ export default class DiaryDtl extends Component {
             }
         }else if(this.state.type == 'UPDATE'){
 
-            if(_.isNil(cur.state.fileId)){
+            if(!(_.isNil(cur.state.fileId) || _.isNil(cur.state.avatarSource.uri))){
                 NativeModules.FileUpload.upload({
                     uploadUrl : 'http://'+Constants.HOST+':'+Constants.PORT+'/product/file/upload',
                     method : 'POST',
