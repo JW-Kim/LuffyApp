@@ -8,16 +8,18 @@ import DiaryDtl from './src/Components/DiaryDtl.js'
 import BasicComponents from './src/Components/Sample/BasicComponents.js'
 import UserInterface from './src/Components/Sample/UserInterface.js'
 import Detail from './src/Components/Detail.js'
+import Note from './src/Components/Note/Note.js'
 
 const MainStack = createMaterialTopTabNavigator(
     {
         Home: Home,
+        Note: Note,
         Detail: Detail,
         BasicComponents : BasicComponents,
         UserInterface : UserInterface
     },
     {
-       initialRouteName : 'Home',
+       initialRouteName : 'Note',
        tabBarOptions: {
          style: {
             backgroundColor: '#484f4f'
