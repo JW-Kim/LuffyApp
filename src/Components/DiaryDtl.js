@@ -225,7 +225,7 @@ export default class DiaryDtl extends Component {
             }
         }else if(this.state.type == 'UPDATE'){
 
-            if(!(_.isNil(cur.state.fileId) || _.isNil(cur.state.avatarSource.uri))){
+            if(!(_.isNil(cur.state.fileId) || _.isNil(cur.state.avatarSource))){
                 NativeModules.FileUpload.upload({
                     uploadUrl : 'http://'+Constants.HOST+':'+Constants.PORT+'/product/file/upload',
                     method : 'POST',
