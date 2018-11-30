@@ -12,6 +12,7 @@ import {
     LocaleConfig
 } from 'react-native-calendars';
 import _ from 'lodash'
+import IonIcons from 'react-native-vector-icons/Ionicons';
 import Constants from '../../Com/Constants.js'
 
 export default class Note extends Component {
@@ -22,7 +23,8 @@ export default class Note extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            noteId : null
+            noteId : null,
+            selectedDay : null
         }
     }
 
@@ -59,7 +61,7 @@ export default class Note extends Component {
                             note : res.data,
                             noteId : res.data[0].noteId,
                             selectedDay : day,
-                            todayDt : day
+                            calCurrentMonth : day
                         }, ()=>{
                             cur.getMonthDiary(month);
                         })
@@ -75,6 +77,10 @@ export default class Note extends Component {
 
     getMonthDiary(month){
         console.log('getMonthDiary' , month)
+        this.setState({
+            calCurrentMonth : month
+        })
+
         fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary/month?noteId='+this.state.noteId+'&diaryMonth='+month, {
             headers: {
                 'Authorization': 'Bearer '+this.state.token
@@ -94,10 +100,12 @@ export default class Note extends Component {
     setMarkedDate(marketDateList, day){
         let markedDates = new Object();
         let todayYn = false;
+        let selectedDiary = null;
         for(var i=0; i<marketDateList.length; i++){
             if(marketDateList[i].diaryDt == day){
                 markedDates[""+marketDateList[i].diaryDt+""]= {selected:true, marked: true, selectedColor: 'blue'};
                 todayYn = true;
+                selectedDiary = marketDateList[i];
             }else{
                 markedDates[""+marketDateList[i].diaryDt+""]= {marked: true, selectedColor: 'blue'};
             }
@@ -108,17 +116,15 @@ export default class Note extends Component {
         }
 
         this.setState({
-            markedDates : markedDates
+            markedDates : markedDates,
+            selectedDay : day,
+            selectedDiary : selectedDiary
         })
     }
 
     getDay(day){
         if(!_.isNil(this.state.markedDates)){
-            this.setState({
-                selectedDay : day.dateString
-            })
             this.setMarkedDate(this.state.diary, day.dateString)
-
         }
     }
 
@@ -152,7 +158,7 @@ export default class Note extends Component {
                         borderColor: '#ebe0eb'
                     }}
                     // Initially visible month. Default = Date()
-                    current={this.state.todayDt}
+                    current={this.state.calCurrentMonth}
                     // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
                     minDate={'2012-05-10'}
                     // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
@@ -177,6 +183,23 @@ export default class Note extends Component {
                     onPressArrowRight={addMonth => addMonth()}
                     markedDates={this.state.markedDates}
                 />
+                <View style={{
+                    flexDirection:'row',
+                    height : 100
+                }}>
+                    {this.state.selectedDiary == null ? <Text></Text> :
+                         <IonIcons name="ios-paper"/>
+                    }
+                    {this.state.selectedDiary == null ? <Text></Text> :
+                        <Text>{this.state.selectedDiary.title}</Text>
+                    }
+                    {this.state.selectedDiary == null ? <Text></Text> :
+                        <Text>{this.state.selectedDiary.content}</Text>
+                    }
+                    {this.state.selectedDiary == null ? <Text></Text> :
+                        <Text>{this.state.selectedDiary.content}</Text>
+                    }
+                </View>
             </View>
         )
     }
