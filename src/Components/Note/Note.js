@@ -132,10 +132,10 @@ export default class Note extends Component {
         const note = [];
         if(!_.isNil(this.state.note)){
             for(let i=0; i<this.state.note.length; i++){
-                 note.push(<Picker.Item label={this.state.note[i].noteNm} value={this.state.note[i].noteId}/>);
+                 note.push(<Picker.Item label={this.state.note[i].noteNm} key={this.state.note[i].noteId} value={this.state.note[i].noteId}/>);
             }
         }
-
+        console.log('note', note)
         return note;
     }
 
