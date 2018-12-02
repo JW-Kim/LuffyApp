@@ -14,9 +14,9 @@ const MainStack = createMaterialTopTabNavigator(
     {
         Home: Home,
         Note: Note,
-        Detail: Detail,
+/*        Detail: Detail,
         BasicComponents : BasicComponents,
-        UserInterface : UserInterface
+        UserInterface : UserInterface*/
     },
     {
        initialRouteName : 'Note',

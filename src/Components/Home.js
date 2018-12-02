@@ -10,7 +10,8 @@ import {
     FlatList,
     TouchableOpacity,
     BackHandler,
-    AsyncStorage
+    AsyncStorage,
+    Picker
 } from 'react-native';
 import {
     Card,
@@ -21,6 +22,7 @@ import ActionButton from 'react-native-action-button';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
 import Image from 'react-native-scalable-image';
+import _ from 'lodash'
 import DiaryDtl from './DiaryDtl.js'
 import HomeCodeTypeIcon from './HomeCodeTypeIcon.js'
 import Constants from '../Com/Constants.js'
@@ -48,13 +50,32 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
+        var cur = this;
+
         AsyncStorage.getItem('access_token', (err, result) => {
             this.setState({
-                token : result,
-                noteId : '1'
+                token : result
               }, () =>{
                 BackHandler.addEventListener('handleBackPress', this.handleBackPress);
-                this.selectDiaryList();
+
+                fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/note', {
+                        headers: {
+                            'Authorization': 'Bearer '+cur.state.token
+                        }
+                    })
+                        .then((response) => response.json())
+                        .then((res) => {
+                            cur.setState({
+                                note : res.data,
+                                noteId : res.data[0].noteId
+                            }, ()=>{
+                                this.selectDiaryList();
+                            })
+                        })
+
+                        .catch((error) => {
+                            console.error(error);
+                        });
               })
         })
 
@@ -91,9 +112,38 @@ export default class Home extends Component {
         })
     }
 
+    changeNote(noteId){
+        this.setState({
+            noteId : noteId
+        }, ()=>{
+            this.selectDiaryList();
+        })
+    }
+
+    renderNote(){
+        const note = [];
+        if(!_.isNil(this.state.note)){
+            for(let i=0; i<this.state.note.length; i++){
+                 note.push(<Picker.Item label={this.state.note[i].noteNm} key={this.state.note[i].noteId} value={this.state.note[i].noteId}/>);
+            }
+        }
+        return note;
+    }
+
     render() {
         return (
-            <View>
+            <View style={{flex:1}}>
+                <View style={{marginLeft:15, height:50}}>
+                { this.state.note == null ? <Text></Text> :
+                    <Picker
+                        selectedValue={this.state.noteId}
+                        style={{height:50, width:200, color:'#000'}}
+                        onValueChange={(itemValue, itemIndex) => this.changeNote(itemValue)}
+                    >
+                        {this.renderNote()}
+                    </Picker>
+                }
+                </View>
                 <ScrollView>
                     <FlatList
                         data={this.state.diaryList}
@@ -158,7 +208,7 @@ export default class Home extends Component {
                     />
 
                 </ScrollView>
-                <ActionButton buttonColor="rgba(231,76,60,1)">
+                <ActionButton buttonColor="rgba(231,76,60,1)" offsetY={60}>
                     <ActionButton.Item buttonColor='#1abc9c' title="새글 작성" onPress={()=> this.props.navigation.navigate('DiaryDtl', {type:'INSERT', noteId:this.state.noteId, refreshFnc:this.selectDiaryList.bind(this)})}>
                         <IonIcons name="md-create" style={styles.actionButtonIcon} />
                     </ActionButton.Item>
