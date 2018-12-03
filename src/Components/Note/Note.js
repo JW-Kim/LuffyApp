@@ -24,17 +24,21 @@ export default class Note extends Component {
         super(props);
         this.state = {
             noteId : null,
-            selectedDay : null
+            selectedDay : null,
+            calCurrentMonth : null
         }
     }
 
     componentDidMount() {
+        var cur = this;
+
         LocaleConfig.locales['kr'] = {
           monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
           monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
           dayNames: ['월','화','수','목','금','토','일'],
           dayNamesShort: ['월','화','수','목','금','토','일']
         };
+
 
         LocaleConfig.defaultLocale = 'kr';
 
@@ -43,10 +47,9 @@ export default class Note extends Component {
         let mm = today.getMonth()+1;
         let yyyy = today.getFullYear();
         let month = yyyy + '-' + mm;
-        let day = yyyy + '-' + mm + '-' + dd;
+        let day = new Date(mm+'/'+dd+'/'+yyyy) ;
 
         AsyncStorage.getItem('access_token', (err, result) => {
-            var cur = this;
             cur.setState({
                 token : result
             }, () =>{
@@ -76,9 +79,9 @@ export default class Note extends Component {
     }
 
     getMonthDiary(month){
-        console.log('getMonthDiary' , month)
+        let monthArr = month.split("-");
         this.setState({
-            calCurrentMonth : month
+            calCurrentMonth : new Date(monthArr[1]+'/'+'01'+'/'+monthArr[0])
         })
 
         fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary/month?noteId='+this.state.noteId+'&diaryMonth='+month, {
@@ -135,8 +138,31 @@ export default class Note extends Component {
                  note.push(<Picker.Item label={this.state.note[i].noteNm} key={this.state.note[i].noteId} value={this.state.note[i].noteId}/>);
             }
         }
-        console.log('note', note)
         return note;
+    }
+
+    renderDiary(){
+        const diary = [];
+
+        if(!_.isNil(this.state.selectedDiary)){
+            diary.push(<View style={{
+                           marginTop : 10,
+                           flexDirection:'column',
+                           height : 60,
+                           borderWidth: 1,
+                           borderColor: '#ebe0eb',
+                           justifyContent: "center"
+                       }}>
+                           <View style={{
+                               flexDirection:'row'
+                           }}>
+                                <IonIcons name="ios-paper" style={{marginLeft: 5 ,fontSize: 30}}/>
+                                <View style={{flexDirection:'column', justifyContent: "center", backgroundColor:'red'}}><Text>{this.state.selectedDiary.title}</Text></View>
+                           </View>
+                       </View>);
+        }
+
+        return diary;
     }
 
     render(){
@@ -183,23 +209,34 @@ export default class Note extends Component {
                     onPressArrowRight={addMonth => addMonth()}
                     markedDates={this.state.markedDates}
                 />
-                <View style={{
-                    flexDirection:'row',
-                    height : 100
+                {this.state.selectedDiary == null ? <View><Text></Text></View> :
+                (<View style={{
+                    marginTop : 10,
+                    flexDirection:'column',
+                    height : 60,
+                    borderWidth: 1,
+                    borderColor: '#ebe0eb',
+                    justifyContent: "center"
                 }}>
-                    {this.state.selectedDiary == null ? <Text></Text> :
-                         <IonIcons name="ios-paper"/>
-                    }
-                    {this.state.selectedDiary == null ? <Text></Text> :
-                        <Text>{this.state.selectedDiary.title}</Text>
-                    }
-                    {this.state.selectedDiary == null ? <Text></Text> :
-                        <Text>{this.state.selectedDiary.content}</Text>
-                    }
-                    {this.state.selectedDiary == null ? <Text></Text> :
-                        <Text>{this.state.selectedDiary.content}</Text>
-                    }
-                </View>
+                    <View style={{
+                        flexDirection:'row'
+                    }}>
+                         <IonIcons name="ios-paper" style={{marginLeft: 5 ,fontSize: 30}}/>
+                         <View style={{
+                            flexDirection:'column',
+                            justifyContent: "center",
+                            marginLeft: 10
+                         }}>
+                            <Text style={{
+                                fontSize: 15,
+                                fontWeight: "bold"
+                            }}>
+                                {this.state.selectedDiary.title}
+                            </Text>
+                         </View>
+                    </View>
+                </View>)}
+
             </View>
         )
     }
