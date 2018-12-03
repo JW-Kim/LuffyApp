@@ -12,8 +12,9 @@ import Note from './src/Components/Note/Note.js'
 
 const MainStack = createMaterialTopTabNavigator(
     {
-        Home: Home,
         Note: Note,
+        Home: Home,
+
 /*        Detail: Detail,
         BasicComponents : BasicComponents,
         UserInterface : UserInterface*/
@@ -24,7 +25,8 @@ const MainStack = createMaterialTopTabNavigator(
          style: {
             backgroundColor: '#484f4f'
           }
-       }
+       },
+       lazy : true
     }
 );
 
