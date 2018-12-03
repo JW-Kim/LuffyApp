@@ -197,6 +197,8 @@ export default class DiaryDtl extends Component {
 
     insertDiary() {
         var cur = this;
+                    console.log('cur.state.fileId', cur.state.fileId)
+                    console.log('cur.state.avatarSource', cur.state.avatarSource)
         if(this.state.type == 'INSERT'){
             //1.파일 업로드
             if(!_.isNil(cur.state.avatarSource)){
@@ -225,7 +227,7 @@ export default class DiaryDtl extends Component {
             }
         }else if(this.state.type == 'UPDATE'){
             console.log('cur.state.avatarSource', cur.state.avatarSource)
-            if(!(_.isNil(cur.state.fileId) && _.isNil(cur.state.avatarSource))){
+            if(_.isNil(cur.state.fileId) && !_.isNil(cur.state.avatarSource)){
                 NativeModules.FileUpload.upload({
                     uploadUrl : 'http://'+Constants.HOST+':'+Constants.PORT+'/product/file/upload',
                     method : 'POST',
