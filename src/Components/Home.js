@@ -150,7 +150,7 @@ export default class Home extends Component {
                         keyExtractor={(item, index) => index.toString()}
                         renderItem={({item}) =>
                             <Card containerStyle={{padding:0, paddingTop:15, paddingBottom:15}} dividerStyle={{marginBottom:0}} title={item.headerTitle}>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('DiaryDtl', {type:'UPDATE', diaryId:item.diaryId, noteId:item.noteId, refreshFnc:this.selectDiaryList.bind(this)})}>
+                                <TouchableOpacity activeOpacity={0.9} onPress={() => this.props.navigation.navigate('DiaryDtl', {type:'UPDATE', diaryId:item.diaryId, noteId:item.noteId, refreshFnc:this.selectDiaryList.bind(this)})}>
                                     <View>
                                         <ImageView fileId={item.fileId} width={Dimensions.get('window').width-30}/>
                                     </View>
