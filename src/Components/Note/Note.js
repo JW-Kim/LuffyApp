@@ -14,6 +14,7 @@ import {
 import _ from 'lodash'
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import Constants from '../../Com/Constants.js'
+import ImageView from '../ImageView.js'
 
 export default class Note extends Component {
     static navigationOptions = {
@@ -126,8 +127,13 @@ export default class Note extends Component {
     }
 
     getDay(day){
+        var cur = this;
         if(!_.isNil(this.state.markedDates)){
-            this.setMarkedDate(this.state.diary, day.dateString)
+            cur.setState({
+                selectedDiary : null
+            }, ()=>{
+                cur.setMarkedDate(cur.state.diary, day.dateString)
+            })
         }
     }
 
@@ -221,18 +227,29 @@ export default class Note extends Component {
                     <View style={{
                         flexDirection:'row'
                     }}>
-                         <IonIcons name="ios-paper" style={{marginLeft: 5 ,fontSize: 30}}/>
-                         <View style={{
-                            flexDirection:'column',
-                            justifyContent: "center",
-                            marginLeft: 10
-                         }}>
-                            <Text style={{
-                                fontSize: 15,
-                                fontWeight: "bold"
-                            }}>
-                                {this.state.selectedDiary.title}
-                            </Text>
+                         <View style={{flex:1, flexDirection:'row'}}>
+                             <View style={{
+                               flexDirection:'column',
+                               justifyContent: "center",
+                               marginLeft: 5
+                             }}>
+                                 <IonIcons name="ios-paper" style={{fontSize: 30}}/>
+                             </View>
+                             <View style={{
+                                flexDirection:'column',
+                                justifyContent: "center",
+                                marginLeft: 10
+                             }}>
+                                <Text style={{
+                                    fontSize: 15,
+                                    fontWeight: "bold"
+                                }}>
+                                    {this.state.selectedDiary.title}
+                                </Text>
+                             </View>
+                         </View>
+                         <View style={{width:60}}>
+                            <ImageView fileId={this.state.selectedDiary.fileId} width={60}/>
                          </View>
                     </View>
                 </View>)}
