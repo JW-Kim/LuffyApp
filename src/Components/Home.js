@@ -152,7 +152,7 @@ export default class Home extends Component {
                             <Card containerStyle={{padding:0, paddingTop:15, paddingBottom:15}} dividerStyle={{marginBottom:0}} title={item.headerTitle}>
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('DiaryDtl', {type:'UPDATE', diaryId:item.diaryId, noteId:item.noteId, refreshFnc:this.selectDiaryList.bind(this)})}>
                                     <View>
-                                        <ImageView fileId={item.fileId} />
+                                        <ImageView fileId={item.fileId} width={Dimensions.get('window').width-30}/>
                                     </View>
                                     <View style={{margin: 15}}>
                                         <View style={{flexDirection:'row', alignItems: 'center'}}>
