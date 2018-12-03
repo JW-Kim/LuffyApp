@@ -260,7 +260,11 @@ export default class DiaryDtl extends Component {
             maxHeight: 500,
             storageOptions: {
                 skipBackup: true
-            }
+            },
+            title:'사진선택',
+            cancelButtonTitle : '취소',
+            takePhotoButtonTitle : '사진촬영',
+            chooseFromLibraryButtonTitle : '앨범에서 사진 선택'
         };
 
         ImagePicker.showImagePicker(options, (response) => {
