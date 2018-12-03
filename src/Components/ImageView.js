@@ -43,7 +43,7 @@ export default class ImageView extends Component {
 
     render(){
         return(
-            <Image width={Dimensions.get('window').width-30} source={{uri :this.state.base64Str}} />
+            <Image width={this.props.width} source={{uri :this.state.base64Str}} />
         )
     }
 }
