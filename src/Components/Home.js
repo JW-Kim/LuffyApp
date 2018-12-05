@@ -11,13 +11,15 @@ import {
     TouchableOpacity,
     BackHandler,
     AsyncStorage,
-    Picker
+    Picker,
+    ActivityIndicator
 } from 'react-native';
 import {
     Card,
     Icon,
     Button
 } from 'react-native-elements';
+import { NavigationEvents } from "react-navigation";
 import ActionButton from 'react-native-action-button';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
@@ -50,34 +52,6 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-        var cur = this;
-
-        AsyncStorage.getItem('access_token', (err, result) => {
-            this.setState({
-                token : result
-              }, () =>{
-                BackHandler.addEventListener('handleBackPress', this.handleBackPress);
-
-                fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/note', {
-                        headers: {
-                            'Authorization': 'Bearer '+cur.state.token
-                        }
-                    })
-                        .then((response) => response.json())
-                        .then((res) => {
-                            cur.setState({
-                                note : res.data,
-                                noteId : res.data[0].noteId
-                            }, ()=>{
-                                this.selectDiaryList();
-                            })
-                        })
-
-                        .catch((error) => {
-                            console.error(error);
-                        });
-              })
-        })
 
     }
 
@@ -87,6 +61,45 @@ export default class Home extends Component {
 
     handleBackPress = () => {
         this.selectDiaryList();
+    }
+
+    selectNoteList(){
+        var cur = this;
+        if(_.isNil(this.state.noteId)){
+            AsyncStorage.getItem('access_token', (err, result) => {
+                this.setState({
+                    token : result,
+                    loading : true
+                  }, () =>{
+                    BackHandler.addEventListener('handleBackPress', this.handleBackPress);
+
+                    fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/note', {
+                            headers: {
+                                'Authorization': 'Bearer '+cur.state.token
+                            }
+                        })
+                            .then((response) => response.json())
+                            .then((res) => {
+                                cur.setState({
+                                    note : res.data,
+                                    noteId : res.data[0].noteId
+                                }, ()=>{
+                                    this.selectDiaryList();
+                                })
+                            })
+
+                            .catch((error) => {
+                                console.error(error);
+                            });
+                  })
+            })
+        }else{
+            this.setState({
+                loading : true
+            })
+            this.selectDiaryList();
+        }
+
     }
 
     selectDiaryList(){
@@ -103,7 +116,8 @@ export default class Home extends Component {
                 .then((res) => {
                     console.log(res);
                     this.setState({
-                        diaryList : res.data
+                        diaryList : res.data,
+                        loading : false
                     })
                 })
                 .catch((error) => {
@@ -133,6 +147,12 @@ export default class Home extends Component {
     render() {
         return (
             <View style={{flex:1}}>
+                <NavigationEvents
+                    onWillFocus={payload => {
+                        this.selectNoteList();
+                        console.log("will focus", payload);
+                    }}
+                />
                 <View style={{marginLeft:15, height:50}}>
                 { this.state.note == null ? <Text></Text> :
                     <Picker
@@ -208,11 +228,16 @@ export default class Home extends Component {
                     />
 
                 </ScrollView>
-                <ActionButton buttonColor="rgba(231,76,60,1)" offsetY={60}>
+                <ActionButton buttonColor="rgba(231,76,60,1)" offsetY={40}>
                     <ActionButton.Item buttonColor='#1abc9c' title="새글 작성" onPress={()=> this.props.navigation.navigate('DiaryDtl', {type:'INSERT', noteId:this.state.noteId, refreshFnc:this.selectDiaryList.bind(this)})}>
                         <IonIcons name="md-create" style={styles.actionButtonIcon} />
                     </ActionButton.Item>
                 </ActionButton>
+                {this.state.loading &&
+                    <View style={styles.loading}>
+                      <ActivityIndicator size='large' color="#FF69B4"/>
+                    </View>
+                }
             </View>
         )
     }
@@ -247,5 +272,15 @@ const styles = StyleSheet.create({
     },
     bad: {
         color: '#ff471a'
+    },
+
+    loading: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 });
