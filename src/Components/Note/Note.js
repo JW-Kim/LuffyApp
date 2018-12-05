@@ -3,7 +3,9 @@ import {
     View,
     Text,
     AsyncStorage,
-    Picker
+    Picker,
+    StyleSheet,
+    ActivityIndicator
 } from 'react-native';
 import {
     Calendar,
@@ -11,6 +13,7 @@ import {
     Agenda,
     LocaleConfig
 } from 'react-native-calendars';
+import { NavigationEvents } from "react-navigation";
 import _ from 'lodash'
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import Constants from '../../Com/Constants.js'
@@ -31,8 +34,6 @@ export default class Note extends Component {
     }
 
     componentDidMount() {
-        var cur = this;
-
         LocaleConfig.locales['kr'] = {
           monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
           monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
@@ -42,7 +43,10 @@ export default class Note extends Component {
 
 
         LocaleConfig.defaultLocale = 'kr';
+    }
 
+    getNote(){
+        var cur = this;
         let today = new Date();
         let dd = today.getDate();
         let mm = today.getMonth()+1;
@@ -50,33 +54,43 @@ export default class Note extends Component {
         let month = yyyy + '-' + mm;
         let day = new Date(mm+'/'+dd+'/'+yyyy) ;
 
-        AsyncStorage.getItem('access_token', (err, result) => {
-            cur.setState({
-                token : result
-            }, () =>{
-                fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/note', {
-                    headers: {
-                        'Authorization': 'Bearer '+cur.state.token
-                    }
-                })
-                    .then((response) => response.json())
-                    .then((res) => {
-                        cur.setState({
-                            note : res.data,
-                            noteId : res.data[0].noteId,
-                            selectedDay : day,
-                            calCurrentMonth : day
-                        }, ()=>{
-                            cur.getMonthDiary(month);
-                        })
+        if(_.isNil(this.state.noteId)){
+
+
+            AsyncStorage.getItem('access_token', (err, result) => {
+                cur.setState({
+                    token : result,
+                    loading : true
+                }, () =>{
+                    fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/note', {
+                        headers: {
+                            'Authorization': 'Bearer '+cur.state.token
+                        }
                     })
+                        .then((response) => response.json())
+                        .then((res) => {
+                            cur.setState({
+                                note : res.data,
+                                noteId : res.data[0].noteId,
+                                selectedDay : day,
+                                calCurrentMonth : day
+                            }, ()=>{
+                                cur.getMonthDiary(month);
+                            })
+                        })
 
-                    .catch((error) => {
-                        console.error(error);
-                    });
+                        .catch((error) => {
+                            console.error(error);
+                        });
 
+                })
             })
-        })
+        }else{
+            this.setState({
+                loading : true
+            })
+            this.getMonthDiary(month);
+        }
     }
 
     getMonthDiary(month){
@@ -122,7 +136,8 @@ export default class Note extends Component {
         this.setState({
             markedDates : markedDates,
             selectedDay : day,
-            selectedDiary : selectedDiary
+            selectedDiary : selectedDiary,
+            loading : false
         })
     }
 
@@ -174,6 +189,12 @@ export default class Note extends Component {
     render(){
         return(
             <View style={{backgroundColor:'white', padding:10, margin:15}}>
+                <NavigationEvents
+                    onWillFocus={payload => {
+                        this.getNote()
+                        console.log("will focus", payload);
+                    }}
+                />
                 { this.state.note == null ? <Text></Text> :
                     <Picker
                         selectedValue={this.state.noteId}
@@ -253,8 +274,24 @@ export default class Note extends Component {
                          </View>
                     </View>
                 </View>)}
-
+                {this.state.loading &&
+                    <View style={styles.loading}>
+                      <ActivityIndicator size='large' color="#FF69B4"/>
+                    </View>
+                }
             </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    loading: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
+});
