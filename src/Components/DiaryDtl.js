@@ -66,6 +66,7 @@ export default class DiaryDtl extends Component {
             type : this.props.navigation.getParam('type'),
             diaryId: this.props.navigation.getParam('diaryId'),
             noteId: this.props.navigation.getParam('noteId'),
+            diaryDt: this.props.navigation.getParam('diaryDt'),
             fileId: null
         }
 
@@ -142,7 +143,8 @@ export default class DiaryDtl extends Component {
                title: this.state.title == null ? '' : this.state.title,
                content: this.state.content == null ? '' : this.state.content,
                fileId : fileId == null ? null : fileId,
-               noteId : this.state.noteId == null ? '' : this.state.noteId
+               noteId : this.state.noteId == null ? '' : this.state.noteId,
+               diaryDt : this.state.diaryDt == null ? '' : this.state.diaryDt
            })
        })
            .then((response) => response.json())
@@ -197,8 +199,7 @@ export default class DiaryDtl extends Component {
 
     insertDiary() {
         var cur = this;
-                    console.log('cur.state.fileId', cur.state.fileId)
-                    console.log('cur.state.avatarSource', cur.state.avatarSource)
+
         if(this.state.type == 'INSERT'){
             //1.파일 업로드
             if(!_.isNil(cur.state.avatarSource)){
