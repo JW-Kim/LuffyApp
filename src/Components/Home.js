@@ -229,7 +229,7 @@ export default class Home extends Component {
 
                 </ScrollView>
                 <ActionButton buttonColor="rgba(231,76,60,1)" offsetY={40}>
-                    <ActionButton.Item buttonColor='#1abc9c' title="새글 작성" onPress={()=> this.props.navigation.navigate('DiaryDtl', {type:'INSERT', noteId:this.state.noteId, refreshFnc:this.selectDiaryList.bind(this)})}>
+                    <ActionButton.Item buttonColor='#1abc9c' title="다이어리 작성" onPress={()=> this.props.navigation.navigate('DiaryDtl', {type:'INSERT', noteId:this.state.noteId, refreshFnc:this.selectDiaryList.bind(this)})}>
                         <IonIcons name="md-create" style={styles.actionButtonIcon} />
                     </ActionButton.Item>
                 </ActionButton>
