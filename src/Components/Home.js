@@ -24,11 +24,26 @@ import ActionButton from 'react-native-action-button';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
 import Image from 'react-native-scalable-image';
+import Toast from 'react-native-toast-native';
 import _ from 'lodash'
 import DiaryDtl from './DiaryDtl.js'
 import HomeCodeTypeIcon from './HomeCodeTypeIcon.js'
 import Constants from '../Com/Constants.js'
 import ImageView from './ImageView.js'
+
+const toastStyle = {
+    backgroundColor: "#acacac",
+    width: 300,
+    height: 100,
+    color: "#ffffff",
+    fontSize: 15,
+    lineHeight: 2,
+    lines: 4,
+    borderRadius: 15,
+    fontWeight: "bold",
+    yOffset: 40,
+    opacity: 0.8
+}
 
 export default class Home extends Component {
     static navigationOptions = {
@@ -89,7 +104,8 @@ export default class Home extends Component {
                             })
 
                             .catch((error) => {
-                                console.error(error);
+                                Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+                                this.props.navigation.navigate('Login')
                             });
                   })
             })
@@ -121,7 +137,8 @@ export default class Home extends Component {
                     })
                 })
                 .catch((error) => {
-                    console.error(error);
+                    Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+                    this.props.navigation.navigate('Login')
                 });
         })
     }
