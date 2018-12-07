@@ -113,7 +113,8 @@ export default class DiaryDtl extends Component {
                             })
                         })
                         .catch((error) => {
-                            console.error(error);
+                            Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+                            this.props.navigation.navigate('Login')
                         });
                 }
               })
@@ -156,7 +157,8 @@ export default class DiaryDtl extends Component {
                console.log(responseJson)
            })
            .catch((error) => {
-               console.error(error);
+               Toast.show('정보 저장을 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+               this.props.navigation.navigate('Login')
            });
     }
 
@@ -193,7 +195,8 @@ export default class DiaryDtl extends Component {
                 console.log(responseJson)
             })
             .catch((error) => {
-                console.error(error);
+               Toast.show('정보 저장을 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+               this.props.navigation.navigate('Login')
             });
     }
 
@@ -464,11 +467,9 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         height:50,
         alignItems : 'center',
-        borderColor: 'gray',
-        borderWidth: 1,
         padding : 10,
-        marginTop : 18,
-        backgroundColor:'#d9e6f2'
+        backgroundColor:'#d9e6f2',
+        flex:1
     },
 
     checkContent : {
