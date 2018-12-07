@@ -23,7 +23,7 @@ export default class Login extends Component {
 
     componentDidMount() {
         AsyncStorage.getItem('access_token', (err, result) => {
-            console.log('getItem', err, result);
+
             if(!_.isNil(result)){
                 const token = JWT_decode(result);
 
@@ -69,7 +69,7 @@ export default class Login extends Component {
                 }}>
                     <Image
                         style={{width: 50}}
-                        source={require('../../assets/images/logo3.png')}
+                        source={require('../../assets/images/logo3.jpg')}
                     />
                 </View>
                 <View style={{
