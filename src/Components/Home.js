@@ -163,14 +163,14 @@ export default class Home extends Component {
 
     render() {
         return (
-            <View style={{flex:1}}>
+            <View style={{flex:1, backgroundColor:'#fff'}}>
                 <NavigationEvents
                     onWillFocus={payload => {
                         this.selectNoteList();
                         console.log("will focus", payload);
                     }}
                 />
-                <View style={{marginLeft:15, height:50}}>
+                <View style={{marginTop: 20, marginLeft:15, height:50}}>
                 { this.state.note == null ? <Text></Text> :
                     <Picker
                         selectedValue={this.state.noteId}
@@ -186,7 +186,7 @@ export default class Home extends Component {
                         data={this.state.diaryList}
                         keyExtractor={(item, index) => index.toString()}
                         renderItem={({item}) =>
-                            <Card containerStyle={{padding:0, paddingTop:15, paddingBottom:15}} dividerStyle={{marginBottom:0}} title={item.headerTitle}>
+                            <Card containerStyle={{padding:0, paddingTop:15, paddingBottom:15,borderWidth: 1, borderColor: '#ebe0eb'}} wrapperStyle={{borderColor: '#ebe0eb'}} dividerStyle={{marginBottom:0}} title={item.headerTitle}>
                                 <TouchableOpacity activeOpacity={0.9} onPress={() => this.props.navigation.navigate('DiaryDtl', {type:'UPDATE', diaryId:item.diaryId, noteId:item.noteId, refreshFnc:this.selectDiaryList.bind(this)})}>
                                     <View>
                                         <ImageView fileId={item.fileId} width={Dimensions.get('window').width-30}/>
