@@ -67,7 +67,9 @@ export default class DiaryDtl extends Component {
             diaryId: this.props.navigation.getParam('diaryId'),
             noteId: this.props.navigation.getParam('noteId'),
             diaryDt: this.props.navigation.getParam('diaryDt'),
-            fileId: null
+            fileId: null,
+            height: null,
+            weight: null
         }
 
         let setFeelingCd = this.setFeelingCd.bind(this);
@@ -145,7 +147,9 @@ export default class DiaryDtl extends Component {
                content: this.state.content == null ? '' : this.state.content,
                fileId : fileId == null ? null : fileId,
                noteId : this.state.noteId == null ? '' : this.state.noteId,
-               diaryDt : this.state.diaryDt == null ? '' : this.state.diaryDt
+               diaryDt : this.state.diaryDt == null ? null : this.state.diaryDt,
+               height : this.state.height == null ? 0 : this.state.height,
+               weight : this.state.weight == null ? 0 : this.state.weight
            })
        })
            .then((response) => response.json())
@@ -183,7 +187,9 @@ export default class DiaryDtl extends Component {
                 sleepEndTime : this.state.sleepEndTime == null ? '' : this.state.sleepEndTime,
                 title: this.state.title == null ? '' : this.state.title,
                 content: this.state.content == null ? '' : this.state.content,
-                fileId : fileId == null ? null : fileId
+                fileId : fileId == null ? null : fileId,
+                height : this.state.height == null ? 0 : this.state.height,
+                weight : this.state.weight == null ? 0 : this.state.weight
             })
         })
             .then((response) => response.json())
