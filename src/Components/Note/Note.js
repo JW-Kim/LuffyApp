@@ -21,9 +21,23 @@ import IonIcons from 'react-native-vector-icons/Ionicons';
 import Constants from '../../Com/Constants.js'
 import ImageView from '../ImageView.js'
 
+const toastStyle = {
+    backgroundColor: "#acacac",
+    width: 300,
+    height: 100,
+    color: "#ffffff",
+    fontSize: 15,
+    lineHeight: 2,
+    lines: 4,
+    borderRadius: 15,
+    fontWeight: "bold",
+    yOffset: 40,
+    opacity: 0.8
+}
+
 export default class Note extends Component {
     static navigationOptions = {
-        title: '일기장',
+        title: '일기장'
     };
 
     constructor(props) {
@@ -59,7 +73,6 @@ export default class Note extends Component {
 
         if(_.isNil(this.state.noteId)){
 
-
             AsyncStorage.getItem('access_token', (err, result) => {
                 cur.setState({
                     token : result,
@@ -82,9 +95,9 @@ export default class Note extends Component {
                                 cur.getMonthDiary(month);
                             })
                         })
-
                         .catch((error) => {
-                            console.error(error);
+                           Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+                           this.props.navigation.navigate('Login')
                         });
 
                 })
@@ -117,6 +130,10 @@ export default class Note extends Component {
                     this.setMarkedDate(res.data, this.state.selectedDay)
                 }
             })
+            .catch((error) => {
+               Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+               this.props.navigation.navigate('Login')
+            });
     }
 
     setMarkedDate(marketDateList, day){
@@ -125,11 +142,11 @@ export default class Note extends Component {
         let selectedDiary = null;
         for(var i=0; i<marketDateList.length; i++){
             if(marketDateList[i].diaryDt == day){
-                markedDates[""+marketDateList[i].diaryDt+""]= {selected:true, marked: true, selectedColor: 'blue'};
+                markedDates[""+marketDateList[i].diaryDt+""]= {selected:true, marked: true, selectedColor: '#33d6ff'};
                 todayYn = true;
                 selectedDiary = marketDateList[i];
             }else{
-                markedDates[""+marketDateList[i].diaryDt+""]= {marked: true, selectedColor: 'blue'};
+                markedDates[""+marketDateList[i].diaryDt+""]= {marked: true, selectedColor: '#33d6ff'};
             }
         }
 
@@ -167,39 +184,16 @@ export default class Note extends Component {
         return note;
     }
 
-    renderDiary(){
-        const diary = [];
-
-        if(!_.isNil(this.state.selectedDiary)){
-            diary.push(<View style={{
-                           marginTop : 10,
-                           flexDirection:'column',
-                           height : 60,
-                           borderWidth: 1,
-                           borderColor: '#ebe0eb',
-                           justifyContent: "center"
-                       }}>
-                           <View style={{
-                               flexDirection:'row'
-                           }}>
-                                <IonIcons name="ios-paper" style={{marginLeft: 5 ,fontSize: 30}}/>
-                                <View style={{flexDirection:'column', justifyContent: "center", backgroundColor:'red'}}><Text>{this.state.selectedDiary.title}</Text></View>
-                           </View>
-                       </View>);
-        }
-
-        return diary;
-    }
-
     render(){
         return(
-            <View style={{backgroundColor:'white', padding:10, margin:15, flex:1}}>
+            <View style={{backgroundColor:'white', padding:10, flex:1}}>
                 <NavigationEvents
                     onWillFocus={payload => {
                         this.getNote()
                         console.log("will focus", payload);
                     }}
                 />
+                <View style={{marginTop: 10, marginLeft:15, height:50}}>
                 { this.state.note == null ? <Text></Text> :
                     <Picker
                         selectedValue={this.state.noteId}
@@ -209,11 +203,17 @@ export default class Note extends Component {
                         {this.renderNote()}
                     </Picker>
                 }
-
+                </View>
                 <Calendar
                     style={{
                         borderWidth: 1,
-                        borderColor: '#ebe0eb'
+                        borderColor: '#ebe0eb',
+                        backgroundColor : '#ebe0eb'
+                    }}
+                    theme={{
+                        backgroundColor: '#ebe0eb',
+                        calendarBackground : '#ebe0eb',
+                        selectedDayBackgroundColor: '#b992b9'
                     }}
                     // Initially visible month. Default = Date()
                     current={this.state.calCurrentMonth}
@@ -262,14 +262,15 @@ export default class Note extends Component {
                                  <View style={{
                                    flexDirection:'column',
                                    justifyContent: "center",
-                                   marginLeft: 5
+                                   marginLeft: 10
                                  }}>
-                                     <IonIcons name="ios-paper" style={{fontSize: 30}}/>
+                                     <IonIcons name="ios-paper" style={{fontSize: 10, color:'#33d6ff'}}/>
                                  </View>
                                  <View style={{
                                     flexDirection:'column',
                                     justifyContent: "center",
-                                    marginLeft: 10
+                                    marginLeft: 10,
+                                    marginRight: 10
                                  }}>
                                     <Text style={{
                                         fontSize: 15,
