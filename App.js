@@ -22,9 +22,22 @@ const MainStack = createMaterialTopTabNavigator(
     {
        initialRouteName : 'Note',
        tabBarOptions: {
-         style: {
-            backgroundColor: '#484f4f'
-          }
+            style: {
+                backgroundColor: '#ffffff',
+                shadowColor: 'transparent',
+                shadowRadius: 0,
+                shadowOffset: {
+                    height: 0,
+                }
+            },
+            labelStyle : {
+                fontSize: 17,
+                fontWeight: 'bold',
+                color : '#000'
+            },
+            indicatorStyle :{
+                backgroundColor: '#ff3399'
+            }
        },
        lazy : true
     }
