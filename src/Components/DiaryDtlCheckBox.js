@@ -61,34 +61,36 @@ export default class DiaryDtlCheckBox extends Component {
 
     render(){
         return(
-            <View style={{flex:1, flexDirection: 'row'}}>
-                <CheckBox
-                    title='좋음'
-                    size={20}
-                    checkedColor={'#33cc33'}
-                    containerStyle={styles.checkBox}
-                    checked={this.state.good}
-                    textStyle={{fontSize: 15, fontWeight:'100'}}
-                    onPress={() => this.setGood(this)}
-                />
-                <CheckBox
-                    title='보통'
-                    size={20}
-                    checkedColor={'#ff8c00'}
-                    containerStyle={styles.checkBox}
-                    checked={this.state.notBad}
-                    textStyle={{fontSize: 15, fontWeight:'100'}}
-                    onPress={() => this.setNotBad(this)}
-                />
-                <CheckBox
-                    title='나쁨'
-                    size={20}
-                    checkedColor={'#ff471a'}
-                    containerStyle={styles.checkBox}
-                    checked={this.state.bad}
-                    textStyle={{fontSize: 15, fontWeight:'100'}}
-                    onPress={() => this.setBad(this)}
-                />
+            <View>
+                <View style={{flex:1, flexDirection: 'row'}}>
+                    <CheckBox
+                        title='좋음'
+                        size={20}
+                        checkedColor={'#33cc33'}
+                        containerStyle={styles.checkBox}
+                        checked={this.state.good}
+                        textStyle={{fontSize: 15, fontWeight:'100'}}
+                        onPress={() => this.setGood(this)}
+                    />
+                    <CheckBox
+                        title='보통'
+                        size={20}
+                        checkedColor={'#ff8c00'}
+                        containerStyle={styles.checkBox}
+                        checked={this.state.notBad}
+                        textStyle={{fontSize: 15, fontWeight:'100'}}
+                        onPress={() => this.setNotBad(this)}
+                    />
+                    <CheckBox
+                        title='나쁨'
+                        size={20}
+                        checkedColor={'#ff471a'}
+                        containerStyle={styles.checkBox}
+                        checked={this.state.bad}
+                        textStyle={{fontSize: 15, fontWeight:'100'}}
+                        onPress={() => this.setBad(this)}
+                    />
+                </View>
             </View>
         )
     }

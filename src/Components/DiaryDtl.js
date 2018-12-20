@@ -348,21 +348,21 @@ export default class DiaryDtl extends Component {
 
     render(){
         return(
-            <View style={{flex:1}}>
+            <View style={{flex:1, backgroundColor:'white'}}>
                 <ModalHeader
                     title="일기 작성"
                     goEvent={this.insertDiary.bind(this)}
                     buttonTitle={'글쓰기'}
                 ></ModalHeader>
-                <View style={{height:Dimensions.get('window').height-148, marginLeft:18, marginRight:18, marginTop:18, backgroundColor:'white'}}>
+                <View style={{height:Dimensions.get('window').height-148}}>
                     <KeyboardAvoidingView  behavior="padding" keyboardVerticalOffset={100}enabled>
-                    <ScrollView style={{padding : 20}}>
+                    <ScrollView style={{padding : 10}}>
                         <View style={{marginBottom:20}}>
                             { this.state.avatarSource === null ? <Text></Text> :
-                                <Image width={Dimensions.get('window').width} source={this.state.avatarSource} />
+                                <Image width={Dimensions.get('window').width-20} source={this.state.avatarSource} />
                             }
                             { this.state.fileId === null ? <Text></Text> :
-                                <ImageView fileId={this.state.fileId}></ImageView>
+                                <ImageView fileId={this.state.fileId} width={Dimensions.get('window').width-20}></ImageView>
                             }
                         </View>
                         <View style={styles.checkContent}>
@@ -484,10 +484,10 @@ const styles = StyleSheet.create({
         paddingLeft:5,
         paddingRight:10,
         justifyContent: 'space-between',
-        borderLeftWidth: 1,
-        borderTopWidth: 1,
-        borderRightWidth: 1,
-        borderColor: '#cccccc'
+        borderLeftWidth: 0.8,
+        borderTopWidth: 0.8,
+        borderRightWidth: 0.8,
+        borderColor: '#ebe0eb'
     },
 
     checkBox : {
@@ -515,9 +515,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingLeft:5,
         paddingRight:20,
-        borderLeftWidth: 1,
-        borderTopWidth: 1,
-        borderRightWidth: 1,
-        borderColor: '#cccccc'
+        borderLeftWidth: 0.8,
+        borderTopWidth: 0.8,
+        borderRightWidth: 0.8,
+        borderColor: '#ebe0eb'
     }
 })

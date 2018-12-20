@@ -9,10 +9,10 @@ export default class ModalHeader extends Component {
   render(){
     return(
         <View style={styles.total}>
-            <View style={{width:70, backgroundColor : '#484f4f'}}></View>
+            <View style={{width:70, backgroundColor : '#ebe0eb'}}></View>
             <Text style={styles.titleText}>{this.props.title}</Text>
             <Button
-                buttonStyle={{width:70, backgroundColor:'#fff', height:36}}
+                buttonStyle={{width:70, backgroundColor:'#fff', height:40}}
                 textStyle={{color:'#000'}}
                 onPress={() => this.props.goEvent(this)}
                 title={this.props.buttonTitle}
@@ -24,15 +24,16 @@ export default class ModalHeader extends Component {
 
 const styles = StyleSheet.create({
     total : {
-        height : 40,
-        backgroundColor : '#484f4f',
+        height : 60,
+        backgroundColor : '#ebe0eb',
         alignItems : 'center',
         justifyContent : 'space-between',
         flexDirection: 'row'
     },
 
     titleText : {
-        color : 'white',
-        fontSize : 15
+        color : '#000',
+        fontWeight: 'bold',
+        fontSize : 17
     }
 })
