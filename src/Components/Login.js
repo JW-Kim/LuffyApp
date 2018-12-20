@@ -69,7 +69,7 @@ export default class Login extends Component {
                 }}>
                     <Image
                         style={{width: 50}}
-                        source={require('../../assets/images/logo3.jpg')}
+                        source={require('../../assets/images/logo3.png')}
                     />
                 </View>
                 <View style={{

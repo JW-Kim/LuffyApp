@@ -6,7 +6,8 @@ import {
     Picker,
     StyleSheet,
     ActivityIndicator,
-    TouchableOpacity
+    TouchableOpacity,
+    ScrollView
 } from 'react-native';
 import {
     Calendar,
@@ -20,6 +21,7 @@ import _ from 'lodash'
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import Constants from '../../Com/Constants.js'
 import ImageView from '../ImageView.js'
+import NoteDiary from './NoteDiary.js'
 
 const toastStyle = {
     backgroundColor: "#acacac",
@@ -174,6 +176,16 @@ export default class Note extends Component {
         }
     }
 
+    openDiaryDtl(){
+        this.setState({
+            selectedDiary : null
+        })
+        this.props.navigation.navigate('DiaryDtl', {   type:'UPDATE',
+                                                        diaryId:this.state.selectedDiary.diaryId,
+                                                        noteId:this.state.noteId,
+                                                        refreshFnc:this.getNote.bind(this)})
+    }
+
     renderNote(){
         const note = [];
         if(!_.isNil(this.state.note)){
@@ -204,6 +216,7 @@ export default class Note extends Component {
                     </Picker>
                 }
                 </View>
+                <ScrollView>
                 <Calendar
                     style={{
                         borderWidth: 1,
@@ -243,49 +256,16 @@ export default class Note extends Component {
                 />
                 {this.state.selectedDiary == null ? <View><Text></Text></View> :
                 (
-                <TouchableOpacity activeOpacity={0.9} onPress={() => this.props.navigation.navigate('DiaryDtl', {   type:'UPDATE',
-                                                                                                                    diaryId:this.state.selectedDiary.diaryId,
-                                                                                                                    noteId:this.state.noteId,
-                                                                                                                    refreshFnc:this.getNote.bind(this)})}>
-                    <View style={{
-                        marginTop : 10,
-                        flexDirection:'column',
-                        height : 60,
-                        borderWidth: 1,
-                        borderColor: '#ebe0eb',
-                        justifyContent: "center"
-                    }}>
-                        <View style={{
-                            flexDirection:'row'
-                        }}>
-                             <View style={{flex:1, flexDirection:'row'}}>
-                                 <View style={{
-                                   flexDirection:'column',
-                                   justifyContent: "center",
-                                   marginLeft: 10
-                                 }}>
-                                     <IonIcons name="ios-paper" style={{fontSize: 10, color:'#33d6ff'}}/>
-                                 </View>
-                                 <View style={{
-                                    flexDirection:'column',
-                                    justifyContent: "center",
-                                    marginLeft: 10,
-                                    marginRight: 10
-                                 }}>
-                                    <Text style={{
-                                        fontSize: 15,
-                                        fontWeight: "bold"
-                                    }}>
-                                        {this.state.selectedDiary.title}
-                                    </Text>
-                                 </View>
-                             </View>
-                             <View style={{width:60}}>
-                                <ImageView fileId={this.state.selectedDiary.fileId} width={60}/>
-                             </View>
-                        </View>
-                    </View>
-                </TouchableOpacity>)}
+                <View style={{marginTop:10}}>
+                    <NoteDiary
+                        diaryId = {this.state.selectedDiary.diaryId}
+                        noteId = {this.state.noteId}
+                        title = {this.state.selectedDiary.title}
+                        fileId = {this.state.selectedDiary.fileId}
+                        openDiaryDtl = {this.openDiaryDtl.bind(this)}
+                    ></NoteDiary>
+                </View>)}
+                </ScrollView>
                 <ActionButton buttonColor="rgba(231,76,60,1)" offsetY={40}>
                     <ActionButton.Item buttonColor='#1abc9c' title="다이어리 작성"
                         onPress={()=> this.props.navigation.navigate('DiaryDtl', {  type:'INSERT',
