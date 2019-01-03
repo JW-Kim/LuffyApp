@@ -22,6 +22,7 @@ import IonIcons from 'react-native-vector-icons/Ionicons';
 import Constants from '../../Com/Constants.js'
 import ImageView from '../ImageView.js'
 import NoteDiary from './NoteDiary.js'
+import Toast from 'react-native-toast-native';
 
 const toastStyle = {
     backgroundColor: "#acacac",

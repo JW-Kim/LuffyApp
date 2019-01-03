@@ -9,11 +9,13 @@ import BasicComponents from './src/Components/Sample/BasicComponents.js'
 import UserInterface from './src/Components/Sample/UserInterface.js'
 import Detail from './src/Components/Detail.js'
 import Note from './src/Components/Note/Note.js'
+import NoteStatics from './src/Components/Note/NoteStatics.js'
 
 const MainStack = createMaterialTopTabNavigator(
     {
         Note: Note,
-        Home: Home,
+        NoteStatics : NoteStatics
+//        Home: Home,
 
 /*        Detail: Detail,
         BasicComponents : BasicComponents,
