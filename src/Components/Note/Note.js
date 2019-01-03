@@ -66,8 +66,8 @@ export default class Note extends Component {
     getNote(){
         var cur = this;
         let today = new Date();
-        let dd = today.getDate();
-        let mm = today.getMonth()+1;
+        let dd = today.getDate()<10 ? '0'+today.getDate() : today.getDate();
+        let mm = today.getMonth()<10 ? '0'+(today.getMonth()+1) : today.getMonth()+1;
         let yyyy = today.getFullYear();
         let month = yyyy + '-' + mm;
         let day = new Date(mm+'/'+dd+'/'+yyyy) ;
@@ -113,6 +113,7 @@ export default class Note extends Component {
     }
 
     getMonthDiary(month){
+        console.log('month', month)
         let monthArr = month.split("-");
         this.setState({
             calCurrentMonth : new Date(monthArr[1]+'/'+'01'+'/'+monthArr[0])
@@ -237,11 +238,11 @@ export default class Note extends Component {
                     // Handler which gets executed on day press. Default = undefined
                     onDayPress={(day) => {this.getDay(day)}}
                     // Handler which gets executed on day long press. Default = undefined
-                    onDayLongPress={(day) => {console.log('selected day', day)}}
+                    onDayLongPress={(day) => {this.getDay(day)}}
                     // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
                     monthFormat={'yyyy MM'}
                     // Handler which gets executed when visible month changes in calendar. Default = undefined
-                    onMonthChange={(month) => {this.getMonthDiary(month.year+'-'+month.month)}}
+                    onMonthChange={(month) => {this.getMonthDiary(month.dateString.substring(0,7))}}
 
                     hideExtraDays={true}
                     // If hideArrows=false and hideExtraDays=false do not switch month when tapping on greyed out

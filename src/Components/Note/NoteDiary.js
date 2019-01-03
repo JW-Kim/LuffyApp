@@ -58,7 +58,9 @@ export default class NoteDiary extends Component {
                                 sleepEndTime : res.data.sleepEndTime,
                                 title: res.data.title,
                                 content: res.data.content,
-                                fileId : res.data.fileId
+                                fileId : res.data.fileId,
+                                weight : res.data.weight+'',
+                                height : res.data.height+''
                             })
                         })
                         .catch((error) => {
@@ -136,6 +138,14 @@ export default class NoteDiary extends Component {
                             <ImageView fileId={this.props.fileId} width={Dimensions.get('window').width-30}/>
                         </View>
                         <View style={{margin: 15}}>
+                            {this.state.height == null || this.state.height == 0 ? <Text></Text> :
+                            (<View style={{flexDirection:'row', alignItems: 'center'}}>
+                                 <Text>키 : {this.state.height} cm</Text>
+                             </View>)}
+                            {this.state.weight == null || this.state.weight == 0 ? <Text></Text> :
+                            (<View style={{flexDirection:'row', alignItems: 'center'}}>
+                                <Text>몸무게 : {this.state.weight} kg</Text>
+                            </View>)}
                             <View style={{flexDirection:'row', alignItems: 'center'}}>
                                 <Text>기분 : </Text>
                                 {this.state.feelingCd == 'good' ? <Text>좋음 </Text> : <Text></Text>}
@@ -180,7 +190,11 @@ export default class NoteDiary extends Component {
                             </View>
                             <View style={{flexDirection:'row', alignItems: 'center'}}>
                                 <Text>배변 : </Text>
-                                <Text>{this.state.shitCnt}회, {this.state.shitCd}({this.state.shitDesc}) </Text>
+                                <Text>{this.state.shitCnt}회,
+                                {this.state.shitCd == 'good' ? <Text>좋음 </Text> : <Text></Text>}
+                                {this.state.shitCd == 'notBad' ? <Text>보통 </Text> : <Text></Text>}
+                                {this.state.shitCd == 'bad' ? <Text>나쁨 </Text> : <Text></Text>}
+                                ({this.state.shitDesc}) </Text>
                                 <HomeCodeTypeIcon code={this.state.shitCd}></HomeCodeTypeIcon>
                             </View>
                             <View style={{flexDirection:'row'}}>

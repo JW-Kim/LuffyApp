@@ -111,7 +111,9 @@ export default class DiaryDtl extends Component {
                                 sleepEndTime : res.data.sleepEndTime,
                                 title: res.data.title,
                                 content: res.data.content,
-                                fileId : res.data.fileId
+                                fileId : res.data.fileId,
+                                weight : res.data.weight+'',
+                                height : res.data.height+''
                             })
                         })
                         .catch((error) => {
@@ -346,6 +348,18 @@ export default class DiaryDtl extends Component {
         })
     }
 
+    setHeight(height){
+        this.setState({
+            height : height
+        })
+    }
+
+    setWeight(weight){
+        this.setState({
+            weight : weight
+        })
+    }
+
     render(){
         return(
             <View style={{flex:1, backgroundColor:'white'}}>
@@ -364,6 +378,28 @@ export default class DiaryDtl extends Component {
                             { this.state.fileId === null ? <Text></Text> :
                                 <ImageView fileId={this.state.fileId} width={Dimensions.get('window').width-20}></ImageView>
                             }
+                        </View>
+                        <View style={styles.checkContent}>
+                            <Text style={{width: 70, fontSize: 15, fontWeight:'800'}}>키</Text>
+                            <View style={{flex:1, flexDirection:'row', alignItems:'center', paddingLeft:50, paddingRight:20}}>
+                                <TextInput
+                                    style={{width:100}}
+                                    onChangeText={(height) => this.setState({height})}
+                                    value={this.state.height}
+                                ></TextInput>
+                                <Text style={{width:50}}>cm</Text>
+                            </View>
+                        </View>
+                        <View style={styles.checkContent}>
+                            <Text style={{width: 70, fontSize: 15, fontWeight:'800'}}>몸무게</Text>
+                            <View style={{flex:1, flexDirection:'row', alignItems:'center', paddingLeft:50, paddingRight:20}}>
+                                <TextInput
+                                    style={{width:100}}
+                                    onChangeText={(weight) => this.setState({weight})}
+                                    value={this.state.weight}
+                                ></TextInput>
+                                <Text>kg</Text>
+                            </View>
                         </View>
                         <View style={styles.checkContent}>
                             <Text style={{width: 70, fontSize: 15, fontWeight:'800'}}>기분</Text>
@@ -415,7 +451,7 @@ export default class DiaryDtl extends Component {
                         </View>
                         <View style={styles.checkContent}>
                             <Text style={{width: 70, fontSize: 15, fontWeight:'800'}}>수면</Text>
-                            <View style={{flex:0.4, flexDirection:'row', alignItems:'center'}}>
+                            <View style={{flex:0.4, flexDirection:'row', alignItems:'center', paddingLeft:50}}>
                                 <TextInput
                                     style={{width:40}}
                                     onChangeText={(sleepStartTime) => this.setState({sleepStartTime})}
@@ -437,21 +473,25 @@ export default class DiaryDtl extends Component {
                         </View>
                         <View style={styles.title}>
                             <Text style={{width: 70, fontSize: 15, fontWeight:'800'}}>제목</Text>
-                            <TextInput style={{flex:1}}
-                               onChangeText={(title) => this.setState({title})}
-                               value={this.state.title}
-                            >
-                            </TextInput>
+                            <View style={{paddingLeft:50, flex:1}}>
+                                <TextInput style={{flex:1}}
+                                   onChangeText={(title) => this.setState({title})}
+                                   value={this.state.title}
+                                >
+                                </TextInput>
+                            </View>
                         </View>
                         <View style={[styles.checkContent,{marginBottom:40, borderBottomWidth: 1}]}>
                             <Text style={{width: 70, fontSize: 15, fontWeight:'800'}}>내용</Text>
-                            <TextInput style={{flex:1}}
-                                numberOfLines={10}
-                                multiline={true}
-                                onChangeText={(content) => this.setState({content})}
-                                value={this.state.content}
-                            >
-                            </TextInput>
+                            <View style={{paddingLeft:50, flex:1}}>
+                                <TextInput style={{flex:1}}
+                                    numberOfLines={10}
+                                    multiline={true}
+                                    onChangeText={(content) => this.setState({content})}
+                                    value={this.state.content}
+                                >
+                                </TextInput>
+                            </View>
                         </View>
                     </ScrollView>
                     </KeyboardAvoidingView>
