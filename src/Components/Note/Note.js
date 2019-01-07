@@ -56,8 +56,8 @@ export default class Note extends Component {
         LocaleConfig.locales['kr'] = {
           monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
           monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-          dayNames: ['월','화','수','목','금','토','일'],
-          dayNamesShort: ['월','화','수','목','금','토','일']
+          dayNames: ['일','월','화','수','목','금','토'],
+          dayNamesShort: ['일','월','화','수','목','금','토']
         };
 
 
@@ -188,6 +188,14 @@ export default class Note extends Component {
                                                         refreshFnc:this.getNote.bind(this)})
     }
 
+    changeNote(noteId){
+       this.setState({
+            noteId : noteId
+        }, ()=>{
+            this.getNote();
+        })
+    }
+
     renderNote(){
         const note = [];
         if(!_.isNil(this.state.note)){
@@ -212,7 +220,7 @@ export default class Note extends Component {
                     <Picker
                         selectedValue={this.state.noteId}
                         style={{height:50, width:200, color:'#000'}}
-                        onValueChange={(itemValue, itemIndex) => this.setState({noteId: itemValue})}
+                        onValueChange={(itemValue, itemIndex) => this.changeNote(itemValue)}
                     >
                         {this.renderNote()}
                     </Picker>
