@@ -276,7 +276,17 @@ export default class Note extends Component {
                     ></NoteDiary>
                 </View>)}
                 </ScrollView>
-                <ActionButton buttonColor="rgba(231,76,60,1)" offsetY={40}>
+				<ActionButton buttonColor="rgba(231,76,60,1)" offsetY={40}>
+                    <ActionButton.Item buttonColor='#1abc9c' title="disease 작성"
+                        onPress={()=> this.props.navigation.navigate('NoteDiseaseDtl', {  type:'INSERT',
+                                                                                    noteId:this.state.noteId,
+                                                                                    diaryDt:this.state.diaryDt,
+                                                                                    refreshFnc:this.getNote.bind(this)})}>
+                        <IonIcons name="md-create" style={styles.actionButtonIcon} />
+                    </ActionButton.Item>
+                </ActionButton>
+                
+				<ActionButton buttonColor="rgba(231,76,60,1)" offsetY={40}>
                     <ActionButton.Item buttonColor='#1abc9c' title="다이어리 작성"
                         onPress={()=> this.props.navigation.navigate('DiaryDtl', {  type:'INSERT',
                                                                                     noteId:this.state.noteId,
