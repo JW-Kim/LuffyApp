@@ -10,6 +10,7 @@ import UserInterface from './src/Components/Sample/UserInterface.js'
 import Detail from './src/Components/Detail.js'
 import Note from './src/Components/Note/Note.js'
 import NoteStatics from './src/Components/Note/NoteStatics.js'
+import NoteDiseaseDtl from './src/Components/Note/NoteDiseaseDtl.js'
 
 const MainStack = createMaterialTopTabNavigator(
     {
@@ -58,7 +59,10 @@ const RootStack = createStackNavigator(
     },
     DiaryDtl : {
       screen : DiaryDtl
-    }
+    },
+    NoteDiseaseDtl : {
+        screen : NoteDiseaseDtl
+    }        
   },
   {
     initialRouteName : 'Login',
