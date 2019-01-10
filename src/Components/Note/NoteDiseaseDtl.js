@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import ModalHeader from '../ModalHeader.js'
 
-export default class NoteStatics extends Component {
+export default class NoteDiseaseDtl extends Component {
 
     constructor(props) {
         super(props);
@@ -19,13 +19,16 @@ export default class NoteStatics extends Component {
     componentWillMount () {
     }
 
-    render(){    
-        <View>
-            <ModalHeader
-                title=“질병 작성”
-                goEvent={this.insertDisease.bind(this)}
-            ></ModlHeader
-        </View>
+    render(){
+        return(
+            <View style={{flex:1, backgroundColor:'white'}}>
+                <ModalHeader
+                    title="질병 작성"
+                    goEvent={this.insertDisease.bind(this)}
+                    buttonTitle={'글쓰기'}
+                ></ModalHeader>
+            </View>
+        )
     }
     
     insertDisease(){
