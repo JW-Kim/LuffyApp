@@ -21,6 +21,13 @@ export default class NoteStatics extends Component {
 
     render(){    
         <View>
+            <ModalHeader
+                title=“질병 작성”
+                goEvent={this.insertDisease.bind(this)}
+            ></ModlHeader
         </View>
+    }
+    
+    insertDisease(){
     }
 }
