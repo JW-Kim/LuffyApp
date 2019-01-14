@@ -116,10 +116,10 @@ export default class NoteDiseaseDtl extends Component {
     setDisease(){
    		var cur = this;
 		
-		if(this.state.type == ’INSERT’){
+		if(this.state.type == 'INSERT'){
 			cur.insertDisease();
 
-		}else if(this.state.type == ‘UPDATE’){
+		}else if(this.state.type == 'UPDATE'){
 			cur.updateDisease();
 		
 		}
