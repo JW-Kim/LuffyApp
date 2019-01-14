@@ -4,33 +4,63 @@ import React, {
 import {
     View,
     Text,
-	KeybordAvoidingView,
+	KeyboardAvoidingView,
 	ScrollView,
 	TextInput,
 	StyleSheet,
-	Dimensions
+	Dimensions,
+	AsyncStorage
 } from 'react-native';
 import ModalHeader from '../ModalHeader.js'
-
+import Toast from 'react-native-toast-native';
+import Constants from '../../Com/Constants.js'
 
 export default class NoteDiseaseDtl extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-
+		 	type : this.props.navigation.getParam('type'),            			noteId: this.props.navigation.getParam('noteId'),
+           diseaseDt: this.props.navigation.getParam('diseaseDt'),
         }
     }
 
     componentWillMount () {
-    }
+		AsyncStorage.getItem('access_token', (err, result) => {
+            this.setState({
+                token : result
+              }, () =>{
+                if(this.state.type == 'UPDATE'){
+                   /* fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary/'+this.state.diaryId,{
+                        headers: {
+                            'Authorization': 'Bearer '+this.state.token
+                        }
+                   })
+                        .then((response) => response.json())
+                        .then((res) => {
+                            console.log('res', res)
+                            this.setState({
+                                diseaseNm: res.data.diseaseNm,
+                                symptom: res.data.symptom,
+             						hospitalNm : res.data.hospitalNm,
+									prescription : res.data.prescription
+  					        })
+                        })
+                        .catch((error) => {
+                            Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+                            this.props.navigation.navigate('Login')
+                        }); */
+              		}
+              }) 
+        })    
+	}
 
     render(){
         return(
            <View style={{flex:1, backgroundColor:'white'}}>
            	<ModalHeader
                     title="질병 작성"
-                    goEvent={this.insertDisease.bind(this)}
+                    goEvent={this.setDisease.bind(this)}
                     buttonTitle={'글쓰기'}
               ></ModalHeader>
               <View style={{height:Dimensions.get('window').height-148}}>
@@ -83,8 +113,48 @@ export default class NoteDiseaseDtl extends Component {
         )
     }
     
-    insertDisease(){
-    }
+    setDisease(){
+   		var cur = this;
+		
+		if(this.state.type == ’INSERT’){
+			cur.insertDisease();
+
+		}else if(this.state.type == ‘UPDATE’){
+			cur.updateDisease();
+		
+		}
+	}
+
+	insertDisease(){
+		fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary/disease',{
+           method : 'POST',
+           headers:{
+               'Content-Type': 'application/json',
+               'Authorization': 'Bearer '+this.state.token
+           },
+           body: JSON.stringify({
+               noteId : this.state.noteId == null ? '' : this.state.noteId,
+               diseaseDt : this.state.diseaseDt == null ? '' : this.state.diseaseDt,
+               diseaseNm : this.state.diseaseNm == null ? '' : this.state.diseaseNm,
+               symptom : this.state.symptom == null ? '' : this.state.symptom,
+               hospitalNm : this.state.hospitalNm == null ? '' : this.state.hospitalNm,
+               prescription : this.state.prescription == null ? '' : this.state.prescription,
+            
+           })
+       })
+           .then((response) => response.json())
+           .then((responseJson) => {
+               Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+               let refreshFnc = this.props.navigation.getParam('refreshFnc');
+               refreshFnc();
+               this.props.navigation.goBack();
+               console.log(responseJson)
+           })
+           .catch((error) => {
+               Toast.show('정보 저장을 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+               this.props.navigation.navigate('Login')
+           });
+   	}
 }
 
 const styles = StyleSheet.create({
@@ -99,4 +169,4 @@ const styles = StyleSheet.create({
         borderRightWidth: 0.8,
         borderColor: '#ebe0eb'
     }
-}
+})
