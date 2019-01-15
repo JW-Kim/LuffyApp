@@ -64,7 +64,7 @@ export default class NoteDiseaseDtl extends Component {
                     buttonTitle={'글쓰기'}
               ></ModalHeader>
               <View style={{height:Dimensions.get('window').height-148}}>
-                  <KeyboardAvoidingView  behavior="padding" keyboardVerticalOffset={300}enabled>
+                  <KeyboardAvoidingView  behavior="padding" keyboardVerticalOffset={100}enabled>
               	  		<ScrollView style={{padding : 10}}>
                     		<View style={styles.checkContent}>
                             <Text style={{width: 70, fontSize: 15, fontWeight:'800'}}>병명</Text>
@@ -96,7 +96,7 @@ export default class NoteDiseaseDtl extends Component {
                                 ></TextInput>                             
                             </View>
                         	</View> 
-							<View style={[styles.checkContent, borderColor: '#ebe0eb', borderBottomWidth:0.8, height:200]}>
+							<View style={[styles.checkContent, {borderColor: '#ebe0eb', borderBottomWidth:0.8, height:200}]}>
                             <Text style={{width: 70, fontSize: 15, fontWeight:'800'}}>처방</Text>
                             <View style={{flex:1, flexDirection:'row', alignItems:'center', paddingLeft:50, paddingRight:20}}>
                                 <TextInput
