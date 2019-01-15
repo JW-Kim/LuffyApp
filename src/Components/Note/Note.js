@@ -281,7 +281,7 @@ export default class Note extends Component {
                     <ActionButton.Item buttonColor='#1abc9c' title="질병 작성"
                         onPress={()=> this.props.navigation.navigate('NoteDiseaseDtl', {  type:'INSERT',
                                                                                     noteId:this.state.noteId,
-                                                                                    diaryDt:this.state.diaryDt,
+                                                                                    diseaseDt:this.state.diaryDt,
                                                                                     refreshFnc:this.getNote.bind(this)})}>
                         <IonIcons name="md-create" style={styles.actionButtonIcon} />
                     </ActionButton.Item>
