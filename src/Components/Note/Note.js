@@ -163,9 +163,9 @@ export default class Note extends Component {
     }
 
     setDiseaseMarketDate(marketDateList, day){
-        let markedDates = this.state.markedDates;
+        let markedDates = new Object();
 
-        for(var i=; i<marketDateList.length; i++){
+        for(var i=0; i<marketDateList.length; i++){
              markedDates[""+marketDateList[i].diseaseDt+""]= {marked: true, selectedColor: '#5F9EA0'};
         }
 
