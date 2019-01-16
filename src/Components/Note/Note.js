@@ -132,12 +132,49 @@ export default class Note extends Component {
                         diary : res.data
                     })
                     this.setMarkedDate(res.data, this.state.selectedDay)
+                   // this.getMonthDisease(month);
                 }
             })
             .catch((error) => {
                Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
                this.props.navigation.navigate('Login')
             });
+    }
+
+    getMonthDisease(month){
+        fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary/diseaseMonth?noteId='+this.state.noteId+'&diseaseMonth='+month, {
+            headers: {
+                'Authorization': 'Bearer '+this.state.token
+            }
+        })
+            .then((response) => response.json())
+            .then((res) => {
+                if(!(_.isNil(res.data) || res.data == null)){
+                    this.setState({
+                        disease : res.data
+                    })
+                    this.setDiseaseMarketDate(res.data, this.state.selectedDay)
+                }
+            })
+            .catch((error) => {
+               Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+               //this.props.navigation.navigate('Login')
+            });
+    }
+
+    setDiseaseMarketDate(marketDateList, day){
+        let markedDates = this.state.markedDates;
+
+        for(var i=; i<marketDateList.length; i++){
+             markedDates[""+marketDateList[i].diseaseDt+""]= {marked: true, selectedColor: '#5F9EA0'};
+        }
+
+        markedDates = this.state.markedDates.concat(markedDates);
+        console.log('this.state.markedDates', this.state.markedDates, markedDates)
+        this.setState({
+            markedDates : markedDates,
+            loading : false
+        })
     }
 
     setMarkedDate(marketDateList, day){
@@ -162,8 +199,8 @@ export default class Note extends Component {
             markedDates : markedDates,
             selectedDay : day,
             selectedDiary : selectedDiary,
-            diaryDt : day,
-            loading : false
+            diaryDt : day
+
         })
     }
 
