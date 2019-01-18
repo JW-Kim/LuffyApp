@@ -133,7 +133,7 @@ export default class Note extends Component {
                     })
 					  this.getMonthDisease(month);
                }
-            })
+           })
             .catch((error) => {
                Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
                this.props.navigation.navigate('Login')
