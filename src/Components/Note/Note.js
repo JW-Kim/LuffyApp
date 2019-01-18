@@ -131,7 +131,8 @@ export default class Note extends Component {
                     this.setState({
                         diary : res.data
                     })
-                    this.setMarkedDate(res.data, this.state.selectedDay)
+                    //this.setMarkedDate(res.data, this.state.selectedDay)
+					  this.getMonthDisease(month);
                 }
             })
             .catch((error) => {
@@ -140,18 +141,51 @@ export default class Note extends Component {
             });
     }
 
+	getMonthDisease(month){
+		fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary/diseaseMonth?noteId='+this.state.noteId+'&diseaseMonth='+month, {
+            headers: {
+                'Authorization': 'Bearer '+this.state.token
+            }
+        })
+            .then((response) => response.json())
+            .then((res) => {
+                if(!(_.isNil(res.data) || res.data == null)){
+                    this.setState({
+                        disease : res.data
+                    })
+                    this.setMarkedDate(this.state.selectedDay)
+                }
+            })
+            .catch((error) => {
+               Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+               this.props.navigation.navigate('Login')
+            });
+	}
+
     setMarkedDate(marketDateList, day){
         let markedDates = new Object();
-        let todayYn = false;
         let selectedDiary = null;
-        for(var i=0; i<marketDateList.length; i++){
-            if(marketDateList[i].diaryDt == day){
-                markedDates[""+marketDateList[i].diaryDt+""]= {selected:true, marked: true, selectedColor: '#33d6ff'};
-                todayYn = true;
-                selectedDiary = marketDateList[i];
-            }else{
-                markedDates[""+marketDateList[i].diaryDt+""]= {marked: true, selectedColor: '#33d6ff'};
-            }
+
+		const diary = {key: 'diary', color: '#33d6ff'}		const disease = {key: 'disease', color: 'blue'}
+			
+        for(var i=0; i<this.state.diary.length; i++){
+            if(this.state.diary[i].diaryDt == day){
+            		selectedDiary = this.state.diary[i];
+					markedDates[""+this.state.diary[i].diaryDt+""]= {dots:[diary], selected:true, selectedColor: '#33d6ff'};
+
+           }else{
+					markedDates[""+this.state.diary[i].diaryDt+""]= {dots:[diary]};
+           }
+        }
+
+
+       for(var i=0; i<this.state.disease.length; i++){
+           if(_.isNil(markedDates[""+this.state.disease[i].diseaseDt+""])){
+					markedDates[""+this.state.disease[i].diseaseDt+""]= {dots:[disease]};
+
+           }else{
+					markedDates[""+this.state.disease[i].diseaseDt+""].dots.push(disease);
+           }
         }
 
         if(!todayYn){
