@@ -131,9 +131,8 @@ export default class Note extends Component {
                     this.setState({
                         diary : res.data
                     })
-                    //this.setMarkedDate(res.data, this.state.selectedDay)
 					  this.getMonthDisease(month);
-                }
+               }
             })
             .catch((error) => {
                Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
@@ -141,8 +140,8 @@ export default class Note extends Component {
             });
     }
 
-	getMonthDisease(month){
-		fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary/diseaseMonth?noteId='+this.state.noteId+'&diseaseMonth='+month, {
+    getMonthDisease(month){
+        fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary/diseaseMonth?noteId='+this.state.noteId+'&diseaseMonth='+month, {
             headers: {
                 'Authorization': 'Bearer '+this.state.token
             }
@@ -153,8 +152,9 @@ export default class Note extends Component {
                     this.setState({
                         disease : res.data
                     })
+
                     this.setMarkedDate(this.state.selectedDay)
-                }
+               }
             })
             .catch((error) => {
                Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
@@ -188,16 +188,12 @@ export default class Note extends Component {
            }
         }
 
-        if(!todayYn){
-            markedDates[""+day+""]= {selected:true};
-        }
-
         this.setState({
             markedDates : markedDates,
             selectedDay : day,
             selectedDiary : selectedDiary,
-            diaryDt : day,
-            loading : false
+            diaryDt : day
+
         })
     }
 
@@ -315,7 +311,7 @@ export default class Note extends Component {
                     <ActionButton.Item buttonColor='#1abc9c' title="질병 작성"
                         onPress={()=> this.props.navigation.navigate('NoteDiseaseDtl', {  type:'INSERT',
                                                                                     noteId:this.state.noteId,
-                                                                                    diaryDt:this.state.diaryDt,
+                                                                                    diseaseDt:this.state.diaryDt,
                                                                                     refreshFnc:this.getNote.bind(this)})}>
                         <IonIcons name="md-create" style={styles.actionButtonIcon} />
                     </ActionButton.Item>
