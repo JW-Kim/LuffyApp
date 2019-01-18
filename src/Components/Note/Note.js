@@ -192,8 +192,8 @@ export default class Note extends Component {
             markedDates : markedDates,
             selectedDay : day,
             selectedDiary : selectedDiary,
-            diaryDt : day
-
+            diaryDt : day,
+			 loading : false	
         })
     }
 
