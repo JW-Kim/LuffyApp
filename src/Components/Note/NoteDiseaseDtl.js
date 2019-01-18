@@ -15,6 +15,20 @@ import ModalHeader from '../ModalHeader.js'
 import Toast from 'react-native-toast-native';
 import Constants from '../../Com/Constants.js'
 
+const toastStyle = {
+    backgroundColor: "#acacac",
+    width: 300,
+    height: 100,
+    color: "#ffffff",
+    fontSize: 15,
+    lineHeight: 2,
+    lines: 4,
+    borderRadius: 15,
+    fontWeight: "bold",
+    yOffset: 40,
+    opacity: 0.8
+}
+
 export default class NoteDiseaseDtl extends Component {
 
     constructor(props) {
