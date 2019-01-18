@@ -166,7 +166,7 @@ export default class Note extends Component {
         let markedDates = new Object();
         let selectedDiary = null;
 
-		const diary = {key: 'diary', color: '#33d6ff'}		const disease = {key: 'disease', color: 'blue'}
+		const diary = {key: 'diary', color: '#33d6ff'};		const disease = {key: 'disease', color: 'blue'};
 			
         for(var i=0; i<this.state.diary.length; i++){
             if(this.state.diary[i].diaryDt == day){
@@ -293,6 +293,7 @@ export default class Note extends Component {
                     // Handler which gets executed when press arrow icon left. It receive a callback can go next month
                     onPressArrowRight={addMonth => addMonth()}
                     markedDates={this.state.markedDates}
+					  markingType={'multi-dot'}	
                 />
                 {this.state.selectedDiary == null ? <View><Text></Text></View> :
                 (
