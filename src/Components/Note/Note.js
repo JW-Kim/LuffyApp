@@ -7,7 +7,8 @@ import {
     StyleSheet,
     ActivityIndicator,
     TouchableOpacity,
-    ScrollView
+    ScrollView,
+	FlatList
 } from 'react-native';
 import {
     Calendar,
@@ -22,6 +23,7 @@ import IonIcons from 'react-native-vector-icons/Ionicons';
 import Constants from '../../Com/Constants.js'
 import ImageView from '../ImageView.js'
 import NoteDiary from './NoteDiary.js'
+import NoteDisease from './NoteDisease.js'
 import Toast from 'react-native-toast-native';
 
 const toastStyle = {
@@ -165,8 +167,10 @@ export default class Note extends Component {
     setMarkedDate(marketDateList, day){
         let markedDates = new Object();
         let selectedDiary = null;
+		 let selectedDiseaseList = [];	
 
-		const diary = {key: 'diary', color: '#33d6ff'};		const disease = {key: 'disease', color: 'blue'};
+		const diary = {key: 'diary', color: '#33d6ff'};
+		const disease = {key: 'disease', color: 'blue'};
 			
         for(var i=0; i<this.state.diary.length; i++){
             if(this.state.diary[i].diaryDt == day){
@@ -181,10 +185,22 @@ export default class Note extends Component {
 
        for(var i=0; i<this.state.disease.length; i++){
            if(_.isNil(markedDates[""+this.state.disease[i].diseaseDt+""])){
+					
+				if(this.state.disease[i].diseaseDt == day){
+					selectedDiseaseList.push(this.state.disease[i]);
+					markedDates[""+this.state.disease[i].diseaseDt+""]= {dots:[disease], selected:true, selectedColor: '#33d6ff'};
+						
+				}else{
+				
 					markedDates[""+this.state.disease[i].diseaseDt+""]= {dots:[disease]};
-
+				}
+				
            }else{
-					markedDates[""+this.state.disease[i].diseaseDt+""].dots.push(disease);
+				if(this.state.disease[i].diseaseDt == day){
+					selectedDiseaseList.push(this.state.disease[i]);
+				}
+				
+	markedDates[""+this.state.disease[i].diseaseDt+""].dots.push(disease);
            }
         }
 
@@ -192,6 +208,7 @@ export default class Note extends Component {
             markedDates : markedDates,
             selectedDay : day,
             selectedDiary : selectedDiary,
+			 selectedDiseaseList : selectedDiseaseList,
             diaryDt : day,
 			 loading : false	
         })
@@ -201,7 +218,9 @@ export default class Note extends Component {
         var cur = this;
         if(!_.isNil(this.state.markedDates)){
             cur.setState({
-                selectedDiary : null
+                selectedDiary : null,
+				  selectedDiseaseList : []	
+
             }, ()=>{
                 cur.setMarkedDate(cur.state.diary, day.dateString)
             })
@@ -306,6 +325,23 @@ export default class Note extends Component {
                         openDiaryDtl = {this.openDiaryDtl.bind(this)}
                     ></NoteDiary>
                 </View>)}
+				  {this.state.selectedDiseaseList == null ? <View><Text></Text></View> :
+				  (<FlatList
+				  	data = {this.state.selectedDiseaseList}					keyExtrctor ={(item, index) => index.toString()}
+					renderItem = {({item}) =>
+						<View style={{marginTop:10}}>
+							<NoteDisease
+								diseaseId = {item.diseaseId}
+								diseaseNm = {item.diseaseNm}
+								symptom = {item.symptom}
+								hospitalNm = {item.hospitalNm}
+								prescription = {item.prescription}
+							></NoteDisease>
+						</View>
+					}
+					
+					/>)}	
+
                 </ScrollView>
                 
 				<ActionButton buttonColor="rgba(231,76,60,1)" offsetY={40}>
