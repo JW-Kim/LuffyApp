@@ -234,8 +234,19 @@ export default class Note extends Component {
         this.props.navigation.navigate('DiaryDtl', {   type:'UPDATE',
                                                         diaryId:this.state.selectedDiary.diaryId,
                                                         noteId:this.state.noteId,
-                                                        refreshFnc:this.getNote.bind(this)})
+                                                        
+refreshFnc:this.getNote.bind(this)})
     }
+
+    openDiseaseDtl(diseaseId){
+        this.props.navigation.navigate('NoteDiseaseDtl', {   type:'UPDATE',
+                                                        diseaseId:diseaseId,
+											diseaseDt : this.state.diaryDt,	
+                                                        noteId:this.state.noteId,
+                                                        
+refreshFnc:this.getNote.bind(this)})
+    }
+
 
     changeNote(noteId){
        this.setState({
@@ -327,7 +338,8 @@ export default class Note extends Component {
                 </View>)}
 				  {this.state.selectedDiseaseList == null ? <View><Text></Text></View> :
 				  (<FlatList
-				  	data = {this.state.selectedDiseaseList}					keyExtrctor ={(item, index) => index.toString()}
+				  	data = {this.state.selectedDiseaseList}
+					keyExtrctor ={(item, index) => index.toString()}
 					renderItem = {({item}) =>
 						<View style={{marginTop:10}}>
 							<NoteDisease
@@ -336,6 +348,8 @@ export default class Note extends Component {
 								symptom = {item.symptom}
 								hospitalNm = {item.hospitalNm}
 								prescription = {item.prescription}
+								openDiseaseDtl = {this.openDiseaseDtl.bind(this)}
+
 							></NoteDisease>
 						</View>
 					}

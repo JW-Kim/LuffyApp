@@ -36,6 +36,8 @@ export default class NoteDiseaseDtl extends Component {
         this.state = {
 		 	type : this.props.navigation.getParam('type'),            			noteId: this.props.navigation.getParam('noteId'),
            diseaseDt: this.props.navigation.getParam('diseaseDt'),
+           diseaseId: this.props.navigation.getParam('diseaseId'),
+
         }
     }
 
@@ -45,7 +47,7 @@ export default class NoteDiseaseDtl extends Component {
                 token : result
               }, () =>{
                 if(this.state.type == 'UPDATE'){
-                   /* fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary/'+this.state.diaryId,{
+                  fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary/disease'+this.state.diseaseId,{
                         headers: {
                             'Authorization': 'Bearer '+this.state.token
                         }
@@ -63,7 +65,7 @@ export default class NoteDiseaseDtl extends Component {
                         .catch((error) => {
                             Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
                             this.props.navigation.navigate('Login')
-                        }); */
+                        }); 
               		}
               }) 
         })    

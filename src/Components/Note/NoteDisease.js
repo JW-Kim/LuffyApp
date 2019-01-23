@@ -30,8 +30,8 @@ export default class NoteDisease extends Component {
         }
     }
 
-	openDiaryDtl(){
-        this.props.openDiaryDtl();
+	openDiseaseDtl(){
+        this.props.openDiseaseDtl(this.props.diseaseId);
     }
 
     render(){
@@ -89,7 +89,7 @@ export default class NoteDisease extends Component {
         _renderContent = section => {
             return (
                 <View style={styles.content}>
-                    <TouchableOpacity activeOpacity={0.9} onPress={() => this.openDiaryDtl()}>
+                    <TouchableOpacity activeOpacity={0.9} onPress={() => this.openDiseaseDtl()}>
                         <View style={{margin:15}}>
 							   <View style={{flexDirection:'row'}}>
                                 <Text>병명 : </Text>
