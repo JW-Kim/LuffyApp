@@ -47,7 +47,7 @@ export default class NoteDiseaseDtl extends Component {
                 token : result
               }, () =>{
                 if(this.state.type == 'UPDATE'){
-                  fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary/disease'+this.state.diseaseId,{
+                  fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary/disease/'+this.state.diseaseId,{
                         headers: {
                             'Authorization': 'Bearer '+this.state.token
                         }
