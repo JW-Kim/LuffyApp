@@ -93,19 +93,19 @@ export default class NoteDisease extends Component {
                         <View style={{margin:15}}>
 							   <View style={{flexDirection:'row'}}>
                                 <Text>병명 : </Text>
-                                <Text>{this.state.diseaseNm}</Text>
+                                <Text>{this.props.diseaseNm}</Text>
                             </View>
 							   <View style={{flexDirection:'row'}}>
                                 <Text>증상 : </Text>
-                                <Text>{this.state.symptom}</Text>
+                                <Text>{this.props.symptom}</Text>
                             </View>
 							   <View style={{flexDirection:'row'}}>
                                 <Text>병원명 : </Text>
-                                <Text>{this.state.hospitalNm}</Text>
+                                <Text>{this.props.hospitalNm}</Text>
                             </View>
 							   <View style={{flexDirection:'row'}}>
                                 <Text>처방 : </Text>
-                                <Text>{this.state.prescription}</Text>
+                                <Text>{this.props.prescription}</Text>
                             </View>
                         </View>
                    </TouchableOpacity>
