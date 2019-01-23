@@ -141,7 +141,8 @@ export default class NoteDiseaseDtl extends Component {
 		}
 	}
 
-	insertDisease(){
+	
+insertDisease(){
 		fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary/disease',{
            method : 'POST',
            headers:{
@@ -171,6 +172,40 @@ export default class NoteDiseaseDtl extends Component {
                this.props.navigation.navigate('Login')
            });
    	}
+
+
+updateDisease(){
+		fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary/disease/'+this.state.diseaseId,{
+           method : 'POST',
+           headers:{
+               'Content-Type': 'application/json',
+               'Authorization': 'Bearer '+this.state.token
+           },
+           body: JSON.stringify({
+               noteId : this.state.noteId == null ? '' : this.state.noteId,
+               diseaseDt : this.state.diseaseDt == null ? '' : this.state.diseaseDt,
+               diseaseNm : this.state.diseaseNm == null ? '' : this.state.diseaseNm,
+               symptom : this.state.symptom == null ? '' : this.state.symptom,
+               hospitalNm : this.state.hospitalNm == null ? '' : this.state.hospitalNm,
+               prescription : this.state.prescription == null ? '' : this.state.prescription,
+            
+           })
+       })
+           .then((response) => response.json())
+           .then((responseJson) => {
+               Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+               let refreshFnc = this.props.navigation.getParam('refreshFnc');
+               refreshFnc();
+               this.props.navigation.goBack();
+               console.log(responseJson)
+           })
+           .catch((error) => {
+               Toast.show('정보 저장을 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+               this.props.navigation.navigate('Login')
+           });
+   	}
+
+
 }
 
 const styles = StyleSheet.create({
