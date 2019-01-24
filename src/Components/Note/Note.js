@@ -339,7 +339,7 @@ refreshFnc:this.getNote.bind(this)})
 				  {this.state.selectedDiseaseList == null ? <View><Text></Text></View> :
 				  (<FlatList
 				  	data = {this.state.selectedDiseaseList}
-					keyExtrctor ={(item, index) => index.toString()}
+					keyExtractor ={(item, index) => index.toString()}
 					renderItem = {({item}) =>
 						<View style={{marginTop:10}}>
 							<NoteDisease
