@@ -24,6 +24,8 @@ import Constants from '../../Com/Constants.js'
 import ImageView from '../ImageView.js'
 import NoteDiary from './NoteDiary.js'
 import NoteDisease from './NoteDisease.js'
+import Header from '../Frame/Header.js'
+
 import Toast from 'react-native-toast-native';
 
 const toastStyle = {
@@ -234,17 +236,15 @@ export default class Note extends Component {
         this.props.navigation.navigate('DiaryDtl', {   type:'UPDATE',
                                                         diaryId:this.state.selectedDiary.diaryId,
                                                         noteId:this.state.noteId,
-                                                        
-refreshFnc:this.getNote.bind(this)})
+                                                        refreshFnc:this.getNote.bind(this)})
     }
 
     openDiseaseDtl(diseaseId){
         this.props.navigation.navigate('NoteDiseaseDtl', {   type:'UPDATE',
                                                         diseaseId:diseaseId,
-											diseaseDt : this.state.diaryDt,	
-                                                        noteId:this.state.noteId,
-                                                        
-refreshFnc:this.getNote.bind(this)})
+												diseaseDt : this.state.diaryDt,
+                                                        noteId:this.state.noteId,                                                     
+												refreshFnc:this.getNote.bind(this)})
     }
 
 
@@ -268,6 +268,10 @@ refreshFnc:this.getNote.bind(this)})
 
     render(){
         return(
+			<View style={{backgroundColor:'white', flex:1}}
+			 <Header navigation={this.props.navigation}
+			 </Header>	
+
             <View style={{backgroundColor:'white', padding:10, flex:1}}>
                 <NavigationEvents
                     onWillFocus={payload => {
@@ -278,6 +282,7 @@ refreshFnc:this.getNote.bind(this)})
                 <View style={{marginTop: 10, marginLeft:15, height:50}}>
                 { this.state.note == null ? <Text></Text> :
                     <Picker
+						   mode='dropdown'	
                         selectedValue={this.state.noteId}
                         style={{height:50, width:200, color:'#000'}}
                         onValueChange={(itemValue, itemIndex) => this.changeNote(itemValue)}
@@ -381,6 +386,8 @@ refreshFnc:this.getNote.bind(this)})
                     </View>
                 }
             </View>
+
+			</View>
         )
     }
 }

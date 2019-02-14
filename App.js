@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { View, Text } from 'react-native';
-import { createStackNavigator, createMaterialTopTabNavigator } from 'react-navigation';
+import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import Modal from './src/Components/Modal.js'
 import Login from './src/Components/Login.js'
 import Home from './src/Components/Home.js'
@@ -11,8 +11,10 @@ import Detail from './src/Components/Detail.js'
 import Note from './src/Components/Note/Note.js'
 import NoteStatics from './src/Components/Note/NoteStatics.js'
 import NoteDiseaseDtl from './src/Components/Note/NoteDiseaseDtl.js'
+import NoteSetting from './src/Components/Setting/Note.js'
+import Setting from './src/Components/Setting/Setting.js'
 
-const MainStack = createMaterialTopTabNavigator(
+const MainStack = createBottomTabNavigator(
     {
         Note: Note,
         NoteStatics : NoteStatics
@@ -31,16 +33,15 @@ const MainStack = createMaterialTopTabNavigator(
                 shadowRadius: 0,
                 shadowOffset: {
                     height: 0,
-                }
+                },
+				  height: 40
             },
             labelStyle : {
-                fontSize: 17,
-                fontWeight: 'bold',
+                fontSize: 12,
+                //fontWeight: 'bold',
                 color : '#000'
             },
-            indicatorStyle :{
-                backgroundColor: '#ff3399'
-            }
+			 activeBackgroundColor : '#ff3399' 
        },
        lazy : true
     }
@@ -62,7 +63,13 @@ const RootStack = createStackNavigator(
     },
     NoteDiseaseDtl : {
         screen : NoteDiseaseDtl
-    }        
+    },
+	NoteSetting : {
+		screen : NoteSetting
+	},
+	Setting : {
+		screen : Setting
+    }    
   },
   {
     initialRouteName : 'Login',
