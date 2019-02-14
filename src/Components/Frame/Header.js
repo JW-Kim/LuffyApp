@@ -37,7 +37,7 @@ export default class Header extends Component {
 							dropdownTextStyle={{fontSize:14, color:'#000'}}
 							dropdownStyle={{height:80}}
 							options={['일기장','설정']}
-							showVerticalScrollIndicator={false}
+							showsVerticalScrollIndicator={false}
 							onSelect={(index,value) => this.chgSetting(value)}
 						/>					
 					</View>
