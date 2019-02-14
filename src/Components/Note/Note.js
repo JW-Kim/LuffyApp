@@ -268,8 +268,8 @@ export default class Note extends Component {
 
     render(){
         return(
-			<View style={{backgroundColor:'white', flex:1}}
-			 <Header navigation={this.props.navigation}
+			<View style={{backgroundColor:'white', flex:1}}>
+			 <Header navigation={this.props.navigation}>
 			 </Header>	
 
             <View style={{backgroundColor:'white', padding:10, flex:1}}>
@@ -344,7 +344,7 @@ export default class Note extends Component {
 				  {this.state.selectedDiseaseList == null ? <View><Text></Text></View> :
 				  (<FlatList
 				  	data = {this.state.selectedDiseaseList}
-					keyExtractor ={(item, index) => index.toString()}
+					keyExtrctor ={(item, index) => index.toString()}
 					renderItem = {({item}) =>
 						<View style={{marginTop:10}}>
 							<NoteDisease
