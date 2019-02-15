@@ -34,7 +34,7 @@ export default class Note extends Component {
 				<ModalHeader
 					title='My 일기장'
 					buttonTitle={'닫기'}
-					goEvent={this.closePopup.bind()this}
+					goEvent={this.closePopup.bind(this)}
 				> 
 				</ModalHeader>
 				<View style={{flex:1, padding:10}}>
