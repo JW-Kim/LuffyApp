@@ -4,10 +4,10 @@ import React, {
 import {
     View,
     Text,
-	StyleSheet
+	StyleSheet,
 	FlatList,
 	TouchableOpacity,
-	ScrollViewl
+	ScrollView
 } from 'react-native';
 import ModalHeader from '../ModalHeader.js'
 
@@ -39,7 +39,8 @@ export default class Note extends Component {
 				</ModalHeader>
 				<View style={{flex:1, padding:10}}>
 					<View style={{flex:0.5}}>
-						<Text style={{fontSize:17}}></Text>						<ScrollView style={{marginTop:10}}>
+						<Text style={{fontSize:17}}></Text>
+						<ScrollView style={{marginTop:10}}>
 							<FlatList
 								data={this.state.myNoteList}
 								keyExtractor={(item, index) => index.toString()}
