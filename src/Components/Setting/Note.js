@@ -7,9 +7,12 @@ import {
 	StyleSheet,
 	FlatList,
 	TouchableOpacity,
-	ScrollView
+	ScrollView,
+	AsyncStorage
 } from 'react-native';
-import ModalHeader from '../ModalHeader.js'
+import ModalHeader from '../ModalHeader.js';
+import Constants from '../../Com/Constants.js';
+import Toast from 'react-native-toast-native';
 
 export default class Note extends Component {
 
@@ -26,6 +29,35 @@ export default class Note extends Component {
 		this.setState({
 			myNoteList : myNoteList
 		})
+	}
+
+	getMyNoteList() {
+		AsyncStorage.getItem('access_token', (err, result) => {
+                cur.setState({
+                    token : result,
+                    loading : true
+                }, () =>{
+                    fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/note', {
+                        headers: {
+                            'Authorization': 'Bearer '+cur.state.token
+                        }
+                    })
+                        .then((response) => response.json())
+                        .then((res) => {
+                            cur.setState({
+                                MyNoteList : res.data
+
+                            }, ()=>{
+
+                            })
+                        })
+                        .catch((error) => {
+                           Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+                           this.props.navigation.navigate('Login')
+                        });
+
+                })
+
 	}
 
     render(){
