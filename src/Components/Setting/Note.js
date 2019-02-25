@@ -44,7 +44,7 @@ export default class Note extends Component {
                         .then((response) => response.json())
                         .then((res) => {
                             cur.setState({
-                                MyNoteList : res.data
+                                myNoteList : res.data
 
                             }, ()=>{
 
