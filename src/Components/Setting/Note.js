@@ -58,6 +58,7 @@ export default class Note extends Component {
 
                 })
 
+		})
 	}
 
     render(){
