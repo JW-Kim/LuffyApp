@@ -29,6 +29,8 @@ export default class Note extends Component {
 	}
 
 	getMyNoteList() {
+		var cur = this;
+
 		AsyncStorage.getItem('access_token', (err, result) => {
                 cur.setState({
                     token : result,
