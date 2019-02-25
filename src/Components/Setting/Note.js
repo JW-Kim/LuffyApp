@@ -24,11 +24,8 @@ export default class Note extends Component {
     }
 
     componentWillMount () {
-		let myNoteList = [{noteNm:'김재윤'},{noteNm:'김정우'}]    
-
-		this.setState({
-			myNoteList : myNoteList
-		})
+		this.getMyNoteList();
+	
 	}
 
 	getMyNoteList() {
