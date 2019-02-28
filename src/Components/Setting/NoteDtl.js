@@ -78,7 +78,7 @@ export default class NoteDtl extends Component {
            <View style={{flex:1, backgroundColor:'white'}}>
            	<ModalHeader
                     title="노트 작성"
-                    goEvent={this.setDisease.bind(this)}
+                    goEvent={this.setNote.bind(this)}
                     buttonTitle={'글쓰기'}
               ></ModalHeader>
               <View style={{height:Dimensions.get('window').height-148}}>
