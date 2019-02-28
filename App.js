@@ -12,6 +12,7 @@ import Note from './src/Components/Note/Note.js'
 import NoteStatics from './src/Components/Note/NoteStatics.js'
 import NoteDiseaseDtl from './src/Components/Note/NoteDiseaseDtl.js'
 import NoteSetting from './src/Components/Setting/Note.js'
+import NoteSettingDtl from './src/Components/Setting/NoteDtl.js'
 import Setting from './src/Components/Setting/Setting.js'
 
 const MainStack = createBottomTabNavigator(
@@ -66,6 +67,9 @@ const RootStack = createStackNavigator(
     },
 	NoteSetting : {
 		screen : NoteSetting
+	},
+	NoteSettingDtl : {
+		screen : NoteSettingDtl
 	},
 	Setting : {
 		screen : Setting

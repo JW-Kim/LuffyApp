@@ -13,6 +13,7 @@ import {
 import ModalHeader from '../ModalHeader.js';
 import Constants from '../../Com/Constants.js';
 import Toast from 'react-native-toast-native';
+import Icons from 'react-native-vector-icons/FontAwesome';
 
 export default class Note extends Component {
 
@@ -71,7 +72,14 @@ export default class Note extends Component {
 				</ModalHeader>
 				<View style={{flex:1, padding:10}}>
 					<View style={{flex:0.5}}>
-						<Text style={{fontSize:17}}></Text>
+						<View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+							<Text style={{fontSize:17}}>내 소유 일기장</Text>
+							<TouchableOpacity style={{width:50, right:0, alignItems:'center'}}
+								onPress={this.openNoteDtl.bind(this)}
+							>
+								<Icons name='plus' color='#00cc00' size={17}/>
+							</TouchableOpacity>
+						</View>
 						<ScrollView style={{marginTop:10}}>
 							<FlatList
 								data={this.state.myNoteList}
@@ -93,6 +101,13 @@ export default class Note extends Component {
 			</View>   
         )
     }
+
+	openNoteDtl(){
+		this.props.navigation.navigate('NoteSettingDtl',{
+			type : 'INSERT',
+			refreshFnc : this.getMyNoteList.bind(this)
+		})
+	}
 
 	closePopup(){
 		this.props.navigation.goBack();
