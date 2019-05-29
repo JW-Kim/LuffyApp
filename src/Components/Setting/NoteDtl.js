@@ -36,7 +36,8 @@ export default class NoteDtl extends Component {
     constructor(props) {
         super(props);
         this.state = {
-		 	type : this.props.navigation.getParam('type'),            			noteId: this.props.navigation.getParam('noteId'),
+		 	type : this.props.navigation.getParam('type'),
+		 	noteId: this.props.navigation.getParam('noteId'),
         	noteNm : null,  
 			sex : null,
 			birthDt : null	
