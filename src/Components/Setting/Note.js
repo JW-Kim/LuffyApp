@@ -218,8 +218,8 @@ export default class Note extends Component {
 					</View>
 					<View style={{flex:0.5}}>
 						<Text style={{fontSize:17}}>공유 일기장</Text>
-					</View>
-					<ScrollView style={{marginTop:10}}>
+
+					    <ScrollView style={{marginTop:10}}>
                     							<FlatList
                     								data={this.state.shareList}
                     								keyExtractor={(item, index) => index.toString()}
@@ -243,7 +243,7 @@ export default class Note extends Component {
                     								}
                     							/>
                     						</ScrollView>
-
+                    </View>
 				</View>
 			</View>   
         )
