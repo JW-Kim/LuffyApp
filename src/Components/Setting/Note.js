@@ -39,7 +39,7 @@ export default class Note extends Component {
         }
 
         let deleteMyNote = this.deleteMyNote.bind(this);
-        let deletShareNote = this.deleteShareNote.bind(this);
+        let deleteShareNote = this.deleteShareNote.bind(this);
     }
 
     componentWillMount () {
@@ -112,7 +112,7 @@ export default class Note extends Component {
 		})
 	}
 
-	deleteMyNote() {
+	deleteMyNote(noteId) {
 		var cur = this;
 		AsyncStorage.getItem('access_token', (err, result) => {
                 cur.setState({
@@ -141,7 +141,7 @@ export default class Note extends Component {
 		})
 	}
 
-    deleteShareNote() {
+    deleteShareNote(noteId) {
 		var cur = this;
 		AsyncStorage.getItem('access_token', (err, result) => {
                 cur.setState({
