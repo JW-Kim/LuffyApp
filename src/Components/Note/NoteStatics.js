@@ -13,18 +13,16 @@ export default class NoteStatics extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-
-        }
+        this.state = {}
     }
 
-    componentWillMount () {
+    componentWillMount() {
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <WebView
-                source={{uri:'http://58.141.217.15:8000/#/noteStatics'}}
+                source={{uri: 'http://58.141.217.15:8000/#/noteStatics'}}
             />
         )
     }

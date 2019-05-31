@@ -16,32 +16,32 @@ export default class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username : null,
-            password : null
+            username: null,
+            password: null
         }
     }
 
     componentDidMount() {
         AsyncStorage.getItem('access_token', (err, result) => {
 
-            if(!_.isNil(result)){
+            if (!_.isNil(result)) {
                 const token = JWT_decode(result);
 
                 let now = new Date();
 
-                if(now > new Date(token.exp  * 1000) ){
-                    AsyncStorage.removeItem('access_token', (err, result) =>{
+                if (now > new Date(token.exp * 1000)) {
+                    AsyncStorage.removeItem('access_token', (err, result) => {
 
                     })
-                }else{
+                } else {
                     this.props.navigation.navigate('Main')
                 }
             }
         });
     }
 
-    login(){
-       fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/login?username='+encodeURI(this.state.username)+'&password='+encodeURI(this.state.password))
+    login() {
+        fetch('http://' + Constants.HOST + ':' + Constants.PORT + '/product/login?username=' + encodeURI(this.state.username) + '&password=' + encodeURI(this.state.password))
             .then((response) => response.json())
             .then((res) => {
                 console.log('res', res)
@@ -55,17 +55,17 @@ export default class Login extends Component {
             });
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <View style={{
-                flex:1,
-                flexDirection : 'column',
-                justifyContent : 'center',
-                backgroundColor : '#fff'
-             }}>
+                flex: 1,
+                flexDirection: 'column',
+                justifyContent: 'center',
+                backgroundColor: '#fff'
+            }}>
                 <View style={{
-                    height : 300,
-                    alignItems:'center'
+                    height: 300,
+                    alignItems: 'center'
                 }}>
                     <Image
                         style={{width: 50}}
@@ -73,30 +73,30 @@ export default class Login extends Component {
                     />
                 </View>
                 <View style={{
-                    height : 100,
-                    alignItems:'center'
+                    height: 100,
+                    alignItems: 'center'
                 }}>
                     <TextInput
                         style={{
-                            width:150
+                            width: 150
                         }}
                         onChangeText={(username) => this.setState({username})}
                         value={this.state.username}
                     />
                     <TextInput
                         style={{
-                            width:150
+                            width: 150
                         }}
                         onChangeText={(password) => this.setState({password})}
                         value={this.state.password}
                     />
                     <Button
                         buttonStyle={{
-                            width:150,
-                            backgroundColor:'#000',
-                            height:36
+                            width: 150,
+                            backgroundColor: '#000',
+                            height: 36
                         }}
-                        textStyle={{color:'#fff'}}
+                        textStyle={{color: '#fff'}}
                         title='로그인'
                         onPress={this.login.bind(this)}
                     />

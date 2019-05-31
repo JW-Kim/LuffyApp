@@ -19,7 +19,7 @@ import {
     Icon,
     Button
 } from 'react-native-elements';
-import { NavigationEvents } from "react-navigation";
+import {NavigationEvents} from "react-navigation";
 import ActionButton from 'react-native-action-button';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
@@ -59,9 +59,9 @@ export default class Home extends Component {
         super(props);
         this.state = {
             modalVisible: false,
-            diaryList : [],
-            token : null,
-            noteId : null,
+            diaryList: [],
+            token: null,
+            noteId: null,
 
         }
     }
@@ -70,7 +70,7 @@ export default class Home extends Component {
 
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         BackHandler.removeEventListener('handleBackPress', this.handleBackPress);
     }
 
@@ -78,62 +78,62 @@ export default class Home extends Component {
         this.selectDiaryList();
     }
 
-    selectNoteList(){
+    selectNoteList() {
         var cur = this;
-        if(_.isNil(this.state.noteId)){
+        if (_.isNil(this.state.noteId)) {
             AsyncStorage.getItem('access_token', (err, result) => {
                 this.setState({
-                    token : result,
-                    loading : true
-                  }, () =>{
+                    token: result,
+                    loading: true
+                }, () => {
                     BackHandler.addEventListener('handleBackPress', this.handleBackPress);
 
-                    fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/note', {
-                            headers: {
-                                'Authorization': 'Bearer '+cur.state.token
-                            }
-                        })
-                            .then((response) => response.json())
-                            .then((res) => {
-                                cur.setState({
-                                    note : res.data,
-                                    noteId : res.data[0].noteId
-                                }, ()=>{
-                                    this.selectDiaryList();
-                                })
+                    fetch('http://' + Constants.HOST + ':' + Constants.PORT + '/product/note', {
+                        headers: {
+                            'Authorization': 'Bearer ' + cur.state.token
+                        }
+                    })
+                        .then((response) => response.json())
+                        .then((res) => {
+                            cur.setState({
+                                note: res.data,
+                                noteId: res.data[0].noteId
+                            }, () => {
+                                this.selectDiaryList();
                             })
+                        })
 
-                            .catch((error) => {
-                                Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
-                                this.props.navigation.navigate('Login')
-                            });
-                  })
+                        .catch((error) => {
+                            Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+                            this.props.navigation.navigate('Login')
+                        });
+                })
             })
-        }else{
+        } else {
             this.setState({
-                loading : true
+                loading: true
             })
             this.selectDiaryList();
         }
 
     }
 
-    selectDiaryList(){
+    selectDiaryList() {
         this.setState({
-            diaryList : []
-        }, () =>{
+            diaryList: []
+        }, () => {
             console.log('Constants', Constants)
-            fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary?noteId='+this.state.noteId,{
-                 headers: {
-                     'Authorization': 'Bearer '+this.state.token,
-                 }
+            fetch('http://' + Constants.HOST + ':' + Constants.PORT + '/product/diary?noteId=' + this.state.noteId, {
+                headers: {
+                    'Authorization': 'Bearer ' + this.state.token,
+                }
             })
                 .then((response) => response.json())
                 .then((res) => {
                     console.log(res);
                     this.setState({
-                        diaryList : res.data,
-                        loading : false
+                        diaryList: res.data,
+                        loading: false
                     })
                 })
                 .catch((error) => {
@@ -143,19 +143,20 @@ export default class Home extends Component {
         })
     }
 
-    changeNote(noteId){
+    changeNote(noteId) {
         this.setState({
-            noteId : noteId
-        }, ()=>{
+            noteId: noteId
+        }, () => {
             this.selectDiaryList();
         })
     }
 
-    renderNote(){
+    renderNote() {
         const note = [];
-        if(!_.isNil(this.state.note)){
-            for(let i=0; i<this.state.note.length; i++){
-                 note.push(<Picker.Item label={this.state.note[i].noteNm} key={this.state.note[i].noteId} value={this.state.note[i].noteId}/>);
+        if (!_.isNil(this.state.note)) {
+            for (let i = 0; i < this.state.note.length; i++) {
+                note.push(<Picker.Item label={this.state.note[i].noteNm} key={this.state.note[i].noteId}
+                                       value={this.state.note[i].noteId}/>);
             }
         }
         return note;
@@ -163,71 +164,85 @@ export default class Home extends Component {
 
     render() {
         return (
-            <View style={{flex:1, backgroundColor:'#fff'}}>
+            <View style={{flex: 1, backgroundColor: '#fff'}}>
                 <NavigationEvents
                     onWillFocus={payload => {
                         this.selectNoteList();
                         console.log("will focus", payload);
                     }}
                 />
-                <View style={{marginTop: 20, marginLeft:15, height:50}}>
-                { this.state.note == null ? <Text></Text> :
-                    <Picker
-                        selectedValue={this.state.noteId}
-                        style={{height:50, width:200, color:'#000'}}
-                        onValueChange={(itemValue, itemIndex) => this.changeNote(itemValue)}
-                    >
-                        {this.renderNote()}
-                    </Picker>
-                }
+                <View style={{marginTop: 20, marginLeft: 15, height: 50}}>
+                    {this.state.note == null ? <Text></Text> :
+                        <Picker
+                            selectedValue={this.state.noteId}
+                            style={{height: 50, width: 200, color: '#000'}}
+                            onValueChange={(itemValue, itemIndex) => this.changeNote(itemValue)}
+                        >
+                            {this.renderNote()}
+                        </Picker>
+                    }
                 </View>
                 <ScrollView>
                     <FlatList
                         data={this.state.diaryList}
                         keyExtractor={(item, index) => index.toString()}
                         renderItem={({item}) =>
-                            <Card containerStyle={{padding:0, paddingTop:15, paddingBottom:15,borderWidth: 1, backgroundColor: '#ebe0eb', borderColor: '#ebe0eb'}} wrapperStyle={{borderColor: '#ebe0eb'}} dividerStyle={{marginBottom:0}} title={item.headerTitle}>
-                                <TouchableOpacity activeOpacity={0.9} onPress={() => this.props.navigation.navigate('DiaryDtl', {type:'UPDATE', diaryId:item.diaryId, noteId:item.noteId, refreshFnc:this.selectDiaryList.bind(this)})}>
+                            <Card containerStyle={{
+                                padding: 0,
+                                paddingTop: 15,
+                                paddingBottom: 15,
+                                borderWidth: 1,
+                                backgroundColor: '#ebe0eb',
+                                borderColor: '#ebe0eb'
+                            }} wrapperStyle={{borderColor: '#ebe0eb'}} dividerStyle={{marginBottom: 0}}
+                                  title={item.headerTitle}>
+                                <TouchableOpacity activeOpacity={0.9}
+                                                  onPress={() => this.props.navigation.navigate('DiaryDtl', {
+                                                      type: 'UPDATE',
+                                                      diaryId: item.diaryId,
+                                                      noteId: item.noteId,
+                                                      refreshFnc: this.selectDiaryList.bind(this)
+                                                  })}>
                                     <View>
-                                        <ImageView fileId={item.fileId} width={Dimensions.get('window').width-30}/>
+                                        <ImageView fileId={item.fileId} width={Dimensions.get('window').width - 30}/>
                                     </View>
                                     <View style={{margin: 15}}>
-                                        <View style={{flexDirection:'row', alignItems: 'center'}}>
+                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                             <Text>기분 : </Text>
                                             <Text>{item.feelingCd} </Text>
                                             <HomeCodeTypeIcon code={item.feelingCd}></HomeCodeTypeIcon>
                                         </View>
-                                        <View style={{flexDirection:'row', alignItems: 'center'}}>
+                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                             <Text>건강 : </Text>
                                             <Text>{item.healthCd} </Text>
                                             <HomeCodeTypeIcon code={item.healthCd}></HomeCodeTypeIcon>
                                         </View>
-                                        <View style={{flexDirection:'row', alignItems: 'center'}}>
+                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                             <Text>열 : </Text>
                                             <Text>{item.feverCd} </Text>
                                             <HomeCodeTypeIcon code={item.feverCd}></HomeCodeTypeIcon>
                                         </View>
-                                        <View style={{flexDirection:'row', alignItems: 'center'}}>
+                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                             <Text>아침 식사 : </Text>
                                             <Text>{item.breakfastCd} </Text>
                                             <HomeCodeTypeIcon code={item.breakfastCd}></HomeCodeTypeIcon>
                                         </View>
-                                        <View style={{flexDirection:'row', alignItems: 'center'}}>
+                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                             <Text>점심 식사 : </Text>
                                             <Text>{item.lunchCd} </Text>
                                             <HomeCodeTypeIcon code={item.lunchCd}></HomeCodeTypeIcon>
                                         </View>
-                                        <View style={{flexDirection:'row', alignItems: 'center'}}>
+                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                             <Text>저녁 식사 : </Text>
                                             <Text>{item.dinnerCd} </Text>
                                             <HomeCodeTypeIcon code={item.dinnerCd}></HomeCodeTypeIcon>
                                         </View>
-                                        <View style={{flexDirection:'row', alignItems: 'center'}}>
+                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                             <Text>배변 : </Text>
                                             <Text>{item.shitCnt}회, {item.shitCd}({item.shitDesc}) </Text>
                                             <HomeCodeTypeIcon code={item.shitCd}></HomeCodeTypeIcon>
                                         </View>
-                                        <View style={{flexDirection:'row'}}>
+                                        <View style={{flexDirection: 'row'}}>
                                             <Text>수면 : </Text>
                                             <Text>{item.sleepStartTime}시 ~ {item.sleepEndTime}시</Text>
                                         </View>
@@ -246,14 +261,19 @@ export default class Home extends Component {
 
                 </ScrollView>
                 <ActionButton buttonColor="rgba(231,76,60,1)" offsetY={40}>
-                    <ActionButton.Item buttonColor='#1abc9c' title="다이어리 작성" onPress={()=> this.props.navigation.navigate('DiaryDtl', {type:'INSERT', noteId:this.state.noteId, refreshFnc:this.selectDiaryList.bind(this)})}>
-                        <IonIcons name="md-create" style={styles.actionButtonIcon} />
+                    <ActionButton.Item buttonColor='#1abc9c' title="다이어리 작성"
+                                       onPress={() => this.props.navigation.navigate('DiaryDtl', {
+                                           type: 'INSERT',
+                                           noteId: this.state.noteId,
+                                           refreshFnc: this.selectDiaryList.bind(this)
+                                       })}>
+                        <IonIcons name="md-create" style={styles.actionButtonIcon}/>
                     </ActionButton.Item>
                 </ActionButton>
                 {this.state.loading &&
-                    <View style={styles.loading}>
-                      <ActivityIndicator size='large' color="#FF69B4"/>
-                    </View>
+                <View style={styles.loading}>
+                    <ActivityIndicator size='large' color="#FF69B4"/>
+                </View>
                 }
             </View>
         )

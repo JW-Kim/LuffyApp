@@ -15,9 +15,12 @@ export default class HomeCodeTypeIcon extends Component {
     render() {
         return (
             <View>
-                {(this.props.code == '좋음' || this.props.code == 'good' ) && <FontAwesomeIcons name="smile-o" color="#33cc33" />}
-                {(this.props.code == '보통' || this.props.code == 'notBad' ) && <FontAwesomeIcons name="meh-o" color="#ff8c00" />}
-                {(this.props.code == '나쁨' || this.props.code == 'bad' ) && <FontAwesomeIcons name="frown-o" color="#ff471a" />}
+                {(this.props.code == '좋음' || this.props.code == 'good' ) &&
+                <FontAwesomeIcons name="smile-o" color="#33cc33"/>}
+                {(this.props.code == '보통' || this.props.code == 'notBad' ) &&
+                <FontAwesomeIcons name="meh-o" color="#ff8c00"/>}
+                {(this.props.code == '나쁨' || this.props.code == 'bad' ) &&
+                <FontAwesomeIcons name="frown-o" color="#ff471a"/>}
             </View>
         )
     }
