@@ -3,7 +3,7 @@ import {
     AsyncStorage
 } from 'react-native';
 
-function getToken(){
+function getToken(options){
     return new Promise(resolve => {
          AsyncStorage.getItem('access_token', (err, result) => {
              const FetchOptions = {
@@ -11,7 +11,12 @@ function getToken(){
                      'Authorization': `Bearer ${result}`
                   }
              }
-            resolve(FetchOptions);
+
+             if(options !== null && options !== undefined && options.headers !== null && options.headers !== undefined){
+                options.headers.Authorization = `Bearer ${result}`;
+             }
+
+            resolve(Object.assign(FetchOptions, options));
          })
     })
 }
