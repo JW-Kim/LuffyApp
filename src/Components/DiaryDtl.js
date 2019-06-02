@@ -26,6 +26,7 @@ import NativeModules from 'NativeModules'
 import _ from 'lodash'
 import DiaryDtlCheckBox from './DiaryDtlCheckBox.js'
 import Constants from '../Com/Constants.js'
+import { getToken } from '../Com/AuthToken.js';
 import ImageView from './ImageView.js'
 
 const toastStyle = {
@@ -83,55 +84,44 @@ export default class DiaryDtl extends Component {
 
     }
 
-    componentDidMount() {
-        AsyncStorage.getItem('access_token', (err, result) => {
-            this.setState({
-                token : result
-              }, () =>{
-                if(this.state.type == 'UPDATE'){
-                   fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary/'+this.state.diaryId,{
-                        headers: {
-                            'Authorization': 'Bearer '+this.state.token
-                        }
-                   })
-                        .then((response) => response.json())
-                        .then((res) => {
-                            console.log('res', res)
-                            this.setState({
-                                feelingCd: res.data.feelingCd,
-                                healthCd: res.data.healthCd,
-                                feverCd: res.data.feverCd,
-                                breakfastCd : res.data.breakfastCd,
-                                lunchCd : res.data.lunchCd,
-                                dinnerCd : res.data.dinnerCd,
-                                shitCd : res.data.shitCd,
-                                shitCnt: res.data.shitCnt,
-                                shitDesc : res.data.shitDesc,
-                                sleepStartTime : res.data.sleepStartTime,
-                                sleepEndTime : res.data.sleepEndTime,
-                                title: res.data.title,
-                                content: res.data.content,
-                                fileId : res.data.fileId,
-                                weight : res.data.weight+'',
-                                height : res.data.height+''
-                            })
-                        })
-                        .catch((error) => {
-                            Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
-                            this.props.navigation.navigate('Login')
-                        });
-                }
-              })
-        })
+    async componentDidMount() {
+        if(this.state.type == 'UPDATE'){
+            fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/${this.state.diaryId}`, await getToken())
+                .then((response) => response.json())
+                .then((res) => {
+                    console.log('res', res)
+                    this.setState({
+                        feelingCd: res.data.feelingCd,
+                        healthCd: res.data.healthCd,
+                        feverCd: res.data.feverCd,
+                        breakfastCd : res.data.breakfastCd,
+                        lunchCd : res.data.lunchCd,
+                        dinnerCd : res.data.dinnerCd,
+                        shitCd : res.data.shitCd,
+                        shitCnt: res.data.shitCnt,
+                        shitDesc : res.data.shitDesc,
+                        sleepStartTime : res.data.sleepStartTime,
+                        sleepEndTime : res.data.sleepEndTime,
+                        title: res.data.title,
+                        content: res.data.content,
+                        fileId : res.data.fileId,
+                        weight : res.data.weight+'',
+                        height : res.data.height+''
+                    })
+                })
+                .catch((error) => {
+                    Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+                    this.props.navigation.navigate('Login')
+                });
+        }
     }
 
-    insertDiaryInfo(fileId){
+    async insertDiaryInfo(fileId){
        //2.파일 정보
-       fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary',{
+       fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary`, await getToken({
            method : 'POST',
            headers:{
-               'Content-Type': 'application/json',
-               'Authorization': 'Bearer '+this.state.token
+               'Content-Type': 'application/json'
            },
            body: JSON.stringify({
                feelingCd : this.state.feelingCd == null ? '' : this.state.feelingCd,
@@ -153,7 +143,7 @@ export default class DiaryDtl extends Component {
                height : this.state.height == null ? 0 : this.state.height,
                weight : this.state.weight == null ? 0 : this.state.weight
            })
-       })
+       }))
            .then((response) => response.json())
            .then((responseJson) => {
                Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, toastStyle);
@@ -168,12 +158,11 @@ export default class DiaryDtl extends Component {
            });
     }
 
-    updateDiaryInfo(fileId){
-        fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary/'+this.state.diaryId ,{
+    async updateDiaryInfo(fileId){
+        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/${this.state.diaryId}` , await getToken({
             method : 'POST',
             headers:{
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer '+this.state.token
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 feelingCd : this.state.feelingCd == null ? '' : this.state.feelingCd,
@@ -193,7 +182,7 @@ export default class DiaryDtl extends Component {
                 height : this.state.height == null ? 0 : this.state.height,
                 weight : this.state.weight == null ? 0 : this.state.weight
             })
-        })
+        }))
             .then((response) => response.json())
             .then((responseJson) => {
                 Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, toastStyle);
@@ -208,18 +197,17 @@ export default class DiaryDtl extends Component {
             });
     }
 
-    insertDiary() {
+    async insertDiary() {
         var cur = this;
 
         if(this.state.type == 'INSERT'){
             //1.파일 업로드
             if(!_.isNil(cur.state.avatarSource)){
-                NativeModules.FileUpload.upload({
-                    uploadUrl : 'http://'+Constants.HOST+':'+Constants.PORT+'/product/file/upload',
+                NativeModules.FileUpload.upload(await getToken({
+                    uploadUrl : `http://${Constants.HOST}:${Constants.PORT}/product/file/upload`,
                     method : 'POST',
                     headers: {
-                        'Accept' : 'application/json',
-                        'Authorization': 'Bearer '+this.state.token
+                        'Accept' : 'application/json'
                     },
                     fields : {
                         'hello' : 'world'
@@ -231,21 +219,19 @@ export default class DiaryDtl extends Component {
                         filetype : 'image/jpeg'
                     }]
 
-                }, function(err, result){
+                }), function(err, result){
                       cur.insertDiaryInfo(JSON.parse(result.data).data.fileId);
                 })
             }else{
                 cur.insertDiaryInfo();
             }
         }else if(this.state.type == 'UPDATE'){
-            console.log('cur.state.avatarSource', cur.state.avatarSource)
             if(_.isNil(cur.state.fileId) && !_.isNil(cur.state.avatarSource)){
-                NativeModules.FileUpload.upload({
-                    uploadUrl : 'http://'+Constants.HOST+':'+Constants.PORT+'/product/file/upload',
+                NativeModules.FileUpload.upload(await getToken({
+                    uploadUrl : `http://${Constants.HOST}:${Constants.PORT}/product/file/upload`,
                     method : 'POST',
                     headers: {
-                        'Accept' : 'application/json',
-                        'Authorization': 'Bearer '+this.state.token
+                        'Accept' : 'application/json'
                     },
                     fields : {
                         'hello' : 'world'
@@ -257,7 +243,7 @@ export default class DiaryDtl extends Component {
                         filetype : 'image/jpeg'
                     }]
 
-                }, function(err, result){
+                }), function(err, result){
                         cur.updateDiaryInfo(JSON.parse(result.data).data.fileId);
                 })
 

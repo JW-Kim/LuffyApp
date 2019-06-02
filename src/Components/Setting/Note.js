@@ -74,11 +74,11 @@ export default class Note extends Component {
             .then((response) => response.json())
             .then((res) => {
                 this.getMyNoteList();
-                Toast.show('note delete', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                Toast.show('노트를 삭제하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
 
             })
             .catch((error) => {
-                Toast.show('note delete 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                Toast.show('노트 삭제를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
                 this.props.navigation.navigate('Login')
             });
     }
@@ -88,11 +88,11 @@ export default class Note extends Component {
             .then((response) => response.json())
             .then((res) => {
                 cur.getShareNoteList();
-                Toast.show('note delete', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                Toast.show('노트를 삭제하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
 
             })
             .catch((error) => {
-                Toast.show('note delete 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                Toast.show('노트 삭제를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
                 this.props.navigation.navigate('Login')
             });
     }
