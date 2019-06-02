@@ -21,26 +21,13 @@ import ActionButton from 'react-native-action-button';
 import _ from 'lodash'
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import Constants from '../../Com/Constants.js'
+import { getToken } from '../../Com/AuthToken.js';
 import ImageView from '../ImageView.js'
 import NoteDiary from './NoteDiary.js'
 import NoteDisease from './NoteDisease.js'
 import Header from '../Frame/Header.js'
 
 import Toast from 'react-native-toast-native';
-
-const toastStyle = {
-    backgroundColor: "#acacac",
-    width: 300,
-    height: 100,
-    color: "#ffffff",
-    fontSize: 15,
-    lineHeight: 2,
-    lines: 4,
-    borderRadius: 15,
-    fontWeight: "bold",
-    yOffset: 40,
-    opacity: 0.8
-}
 
 export default class Note extends Component {
     static navigationOptions = {
@@ -68,7 +55,7 @@ export default class Note extends Component {
         LocaleConfig.defaultLocale = 'kr';
     }
 
-    getNote() {
+    async getNote() {
         var cur = this;
         let today = new Date();
         let dd = today.getDate() < 10 ? '0' + today.getDate() : today.getDate();
@@ -79,36 +66,23 @@ export default class Note extends Component {
         let diaryDt = yyyy + '-' + mm + '-' + dd;
 
         if (_.isNil(this.state.noteId)) {
-
-            AsyncStorage.getItem('access_token', (err, result) => {
-                cur.setState({
-                    token: result,
-                    loading: true
-                }, () => {
-                    fetch('http://' + Constants.HOST + ':' + Constants.PORT + '/product/note', {
-                        headers: {
-                            'Authorization': 'Bearer ' + cur.state.token
-                        }
+            fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note`, await getToken())
+                .then((response) => response.json())
+                .then((res) => {
+                    cur.setState({
+                        note: res.data,
+                        noteId: res.data[0].noteId,
+                        selectedDay: day,
+                        calCurrentMonth: day,
+                        diaryDt: diaryDt
+                    }, () => {
+                        cur.getMonthDiary(month);
                     })
-                        .then((response) => response.json())
-                        .then((res) => {
-                            cur.setState({
-                                note: res.data,
-                                noteId: res.data[0].noteId,
-                                selectedDay: day,
-                                calCurrentMonth: day,
-                                diaryDt: diaryDt
-                            }, () => {
-                                cur.getMonthDiary(month);
-                            })
-                        })
-                        .catch((error) => {
-                            Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
-                            this.props.navigation.navigate('Login')
-                        });
-
                 })
-            })
+                .catch((error) => {
+                    Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                    this.props.navigation.navigate('Login')
+                });
         } else {
             this.setState({
                 loading: true
@@ -117,18 +91,13 @@ export default class Note extends Component {
         }
     }
 
-    getMonthDiary(month) {
-        console.log('month', month)
+   async getMonthDiary(month) {
         let monthArr = month.split("-");
         this.setState({
             calCurrentMonth: new Date(monthArr[1] + '/' + '01' + '/' + monthArr[0])
         })
 
-        fetch('http://' + Constants.HOST + ':' + Constants.PORT + '/product/diary/month?noteId=' + this.state.noteId + '&diaryMonth=' + month, {
-            headers: {
-                'Authorization': 'Bearer ' + this.state.token
-            }
-        })
+        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/month?noteId=${this.state.noteId}'&diaryMonth=${month}`, await getToken())
             .then((response) => response.json())
             .then((res) => {
                 if (!(_.isNil(res.data) || res.data == null)) {
@@ -139,17 +108,13 @@ export default class Note extends Component {
                 }
             })
             .catch((error) => {
-                Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+                Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
                 this.props.navigation.navigate('Login')
             });
     }
 
-    getMonthDisease(month) {
-        fetch('http://' + Constants.HOST + ':' + Constants.PORT + '/product/diary/diseaseMonth?noteId=' + this.state.noteId + '&diseaseMonth=' + month, {
-            headers: {
-                'Authorization': 'Bearer ' + this.state.token
-            }
-        })
+   async getMonthDisease(month) {
+        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/diseaseMonth?noteId=${this.state.noteId}&diseaseMonth=${month}`, await getToken())
             .then((response) => response.json())
             .then((res) => {
                 if (!(_.isNil(res.data) || res.data == null)) {
@@ -161,7 +126,7 @@ export default class Note extends Component {
                 }
             })
             .catch((error) => {
-                Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+                Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
                 this.props.navigation.navigate('Login')
             });
     }

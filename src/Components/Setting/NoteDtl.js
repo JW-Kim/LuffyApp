@@ -15,21 +15,8 @@ import {
 import ModalHeader from '../ModalHeader.js';
 import Toast from 'react-native-toast-native';
 import Constants from '../../Com/Constants.js';
+import { getToken } from '../../Com/AuthToken.js';
 import DatePicker from 'react-native-datepicker';
-
-const toastStyle = {
-    backgroundColor: "#acacac",
-    width: 300,
-    height: 100,
-    color: "#ffffff",
-    fontSize: 15,
-    lineHeight: 2,
-    lines: 4,
-    borderRadius: 15,
-    fontWeight: "bold",
-    yOffset: 40,
-    opacity: 0.8
-}
 
 export default class NoteDtl extends Component {
 
@@ -66,11 +53,86 @@ export default class NoteDtl extends Component {
                                 })
                           })
                           .catch((error) => {
-                              Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+                              Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
                               this.props.navigation.navigate('Login')
                           });
                         } */
             })
+        })
+    }
+
+    setNote() {
+        var cur = this;
+
+        if (this.state.type == 'INSERT') {
+            cur.insertNote();
+
+        } else if (this.state.type == 'UPDATE') {
+            cur.updateNote();
+
+        }
+    }
+
+
+    insertNote() {
+        fetch('http://' + Constants.HOST + ':' + Constants.PORT + '/product/note', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + this.state.token
+            },
+            body: JSON.stringify({
+                noteNm: this.state.noteNm == null ? '' : this.state.noteNm,
+                sex: this.state.sex == null ? '' : this.state.sex,
+                birthDt: this.state.birthDt == null ? '' : this.state.birthDt
+            })
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                let refreshFnc = this.props.navigation.getParam('refreshFnc');
+                refreshFnc();
+                this.props.navigation.goBack();
+                console.log(responseJson)
+            })
+            .catch((error) => {
+                Toast.show('정보 저장을 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                this.props.navigation.navigate('Login')
+            });
+    }
+
+
+    updateNote() {
+        fetch('http://' + Constants.HOST + ':' + Constants.PORT + '/product/note/' + this.state.noteId, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + this.state.token
+            },
+            body: JSON.stringify({
+                noteNm: this.state.noteNm == null ? '' : this.state.noteNm,
+                sex: this.state.sex == null ? '' : this.state.sex,
+                birthDt: this.state.birthDt == null ? '' : this.state.birthDt
+
+            })
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                let refreshFnc = this.props.navigation.getParam('refreshFnc');
+                refreshFnc();
+                this.props.navigation.goBack();
+                console.log(responseJson)
+            })
+            .catch((error) => {
+                Toast.show('정보 저장을 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                this.props.navigation.navigate('Login')
+            });
+    }
+
+    changeSex(sex) {
+        this.setState({
+            sex: sex
         })
     }
 
@@ -161,81 +223,6 @@ export default class NoteDtl extends Component {
                 </View>
             </View>
         )
-    }
-
-    setNote() {
-        var cur = this;
-
-        if (this.state.type == 'INSERT') {
-            cur.insertNote();
-
-        } else if (this.state.type == 'UPDATE') {
-            cur.updateNote();
-
-        }
-    }
-
-
-    insertNote() {
-        fetch('http://' + Constants.HOST + ':' + Constants.PORT + '/product/note', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this.state.token
-            },
-            body: JSON.stringify({
-                noteNm: this.state.noteNm == null ? '' : this.state.noteNm,
-                sex: this.state.sex == null ? '' : this.state.sex,
-                birthDt: this.state.birthDt == null ? '' : this.state.birthDt
-            })
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, toastStyle);
-                let refreshFnc = this.props.navigation.getParam('refreshFnc');
-                refreshFnc();
-                this.props.navigation.goBack();
-                console.log(responseJson)
-            })
-            .catch((error) => {
-                Toast.show('정보 저장을 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
-                this.props.navigation.navigate('Login')
-            });
-    }
-
-
-    updateNote() {
-        fetch('http://' + Constants.HOST + ':' + Constants.PORT + '/product/note/' + this.state.noteId, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this.state.token
-            },
-            body: JSON.stringify({
-                noteNm: this.state.noteNm == null ? '' : this.state.noteNm,
-                sex: this.state.sex == null ? '' : this.state.sex,
-                birthDt: this.state.birthDt == null ? '' : this.state.birthDt
-
-            })
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, toastStyle);
-                let refreshFnc = this.props.navigation.getParam('refreshFnc');
-                refreshFnc();
-                this.props.navigation.goBack();
-                console.log(responseJson)
-            })
-            .catch((error) => {
-                Toast.show('정보 저장을 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
-                this.props.navigation.navigate('Login')
-            });
-    }
-
-    changeSex(sex) {
-        this.setState({
-            sex: sex
-        })
     }
 }
 

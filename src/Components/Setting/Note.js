@@ -12,22 +12,9 @@ import {
 } from 'react-native';
 import ModalHeader from '../ModalHeader.js';
 import Constants from '../../Com/Constants.js';
+import { getToken } from '../../Com/AuthToken.js';
 import Toast from 'react-native-toast-native';
 import Icons from 'react-native-vector-icons/FontAwesome';
-
-const toastStyle = {
-    backgroundColor: "#acacac",
-    width: 300,
-    height: 100,
-    color: "#ffffff",
-    fontSize: 15,
-    lineHeight: 2,
-    lines: 4,
-    borderRadius: 15,
-    fontWeight: "bold",
-    yOffset: 40,
-    opacity: 0.8
-}
 
 export default class Note extends Component {
 
@@ -47,127 +34,67 @@ export default class Note extends Component {
         this.getShareNoteList();
     }
 
-    getMyNoteList() {
-        var cur = this;
+    async getMyNoteList() {
+        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/my`, await getToken())
+            .then((response) => response.json())
+            .then((res) => {
+                this.setState({
+                    myNoteList: res.data
 
-        AsyncStorage.getItem('access_token', (err, result) => {
-            cur.setState({
-                token: result,
-                loading: true
-            }, () => {
-                fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/my`, {
-                    headers: {
-                        'Authorization': 'Bearer ' + cur.state.token
-                    }
+                }, () => {
+
                 })
-                    .then((response) => response.json())
-                    .then((res) => {
-                        cur.setState({
-                            myNoteList: res.data
-
-                        }, () => {
-
-                        })
-                    })
-                    .catch((error) => {
-                        Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
-                        this.props.navigation.navigate('Login')
-                    });
-
             })
-
-        })
+            .catch((error) => {
+                Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                this.props.navigation.navigate('Login')
+            });
     }
 
 
-    getShareNoteList() {
-        var cur = this;
+    async getShareNoteList() {
+        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/share`, await getToken())
+            .then((response) => response.json())
+            .then((res) => {
+                this.setState({
+                    shareList: res.data
 
-        AsyncStorage.getItem('access_token', (err, result) => {
-            cur.setState({
-                token: result,
-                loading: true
-            }, () => {
-                fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/share`, {
-                    headers: {
-                        'Authorization': 'Bearer ' + cur.state.token
-                    }
+                }, () => {
+
                 })
-                    .then((response) => response.json())
-                    .then((res) => {
-                        cur.setState({
-                            shareList: res.data
-
-                        }, () => {
-
-                        })
-                    })
-                    .catch((error) => {
-                        Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
-                        this.props.navigation.navigate('Login')
-                    });
-
             })
-
-        })
+            .catch((error) => {
+                Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                this.props.navigation.navigate('Login')
+            });
     }
 
-    deleteMyNote(noteId) {
-        var cur = this;
-        AsyncStorage.getItem('access_token', (err, result) => {
-            cur.setState({
-                token: result,
-                loading: true
-            }, () => {
-                fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/${noteId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Authorization': 'Bearer ' + cur.state.token
-                    }
-                })
-                    .then((response) => response.json())
-                    .then((res) => {
-                        cur.getMyNoteList();
-                        Toast.show('note delete', Toast.SHORT, Toast.TOP, toastStyle);
-
-                    })
-                    .catch((error) => {
-                        Toast.show('note delete 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
-                        this.props.navigation.navigate('Login')
-                    });
+    async deleteMyNote(noteId) {
+        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/${noteId}`, await getToken())
+            .then((response) => response.json())
+            .then((res) => {
+                this.getMyNoteList();
+                Toast.show('note delete', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
 
             })
-
-        })
+            .catch((error) => {
+                Toast.show('note delete 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                this.props.navigation.navigate('Login')
+            });
     }
 
-    deleteShareNote(noteId) {
-        var cur = this;
-        AsyncStorage.getItem('access_token', (err, result) => {
-            cur.setState({
-                token: result,
-                loading: true
-            }, () => {
-                fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/share/${noteId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Authorization': `Bearer ${cur.state.token}`
-                    }
-                })
-                    .then((response) => response.json())
-                    .then((res) => {
-                        cur.getShareNoteList();
-                        Toast.show('note delete', Toast.SHORT, Toast.TOP, toastStyle);
-
-                    })
-                    .catch((error) => {
-                        Toast.show('note delete 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
-                        this.props.navigation.navigate('Login')
-                    });
+    async deleteShareNote(noteId) {
+        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/share/${noteId}`, await getToken())
+            .then((response) => response.json())
+            .then((res) => {
+                cur.getShareNoteList();
+                Toast.show('note delete', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
 
             })
-
-        })
+            .catch((error) => {
+                Toast.show('note delete 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                this.props.navigation.navigate('Login')
+            });
     }
 
     render() {
