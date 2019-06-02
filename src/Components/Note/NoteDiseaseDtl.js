@@ -61,7 +61,7 @@ export default class NoteDiseaseDtl extends Component {
 
 
     async insertDisease() {
-        fetch('http://' + Constants.HOST + ':' + Constants.PORT + '/product/diary/disease', await getToken({
+        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/disease`, await getToken({
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -91,12 +91,11 @@ export default class NoteDiseaseDtl extends Component {
     }
 
 
-    updateDisease() {
-        fetch('http://' + Constants.HOST + ':' + Constants.PORT + '/product/diary/disease/' + this.state.diseaseId, {
+    async updateDisease() {
+        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/disease/${this.state.diseaseId}`, await getToken({
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this.state.token
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 noteId: this.state.noteId == null ? '' : this.state.noteId,
@@ -107,7 +106,7 @@ export default class NoteDiseaseDtl extends Component {
                 prescription: this.state.prescription == null ? '' : this.state.prescription,
 
             })
-        })
+        }))
             .then((response) => response.json())
             .then((responseJson) => {
                 Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);

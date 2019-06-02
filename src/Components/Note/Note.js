@@ -153,10 +153,8 @@ export default class Note extends Component {
             }
         }
 
-
         for (var i = 0; i < this.state.disease.length; i++) {
             if (_.isNil(markedDates["" + this.state.disease[i].diseaseDt + ""])) {
-
                 if (this.state.disease[i].diseaseDt == day) {
                     selectedDiseaseList.push(this.state.disease[i]);
                     markedDates["" + this.state.disease[i].diseaseDt + ""] = {
@@ -166,16 +164,21 @@ export default class Note extends Component {
                     };
 
                 } else {
-
                     markedDates["" + this.state.disease[i].diseaseDt + ""] = {dots: [disease]};
                 }
-
             } else {
                 if (this.state.disease[i].diseaseDt == day) {
                     selectedDiseaseList.push(this.state.disease[i]);
                 }
 
-                markedDates["" + this.state.disease[i].diseaseDt + ""].dots.push(disease);
+                let diseasePushYn = true;
+                for(let j=0; j< markedDates["" + this.state.disease[i].diseaseDt + ""].dots.length; j++){
+                    if(markedDates["" + this.state.disease[i].diseaseDt + ""].dots[j].key == 'disease'){
+                        diseasePushYn = false;
+                    }
+                }
+
+                if(diseasePushYn)  markedDates["" + this.state.disease[i].diseaseDt + ""].dots.push(disease);
             }
         }
 
