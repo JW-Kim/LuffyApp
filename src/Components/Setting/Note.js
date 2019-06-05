@@ -106,7 +106,7 @@ export default class Note extends Component {
     openNoteDtl(noteId) {
         this.props.navigation.navigate('NoteSettingDtl', {
             type: _.isNil(noteId) ? 'INSERT' : 'UPDATE',
-            noteId: noteId
+            noteId: noteId,
             refreshFnc: this.getMyNoteList.bind(this)
         })
     }

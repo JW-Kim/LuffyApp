@@ -34,7 +34,7 @@ export default class NoteDtl extends Component {
     async componentWillMount() {
         const { noteId, type } = this.state;
         if(type == 'UPDATE'){
-                            fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/${noteId}`, await getToken()
+                            fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/${noteId}`, await getToken())
                                   .then((response) => response.json())
                                   .then((res) => {
                                       console.log('res', res)
@@ -92,6 +92,8 @@ export default class NoteDtl extends Component {
 
 
     async updateNote() {
+        const { noteId } = this.state;
+
         fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/${noteId}, await getToken({
             method: 'POST',
             headers: {
