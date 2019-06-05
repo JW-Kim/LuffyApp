@@ -15,6 +15,7 @@ import Constants from '../../Com/Constants.js';
 import { getToken } from '../../Com/AuthToken.js';
 import Toast from 'react-native-toast-native';
 import Icons from 'react-native-vector-icons/FontAwesome';
+import _ from 'lodash';
 
 export default class Note extends Component {
 
@@ -25,6 +26,7 @@ export default class Note extends Component {
             shareList: []
         }
 
+        let openNoteDtl = this.openNoteDtl.bind(this);
         let deleteMyNote = this.deleteMyNote.bind(this);
         let deleteShareNote = this.deleteShareNote.bind(this);
     }
@@ -70,7 +72,9 @@ export default class Note extends Component {
     }
 
     async deleteMyNote(noteId) {
-        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/${noteId}`, await getToken())
+        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/${noteId}`, await getToken({
+            method: 'DELETE'
+        }))
             .then((response) => response.json())
             .then((res) => {
                 this.getMyNoteList();
@@ -84,7 +88,9 @@ export default class Note extends Component {
     }
 
     async deleteShareNote(noteId) {
-        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/share/${noteId}`, await getToken())
+        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/share/${noteId}`, await getToken({
+            method: 'DELETE'
+        }))
             .then((response) => response.json())
             .then((res) => {
                 cur.getShareNoteList();
@@ -95,6 +101,18 @@ export default class Note extends Component {
                 Toast.show('note delete 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
                 this.props.navigation.navigate('Login')
             });
+    }
+
+    openNoteDtl(noteId) {
+        this.props.navigation.navigate('NoteSettingDtl', {
+            type: _.isNil(noteId) ? 'INSERT' : 'UPDATE',
+            noteId: noteId
+            refreshFnc: this.getMyNoteList.bind(this)
+        })
+    }
+
+    closePopup() {
+        this.props.navigation.goBack();
     }
 
     render() {
@@ -113,7 +131,7 @@ export default class Note extends Component {
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                             <Text style={{fontSize: 17}}>내 소유 일기장</Text>
                             <TouchableOpacity style={{width: 50, right: 0, alignItems: 'center'}}
-                                              onPress={this.openNoteDtl.bind(this)}
+                                              onPress={() => this.openNoteDtl()}
                             >
                                 <Icons name='plus' color='#00cc00' size={17}/>
                             </TouchableOpacity>
@@ -136,7 +154,7 @@ export default class Note extends Component {
                                             justifyContent: 'space-between',
                                             marginRight: 15
                                         }}>
-                                            <TouchableOpacity>
+                                            <TouchableOpacity onPress={() => this.openNoteDtl(item.noteId)}>
                                                 <Icons name="share-alt" color="blue" size={17}/>
                                             </TouchableOpacity>
                                             <TouchableOpacity onPress={() => this.deleteMyNote(item.noteId)}>
@@ -184,17 +202,6 @@ export default class Note extends Component {
                 </View>
             </View>
         )
-    }
-
-    openNoteDtl() {
-        this.props.navigation.navigate('NoteSettingDtl', {
-            type: 'INSERT',
-            refreshFnc: this.getMyNoteList.bind(this)
-        })
-    }
-
-    closePopup() {
-        this.props.navigation.goBack();
     }
 }
 
