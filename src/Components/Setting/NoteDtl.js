@@ -17,6 +17,7 @@ import Toast from 'react-native-toast-native';
 import Constants from '../../Com/Constants.js';
 import { getToken } from '../../Com/AuthToken.js';
 import DatePicker from 'react-native-datepicker';
+import NoteDtlShare from './NoteDtlShare.js';
 
 export default class NoteDtl extends Component {
 
@@ -120,13 +121,9 @@ export default class NoteDtl extends Component {
             });
     }
 
-    changeSex(sex) {
-        this.setState({
-            sex: sex
-        })
-    }
-
     render() {
+        const { noteId } = this.state;
+
         return (
             <View style={{flex: 1, backgroundColor: 'white'}}>
                 <ModalHeader
@@ -134,9 +131,10 @@ export default class NoteDtl extends Component {
                     goEvent={this.setNote.bind(this)}
                     buttonTitle={'글쓰기'}
                 ></ModalHeader>
-                <View style={{height: Dimensions.get('window').height - 148}}>
-                    <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100} enabled>
-                        <ScrollView style={{padding: 10}}>
+                <View style={{height: Dimensions.get('window').height - 60}}>
+                    <View style={{ flex: 1}}>
+                    <View style={{ padding: 10, flex: 0.5 }}
+                        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100} enabled>
                             <View style={styles.checkContent}>
                                 <Text style={{width: 70, fontSize: 15, fontWeight: '800'}}>노트 이름</Text>
                                 <View style={{
@@ -153,7 +151,7 @@ export default class NoteDtl extends Component {
                                     ></TextInput>
                                 </View>
                             </View>
-                            <View style={[styles.checkContent, {height: 200}]}>
+                            <View style={[styles.checkContent, {height: 150}]}>
                                 <Text style={{width: 70, fontSize: 15, fontWeight: '800'}}>성별</Text>
                                 <View style={{
                                     flex: 1,
@@ -165,7 +163,7 @@ export default class NoteDtl extends Component {
                                     <Picker
                                         mode='dropdown'
                                         style={{height: 50, width: 200, color: '#000'}}
-                                        onValueChange={(itemValue, itemIndex) => this.changeSex(itemValue)}
+                                        onValueChange={(sex, itemIndex) => this.setState({ sex })}
                                         selectedValue={this.state.sex}
                                     >
                                         <Picker.Item label='남자' value='M'/>
@@ -208,8 +206,10 @@ export default class NoteDtl extends Component {
                                     />
                                 </View>
                             </View>
-                        </ScrollView>
-                    </KeyboardAvoidingView>
+                         </KeyboardAvoidingView>
+                    </View>
+                    <NoteDtlShare noteId={noteId} />
+                    </View>
                 </View>
             </View>
         )

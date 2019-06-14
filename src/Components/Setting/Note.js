@@ -93,7 +93,7 @@ export default class Note extends Component {
         }))
             .then((response) => response.json())
             .then((res) => {
-                cur.getShareNoteList();
+                this.getShareNoteList();
                 Toast.show('note delete', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
 
             })
@@ -187,9 +187,6 @@ export default class Note extends Component {
                                             justifyContent: 'space-between',
                                             marginRight: 15
                                         }}>
-                                            <TouchableOpacity>
-                                                <Icons name="share-alt" color="blue" size={17}/>
-                                            </TouchableOpacity>
                                             <TouchableOpacity onPress={() => this.deleteShareNote(item.noteId)}>
                                                 <Icons name="minus" color="blue" size={17}/>
                                             </TouchableOpacity>
