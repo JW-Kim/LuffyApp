@@ -14,7 +14,7 @@ import Constants from '../../Com/Constants.js';
 import { getToken } from '../../Com/AuthToken.js';
 import Toast from 'react-native-toast-native';
 
-export default NoteDtlShare expends Component {
+export default class NoteDtlShare extends Component {
 
      constructor(props) {
          super(props)
