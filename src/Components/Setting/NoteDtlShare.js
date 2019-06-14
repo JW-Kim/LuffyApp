@@ -96,9 +96,6 @@ export default class NoteDtlShare extends Component {
                                                            marginRight: 15
                                                        }}>
                                                            <TouchableOpacity onPress={() => this.deleteShareUser(item.userId)}>
-                                                               <Icons name="share-alt" color="blue" size={17}/>
-                                                           </TouchableOpacity>
-                                                           <TouchableOpacity onPress={() => this.deleteMyNote(item.noteId)}>
                                                                <Icons name="minus" color="blue" size={17}/>
                                                            </TouchableOpacity>
                                                        </View>
