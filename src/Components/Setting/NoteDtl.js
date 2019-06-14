@@ -95,7 +95,7 @@ export default class NoteDtl extends Component {
     async updateNote() {
         const { noteId } = this.state;
 
-        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/${noteId}, await getToken({
+        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/${noteId}`, await getToken({
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -133,7 +133,7 @@ export default class NoteDtl extends Component {
                 ></ModalHeader>
                 <View style={{height: Dimensions.get('window').height - 60}}>
                     <View style={{ flex: 1}}>
-                    <View style={{ padding: 10, flex: 0.5 }}
+                    <View style={{ padding: 10, flex: 0.5 }}>
                         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100} enabled>
                             <View style={styles.checkContent}>
                                 <Text style={{width: 70, fontSize: 15, fontWeight: '800'}}>노트 이름</Text>
