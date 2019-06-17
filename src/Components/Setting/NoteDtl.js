@@ -208,7 +208,7 @@ export default class NoteDtl extends Component {
                             </View>
                          </KeyboardAvoidingView>
                     </View>
-                    <NoteDtlShare noteId={noteId} />
+                    <NoteDtlShare noteId={noteId} navigation={this.props.navigation} />
                     </View>
                 </View>
             </View>

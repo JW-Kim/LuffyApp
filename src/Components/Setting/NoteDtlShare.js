@@ -23,6 +23,7 @@ export default class NoteDtlShare extends Component {
          }
 
          let deleteShareUser = this.deleteShareUser.bind(this);
+         let openSearchUser = this.openSearchUser.bind(this);
      }
 
      async componentWillMount() {
@@ -62,6 +63,35 @@ export default class NoteDtlShare extends Component {
                })
      }
 
+     openSearchUser() {
+          this.props.navigation.navigate('SearchUser', {
+               insertShareUser: this.insertShareUser.bind(this);
+          })
+     }
+
+     async insertShareUser(userId) {
+              const { noteId } = this.props;
+
+               fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/${noteId}/share/user`, await getToken({
+                    method: 'POST',
+                    headers: {
+                         'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                         userId: userId
+                    })
+               }))
+                    .then((response) => response.json())
+                    .then((res) => {
+                         this.getShareNoteList()
+                         Toast.show('note share', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                    })
+                    .catch((error) => {
+                         Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                         this.props.navigation.navigate('Login')
+                    })
+          }
+
      render() {
           const { noteId } = this.props;
           const { shareList } = this.state;
@@ -72,7 +102,7 @@ export default class NoteDtlShare extends Component {
                                        <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                                            <Text style={{fontSize: 17}}>share user</Text>
                                            <TouchableOpacity style={{width: 50, right: 0, alignItems: 'center'}}
-                                                             onPress={() => this.openNoteDtl()}
+                                                             onPress={() => this.openSearchUser()}
                                            >
                                                <Icons name='plus' color='#00cc00' size={17}/>
                                            </TouchableOpacity>
