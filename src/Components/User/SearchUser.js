@@ -31,13 +31,13 @@ export default class SearchUser extends Component {
      }
 
      async searchUser() {
-          const { searchVal } = this.props;
+          const { searchVal } = this.state;
 
           fetch(`http://${Constants.HOST}:${Constants.PORT}/product/user/search?searchVal=${searchVal}`, await getToken())
                .then((response) => response.json())
                .then((res) => {
                     this.setState({
-                         shareList: res.data
+                         userList: res.data
                     })
                })
                .catch((error) => {
@@ -77,7 +77,7 @@ export default class SearchUser extends Component {
                              data={userList}
                              keyExtractor={(item, index) => index.toString()}
                              renderItem={({item}) =>
-                                  <TouchableOpacity onPress{() => this.selectedUser(item.userId)}>
+                                  <TouchableOpacity onPress={() => this.selectedUser(item.userId)}>
                                        <View style={styles.noteItem}>
                                             <View style={{ flex: 0.2 }}>
                                                  <Text>profile</Text>

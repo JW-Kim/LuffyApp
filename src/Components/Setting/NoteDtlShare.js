@@ -65,7 +65,7 @@ export default class NoteDtlShare extends Component {
 
      openSearchUser() {
           this.props.navigation.navigate('SearchUser', {
-               insertShareUser: this.insertShareUser.bind(this);
+               insertShareUser: this.insertShareUser.bind(this)
           })
      }
 
