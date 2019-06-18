@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import {
+    Text,
     View,
     TextInput,
-    AsyncStorage
+    AsyncStorage,
+    TouchableOpacity
 } from 'react-native';
 import Image from 'react-native-scalable-image';
 import {
@@ -19,6 +21,8 @@ export default class Login extends Component {
             username: null,
             password: null
         }
+
+        let goUserRegister = this.goUserRegister.bind(this);
     }
 
     componentDidMount() {
@@ -53,6 +57,10 @@ export default class Login extends Component {
             .catch((error) => {
                 console.error(error);
             });
+    }
+
+    goUserRegister() {
+         this.props.navigation.navigate('UserRegister');
     }
 
     render() {
@@ -100,6 +108,11 @@ export default class Login extends Component {
                         title='로그인'
                         onPress={this.login.bind(this)}
                     />
+                    <View style={{ height: 60}}>
+                         <TouchableOpacity onPress={() => this.goUserRegister()}>
+                              <Text>insert User</Text>
+                         </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         )

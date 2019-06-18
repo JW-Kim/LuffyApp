@@ -37,10 +37,13 @@ export default class Note extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            note: [],
             noteId: null,
             selectedDay: null,
             calCurrentMonth: null
         }
+
+        let openNoteDtl = this.openNoteDtl.bind(this);
     }
 
     componentDidMount() {
@@ -69,15 +72,17 @@ export default class Note extends Component {
             fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note`, await getToken())
                 .then((response) => response.json())
                 .then((res) => {
-                    cur.setState({
-                        note: res.data,
-                        noteId: res.data[0].noteId,
-                        selectedDay: day,
-                        calCurrentMonth: day,
-                        diaryDt: diaryDt
-                    }, () => {
-                        cur.getMonthDiary(month);
-                    })
+                     if (res.data.length !== 0){
+                         cur.setState({
+                             note: res.data,
+                             noteId: res.data[0].noteId,
+                             selectedDay: day,
+                             calCurrentMonth: day,
+                             diaryDt: diaryDt
+                         }, () => {
+                             cur.getMonthDiary(month);
+                         })
+                     }
                 })
                 .catch((error) => {
                     Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
@@ -236,7 +241,14 @@ export default class Note extends Component {
         })
     }
 
-    renderNote() {
+    openNoteDtl() {
+         this.props.navigate.navigate('NoteSettingDtl', {
+              type: 'INSERT',
+              refreshFnc: this.getNote.bind(this);
+         })
+    }
+
+    renderNoteList() {
         const note = [];
         if (!_.isNil(this.state.note)) {
             for (let i = 0; i < this.state.note.length; i++) {
@@ -245,6 +257,141 @@ export default class Note extends Component {
             }
         }
         return note;
+    }
+
+    renderNote() {
+         const { note } = this.state;
+
+         if(_.isNil(note) || note.length == 0) {
+              return (
+                   <View style={{ flex: 1}}>
+                        <TouchableOpacity onPress={() => this.openNoteDtl()}>
+                             <Text>note insert</Text>
+                        </TouchableOpacity>
+                   </View>
+              )
+         } else {
+              return (
+                   <View style={{ flex: 1}}>
+                   <View style={{marginTop: 10, marginLeft: 15, height: 50}}>
+                                           {this.state.note == null ? <Text></Text> :
+                                               <Picker
+                                                   mode='dropdown'
+                                                   selectedValue={this.state.noteId}
+                                                   style={{height: 50, width: 200, color: '#000'}}
+                                                   onValueChange={(itemValue, itemIndex) => this.changeNote(itemValue)}
+                                               >
+                                                   {this.renderNoteList()}
+                                               </Picker>
+                                           }
+                                       </View>
+                                       <ScrollView>
+                                           <Calendar
+                                               style={{
+                                                   borderWidth: 1,
+                                                   borderColor: '#ebe0eb',
+                                                   backgroundColor: '#ebe0eb'
+                                               }}
+                                               theme={{
+                                                   backgroundColor: '#ebe0eb',
+                                                   calendarBackground: '#ebe0eb',
+                                                   selectedDayBackgroundColor: '#b992b9'
+                                               }}
+                                               // Initially visible month. Default = Date()
+                                               current={this.state.calCurrentMonth}
+                                               // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
+                                               minDate={'2012-05-10'}
+                                               // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
+                                               maxDate={'2022-12-31'}
+                                               // Handler which gets executed on day press. Default = undefined
+                                               onDayPress={(day) => {
+                                                   this.getDay(day)
+                                               }}
+                                               // Handler which gets executed on day long press. Default = undefined
+                                               onDayLongPress={(day) => {
+                                                   this.getDay(day)
+                                               }}
+                                               // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
+                                               monthFormat={'yyyy MM'}
+                                               // Handler which gets executed when visible month changes in calendar. Default = undefined
+                                               onMonthChange={(month) => {
+                                                   this.getMonthDiary(month.dateString.substring(0, 7))
+                                               }}
+
+                                               hideExtraDays={true}
+                                               // If hideArrows=false and hideExtraDays=false do not switch month when tapping on greyed out
+                                               // day from another month that is visible in calendar page. Default = false
+                                               disableMonthChange={true}
+
+                                               // Handler which gets executed when press arrow icon left. It receive a callback can go back month
+                                               onPressArrowLeft={substractMonth => substractMonth()}
+                                               // Handler which gets executed when press arrow icon left. It receive a callback can go next month
+                                               onPressArrowRight={addMonth => addMonth()}
+                                               markedDates={this.state.markedDates}
+                                               markingType={'multi-dot'}
+                                           />
+                                           {this.state.selectedDiary == null ? <View><Text></Text></View> :
+                                               (
+                                                   <View style={{marginTop: 10}}>
+                                                       <NoteDiary
+                                                           diaryId={this.state.selectedDiary.diaryId}
+                                                           noteId={this.state.noteId}
+                                                           title={this.state.selectedDiary.title}
+                                                           fileId={this.state.selectedDiary.fileId}
+                                                           openDiaryDtl={this.openDiaryDtl.bind(this)}
+                                                       ></NoteDiary>
+                                                   </View>)}
+                                           {this.state.selectedDiseaseList == null ? <View><Text></Text></View> :
+                                               (<FlatList
+                                                   data={this.state.selectedDiseaseList}
+                                                   keyExtractor={(item, index) => index.toString()}
+                                                   renderItem={({item}) =>
+                                                       <View style={{marginTop: 10}}>
+                                                           <NoteDisease
+                                                               diseaseId={item.diseaseId}
+                                                               diseaseNm={item.diseaseNm}
+                                                               symptom={item.symptom}
+                                                               hospitalNm={item.hospitalNm}
+                                                               prescription={item.prescription}
+                                                               openDiseaseDtl={this.openDiseaseDtl.bind(this)}
+
+                                                           ></NoteDisease>
+                                                       </View>
+                                                   }
+
+                                               />)}
+
+                                       </ScrollView>
+
+                                       <ActionButton buttonColor="rgba(231,76,60,1)" offsetY={40}>
+                                           <ActionButton.Item buttonColor='#1abc9c' title="질병 작성"
+                                                              onPress={() => this.props.navigation.navigate('NoteDiseaseDtl', {
+                                                                  type: 'INSERT',
+                                                                  noteId: this.state.noteId,
+                                                                  diseaseDt: this.state.diaryDt,
+                                                                  refreshFnc: this.getNote.bind(this)
+                                                              })}>
+                                               <IonIcons name="md-create" style={styles.actionButtonIcon}/>
+                                           </ActionButton.Item>
+
+                                           <ActionButton.Item buttonColor='#1abc9c' title="다이어리 작성"
+                                                              onPress={() => this.props.navigation.navigate('DiaryDtl', {
+                                                                  type: 'INSERT',
+                                                                  noteId: this.state.noteId,
+                                                                  diaryDt: this.state.diaryDt,
+                                                                  refreshFnc: this.getNote.bind(this)
+                                                              })}>
+                                               <IonIcons name="md-create" style={styles.actionButtonIcon}/>
+                                           </ActionButton.Item>
+                                       </ActionButton>
+                                       {this.state.loading &&
+                                       <View style={styles.loading}>
+                                           <ActivityIndicator size='large' color="#FF69B4"/>
+                                       </View>
+                                       }
+                   </View>
+              )
+         }
     }
 
     render() {
@@ -257,127 +404,10 @@ export default class Note extends Component {
                     <NavigationEvents
                         onWillFocus={payload => {
                             this.getNote()
-                            console.log("will focus", payload);
                         }}
                     />
-                    <View style={{marginTop: 10, marginLeft: 15, height: 50}}>
-                        {this.state.note == null ? <Text></Text> :
-                            <Picker
-                                mode='dropdown'
-                                selectedValue={this.state.noteId}
-                                style={{height: 50, width: 200, color: '#000'}}
-                                onValueChange={(itemValue, itemIndex) => this.changeNote(itemValue)}
-                            >
-                                {this.renderNote()}
-                            </Picker>
-                        }
-                    </View>
-                    <ScrollView>
-                        <Calendar
-                            style={{
-                                borderWidth: 1,
-                                borderColor: '#ebe0eb',
-                                backgroundColor: '#ebe0eb'
-                            }}
-                            theme={{
-                                backgroundColor: '#ebe0eb',
-                                calendarBackground: '#ebe0eb',
-                                selectedDayBackgroundColor: '#b992b9'
-                            }}
-                            // Initially visible month. Default = Date()
-                            current={this.state.calCurrentMonth}
-                            // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-                            minDate={'2012-05-10'}
-                            // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-                            maxDate={'2022-12-31'}
-                            // Handler which gets executed on day press. Default = undefined
-                            onDayPress={(day) => {
-                                this.getDay(day)
-                            }}
-                            // Handler which gets executed on day long press. Default = undefined
-                            onDayLongPress={(day) => {
-                                this.getDay(day)
-                            }}
-                            // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
-                            monthFormat={'yyyy MM'}
-                            // Handler which gets executed when visible month changes in calendar. Default = undefined
-                            onMonthChange={(month) => {
-                                this.getMonthDiary(month.dateString.substring(0, 7))
-                            }}
-
-                            hideExtraDays={true}
-                            // If hideArrows=false and hideExtraDays=false do not switch month when tapping on greyed out
-                            // day from another month that is visible in calendar page. Default = false
-                            disableMonthChange={true}
-
-                            // Handler which gets executed when press arrow icon left. It receive a callback can go back month
-                            onPressArrowLeft={substractMonth => substractMonth()}
-                            // Handler which gets executed when press arrow icon left. It receive a callback can go next month
-                            onPressArrowRight={addMonth => addMonth()}
-                            markedDates={this.state.markedDates}
-                            markingType={'multi-dot'}
-                        />
-                        {this.state.selectedDiary == null ? <View><Text></Text></View> :
-                            (
-                                <View style={{marginTop: 10}}>
-                                    <NoteDiary
-                                        diaryId={this.state.selectedDiary.diaryId}
-                                        noteId={this.state.noteId}
-                                        title={this.state.selectedDiary.title}
-                                        fileId={this.state.selectedDiary.fileId}
-                                        openDiaryDtl={this.openDiaryDtl.bind(this)}
-                                    ></NoteDiary>
-                                </View>)}
-                        {this.state.selectedDiseaseList == null ? <View><Text></Text></View> :
-                            (<FlatList
-                                data={this.state.selectedDiseaseList}
-                                keyExtractor={(item, index) => index.toString()}
-                                renderItem={({item}) =>
-                                    <View style={{marginTop: 10}}>
-                                        <NoteDisease
-                                            diseaseId={item.diseaseId}
-                                            diseaseNm={item.diseaseNm}
-                                            symptom={item.symptom}
-                                            hospitalNm={item.hospitalNm}
-                                            prescription={item.prescription}
-                                            openDiseaseDtl={this.openDiseaseDtl.bind(this)}
-
-                                        ></NoteDisease>
-                                    </View>
-                                }
-
-                            />)}
-
-                    </ScrollView>
-
-                    <ActionButton buttonColor="rgba(231,76,60,1)" offsetY={40}>
-                        <ActionButton.Item buttonColor='#1abc9c' title="질병 작성"
-                                           onPress={() => this.props.navigation.navigate('NoteDiseaseDtl', {
-                                               type: 'INSERT',
-                                               noteId: this.state.noteId,
-                                               diseaseDt: this.state.diaryDt,
-                                               refreshFnc: this.getNote.bind(this)
-                                           })}>
-                            <IonIcons name="md-create" style={styles.actionButtonIcon}/>
-                        </ActionButton.Item>
-
-                        <ActionButton.Item buttonColor='#1abc9c' title="다이어리 작성"
-                                           onPress={() => this.props.navigation.navigate('DiaryDtl', {
-                                               type: 'INSERT',
-                                               noteId: this.state.noteId,
-                                               diaryDt: this.state.diaryDt,
-                                               refreshFnc: this.getNote.bind(this)
-                                           })}>
-                            <IonIcons name="md-create" style={styles.actionButtonIcon}/>
-                        </ActionButton.Item>
-                    </ActionButton>
-                    {this.state.loading &&
-                    <View style={styles.loading}>
-                        <ActivityIndicator size='large' color="#FF69B4"/>
-                    </View>
-                    }
+                    {this.renderNote()}
                 </View>
-
             </View>
         )
     }
