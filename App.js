@@ -14,6 +14,8 @@ import NoteDiseaseDtl from './src/Components/Note/NoteDiseaseDtl.js'
 import NoteSetting from './src/Components/Setting/Note.js'
 import NoteSettingDtl from './src/Components/Setting/NoteDtl.js'
 import Setting from './src/Components/Setting/Setting.js'
+import SearchUser from './src/Components/User/SearchUser.js'
+import UserRegister from './src/Components/User/UserRegister.js'
 
 const MainStack = createBottomTabNavigator(
     {
@@ -73,7 +75,11 @@ const RootStack = createStackNavigator(
 	},
 	Setting : {
 		screen : Setting
-    }    
+    },
+    SearchUser : {
+    	screen : SearchUser
+    },
+    UserRegister: { screen: UserRegister }
   },
   {
     initialRouteName : 'Login',

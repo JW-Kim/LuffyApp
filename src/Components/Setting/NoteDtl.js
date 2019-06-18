@@ -17,6 +17,7 @@ import Toast from 'react-native-toast-native';
 import Constants from '../../Com/Constants.js';
 import { getToken } from '../../Com/AuthToken.js';
 import DatePicker from 'react-native-datepicker';
+import NoteDtlShare from './NoteDtlShare.js';
 
 export default class NoteDtl extends Component {
 
@@ -31,34 +32,24 @@ export default class NoteDtl extends Component {
         }
     }
 
-    componentWillMount() {
-        AsyncStorage.getItem('access_token', (err, result) => {
-            this.setState({
-                token: result
-            }, () => {
-                /*  if(this.state.type == 'UPDATE'){
-                    fetch('http://'+Constants.HOST+':'+Constants.PORT+'/product/diary/disease/'+this.state.diseaseId,{
-                          headers: {
-                              'Authorization': 'Bearer '+this.state.token
-                          }
-                     })
-                          .then((response) => response.json())
-                          .then((res) => {
-                              console.log('res', res)
-                              this.setState({
-                                  diseaseNm: res.data.diseaseNm,
-                                  symptom: res.data.symptom,
-                                       hospitalNm : res.data.hospitalNm,
-                                      prescription : res.data.prescription
-                                })
-                          })
-                          .catch((error) => {
-                              Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
-                              this.props.navigation.navigate('Login')
-                          });
-                        } */
-            })
-        })
+    async componentWillMount() {
+        const { noteId, type } = this.state;
+        if(type == 'UPDATE'){
+                            fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/${noteId}`, await getToken())
+                                  .then((response) => response.json())
+                                  .then((res) => {
+                                      console.log('res', res)
+                                      this.setState({
+                                          noteNm: res.data.noteNm,
+                                          sex: res.data.sex,
+                                          birthDt : res.data.birthDt
+                                        })
+                                  })
+                                  .catch((error) => {
+                                      Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                                      this.props.navigation.navigate('Login')
+                                  });
+                                }
     }
 
     setNote() {
@@ -74,19 +65,18 @@ export default class NoteDtl extends Component {
     }
 
 
-    insertNote() {
-        fetch('http://' + Constants.HOST + ':' + Constants.PORT + '/product/note', {
+    async insertNote() {
+        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note`, await getToken({
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this.state.token
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 noteNm: this.state.noteNm == null ? '' : this.state.noteNm,
                 sex: this.state.sex == null ? '' : this.state.sex,
                 birthDt: this.state.birthDt == null ? '' : this.state.birthDt
             })
-        })
+        }))
             .then((response) => response.json())
             .then((responseJson) => {
                 Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
@@ -102,12 +92,13 @@ export default class NoteDtl extends Component {
     }
 
 
-    updateNote() {
-        fetch('http://' + Constants.HOST + ':' + Constants.PORT + '/product/note/' + this.state.noteId, {
+    async updateNote() {
+        const { noteId } = this.state;
+
+        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/${noteId}`, await getToken({
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this.state.token
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 noteNm: this.state.noteNm == null ? '' : this.state.noteNm,
@@ -115,7 +106,7 @@ export default class NoteDtl extends Component {
                 birthDt: this.state.birthDt == null ? '' : this.state.birthDt
 
             })
-        })
+        }))
             .then((response) => response.json())
             .then((responseJson) => {
                 Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
@@ -128,15 +119,11 @@ export default class NoteDtl extends Component {
                 Toast.show('정보 저장을 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
                 this.props.navigation.navigate('Login')
             });
-    }
-
-    changeSex(sex) {
-        this.setState({
-            sex: sex
-        })
     }
 
     render() {
+        const { noteId } = this.state;
+
         return (
             <View style={{flex: 1, backgroundColor: 'white'}}>
                 <ModalHeader
@@ -144,9 +131,10 @@ export default class NoteDtl extends Component {
                     goEvent={this.setNote.bind(this)}
                     buttonTitle={'글쓰기'}
                 ></ModalHeader>
-                <View style={{height: Dimensions.get('window').height - 148}}>
-                    <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100} enabled>
-                        <ScrollView style={{padding: 10}}>
+                <View style={{height: Dimensions.get('window').height - 60}}>
+                    <View style={{ flex: 1}}>
+                    <View style={{ padding: 10, flex: 0.5 }}>
+                        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100} enabled>
                             <View style={styles.checkContent}>
                                 <Text style={{width: 70, fontSize: 15, fontWeight: '800'}}>노트 이름</Text>
                                 <View style={{
@@ -163,7 +151,7 @@ export default class NoteDtl extends Component {
                                     ></TextInput>
                                 </View>
                             </View>
-                            <View style={[styles.checkContent, {height: 200}]}>
+                            <View style={[styles.checkContent, {height: 150}]}>
                                 <Text style={{width: 70, fontSize: 15, fontWeight: '800'}}>성별</Text>
                                 <View style={{
                                     flex: 1,
@@ -175,7 +163,7 @@ export default class NoteDtl extends Component {
                                     <Picker
                                         mode='dropdown'
                                         style={{height: 50, width: 200, color: '#000'}}
-                                        onValueChange={(itemValue, itemIndex) => this.changeSex(itemValue)}
+                                        onValueChange={(sex, itemIndex) => this.setState({ sex })}
                                         selectedValue={this.state.sex}
                                     >
                                         <Picker.Item label='남자' value='M'/>
@@ -218,8 +206,10 @@ export default class NoteDtl extends Component {
                                     />
                                 </View>
                             </View>
-                        </ScrollView>
-                    </KeyboardAvoidingView>
+                         </KeyboardAvoidingView>
+                    </View>
+                    <NoteDtlShare noteId={noteId} navigation={this.props.navigation} />
+                    </View>
                 </View>
             </View>
         )
