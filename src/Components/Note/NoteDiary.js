@@ -15,7 +15,7 @@ import Toast from 'react-native-toast-native';
 import ImageView from '../ImageView.js'
 import HomeCodeTypeIcon from '../HomeCodeTypeIcon.js'
 import Constants from '../../Com/Constants.js'
-import { getToken } from '../../Com/AuthToken.js';
+import {getToken} from '../../Com/AuthToken.js';
 
 const SECTIONS = [
     {

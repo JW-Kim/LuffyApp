@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import ModalHeader from '../ModalHeader.js';
 import Constants from '../../Com/Constants.js';
-import { getToken } from '../../Com/AuthToken.js';
+import {getToken} from '../../Com/AuthToken.js';
 import Toast from 'react-native-toast-native';
 import Icons from 'react-native-vector-icons/FontAwesome';
 import _ from 'lodash';

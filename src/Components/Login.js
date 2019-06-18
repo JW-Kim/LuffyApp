@@ -60,7 +60,7 @@ export default class Login extends Component {
     }
 
     goUserRegister() {
-         this.props.navigation.navigate('UserRegister');
+        this.props.navigation.navigate('UserRegister');
     }
 
     render() {
@@ -108,10 +108,10 @@ export default class Login extends Component {
                         title='로그인'
                         onPress={this.login.bind(this)}
                     />
-                    <View style={{ height: 60}}>
-                         <TouchableOpacity onPress={() => this.goUserRegister()}>
-                              <Text>insert User</Text>
-                         </TouchableOpacity>
+                    <View style={{height: 60}}>
+                        <TouchableOpacity onPress={() => this.goUserRegister()}>
+                            <Text>insert User</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>
