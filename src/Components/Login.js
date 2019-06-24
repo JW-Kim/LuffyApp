@@ -151,7 +151,8 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
         height: 70,
-        marginBottom: 8
+        marginBottom: 8,
+       justifyContent: 'center'
     },
 
     rowTextField: {

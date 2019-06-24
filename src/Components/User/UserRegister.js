@@ -201,6 +201,7 @@ export default class UserRegister extends Component {
                                 </TextInput>
                             </View>
                             <View style={styles.profile}>
+                                <View style={styles.rowTextField}><Text style={styles.rowText}>email</Text></View>
                                 <View style={styles.profileImage}>
                                     {this.renderProfile()}
                                 </View>
@@ -209,13 +210,14 @@ export default class UserRegister extends Component {
                                         <Text style={{fontSize: 14}}>selectPhoto</Text>
                                     </TouchableOpacity>
                                 </View>
-                                <Text>profile</Text>
                             </View>
-                            <Button
-                                buttonStyle={{width: 150, backgroundColor: '#000', height: 60}}
-                                containerViewStyle={{width: '100%'}}
-                                title='insert User'
-                                onPress={() => this.insertUser()}/>
+                            <View style={styles.row}>
+                                <Button
+                                    buttonStyle={{width: 150, backgroundColor: '#000', height: 60}}
+                                    containerViewStyle={{width: '100%'}}
+                                    title='insert User'
+                                    onPress={() => this.insertUser()}/>
+                            </View>
                         </View>
                     </ScrollView>
                 </KeyboardAvoidingView>
