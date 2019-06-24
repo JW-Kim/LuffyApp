@@ -6,7 +6,7 @@ import {
     AsyncStorage,
     TouchableOpacity,
     StyleSheet,
-    KeyboardAvoidView,
+    KeyboardAvoidingView,
     ScrollView,
     Dimensions
 } from 'react-native';
@@ -77,7 +77,7 @@ export default class Login extends Component {
     render() {
         return (
             <View style={{flex: 1}}>
-                <KeyboardAvoidView style={{flex: 1, width: '100%'}} enabled>
+                <KeyboardAvoidingView style={{flex: 1, width: '100%'}} enabled>
                     <ScrollView>
                         <View style={[styles.mainView, {justifyContent: 'center'}]}>
                             <View style={{flex: 1}}>
@@ -128,7 +128,7 @@ export default class Login extends Component {
                             </View>
                         </View>
                     </ScrollView>
-                </KeyboardAvoidView>
+                </KeyboardAvoidingView>
             </View>
         )
     }

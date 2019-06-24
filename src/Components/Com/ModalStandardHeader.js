@@ -22,6 +22,7 @@ export default class ModalStandardHeader extends Component {
     }
 
     render() {
+        const { title } = this.props;
         return (
             <View style={styles.mainView}>
                 <View style={styles.sideView}>
