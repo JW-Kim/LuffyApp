@@ -50,10 +50,10 @@ export default class Login extends Component {
     }
 
     login() {
-        const { username, password } = this.state;
+        const {username, password} = this.state;
 
-        if(username === '' || password === '') {
-             Toast.show('put in username, password', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+        if (username === '' || password === '') {
+            Toast.show('put in username, password', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
         }
 
         fetch('http://' + Constants.HOST + ':' + Constants.PORT + '/product/login?username=' + encodeURI(this.state.username) + '&password=' + encodeURI(this.state.password))
@@ -76,92 +76,91 @@ export default class Login extends Component {
 
     render() {
         return (
-        <View style={{ flex: 1}}>
-      <KeyboardAvoidView style={{flex: 1, width: '100%'}} enabled>
-      <ScrollView>
-        <View style={[styles.mainView, {justifyContent: 'center'}]}>
-            <View style={{flex: 1 }}>
-                <View style={{
-                    flex: 0.5,
-                    alignItems: 'center'
-                }}>
-                    <Image
-                        style={{width: 50}}
-                        source={require('../../assets/images/logo3.png')}
-                    />
-                </View>
-                <View style={{
-                    flex: 0.5,
-                    alignItems: 'center'
-                }}>
-                    <View style={styles.row}>
-                        <View style={styles.rowTextField}><Text style={styles.rowText}>ID</Text></View>
-                         <TextInput
-                              style={styles.textInput}
-                              onChangeText={(username) => this.setState({username})}
-                             value={this.state.username}
-                         />
-                    </View>
-                    <View style={styles.row}>
-                         <View style={styles.rowTextField}><Text style={styles.rowText}>PW</Text></View>
-                         <TextInput
-                             style={styles.textInput}
-                             onChangeText={(password) => this.setState({password})}
-                             value={this.state.password}
-                         />
-                    </View>
-                    </View>
-                    <View style={styles.row}>
-                         <Button
-                             buttonStyle={{backgroundColor: '#000', height: 70}}
-                             containerViewStyle={{width: '100%'}}
-                             textStyle={{color: '#fff'}}
-                             title='로그인'
-                             onPress={this.login.bind(this)}
-                         />
-                    </View>
-                    <View style={styles.row}>
-                         <TouchableOpacity onPress={() => this.goUserRegister()}>
-                              <Text style={{ fontSize: 14}}>insert User</Text>
-                         </TouchableOpacity>
-                    </View>
-                </View>
+            <View style={{flex: 1}}>
+                <KeyboardAvoidView style={{flex: 1, width: '100%'}} enabled>
+                    <ScrollView>
+                        <View style={[styles.mainView, {justifyContent: 'center'}]}>
+                            <View style={{flex: 1}}>
+                                <View style={{
+                                    flex: 0.5,
+                                    alignItems: 'center'
+                                }}>
+                                    <Image
+                                        style={{width: 50}}
+                                        source={require('../../assets/images/logo3.png')}
+                                    />
+                                </View>
+                                <View style={{
+                                    flex: 0.5,
+                                    alignItems: 'center'
+                                }}>
+                                    <View style={styles.row}>
+                                        <View style={styles.rowTextField}><Text style={styles.rowText}>ID</Text></View>
+                                        <TextInput
+                                            style={styles.textInput}
+                                            onChangeText={(username) => this.setState({username})}
+                                            value={this.state.username}
+                                        />
+                                    </View>
+                                    <View style={styles.row}>
+                                        <View style={styles.rowTextField}><Text style={styles.rowText}>PW</Text></View>
+                                        <TextInput
+                                            style={styles.textInput}
+                                            onChangeText={(password) => this.setState({password})}
+                                            value={this.state.password}
+                                        />
+                                    </View>
+                                </View>
+                                <View style={styles.row}>
+                                    <Button
+                                        buttonStyle={{backgroundColor: '#000', height: 70}}
+                                        containerViewStyle={{width: '100%'}}
+                                        textStyle={{color: '#fff'}}
+                                        title='로그인'
+                                        onPress={this.login.bind(this)}
+                                    />
+                                </View>
+                                <View style={styles.row}>
+                                    <TouchableOpacity onPress={() => this.goUserRegister()}>
+                                        <Text style={{fontSize: 14}}>insert User</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
+                    </ScrollView>
+                </KeyboardAvoidView>
             </View>
-         </View>
-         </ScrollView>
-         </KeyboardAvoidView>
-         </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-     mainView: {
-          height: Dimensions.get('window').height,
-          padding: 20,
-          backgroundColor: '#fff',
-     },
+    mainView: {
+        height: Dimensions.get('window').height,
+        padding: 20,
+        backgroundColor: '#fff',
+    },
 
-     textInput: {
-          paddingLeft: 8,
-          paddingRight: 8,
-          height: 70,
-          flex: 1
-     },
+    textInput: {
+        paddingLeft: 8,
+        paddingRight: 8,
+        height: 70,
+        flex: 1
+    },
 
-     row: {
-          flexDirection: 'row',
-          height: 70,
-          marginBottom: 8
-     },
+    row: {
+        flexDirection: 'row',
+        height: 70,
+        marginBottom: 8
+    },
 
-     rowTextField: {
-          width: 50,
-          justifyContent: 'center'
-     },
+    rowTextField: {
+        width: 50,
+        justifyContent: 'center'
+    },
 
-     rowText: {
-          fontSize: 21,
-          fontWeight: 'bold'
-     }
+    rowText: {
+        fontSize: 21,
+        fontWeight: 'bold'
+    }
 })
