@@ -4,7 +4,11 @@ import {
     View,
     TextInput,
     AsyncStorage,
-    TouchableOpacity
+    TouchableOpacity,
+    StyleSheet,
+    KeyboardAvoidView,
+    ScrollView,
+    Dimensions
 } from 'react-native';
 import Image from 'react-native-scalable-image';
 import {
@@ -13,13 +17,14 @@ import {
 import JWT_decode from 'jwt-decode';
 import _ from 'lodash';
 import Constants from '../Com/Constants.js';
+import Toast from 'react-native-toast-native';
 
 export default class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: null,
-            password: null
+            username: '',
+            password: ''
         }
 
         let goUserRegister = this.goUserRegister.bind(this);
@@ -45,6 +50,12 @@ export default class Login extends Component {
     }
 
     login() {
+        const { username, password } = this.state;
+
+        if(username === '' || password === '') {
+             Toast.show('put in username, password', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+        }
+
         fetch('http://' + Constants.HOST + ':' + Constants.PORT + '/product/login?username=' + encodeURI(this.state.username) + '&password=' + encodeURI(this.state.password))
             .then((response) => response.json())
             .then((res) => {
@@ -65,14 +76,13 @@ export default class Login extends Component {
 
     render() {
         return (
-            <View style={{
-                flex: 1,
-                flexDirection: 'column',
-                justifyContent: 'center',
-                backgroundColor: '#fff'
-            }}>
+        <View style={{ flex: 1}}>
+      <KeyboardAvoidView style={{flex: 1, width: '100%'}} enabled>
+      <ScrollView>
+        <View style={[styles.mainView, {justifyContent: 'center'}]}>
+            <View style={{flex: 1 }}>
                 <View style={{
-                    height: 300,
+                    flex: 0.5,
                     alignItems: 'center'
                 }}>
                     <Image
@@ -81,40 +91,77 @@ export default class Login extends Component {
                     />
                 </View>
                 <View style={{
-                    height: 100,
+                    flex: 0.5,
                     alignItems: 'center'
                 }}>
-                    <TextInput
-                        style={{
-                            width: 150
-                        }}
-                        onChangeText={(username) => this.setState({username})}
-                        value={this.state.username}
-                    />
-                    <TextInput
-                        style={{
-                            width: 150
-                        }}
-                        onChangeText={(password) => this.setState({password})}
-                        value={this.state.password}
-                    />
-                    <Button
-                        buttonStyle={{
-                            width: 150,
-                            backgroundColor: '#000',
-                            height: 36
-                        }}
-                        textStyle={{color: '#fff'}}
-                        title='로그인'
-                        onPress={this.login.bind(this)}
-                    />
-                    <View style={{ height: 60}}>
+                    <View style={styles.row}>
+                        <View style={styles.rowTextField}><Text style={styles.rowText}>ID</Text></View>
+                         <TextInput
+                              style={styles.textInput}
+                              onChangeText={(username) => this.setState({username})}
+                             value={this.state.username}
+                         />
+                    </View>
+                    <View style={styles.row}>
+                         <View style={styles.rowTextField}><Text style={styles.rowText}>PW</Text></View>
+                         <TextInput
+                             style={styles.textInput}
+                             onChangeText={(password) => this.setState({password})}
+                             value={this.state.password}
+                         />
+                    </View>
+                    </View>
+                    <View style={styles.row}>
+                         <Button
+                             buttonStyle={{backgroundColor: '#000', height: 70}}
+                             containerViewStyle={{width: '100%'}}
+                             textStyle={{color: '#fff'}}
+                             title='로그인'
+                             onPress={this.login.bind(this)}
+                         />
+                    </View>
+                    <View style={styles.row}>
                          <TouchableOpacity onPress={() => this.goUserRegister()}>
-                              <Text>insert User</Text>
+                              <Text style={{ fontSize: 14}}>insert User</Text>
                          </TouchableOpacity>
                     </View>
                 </View>
             </View>
+         </View>
+         </ScrollView>
+         </KeyboardAvoidView>
+         </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+     mainView: {
+          height: Dimensions.get('window').height,
+          padding: 20,
+          backgroundColor: '#fff',
+     },
+
+     textInput: {
+          paddingLeft: 8,
+          paddingRight: 8,
+          height: 70,
+          flex: 1
+     },
+
+     row: {
+          flexDirection: 'row',
+          height: 70,
+          marginBottom: 8
+     },
+
+     rowTextField: {
+          width: 50,
+          justifyContent: 'center'
+     },
+
+     rowText: {
+          fontSize: 21,
+          fontWeight: 'bold'
+     }
+})

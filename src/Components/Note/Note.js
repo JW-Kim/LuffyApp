@@ -244,7 +244,7 @@ export default class Note extends Component {
     openNoteDtl() {
          this.props.navigate.navigate('NoteSettingDtl', {
               type: 'INSERT',
-              refreshFnc: this.getNote.bind(this);
+              refreshFnc: this.getNote.bind(this)
          })
     }
 
