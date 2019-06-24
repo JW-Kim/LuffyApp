@@ -71,7 +71,7 @@ export default class Login extends Component {
     }
 
     goUserRegister() {
-         this.props.navigation.navigate('UserRegister');
+        this.props.navigation.navigate('UserRegister');
     }
 
     render() {

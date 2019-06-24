@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { View, Text } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import {View, Text} from 'react-native';
+import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
 import Modal from './src/Components/Modal.js'
 import Login from './src/Components/Login.js'
 import Home from './src/Components/Home.js'
@@ -20,16 +20,16 @@ import UserRegister from './src/Components/User/UserRegister.js'
 const MainStack = createBottomTabNavigator(
     {
         Note: Note,
-        NoteStatics : NoteStatics
+        NoteStatics: NoteStatics
 //        Home: Home,
 
-/*        Detail: Detail,
-        BasicComponents : BasicComponents,
-        UserInterface : UserInterface*/
+        /*        Detail: Detail,
+                BasicComponents : BasicComponents,
+                UserInterface : UserInterface*/
     },
     {
-       initialRouteName : 'Note',
-       tabBarOptions: {
+        initialRouteName: 'Note',
+        tabBarOptions: {
             style: {
                 backgroundColor: '#ffffff',
                 shadowColor: 'transparent',
@@ -37,59 +37,59 @@ const MainStack = createBottomTabNavigator(
                 shadowOffset: {
                     height: 0,
                 },
-				  height: 40
+                height: 40
             },
-            labelStyle : {
+            labelStyle: {
                 fontSize: 12,
                 //fontWeight: 'bold',
-                color : '#000'
+                color: '#000'
             },
-			 activeBackgroundColor : '#ff3399' 
-       },
-       lazy : true
+            activeBackgroundColor: '#ff3399'
+        },
+        lazy: true
     }
 );
 
 const RootStack = createStackNavigator(
-  {
-    Login : {
-        screen : Login,
+    {
+        Login: {
+            screen: Login,
+        },
+        Main: {
+            screen: MainStack,
+        },
+        MyModal: {
+            screen: Modal,
+        },
+        DiaryDtl: {
+            screen: DiaryDtl
+        },
+        NoteDiseaseDtl: {
+            screen: NoteDiseaseDtl
+        },
+        NoteSetting: {
+            screen: NoteSetting
+        },
+        NoteSettingDtl: {
+            screen: NoteSettingDtl
+        },
+        Setting: {
+            screen: Setting
+        },
+        SearchUser: {
+            screen: SearchUser
+        },
+        UserRegister: {screen: UserRegister}
     },
-    Main: {
-      screen: MainStack,
-    },
-    MyModal: {
-      screen: Modal,
-    },
-    DiaryDtl : {
-      screen : DiaryDtl
-    },
-    NoteDiseaseDtl : {
-        screen : NoteDiseaseDtl
-    },
-	NoteSetting : {
-		screen : NoteSetting
-	},
-	NoteSettingDtl : {
-		screen : NoteSettingDtl
-	},
-	Setting : {
-		screen : Setting
-    },
-    SearchUser : {
-    	screen : SearchUser
-    },
-    UserRegister: { screen: UserRegister }
-  },
-  {
-    initialRouteName : 'Login',
-    mode: 'modal',
-    headerMode: 'none',
-  }
+    {
+        initialRouteName: 'Login',
+        mode: 'modal',
+        headerMode: 'none',
+    }
 );
 
 export default class App extends Component {
-  render() {
-    return <RootStack />;
-  }
+    render() {
+        return <RootStack/>;
+    }
 }
