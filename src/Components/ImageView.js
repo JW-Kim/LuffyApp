@@ -4,9 +4,10 @@ import React, {
 import {
     View,
     Dimensions,
-    AsyncStorage
+    AsyncStorage,
+    Image
 } from 'react-native';
-import Image from 'react-native-scalable-image';
+import ScalableImage from 'react-native-scalable-image';
 import RNFetchBlob from 'react-native-fetch-blob';
 import Constants from '../Com/Constants.js';
 
@@ -42,8 +43,16 @@ export default class ImageView extends Component {
     }
 
     render() {
+        const { type, style } = this.props;
+
+        if(type === 'unScalable') {
+            return (
+                <Image style={style} source={{uri: this.state.base64Str}}/>
+            )
+        }
+
         return (
-            <Image width={this.props.width} source={{uri: this.state.base64Str}}/>
+            <ScalableImage width={this.props.width} source={{uri: this.state.base64Str}}/>
         )
     }
 }

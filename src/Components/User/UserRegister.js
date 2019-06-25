@@ -9,6 +9,7 @@ import {
     ScrollView,
     TouchableOpacity,
     KeyboardAvoidingView,
+    Image
 } from 'react-native';
 import {
      Button
@@ -18,7 +19,6 @@ import Constants from '../../Com/Constants.js';
 import { getToken } from '../../Com/AuthToken.js';
 import Toast from 'react-native-toast-native';
 import ModalStandardHeader from '../Com/ModalStandardHeader'
-import Image from 'react-native-scalable-image';
 import ImageView from './ImageView.js';
 import ImagePicker from 'react-native-image-picker';
 
@@ -131,10 +131,10 @@ const options = {
          const { avatarSource, fileId } = this.state;
 
          if(avatarSource !== null) {
-             return(<Image width="80" source={avatarSource} />);
+             return(<Image style={styles.profileImage} source={avatarSource} />);
 
          } else if (fileId !== null) {
-             return(<ImageView fileId={fileId} width="80"></ImageView>);
+             return(<ImageView type="unScalable" style={styles.profileImage} fileId={fileId} width="100"></ImageView>);
          }
 
          return (<Text></Text>)
@@ -165,7 +165,9 @@ const options = {
                         <TextInput
                              style={styles.textInput}
                              underlineColorAndroid="transparent"
-                             placeholder="PW"
+                             placeholder="PASSWORD"
+                             autoCompleteType="password"
+                             secureTextEntry={true}
                              onChangeText={(userPwd) => this.setState({ userPwd })}
                              value={userPwd} >
                         </TextInput>
@@ -175,17 +177,20 @@ const options = {
                         <TextInput
                              style={styles.textInput}
                              underlineColorAndroid="transparent"
-                             placeholder="PW"
+                             placeholder="PASSWORD"
+                             autoCompleteType="password"
+                             secureTextEntry={true}
                              onChangeText={(userPwd2) => this.setState({ userPwd2 })}
                              value={userPwd2} >
                         </TextInput>
                    </View>
                    <View style={styles.row}>
-                        <View style={styles.rowTextField}><Text style={styles.rowText}>email</Text></View>
+                        <View style={styles.rowTextField}><Text style={styles.rowText}>name</Text></View>
                         <TextInput
                              style={styles.textInput}
                              underlineColorAndroid="transparent"
                              placeholder="name"
+                             autoCompleteType="username"
                              onChangeText={(userNm) => this.setState({ userNm })}
                              value={userNm} >
                         </TextInput>
@@ -196,6 +201,7 @@ const options = {
                              style={styles.textInput}
                              underlineColorAndroid="transparent"
                              placeholder="email"
+                             autoCompleteType="email"
                              onChangeText={(email) => this.setState({ email })}
                              value={email} >
                         </TextInput>
@@ -212,7 +218,7 @@ const options = {
                        <Text>profile</Text>
                    </View>
                    <Button
-                        buttonStyle={{ width: 150, backgroundColor: '#000', height: 60}}
+                        buttonStyle={{backgroundColor: '#000', height: 60}}
                         containerViewStyle={{ width: '100%' }}
                         title='insert User'
                         onPress={() => this.insertUser()} />

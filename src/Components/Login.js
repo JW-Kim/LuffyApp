@@ -18,16 +18,24 @@ import JWT_decode from 'jwt-decode';
 import _ from 'lodash';
 import Constants from '../Com/Constants.js';
 import Toast from 'react-native-toast-native';
+import Icons from 'react-native-vector-icons/FontAwesome';
 
 export default class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            idStyle: {},
+            passwordStyle: {},
+            loginBtnStyle: {backgroundColor:'gray', height: 70},
+            isUsername: false,
+            isPassword: false
         }
 
         let goUserRegister = this.goUserRegister.bind(this);
+        let changeId = this.changeId.bind(this);
+        let changePassword = this.changePassword.bind(this);
     }
 
     componentDidMount() {
@@ -50,18 +58,30 @@ export default class Login extends Component {
     }
 
     login() {
-        const { username, password } = this.state;
+        const { username, password, isUsername, isPassword } = this.state;
+
+        if(!(isUsername && isPassword)) {
+            return;
+        }
 
         if(username === '' || password === '') {
              Toast.show('put in username, password', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+             return;
         }
 
         fetch('http://' + Constants.HOST + ':' + Constants.PORT + '/product/login?username=' + encodeURI(this.state.username) + '&password=' + encodeURI(this.state.password))
             .then((response) => response.json())
             .then((res) => {
-                console.log('res', res)
                 AsyncStorage.setItem('access_token', res.data, (err, result) => {
-                    console.log('setItem', err, result)
+                    this.setState({
+                        username: '',
+                        password: '',
+                        idStyle: {},
+                        passwordStyle: {},
+                        loginBtnStyle: {backgroundColor:'gray', height: 70},
+                        isUsername: false,
+                        isPassword: false
+                    })
                     this.props.navigation.navigate('Main');
                 })
             })
@@ -72,6 +92,76 @@ export default class Login extends Component {
 
     goUserRegister() {
         this.props.navigation.navigate('UserRegister');
+    }
+
+    changeId(username) {
+        const { isPassword } = this.state;
+
+        let isUsername = true;
+        const reg = /^[.A-Za-z0-9]*$/
+
+        if(!reg.test(username) || username === '') {
+            isUsername = false;
+        }
+
+        let loginBtnStyle = {};
+        if(isUsername && isPassword) {
+            loginBtnStyle = {backgroundColor: '#000', height: 70};
+        } else {
+            loginBtnStyle = {backgroundColor: 'gray', height: 70};
+        }
+
+        this.setState({username, isUsername, loginBtnStyle});
+    }
+
+    changePassword(password) {
+        const { isUsername } = this.state;
+
+        let isPassword = true;
+        const reg = [ㄱ-ㅎ가-힣]/g
+
+        if(!reg.test(password) || password === '') {
+            isPassword = false;
+        }
+
+        let loginBtnStyle = {};
+        if(isUsername && isPassword) {
+            loginBtnStyle = {backgroundColor: '#000', height: 70};
+        } else {
+            loginBtnStyle = {backgroundColor: 'gray', height: 70};
+        }
+
+        this.setState({password, isPassword, loginBtnStyle});
+    }
+
+    renderIdCheckText() {
+        const { username, isUsername } = this.state;
+
+        if(username !== '' && !isUsername) {
+            return(
+                <View style={styles.checkTextView}>
+                    <Icons name="exclamation" color="#d32f2f" size={14} />
+                    <Text style={styles.checkText}>id는 영문자, 숫자만 가능합니다.</Text>
+                </View>
+            )
+        }
+
+        return(<View><Text></Text></View>)
+    }
+
+    renderPwCheckText() {
+        const { password, isPassword } = this.state;
+
+        if(password !== '' && !isPassword) {
+            return(
+                <View style={styles.checkTextView}>
+                    <Icons name="exclamation" color="#d32f2f" size={14} />
+                    <Text style={styles.checkText}>pw는 영문자, 숫자, 특수문자만 가능합니다.</Text>
+                </View>
+            )
+        }
+
+        return(<View><Text></Text></View>)
     }
 
     render() {
