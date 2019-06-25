@@ -207,7 +207,7 @@ export default class UserRegister extends Component {
                                 </TextInput>
                             </View>
                             <View style={styles.profile}>
-                                <View style={styles.profileImage}>
+                                <View style={styles.profileImage} onPress={() => this.selectPhoto()}>
                                     {this.renderProfile()}
                                 </View>
                                 <View style={styles.selectPhotoRow}>
