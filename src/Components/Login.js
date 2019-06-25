@@ -6,7 +6,7 @@ import {
     AsyncStorage,
     TouchableOpacity,
     StyleSheet,
-    KeyboardAvoidView,
+    KeyboardAvoidingView,
     ScrollView,
     Dimensions
 } from 'react-native';
@@ -28,7 +28,7 @@ export default class Login extends Component {
             password: '',
             idStyle: {},
             passwordStyle: {},
-            loginBtnStyle: {backgroundColor:'gray', height: 70},
+            loginBtnStyle: {backgroundColor: 'gray', height: 70},
             isUsername: false,
             isPassword: false
         }
@@ -58,15 +58,15 @@ export default class Login extends Component {
     }
 
     login() {
-        const { username, password, isUsername, isPassword } = this.state;
+        const {username, password, isUsername, isPassword} = this.state;
 
-        if(!(isUsername && isPassword)) {
+        if (!(isUsername && isPassword)) {
             return;
         }
 
-        if(username === '' || password === '') {
-             Toast.show('put in username, password', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
-             return;
+        if (username === '' || password === '') {
+            Toast.show('put in username, password', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+            return;
         }
 
         fetch('http://' + Constants.HOST + ':' + Constants.PORT + '/product/login?username=' + encodeURI(this.state.username) + '&password=' + encodeURI(this.state.password))
@@ -78,7 +78,7 @@ export default class Login extends Component {
                         password: '',
                         idStyle: {},
                         passwordStyle: {},
-                        loginBtnStyle: {backgroundColor:'gray', height: 70},
+                        loginBtnStyle: {backgroundColor: 'gray', height: 70},
                         isUsername: false,
                         isPassword: false
                     })
@@ -95,17 +95,17 @@ export default class Login extends Component {
     }
 
     changeId(username) {
-        const { isPassword } = this.state;
+        const {isPassword} = this.state;
 
         let isUsername = true;
         const reg = /^[.A-Za-z0-9]*$/
 
-        if(!reg.test(username) || username === '') {
+        if (!reg.test(username) || username === '') {
             isUsername = false;
         }
 
         let loginBtnStyle = {};
-        if(isUsername && isPassword) {
+        if (isUsername && isPassword) {
             loginBtnStyle = {backgroundColor: '#000', height: 70};
         } else {
             loginBtnStyle = {backgroundColor: 'gray', height: 70};
@@ -115,17 +115,17 @@ export default class Login extends Component {
     }
 
     changePassword(password) {
-        const { isUsername } = this.state;
+        const {isUsername} = this.state;
 
         let isPassword = true;
-        const reg = [ㄱ-ㅎ가-힣]/g
+        const reg = /^[가-힣]+$/
 
-        if(!reg.test(password) || password === '') {
+        if (reg.test(password) || password === '') {
             isPassword = false;
         }
 
         let loginBtnStyle = {};
-        if(isUsername && isPassword) {
+        if (isUsername && isPassword) {
             loginBtnStyle = {backgroundColor: '#000', height: 70};
         } else {
             loginBtnStyle = {backgroundColor: 'gray', height: 70};
@@ -135,151 +135,170 @@ export default class Login extends Component {
     }
 
     renderIdCheckText() {
-        const { username, isUsername } = this.state;
+        const {username, isUsername} = this.state;
 
-        if(username !== '' && !isUsername) {
-            return(
+        if (username !== '' && !isUsername) {
+            return (
                 <View style={styles.checkTextView}>
-                    <Icons name="exclamation" color="#d32f2f" size={14} />
+                    <Icons name="exclamation" color="#d32f2f" size={14}/>
                     <Text style={styles.checkText}>id는 영문자, 숫자만 가능합니다.</Text>
                 </View>
             )
         }
 
-        return(<View><Text></Text></View>)
+        return (<View><Text></Text></View>)
     }
 
     renderPwCheckText() {
-        const { password, isPassword } = this.state;
+        const {password, isPassword} = this.state;
 
-        if(password !== '' && !isPassword) {
-            return(
+        if (password !== '' && !isPassword) {
+            return (
                 <View style={styles.checkTextView}>
-                    <Icons name="exclamation" color="#d32f2f" size={14} />
+                    <Icons name="exclamation" color="#d32f2f" size={14}/>
                     <Text style={styles.checkText}>pw는 영문자, 숫자, 특수문자만 가능합니다.</Text>
                 </View>
             )
         }
 
-        return(<View><Text></Text></View>)
+        return (<View><Text></Text></View>)
     }
 
     render() {
-        const { idStyle, passwordStyle, loginBtnStyle } = this.state;
+        const {idStyle, passwordStyle, loginBtnStyle} = this.state;
         return (
-        <View style={{ flex: 1}}>
-      <KeyboardAvoidView style={{flex: 1, width: '100%'}} enabled>
-      <ScrollView>
-        <View style={[styles.mainView, {justifyContent: 'center'}]}>
-            <View style={{flex: 1 }}>
-                <View style={{
-                    flex: 0.5,
-                    alignItems: 'center'
-                }}>
-                    <Image
-                        style={{width: 50}}
-                        source={require('../../assets/images/logo3.png')}
-                    />
-                </View>
-                <View style={{
-                    flex: 0.5,
-                    alignItems: 'center'
-                }}>
-                    <View style={styles.row}>
-                         <TextInput
-                              style={[styles.textInput, idStyle]}
-                              underlineColorAndroid="transparent"
-                              placeholder="ID"
-                              onChangeText={(username) => this.changeId(username)}
-                              onFocus={() => this.setState({idStyle:{borderWidth: 1, borderColor: '#000'}})}
-                              onBlur={() => this.setState({idStyle:{borderWidth: 0, borderColor: '#000'}})}
-                             value={this.state.username}
-                         />
-                    </View>
-                    {this.renderIdCheckText()}
-                    <View style={styles.row}>
-                         <TextInput
-                             style={[styles.textInput, passwordStyle]}
-                             underlineColorAndroid="transparent"
-                             placeholder="PASSWORD"
-                             autoCompleteType="password"
-                             secureTextEntry={true}
-                             onChangeText={(password) => this.changePassword(password)}
-                             onFocus={() => this.setState({idStyle:{borderWidth: 1, borderColor: '#000'}})}
-                             onBlur={() => this.setState({idStyle:{borderWidth: 0, borderColor: '#000'}})}
-                             value={this.state.password}
-                         />
-                    </View>
-                    {this.renderPwCheckText()}
-                    </View>
-                    <View style={styles.row}>
-                         <Button
-                             buttonStyle={loginBtnStyle}
-                             containerViewStyle={{width: '100%'}}
-                             textStyle={{color: '#fff'}}
-                             title='로그인'
-                             onPress={this.login.bind(this)}
-                         />
-                    </View>
-                    <View style={styles.row}>
-                         <TouchableOpacity onPress={() => this.goUserRegister()}>
-                              <Text style={{ fontSize: 14}}>insert User</Text>
-                         </TouchableOpacity>
-                    </View>
-                </View>
+            <View style={{flex: 1}}>
+                <KeyboardAvoidingView style={{flex: 1, width: '100%'}} enabled>
+                    <ScrollView>
+                        <View style={[styles.mainView, {justifyContent: 'center'}]}>
+                            <View style={{flex: 1}}>
+                                <View style={{
+                                    flex: 0.5,
+                                    alignItems: 'center'
+                                }}>
+                                    <Image
+                                        style={{width: 50}}
+                                        source={require('../../assets/images/logo3.png')}
+                                    />
+                                </View>
+                                <View style={{
+                                    flex: 0.5,
+                                    alignItems: 'center'
+                                }}>
+                                    <View style={styles.row}>
+                                        <TextInput
+                                            style={[styles.textInput, idStyle]}
+                                            underlineColorAndroid="transparent"
+                                            placeholder="ID"
+                                            onChangeText={(username) => this.changeId(username)}
+                                            onFocus={() => this.setState({
+                                                idStyle: {
+                                                    borderWidth: 1,
+                                                    borderColor: '#000'
+                                                }
+                                            })}
+                                            onBlur={() => this.setState({
+                                                idStyle: {
+                                                    borderWidth: 0,
+                                                    borderColor: '#000'
+                                                }
+                                            })}
+                                            value={this.state.username}
+                                        />
+                                    </View>
+                                    {this.renderIdCheckText()}
+                                    <View style={styles.row}>
+                                        <TextInput
+                                            style={[styles.textInput, passwordStyle]}
+                                            underlineColorAndroid="transparent"
+                                            placeholder="PASSWORD"
+                                            autoCompleteType="password"
+                                            secureTextEntry={true}
+                                            onChangeText={(password) => this.changePassword(password)}
+                                            onFocus={() => this.setState({
+                                                passwordStyle: {
+                                                    borderWidth: 1,
+                                                    borderColor: '#000'
+                                                }
+                                            })}
+                                            onBlur={() => this.setState({
+                                                passwordStyle: {
+                                                    borderWidth: 0,
+                                                    borderColor: '#000'
+                                                }
+                                            })}
+                                            value={this.state.password}
+                                        />
+                                    </View>
+                                    {this.renderPwCheckText()}
+                                </View>
+                                <View style={styles.row}>
+                                    <Button
+                                        buttonStyle={loginBtnStyle}
+                                        containerViewStyle={{width: '100%'}}
+                                        textStyle={{color: '#fff'}}
+                                        title='로그인'
+                                        onPress={this.login.bind(this)}
+                                    />
+                                </View>
+                                <View style={styles.row}>
+                                    <TouchableOpacity onPress={() => this.goUserRegister()}>
+                                        <Text style={{fontSize: 14}}>insert User</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
+                    </ScrollView>
+                </KeyboardAvoidingView>
             </View>
-         </View>
-         </ScrollView>
-         </KeyboardAvoidView>
-         </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-     mainView: {
-          height: Dimensions.get('window').height,
-          padding: 20,
-          backgroundColor: '#fff',
-     },
+    mainView: {
+        height: Dimensions.get('window').height,
+        padding: 20,
+        backgroundColor: '#fff',
+    },
 
-     textInput: {
-          paddingLeft: 8,
-          paddingRight: 8,
-          height: 70,
-          flex: 1,
-          fontSize: 16
-     },
+    textInput: {
+        paddingLeft: 8,
+        paddingRight: 8,
+        height: 70,
+        flex: 1,
+        fontSize: 16
+    },
 
-     row: {
-          flexDirection: 'row',
-          height: 70,
-          marginBottom: 8,
-          justifyContent: 'center'
-     },
+    row: {
+        flexDirection: 'row',
+        height: 70,
+        marginBottom: 8,
+        justifyContent: 'center'
+    },
 
-     rowTextField: {
-          width: 50,
-          justifyContent: 'center'
-     },
+    rowTextField: {
+        width: 50,
+        justifyContent: 'center'
+    },
 
-     rowText: {
-          fontSize: 16,
-          fontWeight: 'bold'
-     },
+    rowText: {
+        fontSize: 16,
+        fontWeight: 'bold'
+    },
 
-     checkTextView: {
-         flexDirection: 'row',
-         height: 20,
-         paddingLeft: 20,
-         marginBottom: 8,
-         width: '100%',
-         alignItems: 'center'
-     },
+    checkTextView: {
+        flexDirection: 'row',
+        height: 20,
+        paddingLeft: 20,
+        marginBottom: 8,
+        width: '100%',
+        alignItems: 'center'
+    },
 
-     checkText: {
-         marginLeft: 8,
-         fontSize: 14,
-         color: '#d32f2f'
-     }
+    checkText: {
+        marginLeft: 8,
+        fontSize: 14,
+        color: '#d32f2f'
+    }
 })
