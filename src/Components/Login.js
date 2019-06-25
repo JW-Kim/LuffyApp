@@ -165,6 +165,7 @@ export default class Login extends Component {
     }
 
     render() {
+        const { idStyle, passwordStyle, loginBtnStyle } = this.state;
         return (
         <View style={{ flex: 1}}>
       <KeyboardAvoidView style={{flex: 1, width: '100%'}} enabled>
@@ -185,25 +186,35 @@ export default class Login extends Component {
                     alignItems: 'center'
                 }}>
                     <View style={styles.row}>
-                        <View style={styles.rowTextField}><Text style={styles.rowText}>ID</Text></View>
                          <TextInput
-                              style={styles.textInput}
-                              onChangeText={(username) => this.setState({username})}
+                              style={[styles.textInput, idStyle]}
+                              underlineColorAndroid="transparent"
+                              placeholder="ID"
+                              onChangeText={(username) => this.changeId(username)}
+                              onFocus={() => this.setState({idStyle:{borderWidth: 1, borderColor: '#000'}})}
+                              onBlur={() => this.setState({idStyle:{borderWidth: 0, borderColor: '#000'}})}
                              value={this.state.username}
                          />
                     </View>
+                    {this.renderIdCheckText()}
                     <View style={styles.row}>
-                         <View style={styles.rowTextField}><Text style={styles.rowText}>PW</Text></View>
                          <TextInput
-                             style={styles.textInput}
-                             onChangeText={(password) => this.setState({password})}
+                             style={[styles.textInput, passwordStyle]}
+                             underlineColorAndroid="transparent"
+                             placeholder="PASSWORD"
+                             autoCompleteType="password"
+                             secureTextEntry={true}
+                             onChangeText={(password) => this.changePassword(password)}
+                             onFocus={() => this.setState({idStyle:{borderWidth: 1, borderColor: '#000'}})}
+                             onBlur={() => this.setState({idStyle:{borderWidth: 0, borderColor: '#000'}})}
                              value={this.state.password}
                          />
                     </View>
+                    {this.renderPwCheckText()}
                     </View>
                     <View style={styles.row}>
                          <Button
-                             buttonStyle={{backgroundColor: '#000', height: 70}}
+                             buttonStyle={loginBtnStyle}
                              containerViewStyle={{width: '100%'}}
                              textStyle={{color: '#fff'}}
                              title='로그인'
@@ -236,13 +247,15 @@ const styles = StyleSheet.create({
           paddingLeft: 8,
           paddingRight: 8,
           height: 70,
-          flex: 1
+          flex: 1,
+          fontSize: 16
      },
 
      row: {
           flexDirection: 'row',
           height: 70,
-          marginBottom: 8
+          marginBottom: 8,
+          justifyContent: 'center'
      },
 
      rowTextField: {
@@ -251,7 +264,22 @@ const styles = StyleSheet.create({
      },
 
      rowText: {
-          fontSize: 21,
+          fontSize: 16,
           fontWeight: 'bold'
+     },
+
+     checkTextView: {
+         flexDirection: 'row',
+         height: 20,
+         paddingLeft: 20,
+         marginBottom: 8,
+         width: '100%',
+         alignItems: 'center'
+     },
+
+     checkText: {
+         marginLeft: 8,
+         fontSize: 14,
+         color: '#d32f2f'
      }
 })
