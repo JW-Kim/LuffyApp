@@ -189,7 +189,7 @@ export default class Login extends Component {
                                         <TextInput
                                             style={[styles.textInput, idStyle]}
                                             underlineColorAndroid="transparent"
-                                            placeholder="ID"
+                                            placeholder="아이디"
                                             onChangeText={(username) => this.changeId(username)}
                                             onFocus={() => this.setState({
                                                 idStyle: {
@@ -211,7 +211,7 @@ export default class Login extends Component {
                                         <TextInput
                                             style={[styles.textInput, passwordStyle]}
                                             underlineColorAndroid="transparent"
-                                            placeholder="PASSWORD"
+                                            placeholder="비밀번호"
                                             autoCompleteType="password"
                                             secureTextEntry={true}
                                             onChangeText={(password) => this.changePassword(password)}
@@ -243,7 +243,7 @@ export default class Login extends Component {
                                 </View>
                                 <View style={styles.row}>
                                     <TouchableOpacity onPress={() => this.goUserRegister()}>
-                                        <Text style={{fontSize: 14}}>insert User</Text>
+                                        <Text style={{fontSize: 14}}>회원가입</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>

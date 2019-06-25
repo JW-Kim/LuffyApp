@@ -147,25 +147,25 @@ export default class UserRegister extends Component {
         return (
             <View style={{flex: 1, backgroundColor: '#fff'}}>
                 <KeyboardAvoidingView style={{flex: 1, width: '100%'}} enabled>
-                    <ModalStandardHeader title="insert User" navigation={navigation}/>
+                    <ModalStandardHeader title="회원가입" navigation={navigation}/>
                     <ScrollView style={{backgroundColor: '#fff'}}>
                         <View style={styles.mainView}>
                             <View style={styles.row}>
-                                <View style={styles.rowTextField}><Text style={styles.rowText}>ID</Text></View>
+                                <View style={styles.rowTextField}><Text style={styles.rowText}>아이디</Text></View>
                                 <TextInput
                                     style={styles.textInput}
                                     underlineColorAndroid="transparent"
-                                    placeholder="ID"
+                                    placeholder="아이디"
                                     onChangeText={(userLoginId) => this.setState({userLoginId})}
                                     value={userLoginId}>
                                 </TextInput>
                             </View>
                             <View style={styles.row}>
-                                <View style={styles.rowTextField}><Text style={styles.rowText}>pw</Text></View>
+                                <View style={styles.rowTextField}><Text style={styles.rowText}>비밀번호</Text></View>
                                 <TextInput
                                     style={styles.textInput}
                                     underlineColorAndroid="transparent"
-                                    placeholder="PASSWORD"
+                                    placeholder="비밀번호"
                                     autoCompleteType="password"
                                     secureTextEntry={true}
                                     onChangeText={(userPwd) => this.setState({userPwd})}
@@ -173,11 +173,11 @@ export default class UserRegister extends Component {
                                 </TextInput>
                             </View>
                             <View style={styles.row}>
-                                <View style={styles.rowTextField}><Text style={styles.rowText}>pw confirm</Text></View>
+                                <View style={styles.rowTextField}><Text style={styles.rowText}>비밀번호 확인</Text></View>
                                 <TextInput
                                     style={styles.textInput}
                                     underlineColorAndroid="transparent"
-                                    placeholder="PASSWORD"
+                                    placeholder="비밀번호 확인"
                                     autoCompleteType="password"
                                     secureTextEntry={true}
                                     onChangeText={(userPwd2) => this.setState({userPwd2})}
@@ -185,11 +185,11 @@ export default class UserRegister extends Component {
                                 </TextInput>
                             </View>
                             <View style={styles.row}>
-                                <View style={styles.rowTextField}><Text style={styles.rowText}>name</Text></View>
+                                <View style={styles.rowTextField}><Text style={styles.rowText}>이름</Text></View>
                                 <TextInput
                                     style={styles.textInput}
                                     underlineColorAndroid="transparent"
-                                    placeholder="name"
+                                    placeholder="이름"
                                     autoCompleteType="username"
                                     onChangeText={(userNm) => this.setState({userNm})}
                                     value={userNm}>
@@ -219,7 +219,7 @@ export default class UserRegister extends Component {
                             <Button
                                 buttonStyle={{backgroundColor: '#000', height: 60}}
                                 containerViewStyle={{width: '100%'}}
-                                title='insert User'
+                                title='등록'
                                 onPress={() => this.insertUser()}/>
                         </View>
                     </ScrollView>
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     rowTextField: {
         paddingLeft: 20,
         paddingRight: 20,
-        width: 100,
+        width: 150,
         justifyContent: 'center'
     },
     rowText: {
