@@ -50,6 +50,7 @@ export default class Edit extends Component {
                     onBlur={() => onBlur()}
                     value={value}>
                 </TextInput>
+                {this.renderInputValClear()}
             </View>
         )
     }
