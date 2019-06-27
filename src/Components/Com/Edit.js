@@ -19,7 +19,7 @@ export default class Edit extends Component {
 
     renderInputValClear() {
         const {value, onChangeText, height} = this.props;
-        const style = {position: 'absolute', right: 20, bottom: Number(-((Number(height) / 2) - 10)), height: Number(height), width: 20}
+        const style = {position: 'absolute', right: 10, bottom: Number(-((Number(height) / 2) - 10)), height: Number(height), width: 20}
 
         if (value === '') {
             return(<View></View>)

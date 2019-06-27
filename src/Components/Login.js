@@ -171,7 +171,7 @@ export default class Login extends Component {
             return(<View></View>)
         } else {
             return(
-                <View style={{position: 'absolute', right: 20, bottom: -25, height: 70, width: 20}}>
+                <View style={{position: 'absolute', right: 10, bottom: -25, height: 70, width: 20}}>
                     <TouchableOpacity onPress={() => this.changeId('')}>
                         <Icons name="times-circle" color="gray" size={16} />
                     </TouchableOpacity>
@@ -186,7 +186,7 @@ export default class Login extends Component {
             return(<View></View>)
         } else {
             return(
-                <View style={{position: 'absolute', right: 20, bottom: -25, height: 70, width: 20}}>
+                <View style={{position: 'absolute', right: 10, bottom: -25, height: 70, width: 20}}>
                     <TouchableOpacity onPress={() => this.changePassword('')}>
                         <Icons name="times-circle" color="gray" size={16} />
                     </TouchableOpacity>
@@ -297,7 +297,7 @@ const styles = StyleSheet.create({
 
     textInput: {
         paddingLeft: 8,
-        paddingRight: 20,
+        paddingRight: 35,
         height: 70,
         flex: 1,
         fontSize: 16
