@@ -26,8 +26,8 @@ export default class Login extends Component {
         this.state = {
             username: '',
             password: '',
-            idStyle: {},
-            passwordStyle: {},
+            idStyle: {borderWidth: 1, borderColor: 'gray'},
+            passwordStyle: {borderWidth: 1, borderColor: 'gray'},
             loginBtnStyle: {backgroundColor: 'gray', height: 70},
             isUsername: false,
             isPassword: false
@@ -76,8 +76,8 @@ export default class Login extends Component {
                     this.setState({
                         username: '',
                         password: '',
-                        idStyle: {},
-                        passwordStyle: {},
+                        idStyle: {borderWidth: 1, borderColor: 'gray'},
+                        passwordStyle: {borderWidth: 1, borderColor: 'gray'},
                         loginBtnStyle: {backgroundColor: 'gray', height: 70},
                         isUsername: false,
                         isPassword: false
@@ -140,7 +140,7 @@ export default class Login extends Component {
         if (username !== '' && !isUsername) {
             return (
                 <View style={styles.checkTextView}>
-                    <Icons name="exclamation" color="#d32f2f" size={14}/>
+                    <Icons name="exclamation-circle" color="#d32f2f" size={14}/>
                     <Text style={styles.checkText}>id는 영문자, 숫자만 가능합니다.</Text>
                 </View>
             )
@@ -155,7 +155,7 @@ export default class Login extends Component {
         if (password !== '' && !isPassword) {
             return (
                 <View style={styles.checkTextView}>
-                    <Icons name="exclamation" color="#d32f2f" size={14}/>
+                    <Icons name="exclamation-circle" color="#d32f2f" size={14}/>
                     <Text style={styles.checkText}>pw는 영문자, 숫자, 특수문자만 가능합니다.</Text>
                 </View>
             )
@@ -164,10 +164,41 @@ export default class Login extends Component {
         return (<View><Text></Text></View>)
     }
 
+    renderIdClear() {
+        const {username} = this.state;
+
+        if (username === '') {
+            return(<View></View>)
+        } else {
+            return(
+                <View style={{position: 'absolute', right: 20, bottom: -25, height: 70, width: 20}}>
+                    <TouchableOpacity onPress={() => this.changeId('')}>
+                        <Icons name="times-circle" color="gray" size={16} />
+                    </TouchableOpacity>
+                </View>
+            )
+        }
+    }
+    renderPwClear() {
+        const {password} = this.state;
+
+        if (password === '') {
+            return(<View></View>)
+        } else {
+            return(
+                <View style={{position: 'absolute', right: 20, bottom: -25, height: 70, width: 20}}>
+                    <TouchableOpacity onPress={() => this.changePassword('')}>
+                        <Icons name="times-circle" color="gray" size={16} />
+                    </TouchableOpacity>
+                </View>
+            )
+        }
+    }
+
     render() {
         const {idStyle, passwordStyle, loginBtnStyle} = this.state;
         return (
-            <View style={{flex: 1}}>
+            <View style={{flex: 1, backgroundColor: '#fff'}}>
                 <KeyboardAvoidingView style={{flex: 1, width: '100%'}} enabled>
                     <ScrollView>
                         <View style={[styles.mainView, {justifyContent: 'center'}]}>
@@ -199,12 +230,13 @@ export default class Login extends Component {
                                             })}
                                             onBlur={() => this.setState({
                                                 idStyle: {
-                                                    borderWidth: 0,
-                                                    borderColor: '#000'
+                                                    borderWidth: 1,
+                                                    borderColor: 'gray'
                                                 }
                                             })}
                                             value={this.state.username}
                                         />
+                                        {this.renderIdClear()}
                                     </View>
                                     {this.renderIdCheckText()}
                                     <View style={styles.row}>
@@ -223,12 +255,13 @@ export default class Login extends Component {
                                             })}
                                             onBlur={() => this.setState({
                                                 passwordStyle: {
-                                                    borderWidth: 0,
-                                                    borderColor: '#000'
+                                                    borderWidth: 1,
+                                                    borderColor: 'gray'
                                                 }
                                             })}
                                             value={this.state.password}
                                         />
+                                        {this.renderPwClear()}
                                     </View>
                                     {this.renderPwCheckText()}
                                 </View>
@@ -257,14 +290,14 @@ export default class Login extends Component {
 
 const styles = StyleSheet.create({
     mainView: {
-        height: Dimensions.get('window').height,
+        height: Dimensions.get('window').height-'10px',
         padding: 20,
         backgroundColor: '#fff',
     },
 
     textInput: {
         paddingLeft: 8,
-        paddingRight: 8,
+        paddingRight: 20,
         height: 70,
         flex: 1,
         fontSize: 16

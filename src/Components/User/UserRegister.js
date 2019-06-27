@@ -17,10 +17,13 @@ import {
 import _ from 'lodash';
 import Constants from '../../Com/Constants.js';
 import {getToken} from '../../Com/AuthToken.js';
+import {chkId, chkKor, chkSpecialStr, chkEmail, chkEng, chkNum} from '../../Com/ComService.js';
 import Toast from 'react-native-toast-native';
 import ModalStandardHeader from '../Com/ModalStandardHeader'
+import Edit from '../Com/Edit'
 import ImageView from '../ImageView.js';
 import ImagePicker from 'react-native-image-picker';
+import Icons from 'react-native-vector-icons/FontAwesome';
 
 export default class UserRegister extends Component {
     constructor(props) {
@@ -32,11 +35,29 @@ export default class UserRegister extends Component {
             userNm: '',
             email: '',
             fileId: null,
-            avatarSource: null
+            avatarSource: null,
+            isUserLoginId: false,
+            isUserPwd: false,
+            isUserPwd2: false,
+            isUserNm: false,
+            isEmail: false,
+            isEqualPwd: false,
+            isCorrectPwd: false,
+            insertUserBtnStyle: {backgroundColor: 'gray', height: 60},
+            idSytle: {borderBottomWidth: 0, borderColor: 'gray'},
+            userPwdStyle: {borderBottomWidth: 0, borderColor: 'gray'},
+            userPwd2Style: {borderBottomWidth: 0, borderColor: 'gray'},
+            userNmStyle: {borderBottomWidth: 0, borderColor: 'gray'},
+            emailStyle: {borderBottomWidth: 0, borderColor: 'gray'},
         }
 
         let insertUser = this.insertUser.bind(this);
         let selectPhoto = this.selectPhoto.bind(this);
+        let changeUserLoginId = this.changeUserLoginId.bind(this);
+        let changeUserPwd = this.changeUserPwd.bind(this);
+        let changeUserPwd2 = this.changeUserPwd2.bind(this);
+        let changeUserNm = this.changeUserNm.bind(this);
+        let changeEmail = this.changeEmail.bind(this);
     }
 
     async selectUserExist() {
@@ -127,6 +148,189 @@ export default class UserRegister extends Component {
         });
     }
 
+    checkInsertBtnStyle() {
+        const {isUserLoginId, isUserPwd, isUserPwd2, isUserNm, isEmail, isEqualPwd} = this.state;
+
+        if (isUserLoginId && isUserPwd && isUserPwd2 && isUserNm && isEmail && isEqualPwd) {
+            this.setState({insertUserBtnStyle: {backgroundColor: '#000', height: 60}})
+        } else {
+            this.setState({insertUserBtnStyle: {backgroundColor: 'gray', height: 60}})
+        }
+    }
+
+    changeUserLoginId(userLoginId) {
+        const cur = this;
+        let isUserLoginId = true;
+
+        if(!chkId(userLoginId) || userLoginId === '') {
+            isUserLoginId = false;
+        }
+
+        this.setState({userLoginId, isUserLoginId}, () =>{
+            cur.checkInsertBtnStyle();
+        })
+    }
+
+    changeUserPwd(userPwd) {
+        const cur = this;
+        const {userPwd2} = this.state;
+
+        let isUserPwd = true;
+        let isEqualPwd = true;
+        let isCorrectPwd = true;
+
+        if(chkKor(userPwd) || userPwd === '') {
+            isUserPwd = false;
+        }
+
+        if(userPwd !== userPwd2) {
+            isEqualPwd = false;
+        }
+
+        if(!(chkSpecialStr(userPwd) && chkEng(userPwd) && chkNum(userPwd) && userPwd.length >= 6 && userPwd.length <= 12 )) {
+            isCorrectPwd = false;
+        }
+
+        this.setState({userPwd, isUserPwd, isEqualPwd, isCorrectPwd}, () =>{
+            cur.checkInsertBtnStyle();
+        })
+    }
+
+    changeUserPwd2(userPwd2) {
+        const cur = this;
+        const {userPwd} = this.state;
+
+        let isUserPwd2 = true;
+        let isEqualPwd = true;
+
+        if(chkKor(userPwd2) || userPwd2 === '') {
+            isUserPwd2 = false;
+        }
+
+        if(userPwd !== userPwd2) {
+            isEqualPwd = false;
+        }
+
+        this.setState({userPwd2, isUserPwd2, isEqualPwd}, () =>{
+            cur.checkInsertBtnStyle();
+        })
+    }
+
+    changeUserNm(userNm) {
+        const cur = this;
+        let isUserNm = true;
+
+        if(!chkSpecialStr(userNm) || userNm === '') {
+            isUserNm = false;
+        }
+
+        this.setState({userNm, isUserNm}, () =>{
+            cur.checkInsertBtnStyle();
+        })
+    }
+
+    changeEmail(email) {
+        const cur = this;
+        let isEmail = true;
+
+        if(!chkEmail(email) || email === '') {
+            isEmail = false;
+        }
+
+        this.setState({email, isEmail}, () =>{
+            cur.checkInsertBtnStyle();
+        })
+    }
+
+    renderIdCheckText() {
+        const {userLoginId, isUserLoginId} = this.state;
+
+        if(userLoginId !== '' && !isUserLoginId) {
+            return (
+                <View style={styles.checkTextView>
+                    <Icons name="exclamation-circle" color="#d32f2f" size={14} />
+                    <Text style={styles.checkText}>id는영문자, 숫자만 가능합니다.</Text>
+                </View>
+            )
+        }
+
+        return(<View><Text></Text></View>)
+    }
+
+    renderPwCheckText() {
+        const {userPwd, isUserPwd, isCorrectPwd} = this.state;
+
+        if(userPwd !== '' && !isUserPwd) {
+            return (
+                <View style={styles.checkTextView>
+                    <Icons name="exclamation-circle" color="#d32f2f" size={14} />
+                    <Text style={styles.checkText}>PASSWORD는 영문자, 숫자, 특수문자만 가능합니다.</Text>
+                </View>
+            )
+        } else if(userPwd !== '' && !isCorrectPwd) {
+            return (
+                <View style={styles.checkTextView>
+                    <Icons name="exclamation-circle" color="#d32f2f" size={14} />
+                    <Text style={styles.checkText}>PW 조건을 확인하시기 바랍니다.</Text>
+                </View>
+            )
+        }
+
+        return(<View><Text></Text></View>)
+    }
+
+    renderPw2CheckText() {
+        const {userPwd, userPwd2, isUserPwd2, isEqualPwd} = this.state;
+
+        if(userPwd2 !== '' && !isUserPwd2) {
+            return (
+                <View style={styles.checkTextView>
+                    <Icons name="exclamation-circle" color="#d32f2f" size={14} />
+                    <Text style={styles.checkText}>PASSWORD는 영문자, 숫자, 특수문자만 가능합니다.</Text>
+                </View>
+            )
+        } else if(!isEqualPwd && (userPwd === '' && userPwd2 === '')) {
+            return (
+                <View style={styles.checkTextView>
+                    <Icons name="exclamation-circle" color="#d32f2f" size={14} />
+                    <Text style={styles.checkText}>패스워드가 일치하지 않습니다.</Text>
+                </View>
+            )
+        }
+
+        return(<View><Text></Text></View>)
+    }
+
+    renderUserNmCheckText() {
+        const {userNm, isUserNm} = this.state;
+
+        if(userNm !== '' && !isUserNm) {
+            return (
+                <View style={styles.checkTextView>
+                    <Icons name="exclamation-circle" color="#d32f2f" size={14} />
+                    <Text style={styles.checkText}>이름은 한글, 영문자만 가능합니다.</Text>
+                </View>
+            )
+        }
+
+        return(<View><Text></Text></View>)
+    }
+
+    renderEmailCheckText() {
+        const {email, isEmail} = this.state;
+
+        if(email !== '' && !isEmail) {
+            return (
+                <View style={styles.checkTextView>
+                    <Icons name="exclamation-circle" color="#d32f2f" size={14} />
+                    <Text style={styles.checkText}>이메일 형식이 맞지 않습니다.</Text>
+                </View>
+            )
+        }
+
+        return(<View><Text></Text></View>)
+    }
+
     renderProfile() {
         const {avatarSource, fileId} = this.state;
 
@@ -142,7 +346,19 @@ export default class UserRegister extends Component {
 
     render() {
         const {navigation} = this.props;
-        const {userLoginId, userPwd, userPwd2, userNm, email} = this.state;
+        const {
+            userLoginId,
+            userPwd,
+            userPwd2,
+            userNm,
+            email,
+            insertUserBtnStyle,
+            idSytle,
+            userPwdStyle,
+            userPwd2Style,
+            userNmStyle,
+            emailStyle
+        } = this.state;
 
         return (
             <View style={{flex: 1, backgroundColor: '#fff'}}>
@@ -152,60 +368,84 @@ export default class UserRegister extends Component {
                         <View style={styles.mainView}>
                             <View style={styles.row}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>아이디</Text></View>
-                                <TextInput
-                                    style={styles.textInput}
+                                <Edit
+                                    height="60"
+                                    style={[styles.textInput, idSytle]}
                                     underlineColorAndroid="transparent"
-                                    placeholder="아이디"
+                                    placeholder="영문/숫자 6~12자"
+                                    autoCompleteType="off"
+                                    secureTextEntry={false}
                                     onChangeText={(userLoginId) => this.setState({userLoginId})}
+                                    onFocus={() => this.setState({idSytle: {borderBottomWidth: 1, borderColor: 'gray'}})}
+                                    onBlur={() => this.setState({idSytle: {borderBottomWidth: 1, borderColor: 'gray'}})}
                                     value={userLoginId}>
-                                </TextInput>
+                                </Edit>
                             </View>
+                            {this.renderIdCheckText()}
                             <View style={styles.row}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>비밀번호</Text></View>
-                                <TextInput
-                                    style={styles.textInput}
+                                <Edit
+                                    height="60"
+                                    style={[styles.textInput, userPwdStyle]}
                                     underlineColorAndroid="transparent"
-                                    placeholder="비밀번호"
+                                    placeholder="영문/숫자/특수기호 조합 6~12자"
                                     autoCompleteType="password"
                                     secureTextEntry={true}
                                     onChangeText={(userPwd) => this.setState({userPwd})}
+                                    onFocus={() => this.setState({userPwdStyle: {borderBottomWidth: 1, borderColor: 'gray'}})}
+                                    onBlur={() => this.setState({userPwdStyle: {borderBottomWidth: 1, borderColor: 'gray'}})}
                                     value={userPwd}>
-                                </TextInput>
+                                </Edit>
                             </View>
+                            {this.renderPwCheckText()}
                             <View style={styles.row}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>비밀번호 확인</Text></View>
-                                <TextInput
-                                    style={styles.textInput}
+                                <Edit
+                                    height="60"
+                                    style={[styles.textInput, userPwd2Style]}
                                     underlineColorAndroid="transparent"
                                     placeholder="비밀번호 확인"
                                     autoCompleteType="password"
                                     secureTextEntry={true}
                                     onChangeText={(userPwd2) => this.setState({userPwd2})}
+                                    onFocus={() => this.setState({userPwd2Style: {borderBottomWidth: 1, borderColor: 'gray'}})}
+                                    onBlur={() => this.setState({userPwd2Style: {borderBottomWidth: 1, borderColor: 'gray'}})}
                                     value={userPwd2}>
-                                </TextInput>
+                                </Edit>
                             </View>
+                            {this.renderPw2CheckText()}
                             <View style={styles.row}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>이름</Text></View>
-                                <TextInput
-                                    style={styles.textInput}
+                                <Edit
+                                    height="60"
+                                    style={[styles.textInput, userNmStyle]}
                                     underlineColorAndroid="transparent"
-                                    placeholder="이름"
+                                    placeholder="한글/영문/숫자 6~12자"
                                     autoCompleteType="username"
+                                    secureTextEntry={false}
                                     onChangeText={(userNm) => this.setState({userNm})}
+                                    onFocus={() => this.setState({userNmStyle: {borderBottomWidth: 1, borderColor: 'gray'}})}
+                                    onBlur={() => this.setState({userNmStyle: {borderBottomWidth: 1, borderColor: 'gray'}})}
                                     value={userNm}>
-                                </TextInput>
+                                </Edit>
                             </View>
+                            {this.renderUserNmCheckText()}
                             <View style={styles.row}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>email</Text></View>
-                                <TextInput
-                                    style={styles.textInput}
+                                <Edit
+                                    height="60"
+                                    style={[styles.textInput, emailStyle]}
                                     underlineColorAndroid="transparent"
-                                    placeholder="email"
+                                    placeholder="xxx@xxxxxx"
                                     autoCompleteType="email"
+                                    secureTextEntry={false}
                                     onChangeText={(email) => this.setState({email})}
+                                    onFocus={() => this.setState({emailStyle: {borderBottomWidth: 1, borderColor: 'gray'}})}
+                                    onBlur={() => this.setState({emailStyle: {borderBottomWidth: 1, borderColor: 'gray'}})}
                                     value={email}>
-                                </TextInput>
+                                </Edit>
                             </View>
+                            {this.renderEmailCheckText()}
                             <View style={styles.profile}>
                                 <View style={styles.profileImage} onPress={() => this.selectPhoto()}>
                                     {this.renderProfile()}
@@ -217,7 +457,7 @@ export default class UserRegister extends Component {
                                 </View>
                             </View>
                             <Button
-                                buttonStyle={{backgroundColor: '#000', height: 60}}
+                                buttonStyle={insertUserBtnStyle}
                                 containerViewStyle={{width: '100%'}}
                                 title='등록'
                                 onPress={() => this.insertUser()}/>
@@ -244,17 +484,17 @@ const styles = StyleSheet.create({
         flex: 1
     },
     row: {
+        paddingLeft: 20,
+        paddingRight: 20,
         flexDirection: 'row',
         height: 60,
         marginBottom: 1,
         justifyContent: 'center',
-        alignItems: 'center',
-        borderBottomWidth: 0.3
+        alignItems: 'center'
     },
     rowTextField: {
-        paddingLeft: 20,
         paddingRight: 20,
-        width: 150,
+        width: 130,
         justifyContent: 'center'
     },
     rowText: {
@@ -278,5 +518,18 @@ const styles = StyleSheet.create({
         marginBottom: 8,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    checkTextView: {
+        flexDirection: 'row',
+        height: 20,
+        paddingLeft: 170,
+        marginBottom: 8,
+        width: '100%',
+        alignItems: 'center'
+    },
+    checkText: {
+        marginLeft: 8,
+        fontSize: 14,
+        color: '#d32f2f'
     }
 })
