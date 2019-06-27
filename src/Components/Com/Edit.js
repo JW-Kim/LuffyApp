@@ -48,7 +48,7 @@ export default class Edit extends Component {
                     onChangeText={(text) => onChangeText(text)}
                     onFocus={() => onFocus()}
                     onBlur={() => onBlur()}
-                    value={email}>
+                    value={values}>
                 </TextInput>
             </View>
         )

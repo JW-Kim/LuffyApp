@@ -220,7 +220,7 @@ export default class UserRegister extends Component {
         const cur = this;
         let isUserNm = true;
 
-        if(!chkSpecialStr(userNm) || userNm === '') {
+        if(chkSpecialStr(userNm) || userNm === '') {
             isUserNm = false;
         }
 
@@ -247,7 +247,7 @@ export default class UserRegister extends Component {
 
         if(userLoginId !== '' && !isUserLoginId) {
             return (
-                <View style={styles.checkTextView>
+                <View style={styles.checkTextView}>
                     <Icons name="exclamation-circle" color="#d32f2f" size={14} />
                     <Text style={styles.checkText}>id는영문자, 숫자만 가능합니다.</Text>
                 </View>
@@ -262,14 +262,14 @@ export default class UserRegister extends Component {
 
         if(userPwd !== '' && !isUserPwd) {
             return (
-                <View style={styles.checkTextView>
+                <View style={styles.checkTextView}>
                     <Icons name="exclamation-circle" color="#d32f2f" size={14} />
                     <Text style={styles.checkText}>PASSWORD는 영문자, 숫자, 특수문자만 가능합니다.</Text>
                 </View>
             )
         } else if(userPwd !== '' && !isCorrectPwd) {
             return (
-                <View style={styles.checkTextView>
+                <View style={styles.checkTextView}>
                     <Icons name="exclamation-circle" color="#d32f2f" size={14} />
                     <Text style={styles.checkText}>PW 조건을 확인하시기 바랍니다.</Text>
                 </View>
@@ -284,14 +284,14 @@ export default class UserRegister extends Component {
 
         if(userPwd2 !== '' && !isUserPwd2) {
             return (
-                <View style={styles.checkTextView>
+                <View style={styles.checkTextView}>
                     <Icons name="exclamation-circle" color="#d32f2f" size={14} />
                     <Text style={styles.checkText}>PASSWORD는 영문자, 숫자, 특수문자만 가능합니다.</Text>
                 </View>
             )
-        } else if(!isEqualPwd && (userPwd === '' && userPwd2 === '')) {
+        } else if(!isEqualPwd && !(userPwd === '' && userPwd2 === '')) {
             return (
-                <View style={styles.checkTextView>
+                <View style={styles.checkTextView}>
                     <Icons name="exclamation-circle" color="#d32f2f" size={14} />
                     <Text style={styles.checkText}>패스워드가 일치하지 않습니다.</Text>
                 </View>
@@ -306,7 +306,7 @@ export default class UserRegister extends Component {
 
         if(userNm !== '' && !isUserNm) {
             return (
-                <View style={styles.checkTextView>
+                <View style={styles.checkTextView}>
                     <Icons name="exclamation-circle" color="#d32f2f" size={14} />
                     <Text style={styles.checkText}>이름은 한글, 영문자만 가능합니다.</Text>
                 </View>
@@ -321,7 +321,7 @@ export default class UserRegister extends Component {
 
         if(email !== '' && !isEmail) {
             return (
-                <View style={styles.checkTextView>
+                <View style={styles.checkTextView}>
                     <Icons name="exclamation-circle" color="#d32f2f" size={14} />
                     <Text style={styles.checkText}>이메일 형식이 맞지 않습니다.</Text>
                 </View>
@@ -375,7 +375,7 @@ export default class UserRegister extends Component {
                                     placeholder="영문/숫자 6~12자"
                                     autoCompleteType="off"
                                     secureTextEntry={false}
-                                    onChangeText={(userLoginId) => this.setState({userLoginId})}
+                                    onChangeText={(userLoginId) => this.changeUserLoginId(userLoginId)}
                                     onFocus={() => this.setState({idSytle: {borderBottomWidth: 1, borderColor: 'gray'}})}
                                     onBlur={() => this.setState({idSytle: {borderBottomWidth: 1, borderColor: 'gray'}})}
                                     value={userLoginId}>
@@ -391,7 +391,7 @@ export default class UserRegister extends Component {
                                     placeholder="영문/숫자/특수기호 조합 6~12자"
                                     autoCompleteType="password"
                                     secureTextEntry={true}
-                                    onChangeText={(userPwd) => this.setState({userPwd})}
+                                    onChangeText={(userPwd) => this.changeUserPwd(userPwd)}
                                     onFocus={() => this.setState({userPwdStyle: {borderBottomWidth: 1, borderColor: 'gray'}})}
                                     onBlur={() => this.setState({userPwdStyle: {borderBottomWidth: 1, borderColor: 'gray'}})}
                                     value={userPwd}>
@@ -407,7 +407,7 @@ export default class UserRegister extends Component {
                                     placeholder="비밀번호 확인"
                                     autoCompleteType="password"
                                     secureTextEntry={true}
-                                    onChangeText={(userPwd2) => this.setState({userPwd2})}
+                                    onChangeText={(userPwd2) => this.changeUserPwd2(userPwd2)}
                                     onFocus={() => this.setState({userPwd2Style: {borderBottomWidth: 1, borderColor: 'gray'}})}
                                     onBlur={() => this.setState({userPwd2Style: {borderBottomWidth: 1, borderColor: 'gray'}})}
                                     value={userPwd2}>
@@ -421,9 +421,9 @@ export default class UserRegister extends Component {
                                     style={[styles.textInput, userNmStyle]}
                                     underlineColorAndroid="transparent"
                                     placeholder="한글/영문/숫자 6~12자"
-                                    autoCompleteType="username"
+                                    autoCompleteType="off"
                                     secureTextEntry={false}
-                                    onChangeText={(userNm) => this.setState({userNm})}
+                                    onChangeText={(userNm) => this.changeUserNm(userNm)}
                                     onFocus={() => this.setState({userNmStyle: {borderBottomWidth: 1, borderColor: 'gray'}})}
                                     onBlur={() => this.setState({userNmStyle: {borderBottomWidth: 1, borderColor: 'gray'}})}
                                     value={userNm}>
@@ -437,9 +437,9 @@ export default class UserRegister extends Component {
                                     style={[styles.textInput, emailStyle]}
                                     underlineColorAndroid="transparent"
                                     placeholder="xxx@xxxxxx"
-                                    autoCompleteType="email"
+                                    autoCompleteType="off"
                                     secureTextEntry={false}
-                                    onChangeText={(email) => this.setState({email})}
+                                    onChangeText={(email) => this.changeEmail(email)}
                                     onFocus={() => this.setState({emailStyle: {borderBottomWidth: 1, borderColor: 'gray'}})}
                                     onBlur={() => this.setState({emailStyle: {borderBottomWidth: 1, borderColor: 'gray'}})}
                                     value={email}>
