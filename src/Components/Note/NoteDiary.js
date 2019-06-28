@@ -97,7 +97,6 @@ export default class NoteDiary extends Component {
                                 justifyContent: "center",
                                 marginLeft: 10
                             }}>
-                                <IonIcons name="ios-paper" style={{fontSize: 21, color: '#33d6ff'}}/>
                             </View>
                             <View style={{
                                 flexDirection: 'column',
@@ -106,7 +105,7 @@ export default class NoteDiary extends Component {
                                 marginRight: 10
                             }}>
                                 <Text style={{
-                                    fontSize: 21,
+                                    fontSize: 18,
                                     fontWeight: "bold"
                                 }}>
                                     {this.props.title}
@@ -151,7 +150,7 @@ export default class NoteDiary extends Component {
                     <Text style={styles.contentText}>
                         {content}
                     </Text>                    
-                    <View style={{margin: 15}}>
+                    <View style={{marginTop: 10, marginLeft:40, marginRight:40}}>
                         {height == null || height == 0 ? <Text></Text> :
                             (<View style={styles.rowView}>
                                 <View style={styles.rowTitle}><Text style={styles.rowText}>키</Text></View> <Text style={styles.rowText}>{this.state.height} cm</Text>
@@ -211,7 +210,7 @@ export default class NoteDiary extends Component {
                                 ({shitDesc}) </Text>
                             <HomeCodeTypeIcon code={shitCd}></HomeCodeTypeIcon>
                         </View>
-                        <View style={{flexDirection: 'row'}}>
+                        <View style={{flexDirection: 'row', paddingBottom: 20}}>
                             <View style={styles.rowTitle}><Text style={styles.rowText}>수면</Text></View>
                             <Text style={styles.rowText}>{sleepStartTime}시 ~ {sleepEndTime}시</Text>
                         </View>
@@ -239,13 +238,13 @@ const styles = StyleSheet.create({
 
     content: {
         backgroundColor: '#fff',
-        marginTop: 10,
+        marginTop: 1,
         borderWidth: 1,
         borderColor: '#ebe0eb',
     },
 
     rowTitle: {
-        width: 100
+        width: 150
     },
 
     rowText: {
@@ -263,8 +262,9 @@ const styles = StyleSheet.create({
     },
 
     contentText: {
-        marginLeft: 15,
-        marginRight: 15,
+        marginLeft: 20,
+        marginRight: 20,
+        marginTop: 32,
         fontSize: 16
     },
 })

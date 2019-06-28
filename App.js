@@ -40,9 +40,10 @@ const MainStack = createBottomTabNavigator(
                 height: 40
             },
             labelStyle: {
-                fontSize: 12,
+                fontSize: 16,
                 //fontWeight: 'bold',
-                color: '#000'
+                color: '#000',
+                paddingBottom: 8
             },
             activeBackgroundColor: '#ff3399'
         },

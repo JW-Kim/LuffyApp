@@ -278,7 +278,7 @@ export default class Note extends Component {
                             <Picker
                                 mode='dropdown'
                                 selectedValue={this.state.noteId}
-                                style={{height: 50, width: 200, color: '#000', fontSize: 16}}
+                                style={{height: 50, width: 200, color: '#000'}}
                                 onValueChange={(itemValue, itemIndex) => this.changeNote(itemValue)}
                             >
                                 {this.renderNoteList()}
