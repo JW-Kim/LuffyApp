@@ -25,11 +25,9 @@ export default class Edit extends Component {
             return(<View></View>)
         } else {
             return(
-                <View style={style}>
-                    <TouchableOpacity onPress={() => onChangeText('')}>
-                        <Icons name="times-circle" color="gray" size={16} />
-                    </TouchableOpacity>
-                </View>
+                <TouchableOpacity onPress={() => onChangeText('')} style={style}>
+                    <Icons name="times-circle" color="gray" size={16} />
+                </TouchableOpacity>
             )
         }
     }

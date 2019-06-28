@@ -97,7 +97,7 @@ export default class NoteDiary extends Component {
                                 justifyContent: "center",
                                 marginLeft: 10
                             }}>
-                                <IonIcons name="ios-paper" style={{fontSize: 10, color: '#33d6ff'}}/>
+                                <IonIcons name="ios-paper" style={{fontSize: 21, color: '#33d6ff'}}/>
                             </View>
                             <View style={{
                                 flexDirection: 'column',
@@ -106,7 +106,7 @@ export default class NoteDiary extends Component {
                                 marginRight: 10
                             }}>
                                 <Text style={{
-                                    fontSize: 15,
+                                    fontSize: 21,
                                     fontWeight: "bold"
                                 }}>
                                     {this.props.title}
@@ -129,60 +129,63 @@ export default class NoteDiary extends Component {
                     <View>
                         <ImageView fileId={this.props.fileId} width={Dimensions.get('window').width - 30}/>
                     </View>
+                    <Text style={styles.contentText}>
+                        {this.state.content}
+                    </Text>                    
                     <View style={{margin: 15}}>
                         {this.state.height == null || this.state.height == 0 ? <Text></Text> :
-                            (<View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                <Text>키 : {this.state.height} cm</Text>
+                            (<View style={styles.rowView}>
+                                <Text style={styles.rowText}>키 : {this.state.height} cm</Text>
                             </View>)}
                         {this.state.weight == null || this.state.weight == 0 ? <Text></Text> :
-                            (<View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                <Text>몸무게 : {this.state.weight} kg</Text>
+                            (<View style={styles.rowView}>
+                                <Text style={styles.rowText}>몸무게 : {this.state.weight} kg</Text>
                             </View>)}
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text>기분 : </Text>
+                        <View style={styles.rowView}>
+                            <Text style={styles.rowText}>기분 : </Text>
                             {this.state.feelingCd == 'good' ? <Text>좋음 </Text> : <Text></Text>}
                             {this.state.feelingCd == 'notBad' ? <Text>보통 </Text> : <Text></Text>}
                             {this.state.feelingCd == 'bad' ? <Text>나쁨 </Text> : <Text></Text>}
                             <HomeCodeTypeIcon code={this.state.feelingCd}></HomeCodeTypeIcon>
                         </View>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text>건강 : </Text>
+                        <View style={styles.rowView}>
+                            <Text style={styles.rowText}>건강 : </Text>
                             {this.state.healthCd == 'good' ? <Text>좋음 </Text> : <Text></Text>}
                             {this.state.healthCd == 'notBad' ? <Text>보통 </Text> : <Text></Text>}
                             {this.state.healthCd == 'bad' ? <Text>나쁨 </Text> : <Text></Text>}
                             <HomeCodeTypeIcon code={this.state.healthCd}></HomeCodeTypeIcon>
                         </View>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text>열 : </Text>
+                        <View style={styles.rowView}>
+                            <Text style={styles.rowText}>열 : </Text>
                             {this.state.feverCd == 'good' ? <Text>좋음 </Text> : <Text></Text>}
                             {this.state.feverCd == 'notBad' ? <Text>보통 </Text> : <Text></Text>}
                             {this.state.feverCd == 'bad' ? <Text>나쁨 </Text> : <Text></Text>}
                             <HomeCodeTypeIcon code={this.state.feverCd}></HomeCodeTypeIcon>
                         </View>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text>아침 식사 : </Text>
+                        <View style={styles.rowView}>
+                            <Text style={styles.rowText}>아침 식사 : </Text>
                             {this.state.breakfastCd == 'good' ? <Text>좋음 </Text> : <Text></Text>}
                             {this.state.breakfastCd == 'notBad' ? <Text>보통 </Text> : <Text></Text>}
                             {this.state.breakfastCd == 'bad' ? <Text>나쁨 </Text> : <Text></Text>}
                             <HomeCodeTypeIcon code={this.state.breakfastCd}></HomeCodeTypeIcon>
                         </View>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text>점심 식사 : </Text>
+                        <View style={styles.rowView}>
+                            <Text style={styles.rowText}>점심 식사 : </Text>
                             {this.state.lunchCd == 'good' ? <Text>좋음 </Text> : <Text></Text>}
                             {this.state.lunchCd == 'notBad' ? <Text>보통 </Text> : <Text></Text>}
                             {this.state.lunchCd == 'bad' ? <Text>나쁨 </Text> : <Text></Text>}
                             <HomeCodeTypeIcon code={this.state.lunchCd}></HomeCodeTypeIcon>
                         </View>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text>저녁 식사 : </Text>
+                        <View style={styles.rowView}>
+                            <Text style={styles.rowText}>저녁 식사 : </Text>
                             {this.state.dinnerCd == 'good' ? <Text>좋음 </Text> : <Text></Text>}
                             {this.state.dinnerCd == 'notBad' ? <Text>보통 </Text> : <Text></Text>}
                             {this.state.dinnerCd == 'bad' ? <Text>나쁨 </Text> : <Text></Text>}
                             <HomeCodeTypeIcon code={this.state.dinnerCd}></HomeCodeTypeIcon>
                         </View>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text>배변 : </Text>
-                            <Text>{this.state.shitCnt}회,
+                        <View style={styles.rowView}>
+                            <Text style={styles.rowText}>배변 : </Text>
+                            <Text style={styles.rowText}>{this.state.shitCnt}회,
                                 {this.state.shitCd == 'good' ? <Text>좋음 </Text> : <Text></Text>}
                                 {this.state.shitCd == 'notBad' ? <Text>보통 </Text> : <Text></Text>}
                                 {this.state.shitCd == 'bad' ? <Text>나쁨 </Text> : <Text></Text>}
@@ -190,16 +193,10 @@ export default class NoteDiary extends Component {
                             <HomeCodeTypeIcon code={this.state.shitCd}></HomeCodeTypeIcon>
                         </View>
                         <View style={{flexDirection: 'row'}}>
-                            <Text>수면 : </Text>
-                            <Text>{this.state.sleepStartTime}시 ~ {this.state.sleepEndTime}시</Text>
+                            <Text style={styles.rowText}>수면 : </Text>
+                            <Text style={styles.rowText}>{this.state.sleepStartTime}시 ~ {this.state.sleepEndTime}시</Text>
                         </View>
                     </View>
-                    <Text style={styles.title}>
-                        {this.state.title}
-                    </Text>
-                    <Text style={styles.contentText}>
-                        {this.state.content}
-                    </Text>
                 </TouchableOpacity>
             </View>
         );
@@ -215,11 +212,21 @@ const styles = StyleSheet.create({
         backgroundColor: '#ebe0eb'
     },
 
+    rowView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingBottom: 16
+    },
+
     content: {
         backgroundColor: '#fff',
         marginTop: 10,
         borderWidth: 1,
         borderColor: '#ebe0eb',
+    },
+
+    rowText: {
+        fontSize: 14
     },
 
     title: {
@@ -233,6 +240,7 @@ const styles = StyleSheet.create({
 
     contentText: {
         marginLeft: 15,
-        marginRight: 15
+        marginRight: 15,
+        fontSize: 16
     },
 })

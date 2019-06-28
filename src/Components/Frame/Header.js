@@ -24,16 +24,16 @@ export default class Header extends Component {
             <View style={{height: 40, backgroundColor: 'white', marginTop: 10, marginLeft: 10, marginRight: 10}}>
                 <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                     <View>
-                        <Text style={{fontSize: 17, fontWeight: 'bold', color: '#000'}}>
+                        <Text style={{fontSize: 21, fontWeight: 'bold', color: '#000'}}>
                             일기장
                         </Text>
                     </View>
                     <View>
                         <ModalDropdown
                             defaultValue={'My'}
-                            textStyle={{fontSize: 17, fontWeight: 'bold', color: '#000'}}
-                            dropdownTextStyle={{fontSize: 14, color: '#000'}}
-                            dropdownStyle={{height: 80}}
+                            textStyle={{fontSize: 121, fontWeight: 'bold', color: '#000'}}
+                            dropdownTextStyle={{fontSize: 16, color: '#000', height: 40}}
+                            dropdownStyle={{height: 80, width: 100}}
                             options={['일기장', '설정']}
                             showsVerticalScrollIndicator={false}
                             onSelect={(index, value) => this.chgSetting(value)}

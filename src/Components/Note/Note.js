@@ -278,7 +278,7 @@ export default class Note extends Component {
                             <Picker
                                 mode='dropdown'
                                 selectedValue={this.state.noteId}
-                                style={{height: 50, width: 200, color: '#000'}}
+                                style={{height: 50, width: 200, color: '#000', fontSize: 16}}
                                 onValueChange={(itemValue, itemIndex) => this.changeNote(itemValue)}
                             >
                                 {this.renderNoteList()}
@@ -295,7 +295,10 @@ export default class Note extends Component {
                             theme={{
                                 backgroundColor: '#ebe0eb',
                                 calendarBackground: '#ebe0eb',
-                                selectedDayBackgroundColor: '#b992b9'
+                                selectedDayBackgroundColor: '#b992b9',
+                                textDayFontSize: 16,
+                                textMonthFontSize: 16,
+                                textDayHeaderFontSize: 16
                             }}
                             // Initially visible month. Default = Date()
                             current={this.state.calCurrentMonth}
@@ -415,7 +418,7 @@ export default class Note extends Component {
 
 const styles = StyleSheet.create({
     actionButtonIcon: {
-        fontSize: 20,
+        fontSize: 16,
         height: 22,
         color: 'white',
     },

@@ -171,11 +171,9 @@ export default class Login extends Component {
             return(<View></View>)
         } else {
             return(
-                <View style={{position: 'absolute', right: 10, bottom: -25, height: 70, width: 20}}>
-                    <TouchableOpacity onPress={() => this.changeId('')}>
-                        <Icons name="times-circle" color="gray" size={16} />
-                    </TouchableOpacity>
-                </View>
+                <TouchableOpacity onPress={() => this.changeId('')} style={{position: 'absolute', right: 10, bottom: -25, height: 70, width: 20}}>
+                    <Icons name="times-circle" color="gray" size={16} />
+                </TouchableOpacity>
             )
         }
     }
@@ -186,11 +184,9 @@ export default class Login extends Component {
             return(<View></View>)
         } else {
             return(
-                <View style={{position: 'absolute', right: 10, bottom: -25, height: 70, width: 20}}>
-                    <TouchableOpacity onPress={() => this.changePassword('')}>
-                        <Icons name="times-circle" color="gray" size={16} />
-                    </TouchableOpacity>
-                </View>
+                <TouchableOpacity onPress={() => this.changePassword('')} style={{position: 'absolute', right: 10, bottom: -25, height: 70, width: 20}}>
+                    <Icons name="times-circle" color="gray" size={16} />
+                </TouchableOpacity>
             )
         }
     }
