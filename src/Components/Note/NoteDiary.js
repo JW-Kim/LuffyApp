@@ -123,78 +123,97 @@ export default class NoteDiary extends Component {
     };
 
     _renderContent = section => {
+        const {fileId} = this.props;
+        
+        const {
+            content,
+            height,
+            weight,
+            feelingCd,
+            healthCd,
+            feverCd,
+            breakfastCd,
+            lunchCd,
+            dinnerCd,
+            shitCd,
+            shitCnt,
+            shitDesc,
+            sleepStartTime,
+            sleepEndTime 
+        } = this.state;
+    
         return (
             <View style={styles.content}>
                 <TouchableOpacity activeOpacity={0.9} onPress={() => this.openDiaryDtl()}>
                     <View>
-                        <ImageView fileId={this.props.fileId} width={Dimensions.get('window').width - 30}/>
+                        <ImageView fileId={fileId} width={Dimensions.get('window').width - 30}/>
                     </View>
                     <Text style={styles.contentText}>
-                        {this.state.content}
+                        {content}
                     </Text>                    
                     <View style={{margin: 15}}>
-                        {this.state.height == null || this.state.height == 0 ? <Text></Text> :
+                        {height == null || height == 0 ? <Text></Text> :
                             (<View style={styles.rowView}>
-                                <Text style={styles.rowText}>키 : {this.state.height} cm</Text>
+                                <View style={styles.rowTitle}><Text style={styles.rowText}>키</Text></View> <Text style={styles.rowText}>{this.state.height} cm</Text>
                             </View>)}
-                        {this.state.weight == null || this.state.weight == 0 ? <Text></Text> :
+                        {weight == null || weight == 0 ? <Text></Text> :
                             (<View style={styles.rowView}>
-                                <Text style={styles.rowText}>몸무게 : {this.state.weight} kg</Text>
+                                <View style={styles.rowTitle}><Text style={styles.rowText}>몸무게</Text></View> <Text style={styles.rowText}>{weight} kg</Text>
                             </View>)}
                         <View style={styles.rowView}>
-                            <Text style={styles.rowText}>기분 : </Text>
-                            {this.state.feelingCd == 'good' ? <Text>좋음 </Text> : <Text></Text>}
-                            {this.state.feelingCd == 'notBad' ? <Text>보통 </Text> : <Text></Text>}
-                            {this.state.feelingCd == 'bad' ? <Text>나쁨 </Text> : <Text></Text>}
-                            <HomeCodeTypeIcon code={this.state.feelingCd}></HomeCodeTypeIcon>
+                            <View style={styles.rowTitle}><Text style={styles.rowText}>기분</Text></View>
+                            {feelingCd == 'good' ? <Text style={styles.rowText}>좋음 </Text> : <Text></Text>}
+                            {feelingCd == 'notBad' ? <Text style={styles.rowText}>보통 </Text> : <Text></Text>}
+                            {feelingCd == 'bad' ? <Text style={styles.rowText}>나쁨 </Text> : <Text></Text>}
+                            <HomeCodeTypeIcon code={feelingCd}></HomeCodeTypeIcon>
                         </View>
                         <View style={styles.rowView}>
-                            <Text style={styles.rowText}>건강 : </Text>
-                            {this.state.healthCd == 'good' ? <Text>좋음 </Text> : <Text></Text>}
-                            {this.state.healthCd == 'notBad' ? <Text>보통 </Text> : <Text></Text>}
-                            {this.state.healthCd == 'bad' ? <Text>나쁨 </Text> : <Text></Text>}
-                            <HomeCodeTypeIcon code={this.state.healthCd}></HomeCodeTypeIcon>
+                            <View style={styles.rowTitle}><Text style={styles.rowText}>건강</Text></View>
+                            {healthCd == 'good' ? <Text style={styles.rowText}>좋음 </Text> : <Text></Text>}
+                            {healthCd == 'notBad' ? <Text style={styles.rowText}>보통 </Text> : <Text></Text>}
+                            {healthCd == 'bad' ? <Text style={styles.rowText}>나쁨 </Text> : <Text></Text>}
+                            <HomeCodeTypeIcon code={healthCd}></HomeCodeTypeIcon>
                         </View>
                         <View style={styles.rowView}>
-                            <Text style={styles.rowText}>열 : </Text>
-                            {this.state.feverCd == 'good' ? <Text>좋음 </Text> : <Text></Text>}
-                            {this.state.feverCd == 'notBad' ? <Text>보통 </Text> : <Text></Text>}
-                            {this.state.feverCd == 'bad' ? <Text>나쁨 </Text> : <Text></Text>}
-                            <HomeCodeTypeIcon code={this.state.feverCd}></HomeCodeTypeIcon>
+                            <View style={styles.rowTitle}><Text style={styles.rowText}>열</Text></View>
+                            {feverCd == 'good' ? <Text style={styles.rowText}>좋음 </Text> : <Text></Text>}
+                            {feverCd == 'notBad' ? <Text style={styles.rowText}>보통 </Text> : <Text></Text>}
+                            {feverCd == 'bad' ? <Text style={styles.rowText}>나쁨 </Text> : <Text></Text>}
+                            <HomeCodeTypeIcon code={feverCd}></HomeCodeTypeIcon>
                         </View>
                         <View style={styles.rowView}>
-                            <Text style={styles.rowText}>아침 식사 : </Text>
-                            {this.state.breakfastCd == 'good' ? <Text>좋음 </Text> : <Text></Text>}
-                            {this.state.breakfastCd == 'notBad' ? <Text>보통 </Text> : <Text></Text>}
-                            {this.state.breakfastCd == 'bad' ? <Text>나쁨 </Text> : <Text></Text>}
-                            <HomeCodeTypeIcon code={this.state.breakfastCd}></HomeCodeTypeIcon>
+                            <View style={styles.rowTitle}><Text style={styles.rowText}>아침 식사</Text></View>
+                            {breakfastCd == 'good' ? <Text style={styles.rowText}>좋음 </Text> : <Text></Text>}
+                            {breakfastCd == 'notBad' ? <Text style={styles.rowText}>보통 </Text> : <Text></Text>}
+                            {breakfastCd == 'bad' ? <Text style={styles.rowText}>나쁨 </Text> : <Text></Text>}
+                            <HomeCodeTypeIcon code={breakfastCd}></HomeCodeTypeIcon>
                         </View>
                         <View style={styles.rowView}>
-                            <Text style={styles.rowText}>점심 식사 : </Text>
-                            {this.state.lunchCd == 'good' ? <Text>좋음 </Text> : <Text></Text>}
-                            {this.state.lunchCd == 'notBad' ? <Text>보통 </Text> : <Text></Text>}
-                            {this.state.lunchCd == 'bad' ? <Text>나쁨 </Text> : <Text></Text>}
-                            <HomeCodeTypeIcon code={this.state.lunchCd}></HomeCodeTypeIcon>
+                            <View style={styles.rowTitle}><Text style={styles.rowText}>점심 식사</Text></View>
+                            {lunchCd == 'good' ? <Text style={styles.rowText}>좋음 </Text> : <Text></Text>}
+                            {lunchCd == 'notBad' ? <Text style={styles.rowText}>보통 </Text> : <Text></Text>}
+                            {lunchCd == 'bad' ? <Text style={styles.rowText}>나쁨 </Text> : <Text></Text>}
+                            <HomeCodeTypeIcon code={lunchCd}></HomeCodeTypeIcon>
                         </View>
                         <View style={styles.rowView}>
-                            <Text style={styles.rowText}>저녁 식사 : </Text>
-                            {this.state.dinnerCd == 'good' ? <Text>좋음 </Text> : <Text></Text>}
-                            {this.state.dinnerCd == 'notBad' ? <Text>보통 </Text> : <Text></Text>}
-                            {this.state.dinnerCd == 'bad' ? <Text>나쁨 </Text> : <Text></Text>}
-                            <HomeCodeTypeIcon code={this.state.dinnerCd}></HomeCodeTypeIcon>
+                            <View style={styles.rowTitle}><Text style={styles.rowText}>저녁 식사</Text></View>
+                            {dinnerCd == 'good' ? <Text style={styles.rowText}>좋음 </Text> : <Text></Text>}
+                            {dinnerCd == 'notBad' ? <Text style={styles.rowText}>보통 </Text> : <Text></Text>}
+                            {dinnerCd == 'bad' ? <Text style={styles.rowText}>나쁨 </Text> : <Text></Text>}
+                            <HomeCodeTypeIcon code={dinnerCd}></HomeCodeTypeIcon>
                         </View>
                         <View style={styles.rowView}>
-                            <Text style={styles.rowText}>배변 : </Text>
-                            <Text style={styles.rowText}>{this.state.shitCnt}회,
-                                {this.state.shitCd == 'good' ? <Text>좋음 </Text> : <Text></Text>}
-                                {this.state.shitCd == 'notBad' ? <Text>보통 </Text> : <Text></Text>}
-                                {this.state.shitCd == 'bad' ? <Text>나쁨 </Text> : <Text></Text>}
-                                ({this.state.shitDesc}) </Text>
-                            <HomeCodeTypeIcon code={this.state.shitCd}></HomeCodeTypeIcon>
+                            <View style={styles.rowTitle}><Text style={styles.rowText}>배변</Text></View>
+                            <Text style={styles.rowText}>{shitCnt}회,
+                                {shitCd == 'good' ? <Text style={styles.rowText}>좋음 </Text> : <Text></Text>}
+                                {shitCd == 'notBad' ? <Text style={styles.rowText}>보통 </Text> : <Text></Text>}
+                                {shitCd == 'bad' ? <Text style={styles.rowText}>나쁨 </Text> : <Text></Text>}
+                                ({shitDesc}) </Text>
+                            <HomeCodeTypeIcon code={shitCd}></HomeCodeTypeIcon>
                         </View>
                         <View style={{flexDirection: 'row'}}>
-                            <Text style={styles.rowText}>수면 : </Text>
-                            <Text style={styles.rowText}>{this.state.sleepStartTime}시 ~ {this.state.sleepEndTime}시</Text>
+                            <View style={styles.rowTitle}><Text style={styles.rowText}>수면</Text></View>
+                            <Text style={styles.rowText}>{sleepStartTime}시 ~ {sleepEndTime}시</Text>
                         </View>
                     </View>
                 </TouchableOpacity>
@@ -225,8 +244,13 @@ const styles = StyleSheet.create({
         borderColor: '#ebe0eb',
     },
 
+    rowTitle: {
+        width: 100
+    },
+
     rowText: {
-        fontSize: 14
+        fontSize: 14,
+        marginRight: 8
     },
 
     title: {

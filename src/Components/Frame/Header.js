@@ -31,7 +31,7 @@ export default class Header extends Component {
                     <View>
                         <ModalDropdown
                             defaultValue={'My'}
-                            textStyle={{fontSize: 121, fontWeight: 'bold', color: '#000'}}
+                            textStyle={{fontSize: 21, fontWeight: 'bold', color: '#000'}}
                             dropdownTextStyle={{fontSize: 16, color: '#000', height: 40}}
                             dropdownStyle={{height: 80, width: 100}}
                             options={['일기장', '설정']}
