@@ -65,7 +65,6 @@ export default class NoteDisease extends Component {
                                 justifyContent: "center",
                                 marginLeft: 10
                             }}>
-                                <IonIcons name="ios-paper" style={{fontSize: 10, color: '#33d6ff'}}/>
                             </View>
                             <View style={{
                                 flexDirection: 'column',
@@ -94,15 +93,15 @@ export default class NoteDisease extends Component {
                     <View style={{margin: 20}}>
                         <View style={styles.rowView}>
                             <View style={styles.rowTitle}><Text style={styles.rowText}>증상</Text></View>
-                            <Text style={styles.rowText}>{this.props.symptom}</Text>
+                            <View style={{flex: 1}}><Text style={styles.rowText}>{this.props.symptom}</Text></View>
                         </View>
                         <View style={styles.rowView}>
                             <View style={styles.rowTitle}><Text style={styles.rowText}>병원명</Text></View>
-                            <Text style={styles.rowText}>{this.props.hospitalNm}</Text>
+                            <View style={{flex: 1}}><Text style={styles.rowText}>{this.props.hospitalNm}</Text></View>
                         </View>
                         <View style={styles.rowView}>
                             <View style={styles.rowTitle}><Text style={styles.rowText}>처방</Text></View>
-                            <Text style={styles.rowText}>{this.props.prescription}</Text>
+                            <View style={{flex: 1}}><Text style={styles.rowText}>{this.props.prescription}</Text></View>
                         </View>
                     </View>
                 </TouchableOpacity>

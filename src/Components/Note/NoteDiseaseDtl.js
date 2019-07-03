@@ -11,10 +11,15 @@ import {
     Dimensions,
     AsyncStorage
 } from 'react-native';
+import {
+    Button
+} from 'react-native-elements';
 import ModalHeader from '../ModalHeader.js'
 import Toast from 'react-native-toast-native';
 import Constants from '../../Com/Constants.js';
 import {getToken} from '../../Com/AuthToken.js';
+import ModalStandardHeader from '../Com/ModalStandardHeader'
+import Edit from '../Com/Edit'
 
 export default class NoteDiseaseDtl extends Component {
 
@@ -24,6 +29,7 @@ export default class NoteDiseaseDtl extends Component {
             type: this.props.navigation.getParam('type'), noteId: this.props.navigation.getParam('noteId'),
             diseaseDt: this.props.navigation.getParam('diseaseDt'),
             diseaseId: this.props.navigation.getParam('diseaseId'),
+            saveNoteDiseaseBtnStyle: {backgroundColor: 'gray', height: 60},
 
         }
     }
@@ -122,14 +128,13 @@ export default class NoteDiseaseDtl extends Component {
     }
 
     render() {
+        const {navigation} = this.props;
+        const {saveNoteDiseaseBtnStyle} = this.state;
+
         return (
             <View style={{flex: 1, backgroundColor: 'white'}}>
-                <ModalHeader
-                    title="질병 작성"
-                    goEvent={this.setDisease.bind(this)}
-                    buttonTitle={'글쓰기'}
-                ></ModalHeader>
-                <View style={{height: Dimensions.get('window').height - 148}}>
+                <ModalStandardHeader title="질병 작성" navigation={navigation}/>
+                <View style={{height: Dimensions.get('window').height - 208}}>
                     <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100} enabled>
                         <ScrollView style={{padding: 10}}>
                             <View style={styles.checkContent}>
@@ -203,6 +208,11 @@ export default class NoteDiseaseDtl extends Component {
                         </ScrollView>
                     </KeyboardAvoidingView>
                 </View>
+                <Button
+                    buttonStyle={saveNoteDiseaseBtnStyle}
+                    containerViewStyle={{width: '100%', marginLeft: 0, marginRight: 0}}
+                    title='저장'
+                    onPress={() => this.insertUser()}/>
             </View>
         )
     }
