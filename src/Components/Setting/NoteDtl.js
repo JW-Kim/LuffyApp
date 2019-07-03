@@ -219,7 +219,7 @@ export default class NoteDtl extends Component {
                     <Button
                         buttonStyle={insertNoteDtlBtnStyle}
                         title="save"
-                        onPress={() => this.setNote()}
+                        onPress={() => this.setNote()} />
                 </View>
             </View>
         )
