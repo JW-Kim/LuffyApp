@@ -227,7 +227,7 @@ export default class NoteDiary extends Component {
 
 const styles = StyleSheet.create({
     header: {
-        backgroundColor: '#ebe0eb'
+        backgroundColor: '#fff'
     },
 
     rowView: {
@@ -238,7 +238,6 @@ const styles = StyleSheet.create({
 
     content: {
         backgroundColor: '#fff',
-        marginTop: 1,
         borderWidth: 1,
         borderColor: '#ebe0eb',
     },
