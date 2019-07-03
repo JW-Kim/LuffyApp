@@ -140,6 +140,7 @@ export default class Note extends Component {
         let markedDates = new Object();
         let selectedDiary = null;
         let selectedDiseaseList = [];
+        let isEmpty = true;
 
         const diary = {key: 'diary', color: '#33d6ff'};
         const disease = {key: 'disease', color: 'blue'};
@@ -152,6 +153,7 @@ export default class Note extends Component {
                     selected: true,
                     selectedColor: '#33d6ff'
                 };
+                isEmpty = false;
 
             } else {
                 markedDates["" + this.state.diary[i].diaryDt + ""] = {dots: [diary]};
@@ -167,7 +169,7 @@ export default class Note extends Component {
                         selected: true,
                         selectedColor: '#33d6ff'
                     };
-
+                    isEmpty = false;
                 } else {
                     markedDates["" + this.state.disease[i].diseaseDt + ""] = {dots: [disease]};
                 }
@@ -185,6 +187,10 @@ export default class Note extends Component {
 
                 if (diseasePushYn) markedDates["" + this.state.disease[i].diseaseDt + ""].dots.push(disease);
             }
+        }
+
+        if(isEmpty) {
+            markedDates[day] = {selected: true, selectedColor: '#33d6ff'};
         }
 
         this.setState({

@@ -74,7 +74,7 @@ export default class NoteDisease extends Component {
                                 marginRight: 10
                             }}>
                                 <Text style={{
-                                    fontSize: 15,
+                                    fontSize: 18,
                                     fontWeight: "bold"
                                 }}>
                                     {this.props.diseaseNm}
@@ -91,22 +91,18 @@ export default class NoteDisease extends Component {
         return (
             <View style={styles.content}>
                 <TouchableOpacity activeOpacity={0.9} onPress={() => this.openDiseaseDtl()}>
-                    <View style={{margin: 15}}>
-                        <View style={{flexDirection: 'row'}}>
-                            <Text>병명 : </Text>
-                            <Text>{this.props.diseaseNm}</Text>
+                    <View style={{margin: 20}}>
+                        <View style={styles.rowView}>
+                            <View style={styles.rowTitle}><Text style={styles.rowText}>증상</Text></View>
+                            <Text style={styles.rowText}>{this.props.symptom}</Text>
                         </View>
-                        <View style={{flexDirection: 'row'}}>
-                            <Text>증상 : </Text>
-                            <Text>{this.props.symptom}</Text>
+                        <View style={styles.rowView}>
+                            <View style={styles.rowTitle}><Text style={styles.rowText}>병원명</Text></View>
+                            <Text style={styles.rowText}>{this.props.hospitalNm}</Text>
                         </View>
-                        <View style={{flexDirection: 'row'}}>
-                            <Text>병원명 : </Text>
-                            <Text>{this.props.hospitalNm}</Text>
-                        </View>
-                        <View style={{flexDirection: 'row'}}>
-                            <Text>처방 : </Text>
-                            <Text>{this.props.prescription}</Text>
+                        <View style={styles.rowView}>
+                            <View style={styles.rowTitle}><Text style={styles.rowText}>처방</Text></View>
+                            <Text style={styles.rowText}>{this.props.prescription}</Text>
                         </View>
                     </View>
                 </TouchableOpacity>
@@ -121,12 +117,11 @@ export default class NoteDisease extends Component {
 
 const styles = StyleSheet.create({
     header: {
-        backgroundColor: '#00BFFF'
+        backgroundColor: '#fff'
     },
 
     content: {
         backgroundColor: '#fff',
-        marginTop: 10,
         borderWidth: 1,
         borderColor: '#ebe0eb',
     },
@@ -144,4 +139,19 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         marginRight: 15
     },
+
+    rowText: {
+        fontSize: 14,
+        marginRight: 8
+    },
+
+    rowTitle: {
+        width: 150
+    },
+
+    rowView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingBottom: 16
+    }
 })

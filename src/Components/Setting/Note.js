@@ -13,6 +13,7 @@ import {
 import ModalHeader from '../ModalHeader.js';
 import Constants from '../../Com/Constants.js';
 import {getToken} from '../../Com/AuthToken.js';
+import ModalStandardHeader from '../Com/ModalStandardHeader'
 import Toast from 'react-native-toast-native';
 import Icons from 'react-native-vector-icons/FontAwesome';
 import _ from 'lodash';
@@ -116,27 +117,23 @@ export default class Note extends Component {
     }
 
     render() {
+        const {navigation} = this.props;
         const {shareList} = this.state;
 
         return (
             <View style={{flex: 1, backgroundColor: '#fff'}}>
-                <ModalHeader
-                    title='My 일기장'
-                    buttonTitle={'닫기'}
-                    goEvent={this.closePopup.bind(this)}
-                >
-                </ModalHeader>
-                <View style={{flex: 1, padding: 10}}>
+                <ModalStandardHeader title="diary" navigation={navigation} />
+                <View style={{flex: 1, padding: 20}}>
                     <View style={{flex: 0.5}}>
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                            <Text style={{fontSize: 17}}>내 소유 일기장</Text>
+                            <Text style={styles.rowTitle}>내 소유 일기장</Text>
                             <TouchableOpacity style={{width: 50, right: 0, alignItems: 'center'}}
                                               onPress={() => this.openNoteDtl()}
                             >
-                                <Icons name='plus' color='#00cc00' size={17}/>
+                                <Icons name='plus' color='#00cc00' size={18}/>
                             </TouchableOpacity>
                         </View>
-                        <ScrollView style={{marginTop: 10}}>
+                        <ScrollView style={{marginTop: 8}}>
                             <FlatList
                                 data={this.state.myNoteList}
                                 keyExtractor={(item, index) => index.toString()}
@@ -146,7 +143,7 @@ export default class Note extends Component {
                                             <Text>profile</Text>
                                         </View>
                                         <View style={{flex: 0.6}}>
-                                            <Text>{item.noteNm}</Text>
+                                            <Text style={styles.rowText}>{item.noteNm}</Text>
                                         </View>
                                         <View style={{
                                             width: 50,
@@ -155,10 +152,10 @@ export default class Note extends Component {
                                             marginRight: 15
                                         }}>
                                             <TouchableOpacity onPress={() => this.openNoteDtl(item.noteId)}>
-                                                <Icons name="share-alt" color="blue" size={17}/>
+                                                <Icons name="share-alt" color="blue" size={16}/>
                                             </TouchableOpacity>
                                             <TouchableOpacity onPress={() => this.deleteMyNote(item.noteId)}>
-                                                <Icons name="minus" color="blue" size={17}/>
+                                                <Icons name="minus" color="blue" size={16}/>
                                             </TouchableOpacity>
                                         </View>
                                     </View>
@@ -167,9 +164,9 @@ export default class Note extends Component {
                         </ScrollView>
                     </View>
                     <View style={{flex: 0.5}}>
-                        <Text style={{fontSize: 17}}>공유 일기장</Text>
+                        <Text style={styles.rowTitle}>공유 일기장</Text>
 
-                        <ScrollView style={{marginTop: 10}}>
+                        <ScrollView style={{marginTop: 8}}>
                             <FlatList
                                 data={this.state.shareList}
                                 keyExtractor={(item, index) => index.toString()}
@@ -179,7 +176,7 @@ export default class Note extends Component {
                                             <Text>profile</Text>
                                         </View>
                                         <View style={{flex: 0.6}}>
-                                            <Text>{item.noteNm}</Text>
+                                            <Text style={styles.rowText}>{item.noteNm}</Text>
                                         </View>
                                         <View style={{
                                             width: 50,
@@ -188,7 +185,7 @@ export default class Note extends Component {
                                             marginRight: 15
                                         }}>
                                             <TouchableOpacity onPress={() => this.deleteShareNote(item.noteId)}>
-                                                <Icons name="minus" color="blue" size={17}/>
+                                                <Icons name="minus" color="blue" size={16}/>
                                             </TouchableOpacity>
                                         </View>
                                     </View>
@@ -215,5 +212,12 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0.8,
         borderColor: '#ebe0eb',
         paddingLeft: 20
+    },
+    rowText: {
+        fontSize:16
+    },
+    rowTitle: {
+        fontSize: 16,
+        fontWeight: 'bold'
     }
 })

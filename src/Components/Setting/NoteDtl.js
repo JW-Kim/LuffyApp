@@ -12,10 +12,14 @@ import {
     AsyncStorage,
     Picker
 } from 'react-native';
+import {
+    Button
+} from 'react-native-elements';
 import ModalHeader from '../ModalHeader.js';
 import Toast from 'react-native-toast-native';
 import Constants from '../../Com/Constants.js';
 import {getToken} from '../../Com/AuthToken.js';
+import ModalStandardHeader from '../Com/ModalStandardHeader'
 import DatePicker from 'react-native-datepicker';
 import NoteDtlShare from './NoteDtlShare.js';
 
@@ -28,8 +32,11 @@ export default class NoteDtl extends Component {
             noteId: this.props.navigation.getParam('noteId'),
             noteNm: null,
             sex: null,
-            birthDt: null
+            birthDt: null,
+            insertNoteDtlBtnStyle: {backgroundColor: 'gray', height: 60}
         }
+
+        let setNote = this.setNote.bind(this);
     }
 
     async componentWillMount() {
@@ -122,16 +129,13 @@ export default class NoteDtl extends Component {
     }
 
     render() {
-        const {noteId} = this.state;
+        const {navigation} = this.props;
+        const {noteId, insertNoteDtlBtnStyle} = this.state;
 
         return (
             <View style={{flex: 1, backgroundColor: 'white'}}>
-                <ModalHeader
-                    title="노트 작성"
-                    goEvent={this.setNote.bind(this)}
-                    buttonTitle={'글쓰기'}
-                ></ModalHeader>
-                <View style={{height: Dimensions.get('window').height - 60}}>
+                <ModalStandardHeader title="노트 작성" navigation={navigation} />
+                <View style={{height: Dimensions.get('window').height - 140}}>
                     <View style={{flex: 1}}>
                         <View style={{padding: 10, flex: 0.5}}>
                             <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100} enabled>
@@ -210,6 +214,12 @@ export default class NoteDtl extends Component {
                         </View>
                         <NoteDtlShare noteId={noteId} navigation={this.props.navigation}/>
                     </View>
+                </View>
+                <View style={{height:60, width: '100%', backgroundColor: 'red', justifyContent: 'center'}}>
+                    <Button
+                        buttonStyle={insertNoteDtlBtnStyle}
+                        title="save"
+                        onPress={() => this.setNote()}
                 </View>
             </View>
         )
