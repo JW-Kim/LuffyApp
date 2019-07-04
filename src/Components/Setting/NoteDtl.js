@@ -140,7 +140,7 @@ export default class NoteDtl extends Component {
                 <View style={{height: Dimensions.get('window').height - 140}}>
                     <View style={{flex: 1}}>
                         <View style={{marginLeft: 20, marginTop: 20}}>
-                            <Text style={styles.rowTitle}>note info</Text>
+                            <Text style={styles.rowTitle}>노트 정보</Text>
                         </View>
                         <View style={{paddingLeft: 28, paddingRight: 20, paddingTop: 8, height: 180}}>
                             <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100} enabled>

@@ -100,7 +100,7 @@ export default class NoteDtlShare extends Component {
             <View style={{flex: 1, paddingTop: 32, paddingLeft: 20, paddingRight: 20}}>
                 <View style={{flex: 1}}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                        <Text style={styles.rowTitle}>share user</Text>
+                        <Text style={styles.rowTitle}>공유한 사람</Text>
                         <TouchableOpacity style={{width: 30, justifyContent: 'flex-end', alignItems: 'center'}}
                                           onPress={() => this.openSearchUser()}
                         >

@@ -122,7 +122,7 @@ export default class Note extends Component {
 
         return (
             <View style={{flex: 1, backgroundColor: '#fff'}}>
-                <ModalStandardHeader title="diary" navigation={navigation} />
+                <ModalStandardHeader title="일기장" navigation={navigation} />
                 <View style={{flex: 1, padding: 20}}>
                     <View style={{flex: 0.5}}>
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
