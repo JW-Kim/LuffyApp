@@ -28,7 +28,9 @@ export default class NoteDiary extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeSections: []
+            activeSections: [],
+            height: 0,
+            weight: 0
         }
     }
 
@@ -151,14 +153,8 @@ export default class NoteDiary extends Component {
                         {content}
                     </Text>                    
                     <View style={{marginTop: 10, marginLeft:40, marginRight:40}}>
-                        {height == null || height == 0 ? <Text></Text> :
-                            (<View style={styles.rowView}>
-                                <View style={styles.rowTitle}><Text style={styles.rowText}>키</Text></View> <Text style={styles.rowText}>{height} cm</Text>
-                            </View>)}
-                        {weight == null || weight == 0 ? <Text></Text> :
-                            (<View style={styles.rowView}>
-                                <View style={styles.rowTitle}><Text style={styles.rowText}>몸무게</Text></View> <Text style={styles.rowText}>{weight} kg</Text>
-                            </View>)}
+                        {this.renderHeight()}
+                        {this.renderWeight()}
                         <View style={styles.rowView}>
                             <View style={styles.rowTitle}><Text style={styles.rowText}>기분</Text></View>
                             {feelingCd == 'good' ? <Text style={styles.rowText}>좋음 </Text> : <Text></Text>}
@@ -219,6 +215,40 @@ export default class NoteDiary extends Component {
             </View>
         );
     };
+
+    renderHeight() {
+        const {height} = this.state;
+
+        if(height == null || height == 0) {
+            return;
+        }
+
+        return(
+            <View style={styles.rowView}>
+                <View style={styles.rowTitle}>
+                    <Text style={styles.rowText}>키</Text>
+                </View>
+                <Text style={styles.rowText}>{height} cm</Text>
+            </View>
+        )
+    }
+
+    renderWeight() {
+        const {weight} = this.state;
+
+        if(weight == null || weight == 0) {
+            return;
+        }
+
+        return(
+            <View style={styles.rowView}>
+                <View style={styles.rowTitle}>
+                    <Text style={styles.rowText}>몸무게</Text>
+                </View>
+                <Text style={styles.rowText}>{weight} kg</Text>
+            </View>
+        )
+    }
 
     _updateSections = activeSections => {
         this.setState({activeSections});
