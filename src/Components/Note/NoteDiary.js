@@ -153,7 +153,7 @@ export default class NoteDiary extends Component {
                     <View style={{marginTop: 10, marginLeft:40, marginRight:40}}>
                         {height == null || height == 0 ? <Text></Text> :
                             (<View style={styles.rowView}>
-                                <View style={styles.rowTitle}><Text style={styles.rowText}>키</Text></View> <Text style={styles.rowText}>{this.state.height} cm</Text>
+                                <View style={styles.rowTitle}><Text style={styles.rowText}>키</Text></View> <Text style={styles.rowText}>{height} cm</Text>
                             </View>)}
                         {weight == null || weight == 0 ? <Text></Text> :
                             (<View style={styles.rowView}>

@@ -20,6 +20,7 @@ import Toast from 'react-native-toast-native';
 import Constants from '../../Com/Constants.js';
 import {getToken} from '../../Com/AuthToken.js';
 import ModalStandardHeader from '../Com/ModalStandardHeader'
+import Edit from '../Com/Edit';
 import DatePicker from 'react-native-datepicker';
 import NoteDtlShare from './NoteDtlShare.js';
 
@@ -30,10 +31,11 @@ export default class NoteDtl extends Component {
         this.state = {
             type: this.props.navigation.getParam('type'),
             noteId: this.props.navigation.getParam('noteId'),
-            noteNm: null,
+            noteNm: '',
             sex: null,
             birthDt: null,
-            insertNoteDtlBtnStyle: {backgroundColor: 'gray', height: 60}
+            insertNoteDtlBtnStyle: {backgroundColor: 'gray', height: 60},
+            noteNmStyle: {borderBottomWidth: 0, borderColor: 'gray'}
         }
 
         let setNote = this.setNote.bind(this);
@@ -130,43 +132,49 @@ export default class NoteDtl extends Component {
 
     render() {
         const {navigation} = this.props;
-        const {noteId, insertNoteDtlBtnStyle} = this.state;
+        const {noteId, insertNoteDtlBtnStyle, noteNmStyle} = this.state;
 
         return (
             <View style={{flex: 1, backgroundColor: 'white'}}>
                 <ModalStandardHeader title="노트 작성" navigation={navigation} />
                 <View style={{height: Dimensions.get('window').height - 140}}>
                     <View style={{flex: 1}}>
-                        <View style={{padding: 10, flex: 0.5}}>
+                        <View style={{marginLeft: 20, marginTop: 20}}>
+                            <Text style={styles.rowTitle}>note info</Text>
+                        </View>
+                        <View style={{paddingLeft: 28, paddingRight: 20, paddingTop: 8, height: 180}}>
                             <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100} enabled>
                                 <View style={styles.checkContent}>
-                                    <Text style={{width: 70, fontSize: 15, fontWeight: '800'}}>노트 이름</Text>
+                                    <View style={styles.rowTextField}><Text style={styles.rowText}>노트 이름</Text></View>
                                     <View style={{
                                         flex: 1,
                                         flexDirection: 'row',
-                                        alignItems: 'center',
-                                        paddingLeft: 50,
-                                        paddingRight: 20
+                                        alignItems: 'center'
                                     }}>
-                                        <TextInput
-                                            style={{flex: 1}}
+                                        <Edit
+                                            height="60"
+                                            style={[styles.textInput, noteNmStyle]}
+                                            underlineColorAndroid="transparent"
+                                            placeholder="영문/숫자 10자"
+                                            autoCompleteType="off"
+                                            secureTextEntry={false}
+                                            onFocus={() => this.setState({noteNmStyle: {borderBottomWidth: 1, borderColor: 'gray'}})}
+                                            onBlur={() => this.setState({noteNmStyle: {borderBottomWidth: 0, borderColor: 'gray'}})}
                                             onChangeText={(noteNm) => this.setState({noteNm})}
                                             value={this.state.noteNm}
-                                        ></TextInput>
+                                        ></Edit>
                                     </View>
                                 </View>
-                                <View style={[styles.checkContent, {height: 150}]}>
-                                    <Text style={{width: 70, fontSize: 15, fontWeight: '800'}}>성별</Text>
+                                <View style={styles.checkContent}>
+                                    <View style={styles.rowTextField}><Text style={styles.rowText}>성별</Text></View>
                                     <View style={{
                                         flex: 1,
                                         flexDirection: 'row',
-                                        alignItems: 'center',
-                                        paddingLeft: 50,
-                                        paddingRight: 20
+                                        alignItems: 'center'
                                     }}>
                                         <Picker
                                             mode='dropdown'
-                                            style={{height: 50, width: 200, color: '#000'}}
+                                            style={{height: 50, width: '100%', color: '#000'}}
                                             onValueChange={(sex, itemIndex) => this.setState({sex})}
                                             selectedValue={this.state.sex}
                                         >
@@ -176,19 +184,17 @@ export default class NoteDtl extends Component {
                                     </View>
                                 </View>
                                 <View style={styles.checkContent}>
-                                    <Text style={{width: 70, fontSize: 15, fontWeight: '800'}}>출생일</Text>
+                                    <View style={styles.rowTextField}><Text style={styles.rowText}>출생일</Text></View>
                                     <View style={{
                                         flex: 1,
                                         flexDirection: 'row',
-                                        alignItems: 'center',
-                                        paddingLeft: 50,
-                                        paddingRight: 20
+                                        alignItems: 'center'
                                     }}>
                                         <DatePicker
-                                            style={{width: 200}}
+                                            style={{width: '100%'}}
                                             date={this.state.birthDt}
                                             mode='date'
-                                            androidMode='spinner'
+                                            androidMode='default'
                                             placeholder='날짜를 선택하세요'
                                             format='YYYY-MM-DD'
                                             confirmBtnText=''
@@ -215,9 +221,10 @@ export default class NoteDtl extends Component {
                         <NoteDtlShare noteId={noteId} navigation={this.props.navigation}/>
                     </View>
                 </View>
-                <View style={{height:60, width: '100%', backgroundColor: 'red', justifyContent: 'center'}}>
+                <View style={{height:60}}>
                     <Button
                         buttonStyle={insertNoteDtlBtnStyle}
+                        containerViewStyle={{width: '100%', marginLeft: 0, marginRight: 0}}
                         title="save"
                         onPress={() => this.setNote()} />
                 </View>
@@ -233,9 +240,25 @@ const styles = StyleSheet.create({
         paddingLeft: 5,
         paddingRight: 10,
         justifyContent: 'space-between',
-        borderLeftWidth: 0.8,
-        borderTopWidth: 0.8,
-        borderRightWidth: 0.8,
-        borderColor: '#ebe0eb'
+        height: 60
+    },
+    rowTextField: {
+        paddingRight: 20,
+        width: 130,
+        justifyContent: 'center'
+    },
+    rowText: {
+        fontSize: 16
+    },
+    textInput: {
+        paddingLeft: 8,
+        paddingRight: 35,
+        height: 60,
+        fontSize: 16,
+        flex: 1
+    },
+    rowTitle: {
+        fontSize: 18,
+        fontWeight: 'bold'
     }
 })

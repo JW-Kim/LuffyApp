@@ -97,17 +97,17 @@ export default class NoteDtlShare extends Component {
         const {shareList} = this.state;
 
         return (
-            <View style={{flex: 0.5, padding: 10}}>
+            <View style={{flex: 1, paddingTop: 32, paddingLeft: 20, paddingRight: 20}}>
                 <View style={{flex: 1}}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                        <Text style={{fontSize: 17}}>share user</Text>
-                        <TouchableOpacity style={{width: 50, right: 0, alignItems: 'center'}}
+                        <Text style={styles.rowTitle}>share user</Text>
+                        <TouchableOpacity style={{width: 30, justifyContent: 'flex-end', alignItems: 'center'}}
                                           onPress={() => this.openSearchUser()}
                         >
-                            <Icons name='plus' color='#00cc00' size={17}/>
+                            <Icons name='plus' color='#00cc00' size={16}/>
                         </TouchableOpacity>
                     </View>
-                    <ScrollView style={{marginTop: 10}}>
+                    <ScrollView style={styles.shareContent}>
                         <FlatList
                             data={shareList}
                             keyExtractor={(item, index) => index.toString()}
@@ -116,17 +116,12 @@ export default class NoteDtlShare extends Component {
                                     <View style={{flex: 0.2}}>
                                         <Text>profile</Text>
                                     </View>
-                                    <View style={{flex: 0.6}}>
-                                        <Text>{item.userNm}</Text>
+                                    <View style={{flex: 0.8}}>
+                                        <Text style={styles.rowText}>{item.userNm}</Text>
                                     </View>
-                                    <View style={{
-                                        width: 50,
-                                        flexDirection: 'row',
-                                        justifyContent: 'space-between',
-                                        marginRight: 15
-                                    }}>
+                                    <View style={{width: 30, justifyContent: 'flex-end', paddingRight: 20}}>
                                         <TouchableOpacity onPress={() => this.deleteShareUser(item.userId)}>
-                                            <Icons name="minus" color="blue" size={17}/>
+                                            <Icons name="minus" color="#d32f2f" size={16}/>
                                         </TouchableOpacity>
                                     </View>
                                 </View>
@@ -141,10 +136,20 @@ export default class NoteDtlShare extends Component {
 
 
 const styles = StyleSheet.create({
+    shareContent: {
+        borderLeftWidth: 0.8,
+        borderTopWidth: 0.8,
+        borderRightWidth: 0.8,
+        borderBottomWidth: 0.8,
+        borderColor: '#ebe0eb',
+        marginTop: 8,
+        marginBottom: 20,
+        flex: 1
+    },
     noteItem: {
         flex: 1,
         flexDirection: 'row',
-        height: 50,
+        height: 60,
         alignItems: 'center',
         justifyContent: 'space-between',
         borderLeftWidth: 0.8,
@@ -164,5 +169,12 @@ const styles = StyleSheet.create({
         borderTopWidth: 0.8,
         borderRightWidth: 0.8,
         borderColor: '#ebe0eb'
+    },
+    rowText: {
+        fontSize: 16
+    },
+    rowTitle: {
+        fontSize: 18,
+        fontWeight: 'bold'
     }
 })

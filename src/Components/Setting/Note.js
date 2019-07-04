@@ -127,7 +127,7 @@ export default class Note extends Component {
                     <View style={{flex: 0.5}}>
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                             <Text style={styles.rowTitle}>내 소유 일기장</Text>
-                            <TouchableOpacity style={{width: 50, right: 0, alignItems: 'center'}}
+                            <TouchableOpacity style={{width: 30, justifyContent: 'flex-end', alignItems: 'center'}}
                                               onPress={() => this.openNoteDtl()}
                             >
                                 <Icons name='plus' color='#00cc00' size={18}/>
@@ -142,20 +142,15 @@ export default class Note extends Component {
                                         <View style={{flex: 0.2}}>
                                             <Text>profile</Text>
                                         </View>
-                                        <View style={{flex: 0.6}}>
+                                        <View style={{flex: 0.8}}>
                                             <Text style={styles.rowText}>{item.noteNm}</Text>
                                         </View>
-                                        <View style={{
-                                            width: 50,
-                                            flexDirection: 'row',
-                                            justifyContent: 'space-between',
-                                            marginRight: 15
-                                        }}>
+                                        <View style={{width: 60, flexDirection: 'row', justifyContent: 'space-between', paddingRight: 20}}>
                                             <TouchableOpacity onPress={() => this.openNoteDtl(item.noteId)}>
                                                 <Icons name="share-alt" color="blue" size={16}/>
                                             </TouchableOpacity>
                                             <TouchableOpacity onPress={() => this.deleteMyNote(item.noteId)}>
-                                                <Icons name="minus" color="blue" size={16}/>
+                                                <Icons name="minus" color="#d32f2f" size={16}/>
                                             </TouchableOpacity>
                                         </View>
                                     </View>
@@ -163,7 +158,7 @@ export default class Note extends Component {
                             />
                         </ScrollView>
                     </View>
-                    <View style={{flex: 0.5}}>
+                    <View style={{flex: 0.5, marginTop: 20}}>
                         <Text style={styles.rowTitle}>공유 일기장</Text>
 
                         <ScrollView style={{marginTop: 8}}>
@@ -175,17 +170,12 @@ export default class Note extends Component {
                                         <View style={{flex: 0.2}}>
                                             <Text>profile</Text>
                                         </View>
-                                        <View style={{flex: 0.6}}>
+                                        <View style={{flex: 0.8}}>
                                             <Text style={styles.rowText}>{item.noteNm}</Text>
                                         </View>
-                                        <View style={{
-                                            width: 50,
-                                            flexDirection: 'row',
-                                            justifyContent: 'space-between',
-                                            marginRight: 15
-                                        }}>
+                                        <View style={{width: 30, justifyContent: 'flex-end', paddingRight: 20}}>
                                             <TouchableOpacity onPress={() => this.deleteShareNote(item.noteId)}>
-                                                <Icons name="minus" color="blue" size={16}/>
+                                                <Icons name="minus" color="#d32f2f" size={16}/>
                                             </TouchableOpacity>
                                         </View>
                                     </View>
@@ -203,7 +193,7 @@ const styles = StyleSheet.create({
     noteItem: {
         flex: 1,
         flexDirection: 'row',
-        height: 50,
+        height: 60,
         alignItems: 'center',
         justifyContent: 'space-between',
         borderLeftWidth: 0.8,
@@ -217,7 +207,7 @@ const styles = StyleSheet.create({
         fontSize:16
     },
     rowTitle: {
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: 'bold'
     }
 })

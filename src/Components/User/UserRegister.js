@@ -9,7 +9,8 @@ import {
     ScrollView,
     TouchableOpacity,
     KeyboardAvoidingView,
-    Image
+    Image,
+    Dimensions
 } from 'react-native';
 import {
     Button
@@ -364,7 +365,7 @@ export default class UserRegister extends Component {
             <View style={{flex: 1, backgroundColor: '#fff'}}>
                 <KeyboardAvoidingView style={{flex: 1, width: '100%'}} enabled>
                     <ModalStandardHeader title="회원가입" navigation={navigation}/>
-                    <ScrollView style={{backgroundColor: '#fff'}}>
+                    <ScrollView style={{backgroundColor: '#fff', height: Dimensions.get('window').height - 140}}>
                         <View style={styles.mainView}>
                             <View style={styles.row}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>아이디</Text></View>
@@ -456,14 +457,14 @@ export default class UserRegister extends Component {
                                     </TouchableOpacity>
                                 </View>
                             </View>
-                            <Button
-                                buttonStyle={insertUserBtnStyle}
-                                containerViewStyle={{width: '100%'}}
-                                title='등록'
-                                onPress={() => this.insertUser()}/>
                         </View>
                     </ScrollView>
                 </KeyboardAvoidingView>
+                    <Button
+                        buttonStyle={insertUserBtnStyle}
+                        containerViewStyle={{width: '100%', marginLeft: 0, marginRight: 0}}
+                        title='등록'
+                        onPress={() => this.insertUser()}/>
             </View>
         )
     }
