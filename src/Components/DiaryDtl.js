@@ -385,19 +385,23 @@ export default class DiaryDtl extends Component {
                                     alignItems: 'center',
                                     paddingLeft: 20
                                 }}>
-                                    <Edit
-                                        height="60"
-                                        style={[styles.textInput, heightStyle]}
-                                        underlineColorAndroid="transparent"
-                                        placeholder="숫자만 입력하세요"
-                                        autoCompleteType="off"
-                                        secureTextEntry={false}
-                                        onFocus={() => this.setState({heightStyle: Constants.EDIT_FOCUS_STYLE})}
-                                        onBlur={() => this.setState({heightStyle: Constants.EDIT_BLUR_STYLE})}
-                                        onChangeText={(height) => this.setState({height})}
-                                        value={this.state.height}
-                                    ></Edit>
-                                    <Text style={[styles.rowText,{width: 50}]}>cm</Text>
+                                    <View style={{flex: 1}}>
+                                        <Edit
+                                            height="60"
+                                            style={[styles.textInput, heightStyle]}
+                                            underlineColorAndroid="transparent"
+                                            placeholder="숫자만 입력하세요"
+                                            autoCompleteType="off"
+                                            secureTextEntry={false}
+                                            onFocus={() => this.setState({heightStyle: Constants.EDIT_FOCUS_STYLE})}
+                                            onBlur={() => this.setState({heightStyle: Constants.EDIT_BLUR_STYLE})}
+                                            onChangeText={(height) => this.setState({height})}
+                                            value={this.state.height}
+                                        ></Edit>
+                                    </View>
+                                    <View>
+                                        <Text style={styles.rowText}>cm</Text>
+                                    </View>
                                 </View>
                             </View>
                             <View style={[styles.checkContent, {height: 60}]}>
@@ -408,19 +412,23 @@ export default class DiaryDtl extends Component {
                                     alignItems: 'center',
                                     paddingLeft: 20
                                 }}>
-                                    <Edit
-                                        height="60"
-                                        style={[styles.textInput, weightStyle]}
-                                        underlineColorAndroid="transparent"
-                                        placeholder="숫자만 입력하세요"
-                                        autoCompleteType="off"
-                                        secureTextEntry={false}
-                                        onFocus={() => this.setState({weightStyle: Constants.EDIT_FOCUS_STYLE})}
-                                        onBlur={() => this.setState({weightStyle: Constants.EDIT_BLUR_STYLE})}
-                                        onChangeText={(weight) => this.setState({weight})}
-                                        value={this.state.weight}
-                                    ></Edit>
-                                    <Text style={[styles.rowText,{width: 50}]}>kg</Text>
+                                    <View style={{flex: 1}}>
+                                        <Edit
+                                            height="60"
+                                            style={[styles.textInput, weightStyle]}
+                                            underlineColorAndroid="transparent"
+                                            placeholder="숫자만 입력하세요"
+                                            autoCompleteType="off"
+                                            secureTextEntry={false}
+                                            onFocus={() => this.setState({weightStyle: Constants.EDIT_FOCUS_STYLE})}
+                                            onBlur={() => this.setState({weightStyle: Constants.EDIT_BLUR_STYLE})}
+                                            onChangeText={(weight) => this.setState({weight})}
+                                            value={this.state.weight}
+                                        ></Edit>
+                                    </View>
+                                    <View>
+                                        <Text style={styles.rowText}>kg</Text>
+                                    </View>
                                 </View>
                             </View>
                             <View style={[styles.checkContent, {height: 60}]}>
