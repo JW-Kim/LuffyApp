@@ -287,9 +287,7 @@ export default class DiaryDtl extends Component {
     renderImageView() {
        const {avatarSource, fileId} = this.state;
 
-       if(avatarSource === null) {
-           return;
-       } else {
+       if(avatarSource !== null) {
            return(
                <View>
                    <Image width={Dimensions.get('window').width - 20} source={this.state.avatarSource}/>
@@ -297,15 +295,15 @@ export default class DiaryDtl extends Component {
            )
        }
 
-       if(fileId === null) {
-           return;
-       } else {
+       if(fileId !== null) {
            return (
                <View>
                    <ImageView fileId={this.state.fileId} width={Dimensions.get('window').width - 20}></ImageView>
                </View>
            )
        }
+
+       return;
     }
 
     render() {
@@ -316,7 +314,7 @@ export default class DiaryDtl extends Component {
                 <ModalHeader
                     title="일기 작성"
                     goEvent={this.insertDiary.bind(this)}
-                    buttonTitle={'글쓰기'}
+                    buttonTitle={'저장'}
                     navigation={navigation}
                 ></ModalHeader>
                 <View style={{height: Dimensions.get('window').height - 148}}>
@@ -325,8 +323,8 @@ export default class DiaryDtl extends Component {
                             {this.renderImageView()}
                             <View style={styles.title}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>제목</Text></View>
-                                <View style={{paddingLeft: 50, flex: 1}}>
-                                    <TextInput style={{flex: 1, paddingLeft: 10}}
+                                <View style={{paddingLeft: 10, flex: 1}}>
+                                    <TextInput style={{flex: 1}}
                                                onChangeText={(title) => this.setState({title})}
                                                value={this.state.title}
                                     >
@@ -335,8 +333,8 @@ export default class DiaryDtl extends Component {
                             </View>
                             <View style={styles.checkContent}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>내용</Text></View>
-                                <View style={{paddingLeft: 50, flex: 1}}>
-                                    <TextInput style={{flex: 1, paddingLeft: 10}}
+                                <View style={{paddingLeft: 10, flex: 1}}>
+                                    <TextInput style={{flex: 1}}
                                                numberOfLines={10}
                                                multiline={true}
                                                onChangeText={(content) => this.setState({content})}

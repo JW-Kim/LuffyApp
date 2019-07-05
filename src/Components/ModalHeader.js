@@ -30,9 +30,9 @@ export default class ModalHeader extends Component {
                 <View style={{flex: 1, alignItems: 'center'}}>
                     <Text style={styles.titleText}>{title}</Text>
                 </View>
-                <View style={{width: 80}} onPress={() => this.props.goEvent(this)}>
+                <TouchableOpacity style={{width: 80}} onPress={() => this.props.goEvent(this)}>
                     <Text style={[styles.eventText, {textAlign: 'right'}]}>{buttonTitle}</Text>
-                </View>
+                </TouchableOpacity>
             </View>
         )
     }

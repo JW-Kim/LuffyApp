@@ -29,6 +29,8 @@ export default class NoteDiseaseDtl extends Component {
             type: this.props.navigation.getParam('type'), noteId: this.props.navigation.getParam('noteId'),
             diseaseDt: this.props.navigation.getParam('diseaseDt'),
             diseaseId: this.props.navigation.getParam('diseaseId'),
+            diseaseNm: '',
+            hospitalNm: '',
             saveNoteDiseaseBtnStyle: {backgroundColor: 'gray', height: 60},
             diseaseNmStyle: {borderBottomWidth: 0, borderColor: 'gray'},
             hospitalNmStyle: {borderBottomWidth: 0, borderColor: 'gray'},
@@ -139,96 +141,92 @@ export default class NoteDiseaseDtl extends Component {
         return (
             <View style={{flex: 1, backgroundColor: 'white'}}>
                 <ModalStandardHeader title="질병 작성" navigation={navigation}/>
-                <View style={{height: Dimensions.get('window').height - 140}}>
-                    <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100} enabled>
-                        <ScrollView style={{padding: 10}}>
-                            <View style={styles.checkContent}>
-                                <View style={styles.rowTextField}><Text style={styles.rowText}>병명</Text></View>
-                                <View style={{
-                                    flex: 1,
-                                    flexDirection: 'row',
-                                    alignItems: 'center'
-                                }}>
-                                    <Edit
-                                        style={[styles.textInput, diseaseNmStyle]}
-                                        height="60"
-                                        underlineColorAndroid="transparent"
-                                        placeholder="영문/숫자 6~12자"
-                                        autoCompleteType="off"
-                                        secureTextEntry={false}
-                                        onFocus={() => this.setState({diseaseNmStyle: {borderBottomWidth: 1, borderColor: 'gray'}})}
-                                        onBlur={() => this.setState({diseaseNmStyle: {borderBottomWidth: 0, borderColor: 'gray'}})}
-                                        onChangeText={(diseaseNm) => this.setState({diseaseNm})}
-                                        value={this.state.diseaseNm}
-                                    ></Edit>
-                                </View>
+                <KeyboardAvoidingView style={{flex: 1, width: '100%', }} enabled>
+                    <ScrollView style={{padding: 10, height: Dimensions.get('window').height - 140}}>
+                        <View style={styles.checkContent}>
+                            <View style={styles.rowTextField}><Text style={styles.rowText}>병명</Text></View>
+                            <View style={{
+                                flex: 1,
+                                flexDirection: 'row',
+                                alignItems: 'center'
+                            }}>
+                                <Edit
+                                    style={[styles.textInput, diseaseNmStyle]}
+                                    height="60"
+                                    underlineColorAndroid="transparent"
+                                    placeholder="영문/숫자 6~12자"
+                                    autoCompleteType="off"
+                                    secureTextEntry={false}
+                                    onFocus={() => this.setState({diseaseNmStyle: {borderBottomWidth: 1, borderColor: 'gray'}})}
+                                    onBlur={() => this.setState({diseaseNmStyle: {borderBottomWidth: 0, borderColor: 'gray'}})}
+                                    onChangeText={(diseaseNm) => this.setState({diseaseNm})}
+                                    value={this.state.diseaseNm}
+                                ></Edit>
                             </View>
-                            <View style={[styles.checkContent, {height: 200}]}>
-                                <View style={styles.rowTextField}><Text style={styles.rowText}>증상</Text></View>
-                                <View style={{
-                                    flex: 1,
-                                    flexDirection: 'row',
-                                    alignItems: 'center'
-                                }}>
-                                    <TextInput
-                                        style={[{flex: 1}, symptomStyle]}
-                                        numberOfLines={10}
-                                        multiline={true}
-                                        underlineColorAndroid="transparent"
-                                        onFocus={() => this.setState({symptomStyle: {borderWidth: 1, borderColor: 'gray'}})}
-                                        onBlur={() => this.setState({symptomStyle: {borderWidth: 0, borderColor: 'gray'}})}
-                                        onChangeText={(symptom) => this.setState({symptom})}
-                                        value={this.state.symptom}
-                                    ></TextInput>
-                                </View>
+                        </View>
+                        <View style={[styles.checkContent, {height: 200}]}>
+                            <View style={styles.rowTextField}><Text style={styles.rowText}>증상</Text></View>
+                            <View style={{
+                                flex: 1,
+                                flexDirection: 'row',
+                                alignItems: 'center'
+                            }}>
+                                <TextInput
+                                    style={[{flex: 1, fontSize: 16}, symptomStyle]}
+                                    numberOfLines={10}
+                                    multiline={true}
+                                    placeholder="증상을 입력해주세요"
+                                    underlineColorAndroid="transparent"
+                                    onFocus={() => this.setState({symptomStyle: {borderWidth: 1, borderColor: 'gray'}})}
+                                    onBlur={() => this.setState({symptomStyle: {borderWidth: 0, borderColor: 'gray'}})}
+                                    onChangeText={(symptom) => this.setState({symptom})}
+                                    value={this.state.symptom}
+                                ></TextInput>
                             </View>
-                            <View style={styles.checkContent}>
-                                <View style={styles.rowTextField}><Text style={styles.rowText}>병원명</Text></View>
-                                <View style={{
-                                    flex: 1,
-                                    flexDirection: 'row',
-                                    alignItems: 'center'
-                                }}>
-                                    <Edit
-                                        style={[styles.textInput, hospitalNmStyle]}
-                                        height="60"
-                                        underlineColorAndroid="transparent"
-                                        placeholder="영문/숫자 6~12자"
-                                        autoCompleteType="off"
-                                        secureTextEntry={false}
-                                        onFocus={() => this.setState({hospitalNmStyle: {borderBottomWidth: 1, borderColor: 'gray'}})}
-                                        onBlur={() => this.setState({hospitalNmStyle: {borderBottomWidth: 0, borderColor: 'gray'}})}
-                                        onChangeText={(hospitalNm) => this.setState({hospitalNm})}
-                                        value={this.state.hospitalNm}
-                                    ></Edit>
-                                </View>
+                        </View>
+                        <View style={styles.checkContent}>
+                            <View style={styles.rowTextField}><Text style={styles.rowText}>병원명</Text></View>
+                            <View style={{
+                                flex: 1,
+                                flexDirection: 'row',
+                                alignItems: 'center'
+                            }}>
+                                <Edit
+                                    style={[styles.textInput, hospitalNmStyle]}
+                                    height="60"
+                                    underlineColorAndroid="transparent"
+                                    placeholder="영문/숫자 6~12자"
+                                    autoCompleteType="off"
+                                    secureTextEntry={false}
+                                    onFocus={() => this.setState({hospitalNmStyle: {borderBottomWidth: 1, borderColor: 'gray'}})}
+                                    onBlur={() => this.setState({hospitalNmStyle: {borderBottomWidth: 0, borderColor: 'gray'}})}
+                                    onChangeText={(hospitalNm) => this.setState({hospitalNm})}
+                                    value={this.state.hospitalNm}
+                                ></Edit>
                             </View>
-                            <View style={[styles.checkContent, {
-                                borderColor: '#ebe0eb',
-                                borderBottomWidth: 0.8,
-                                height: 200
-                            }]}>
-                                <View style={styles.rowTextField}><Text style={styles.rowText}>처방</Text></View>
-                                <View style={{
-                                    flex: 1,
-                                    flexDirection: 'row',
-                                    alignItems: 'center'
-                                }}>
-                                    <TextInput
-                                        style={[{flex: 1}, prescriptionStyle]}
-                                        numberOfLines={10}
-                                        multiline={true}
-                                        underlineColorAndroid="transparent"
-                                        onFocus={() => this.setState({prescriptionStyle: {borderWidth: 1, borderColor: 'gray'}})}
-                                        onBlur={() => this.setState({prescriptionStyle: {borderWidth: 0, borderColor: 'gray'}})}
-                                        onChangeText={(prescription) => this.setState({prescription})}
-                                        value={this.state.prescription}
-                                    ></TextInput>
-                                </View>
+                        </View>
+                        <View style={[styles.checkContent, {flex: 1}]}>
+                            <View style={styles.rowTextField}><Text style={styles.rowText}>처방</Text></View>
+                            <View style={{
+                                flex: 1,
+                                flexDirection: 'row',
+                                alignItems: 'center'
+                            }}>
+                                <TextInput
+                                    style={[{flex: 1, fontSize: 16}, prescriptionStyle]}
+                                    numberOfLines={10}
+                                    multiline={true}
+                                    underlineColorAndroid="transparent"
+                                    placeholder="처방을 간단히 입력해주세요"
+                                    onFocus={() => this.setState({prescriptionStyle: {borderWidth: 1, borderColor: 'gray'}})}
+                                    onBlur={() => this.setState({prescriptionStyle: {borderWidth: 0, borderColor: 'gray'}})}
+                                    onChangeText={(prescription) => this.setState({prescription})}
+                                    value={this.state.prescription}
+                                ></TextInput>
                             </View>
-                        </ScrollView>
-                    </KeyboardAvoidingView>
-                </View>
+                        </View>
+                    </ScrollView>
+                </KeyboardAvoidingView>
                 <Button
                     buttonStyle={saveNoteDiseaseBtnStyle}
                     containerViewStyle={{width: '100%', marginLeft: 0, marginRight: 0}}
@@ -244,7 +242,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingLeft: 5,
-        paddingRight: 10,    },
+        paddingRight: 10,
+    },
     textInput: {
         paddingLeft: 8,
         paddingRight: 35,
