@@ -150,7 +150,7 @@ export default class NoteDiseaseDtl extends Component {
                                     alignItems: 'center'
                                 }}>
                                     <Edit
-                                        style={[{flex: 1}, diseaseNmStyle]}
+                                        style={[styles.textInput, diseaseNmStyle]}
                                         height="60"
                                         underlineColorAndroid="transparent"
                                         placeholder="영문/숫자 6~12자"
@@ -190,7 +190,7 @@ export default class NoteDiseaseDtl extends Component {
                                     alignItems: 'center'
                                 }}>
                                     <Edit
-                                        style={[{flex: 1}, hospitalNmStyle]}
+                                        style={[styles.textInput, hospitalNmStyle]}
                                         height="60"
                                         underlineColorAndroid="transparent"
                                         placeholder="영문/숫자 6~12자"
@@ -219,8 +219,8 @@ export default class NoteDiseaseDtl extends Component {
                                         numberOfLines={10}
                                         multiline={true}
                                         underlineColorAndroid="transparent"
-                                        onFocus={() => this.setState({symptomStyle: {borderWidth: 1, borderColor: 'gray'}})}
-                                        onBlur={() => this.setState({symptomStyle: {borderWidth: 0, borderColor: 'gray'}})}
+                                        onFocus={() => this.setState({prescriptionStyle: {borderWidth: 1, borderColor: 'gray'}})}
+                                        onBlur={() => this.setState({prescriptionStyle: {borderWidth: 0, borderColor: 'gray'}})}
                                         onChangeText={(prescription) => this.setState({prescription})}
                                         value={this.state.prescription}
                                     ></TextInput>

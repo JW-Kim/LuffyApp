@@ -73,13 +73,6 @@ export default class DiaryDtl extends Component {
             weight: null
         }
 
-        let setFeelingCd = this.setFeelingCd.bind(this);
-        let setHealthCd = this.setHealthCd.bind(this);
-        let setFeverCd = this.setFeverCd.bind(this);
-        let setBreakfastCd = this.setBreakfastCd.bind(this);
-        let setLunchCd = this.setLunchCd.bind(this);
-        let setDinnerCd = this.setDinnerCd.bind(this);
-        let setShitCd = this.setShitCd.bind(this);
         let insertDiary = this.insertDiary.bind(this);
 
     }
@@ -291,68 +284,16 @@ export default class DiaryDtl extends Component {
         });
     }
 
-    setFeelingCd(type) {
-        this.setState({
-            feelingCd: type
-        })
-
-    }
-
-    setHealthCd(type) {
-        this.setState({
-            healthCd: type
-        })
-    }
-
-    setFeverCd(type) {
-        this.setState({
-            feverCd: type
-        })
-    }
-
-    setBreakfastCd(type) {
-        this.setState({
-            breakfastCd: type
-        })
-    }
-
-    setLunchCd(type) {
-        this.setState({
-            lunchCd: type
-        })
-    }
-
-    setDinnerCd(type) {
-        this.setState({
-            dinnerCd: type
-        })
-    }
-
-    setShitCd(type) {
-        this.setState({
-            shitCd: type
-        })
-    }
-
-    setHeight(height) {
-        this.setState({
-            height: height
-        })
-    }
-
-    setWeight(weight) {
-        this.setState({
-            weight: weight
-        })
-    }
-
     render() {
+        const {navigation} = this.props;
+
         return (
             <View style={{flex: 1, backgroundColor: 'white'}}>
                 <ModalHeader
                     title="일기 작성"
                     goEvent={this.insertDiary.bind(this)}
                     buttonTitle={'글쓰기'}
+                    navigation={navigation}
                 ></ModalHeader>
                 <View style={{height: Dimensions.get('window').height - 148}}>
                     <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100} enabled>
@@ -367,8 +308,30 @@ export default class DiaryDtl extends Component {
                                                width={Dimensions.get('window').width - 20}></ImageView>
                                 }
                             </View>
+                            <View style={styles.title}>
+                                <View style={styles.rowTextField}><Text style={styles.rowText}>제목</Text></View>
+                                <View style={{paddingLeft: 50, flex: 1}}>
+                                    <TextInput style={{flex: 1}}
+                                               onChangeText={(title) => this.setState({title})}
+                                               value={this.state.title}
+                                    >
+                                    </TextInput>
+                                </View>
+                            </View>
                             <View style={styles.checkContent}>
-                                <Text style={{width: 70, fontSize: 15, fontWeight: '800'}}>키</Text>
+                                <View style={styles.rowTextField}><Text style={styles.rowText}>내용</Text></View>
+                                <View style={{paddingLeft: 50, flex: 1}}>
+                                    <TextInput style={{flex: 1}}
+                                               numberOfLines={10}
+                                               multiline={true}
+                                               onChangeText={(content) => this.setState({content})}
+                                               value={this.state.content}
+                                    >
+                                    </TextInput>
+                                </View>
+                            </View>
+                            <View style={[styles.checkContent, {height: 60}]}>
+                                <View style={styles.rowTextField}><Text style={styles.rowText}>키</Text></View>
                                 <View style={{
                                     flex: 1,
                                     flexDirection: 'row',
@@ -384,8 +347,8 @@ export default class DiaryDtl extends Component {
                                     <Text style={{width: 50}}>cm</Text>
                                 </View>
                             </View>
-                            <View style={styles.checkContent}>
-                                <Text style={{width: 70, fontSize: 15, fontWeight: '800'}}>몸무게</Text>
+                            <View style={[styles.checkContent, {height: 60}]}>
+                                <View style={styles.rowTextField}><Text style={styles.rowText}>몸무게</Text></View>
                                 <View style={{
                                     flex: 1,
                                     flexDirection: 'row',
@@ -401,48 +364,48 @@ export default class DiaryDtl extends Component {
                                     <Text>kg</Text>
                                 </View>
                             </View>
-                            <View style={styles.checkContent}>
-                                <Text style={{width: 70, fontSize: 15, fontWeight: '800'}}>기분</Text>
+                            <View style={[styles.checkContent, {height: 60}]}>
+                                <View style={styles.rowTextField}><Text style={styles.rowText}>기분</Text></View>
                                 <DiaryDtlCheckBox code={this.state.feelingCd}
-                                                  setCode={this.setFeelingCd.bind(this)}></DiaryDtlCheckBox>
+                                                  setCode={(feelingCd) => this.setState({feelingCd})}></DiaryDtlCheckBox>
                             </View>
-                            <View style={styles.checkContent}>
-                                <Text style={{width: 70, fontSize: 15, fontWeight: '800'}}>건강</Text>
+                            <View style={[styles.checkContent, {height: 60}]}>
+                                <View style={styles.rowTextField}><Text style={styles.rowText}>건강</Text></View>
                                 <DiaryDtlCheckBox code={this.state.healthCd}
-                                                  setCode={this.setHealthCd.bind(this)}></DiaryDtlCheckBox>
+                                                  setCode={(healthCd) => this.setState({healthCd})}></DiaryDtlCheckBox>
                             </View>
-                            <View style={styles.checkContent}>
+                            <View style={[styles.checkContent, {height: 120}]}>
                                 <View style={{width: 70, alignItems: 'flex-start'}}>
-                                    <Text style={{width: 70, fontSize: 15, fontWeight: '800'}}>열</Text>
+                                    <View style={styles.rowTextField}><Text style={styles.rowText}>열</Text></View>
                                 </View>
                                 <View>
                                     <DiaryDtlCheckBox code={this.state.feverCd}
-                                                      setCode={this.setFeverCd.bind(this)}></DiaryDtlCheckBox>
+                                                      setCode={(feverCd) => this.setState({feverCd})}></DiaryDtlCheckBox>
                                     <View style={{paddingLeft: 10, paddingRight: 20}}>
                                         <TextInput></TextInput>
                                     </View>
                                 </View>
                             </View>
-                            <View style={styles.checkContent}>
-                                <Text style={{width: 70, fontSize: 15, fontWeight: '800'}}>아침식사</Text>
+                            <View style={[styles.checkContent, {height: 60}]}>
+                                <View style={styles.rowTextField}><Text style={styles.rowText}>아침식사</Text></View>
                                 <DiaryDtlCheckBox code={this.state.breakfastCd}
-                                                  setCode={this.setBreakfastCd.bind(this)}></DiaryDtlCheckBox>
+                                                  setCode={(breakfastCd) => this.setState({breakfastCd})}></DiaryDtlCheckBox>
                             </View>
-                            <View style={styles.checkContent}>
-                                <Text style={{width: 70, fontSize: 15, fontWeight: '800'}}>점심식사</Text>
+                            <View style={[styles.checkContent, {height: 60}]}>
+                                <View style={styles.rowTextField}><Text style={styles.rowText}>점심식사</Text></View>
                                 <DiaryDtlCheckBox code={this.state.lunchCd}
-                                                  setCode={this.setLunchCd.bind(this)}></DiaryDtlCheckBox>
+                                                  setCode={(lunchCd) => this.setState({lunchCd})}></DiaryDtlCheckBox>
                             </View>
-                            <View style={styles.checkContent}>
-                                <Text style={{width: 70, fontSize: 15, fontWeight: '800'}}>저녁식사</Text>
+                            <View style={[styles.checkContent, {height: 60}]}>
+                                <View style={styles.rowTextField}><Text style={styles.rowText}>저녁식사</Text></View>
                                 <DiaryDtlCheckBox code={this.state.dinnerCd}
-                                                  setCode={this.setDinnerCd.bind(this)}></DiaryDtlCheckBox>
+                                                  setCode={(dinnerCd) => this.setState({dinnerCd})}></DiaryDtlCheckBox>
                             </View>
-                            <View style={styles.checkContent}>
-                                <Text style={{width: 70, fontSize: 15, fontWeight: '800'}}>배변</Text>
+                            <View style={[styles.checkContent, {height: 120}]}>
+                                <View style={styles.rowTextField}><Text style={styles.rowText}>배변</Text></View>
                                 <View>
                                     <DiaryDtlCheckBox code={this.state.shitCd}
-                                                      setCode={this.setShitCd.bind(this)}></DiaryDtlCheckBox>
+                                                      setCode={(shitCd) => this.setState({shitCd})}></DiaryDtlCheckBox>
                                     <View style={{
                                         flexDirection: 'row',
                                         alignItems: 'center',
@@ -453,7 +416,7 @@ export default class DiaryDtl extends Component {
                                                    onChangeText={(shitCnt) => this.setState({shitCnt})}
                                                    value={this.state.shitCnt}
                                         ></TextInput>
-                                        <Text style={{width: 15, marginRight: 10}}>회</Text>
+                                        <Text style={[styles.rowText, {width: 15, marginRight: 10}]}>회</Text>
                                         <TextInput style={{flex: 0.9}}
                                                    onChangeText={(shitDesc) => this.setState({shitDesc})}
                                                    value={this.state.shitDesc}
@@ -461,8 +424,8 @@ export default class DiaryDtl extends Component {
                                     </View>
                                 </View>
                             </View>
-                            <View style={styles.checkContent}>
-                                <Text style={{width: 70, fontSize: 15, fontWeight: '800'}}>수면</Text>
+                            <View style={[styles.checkContent, {height: 60}]}>
+                                <View style={styles.rowTextField}><Text style={styles.rowText}>수면</Text></View>
                                 <View style={{flex: 0.4, flexDirection: 'row', alignItems: 'center', paddingLeft: 50}}>
                                     <TextInput
                                         style={{width: 40}}
@@ -480,37 +443,15 @@ export default class DiaryDtl extends Component {
                                         value={this.state.sleepEndTime}
                                     >
                                     </TextInput>
-                                    <Text>시</Text>
-                                </View>
-                            </View>
-                            <View style={styles.title}>
-                                <Text style={{width: 70, fontSize: 15, fontWeight: '800'}}>제목</Text>
-                                <View style={{paddingLeft: 50, flex: 1}}>
-                                    <TextInput style={{flex: 1}}
-                                               onChangeText={(title) => this.setState({title})}
-                                               value={this.state.title}
-                                    >
-                                    </TextInput>
-                                </View>
-                            </View>
-                            <View style={[styles.checkContent, {marginBottom: 40, borderBottomWidth: 1}]}>
-                                <Text style={{width: 70, fontSize: 15, fontWeight: '800'}}>내용</Text>
-                                <View style={{paddingLeft: 50, flex: 1}}>
-                                    <TextInput style={{flex: 1}}
-                                               numberOfLines={10}
-                                               multiline={true}
-                                               onChangeText={(content) => this.setState({content})}
-                                               value={this.state.content}
-                                    >
-                                    </TextInput>
+                                    <Text style={styles.rowText}>시</Text>
                                 </View>
                             </View>
                         </ScrollView>
                     </KeyboardAvoidingView>
                 </View>
                 <TouchableOpacity style={styles.eventIcons} onPress={this.selectPhotoTapped.bind(this)}>
-                    <Icons name="image" color="#00cc00" size={30}/>
-                    <Text style={{marginLeft: 5}}> 사진 </Text>
+                    <Icons name="image" color="#00cc00" size={18}/>
+                    <Text style={{marginLeft: 5, fontSize: 18}}> 사진 </Text>
                 </TouchableOpacity>
             </View>
         )
@@ -535,11 +476,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingLeft: 5,
         paddingRight: 10,
-        justifyContent: 'space-between',
-        borderLeftWidth: 0.8,
-        borderTopWidth: 0.8,
-        borderRightWidth: 0.8,
-        borderColor: '#ebe0eb'
+        justifyContent: 'space-between'
     },
 
     checkBox: {
@@ -566,10 +503,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingLeft: 5,
+        paddingRight: 20
+    },
+    rowTextField: {
         paddingRight: 20,
-        borderLeftWidth: 0.8,
-        borderTopWidth: 0.8,
-        borderRightWidth: 0.8,
-        borderColor: '#ebe0eb'
+        width: 80,
+        justifyContent: 'center'
+    },
+    rowText: {
+        fontSize: 16
     }
 })

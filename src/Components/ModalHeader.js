@@ -1,39 +1,56 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {
     Button
-} from 'react-native-elements'
+} from 'react-native-elements';
+import Icons from 'react-native-vector-icons/FontAwesome';
 
 export default class ModalHeader extends Component {
 
+    constructor(props) {
+        super(props);
+
+        let close = this.close.bind(this);
+    }
+
+    close() {
+        this.props.navigation.goBack();
+    }
+
     render() {
+        const {buttonTitle, title} = this.props;
+
         return (
-            <View style={styles.total}>
-                <View style={{width: 70, backgroundColor: '#ebe0eb'}}></View>
-                <Text style={styles.titleText}>{this.props.title}</Text>
-                <Button
-                    buttonStyle={{width: 70, backgroundColor: '#fff', height: 40}}
-                    textStyle={{color: '#000'}}
-                    onPress={() => this.props.goEvent(this)}
-                    title={this.props.buttonTitle}
-                />
+            <View style={styles.mainView}>
+                <View style={{width: 80}}>
+                    <TouchableOpacity onPress={() => this.close()}>
+                        <Icons name="times" color="#000" size={21}/>
+                    </TouchableOpacity>
+                </View>
+                <View style={{flex: 1, alignItems: 'center'}}>
+                    <Text style={styles.titleText}>{title}</Text>
+                </View>
+                <View style={{width: 80}} onPress={() => this.props.goEvent(this)}>
+                    <Text style={[styles.titleText, {textAlign: 'right'}]}>{buttonTitle}</Text>
+                </View>
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    total: {
+    mainView: {
         height: 60,
         backgroundColor: '#ebe0eb',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        paddingLeft: 20,
+        paddingRight: 20
     },
 
     titleText: {
         color: '#000',
         fontWeight: 'bold',
-        fontSize: 17
+        fontSize: 21
     }
 })

@@ -61,33 +61,33 @@ export default class DiaryDtlCheckBox extends Component {
 
     render() {
         return (
-            <View>
-                <View style={{flex: 1, flexDirection: 'row'}}>
+            <View style={{height: 60}}>
+                <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
                     <CheckBox
                         title='좋음'
-                        size={20}
+                        size={16}
                         checkedColor={'#33cc33'}
                         containerStyle={styles.checkBox}
                         checked={this.state.good}
-                        textStyle={{fontSize: 15, fontWeight: '100'}}
+                        textStyle={{fontSize: 16, fontWeight: '100'}}
                         onPress={() => this.setGood(this)}
                     />
                     <CheckBox
                         title='보통'
-                        size={20}
+                        size={16}
                         checkedColor={'#ff8c00'}
                         containerStyle={styles.checkBox}
                         checked={this.state.notBad}
-                        textStyle={{fontSize: 15, fontWeight: '100'}}
+                        textStyle={{fontSize: 16, fontWeight: '100'}}
                         onPress={() => this.setNotBad(this)}
                     />
                     <CheckBox
                         title='나쁨'
-                        size={20}
+                        size={16}
                         checkedColor={'#ff471a'}
                         containerStyle={styles.checkBox}
                         checked={this.state.bad}
-                        textStyle={{fontSize: 15, fontWeight: '100'}}
+                        textStyle={{fontSize: 16, fontWeight: '100'}}
                         onPress={() => this.setBad(this)}
                     />
                 </View>
@@ -98,7 +98,8 @@ export default class DiaryDtlCheckBox extends Component {
 
 const styles = StyleSheet.create({
     checkBox: {
-        width: 69,
+        width: 71,
+        height: 16,
         alignItems: 'center',
         backgroundColor: 'white',
         margin: 0,
