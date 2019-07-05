@@ -28,6 +28,7 @@ import DiaryDtlCheckBox from './DiaryDtlCheckBox.js'
 import Constants from '../Com/Constants.js'
 import {getToken} from '../Com/AuthToken.js';
 import ImageView from './ImageView.js'
+import Edit from './Com/Edit'
 
 const toastStyle = {
     backgroundColor: "#acacac",
@@ -69,8 +70,16 @@ export default class DiaryDtl extends Component {
             noteId: this.props.navigation.getParam('noteId'),
             diaryDt: this.props.navigation.getParam('diaryDt'),
             fileId: null,
-            height: null,
-            weight: null
+            height: '',
+            weight: '',
+            titleStyle: Constants.EDIT_BLUR_STYLE,
+            contentStyle: Constants.MULTI_EDIT_BLUR_STYLE,
+            heightStyle: Constants.EDIT_BLUR_STYLE,
+            weightStyle: Constants.EDIT_BLUR_STYLE,
+            shiCntStyle: Constants.EDIT_BLUR_STYLE,
+            shitDescStyle: Constants.EDIT_BLUR_STYLE,
+            sleepStartTimeStyle: Constants.EDIT_BLUR_STYLE,
+            sleepEndTimeStyle: Constants.EDIT_BLUR_STYLE
         }
 
         let insertDiary = this.insertDiary.bind(this);
@@ -133,8 +142,8 @@ export default class DiaryDtl extends Component {
                 fileId: fileId == null ? null : fileId,
                 noteId: this.state.noteId == null ? '' : this.state.noteId,
                 diaryDt: this.state.diaryDt == null ? null : this.state.diaryDt,
-                height: this.state.height == null ? 0 : this.state.height,
-                weight: this.state.weight == null ? 0 : this.state.weight
+                height: this.state.height == '' ? 0 : this.state.height,
+                weight: this.state.weight == '' ? 0 : this.state.weight
             })
         }))
             .then((response) => response.json())
@@ -308,6 +317,16 @@ export default class DiaryDtl extends Component {
 
     render() {
         const {navigation} = this.props;
+        const {
+            titleStyle,
+            contentStyle,
+            heightStyle,
+            weightStyle,
+            shiCntStyle,
+            shitDescStyle,
+            sleepStartTimeStyle,
+            sleepEndTimeStyle
+        } = this.state;
 
         return (
             <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -323,22 +342,37 @@ export default class DiaryDtl extends Component {
                             {this.renderImageView()}
                             <View style={styles.title}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>제목</Text></View>
-                                <View style={{paddingLeft: 10, flex: 1}}>
-                                    <TextInput style={{flex: 1}}
-                                               onChangeText={(title) => this.setState({title})}
-                                               value={this.state.title}
+                                <View style={{paddingLeft: 20, flex: 1}}>
+                                    <Edit
+                                        height="60"
+                                        style={[styles.textInput, titleStyle]}
+                                        underlineColorAndroid="transparent"
+                                        placeholder="제목을 입력하세요"
+                                        autoCompleteType="off"
+                                        secureTextEntry={false}
+                                        onFocus={() => this.setState({titleStyle: Constants.EDIT_FOCUS_STYLE})}
+                                        onBlur={() => this.setState({titleStyle: Constants.EDIT_BLUR_STYLE})}
+                                        onChangeText={(title) => this.setState({title})}
+                                        value={this.state.title}
                                     >
-                                    </TextInput>
+                                    </Edit>
                                 </View>
                             </View>
                             <View style={styles.checkContent}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>내용</Text></View>
-                                <View style={{paddingLeft: 10, flex: 1}}>
-                                    <TextInput style={{flex: 1}}
-                                               numberOfLines={10}
-                                               multiline={true}
-                                               onChangeText={(content) => this.setState({content})}
-                                               value={this.state.content}
+                                <View style={{paddingLeft: 20, flex: 1}}>
+                                    <TextInput
+                                        style={[{flex: 1, fontSize: 16}, contentStyle]}
+                                        underlineColorAndroid="transparent"
+                                        placeholder="내용을 입력하세요"
+                                        autoCompleteType="off"
+                                        secureTextEntry={false}
+                                        onFocus={() => this.setState({contentStyle: Constants.MULTI_EDIT_FOCUS_STYLE})}
+                                        onBlur={() => this.setState({contentStyle: Constants.MULTI_EDIT_BLUR_STYLE})}
+                                        numberOfLines={10}
+                                        multiline={true}
+                                        onChangeText={(content) => this.setState({content})}
+                                        value={this.state.content}
                                     >
                                     </TextInput>
                                 </View>
@@ -349,14 +383,21 @@ export default class DiaryDtl extends Component {
                                     flex: 1,
                                     flexDirection: 'row',
                                     alignItems: 'center',
-                                    paddingLeft: 10
+                                    paddingLeft: 20
                                 }}>
-                                    <TextInput
-                                        style={{width: 100}}
+                                    <Edit
+                                        height="60"
+                                        style={[styles.textInput, heightStyle]}
+                                        underlineColorAndroid="transparent"
+                                        placeholder="숫자만 입력하세요"
+                                        autoCompleteType="off"
+                                        secureTextEntry={false}
+                                        onFocus={() => this.setState({heightStyle: Constants.EDIT_FOCUS_STYLE})}
+                                        onBlur={() => this.setState({heightStyle: Constants.EDIT_BLUR_STYLE})}
                                         onChangeText={(height) => this.setState({height})}
                                         value={this.state.height}
-                                    ></TextInput>
-                                    <Text style={{width: 50}}>cm</Text>
+                                    ></Edit>
+                                    <Text style={[styles.rowText,{width: 50}]}>cm</Text>
                                 </View>
                             </View>
                             <View style={[styles.checkContent, {height: 60}]}>
@@ -365,14 +406,21 @@ export default class DiaryDtl extends Component {
                                     flex: 1,
                                     flexDirection: 'row',
                                     alignItems: 'center',
-                                    paddingLeft: 10
+                                    paddingLeft: 20
                                 }}>
-                                    <TextInput
-                                        style={{width: 100}}
+                                    <Edit
+                                        height="60"
+                                        style={[styles.textInput, weightStyle]}
+                                        underlineColorAndroid="transparent"
+                                        placeholder="숫자만 입력하세요"
+                                        autoCompleteType="off"
+                                        secureTextEntry={false}
+                                        onFocus={() => this.setState({weightStyle: Constants.EDIT_FOCUS_STYLE})}
+                                        onBlur={() => this.setState({weightStyle: Constants.EDIT_BLUR_STYLE})}
                                         onChangeText={(weight) => this.setState({weight})}
                                         value={this.state.weight}
-                                    ></TextInput>
-                                    <Text>kg</Text>
+                                    ></Edit>
+                                    <Text style={[styles.rowText,{width: 50}]}>kg</Text>
                                 </View>
                             </View>
                             <View style={[styles.checkContent, {height: 60}]}>
@@ -385,16 +433,13 @@ export default class DiaryDtl extends Component {
                                 <DiaryDtlCheckBox code={this.state.healthCd}
                                                   setCode={(healthCd) => this.setState({healthCd})}></DiaryDtlCheckBox>
                             </View>
-                            <View style={[styles.checkContent, {height: 120}]}>
+                            <View style={[styles.checkContent, {height: 60}]}>
                                 <View style={{width: 70, alignItems: 'flex-start'}}>
                                     <View style={styles.rowTextField}><Text style={styles.rowText}>열</Text></View>
                                 </View>
                                 <View>
                                     <DiaryDtlCheckBox code={this.state.feverCd}
                                                       setCode={(feverCd) => this.setState({feverCd})}></DiaryDtlCheckBox>
-                                    <View style={{paddingLeft: 10, paddingRight: 20}}>
-                                        <TextInput></TextInput>
-                                    </View>
                                 </View>
                             </View>
                             <View style={[styles.checkContent, {height: 60}]}>
@@ -421,39 +466,74 @@ export default class DiaryDtl extends Component {
                                         flexDirection: 'row',
                                         alignItems: 'center',
                                         paddingLeft: 10,
-                                        paddingRight: 20
+                                        height: 60
                                     }}>
-                                        <TextInput style={{flex: 0.2, marginRight: 3}}
-                                                   onChangeText={(shitCnt) => this.setState({shitCnt})}
-                                                   value={this.state.shitCnt}
-                                        ></TextInput>
-                                        <Text style={[styles.rowText, {width: 15, marginRight: 10}]}>회</Text>
-                                        <TextInput style={{flex: 0.9}}
-                                                   onChangeText={(shitDesc) => this.setState({shitDesc})}
-                                                   value={this.state.shitDesc}
-                                        ></TextInput>
+                                        <View style={{flex: 0.3}}>
+                                            <Edit
+                                                height="60"
+                                                style={[styles.textInput, shiCntStyle]}
+                                                underlineColorAndroid="transparent"
+                                                placeholder="예) 1"
+                                                autoCompleteType="off"
+                                                secureTextEntry={false}
+                                                onFocus={() => this.setState({shiCntStyle: Constants.EDIT_FOCUS_STYLE})}
+                                                onBlur={() => this.setState({shiCntStyle: Constants.EDIT_BLUR_STYLE})}
+                                                onChangeText={(shitCnt) => this.setState({shitCnt})}
+                                                value={this.state.shitCnt}
+                                            ></Edit>
+                                        </View>
+                                        <View style={{flex: 0.2}}>
+                                            <Text style={styles.rowText}>회</Text>
+                                        </View>
+                                        <View style={{flex: 0.5}}>
+                                            <Edit
+                                                height="60"
+                                                style={[styles.textInput, shitDescStyle]}
+                                                underlineColorAndroid="transparent"
+                                                placeholder="배변 설명"
+                                                autoCompleteType="off"
+                                                secureTextEntry={false}
+                                                onFocus={() => this.setState({shitDescStyle: Constants.EDIT_FOCUS_STYLE})}
+                                                onBlur={() => this.setState({shitDescStyle: Constants.EDIT_BLUR_STYLE})}
+                                                onChangeText={(shitDesc) => this.setState({shitDesc})}
+                                                value={this.state.shitDesc}
+                                            ></Edit>
+                                        </View>
                                     </View>
                                 </View>
                             </View>
-                            <View style={[styles.checkContent, {height: 60}]}>
+                            <View style={[styles.checkContent, {height: 60, marginBottom: 20}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>수면</Text></View>
-                                <View style={{flex: 0.4, flexDirection: 'row', alignItems: 'center', paddingLeft: 50}}>
-                                    <TextInput
-                                        style={{width: 40}}
+                                <View style={{flex: 0.4, flexDirection: 'row', alignItems: 'center', paddingLeft: 20}}>
+                                    <Edit
+                                        height="60"
+                                        style={[styles.textInput, sleepStartTimeStyle]}
+                                        underlineColorAndroid="transparent"
+                                        placeholder="예) 22"
+                                        autoCompleteType="off"
+                                        secureTextEntry={false}
+                                        onFocus={() => this.setState({sleepStartTimeStyle: Constants.EDIT_FOCUS_STYLE})}
+                                        onBlur={() => this.setState({sleepStartTimeStyle: Constants.EDIT_BLUR_STYLE})}
                                         onChangeText={(sleepStartTime) => this.setState({sleepStartTime})}
                                         value={this.state.sleepStartTime}
                                     >
-                                    </TextInput>
-                                    <Text>시</Text>
+                                    </Edit>
                                 </View>
-                                <Text style={{flex: 0.2}}>~</Text>
+                                <View style={{justifyContent: 'center'}}><Text style={{flex: 0.2}}>~</Text></View>
                                 <View style={{flex: 0.4, flexDirection: 'row', alignItems: 'center'}}>
-                                    <TextInput
-                                        style={{width: 40}}
+                                    <Edit
+                                        height="60"
+                                        style={[styles.textInput, sleepEndTimeStyle]}
+                                        underlineColorAndroid="transparent"
+                                        placeholder="예) 7"
+                                        autoCompleteType="off"
+                                        secureTextEntry={false}
+                                        onFocus={() => this.setState({sleepEndTimeStyle: Constants.EDIT_FOCUS_STYLE})}
+                                        onBlur={() => this.setState({sleepEndTimeStyle: Constants.EDIT_BLUR_STYLE})}
                                         onChangeText={(sleepEndTime) => this.setState({sleepEndTime})}
                                         value={this.state.sleepEndTime}
                                     >
-                                    </TextInput>
+                                    </Edit>
                                     <Text style={styles.rowText}>시</Text>
                                 </View>
                             </View>
@@ -513,7 +593,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingLeft: 5,
-        paddingRight: 20,
         height: 60
     },
     rowTextField: {
@@ -523,5 +602,12 @@ const styles = StyleSheet.create({
     },
     rowText: {
         fontSize: 16
-    }
+    },
+    textInput: {
+        paddingLeft: 8,
+        paddingRight: 35,
+        height: 60,
+        fontSize: 16,
+        flex: 1
+    },
 })

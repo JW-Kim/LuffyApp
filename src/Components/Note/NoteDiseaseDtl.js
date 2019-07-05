@@ -32,10 +32,10 @@ export default class NoteDiseaseDtl extends Component {
             diseaseNm: '',
             hospitalNm: '',
             saveNoteDiseaseBtnStyle: {backgroundColor: 'gray', height: 60},
-            diseaseNmStyle: {borderBottomWidth: 0, borderColor: 'gray'},
-            hospitalNmStyle: {borderBottomWidth: 0, borderColor: 'gray'},
-            prescriptionStyle: {borderWidth: 0, borderColor: 'gray'},
-            symptomStyle: {borderWidth: 0, borderColor: 'gray'}
+            diseaseNmStyle: Constants.EDIT_BLUR_STYLE,
+            hospitalNmStyle: Constants.EDIT_BLUR_STYLE,
+            prescriptionStyle: Constants.MULTI_EDIT_BLUR_STYLE,
+            symptomStyle: Constants.MULTI_EDIT_BLUR_STYLE
         }
 
         let setDisease = this.setDisease.bind(this);
@@ -157,8 +157,8 @@ export default class NoteDiseaseDtl extends Component {
                                     placeholder="영문/숫자 6~12자"
                                     autoCompleteType="off"
                                     secureTextEntry={false}
-                                    onFocus={() => this.setState({diseaseNmStyle: {borderBottomWidth: 1, borderColor: 'gray'}})}
-                                    onBlur={() => this.setState({diseaseNmStyle: {borderBottomWidth: 0, borderColor: 'gray'}})}
+                                    onFocus={() => this.setState({diseaseNmStyle: Constants.EDIT_FOCUS_STYLE})}
+                                    onBlur={() => this.setState({diseaseNmStyle: Constants.EDIT_BLUR_STYLE})}
                                     onChangeText={(diseaseNm) => this.setState({diseaseNm})}
                                     value={this.state.diseaseNm}
                                 ></Edit>
@@ -177,8 +177,8 @@ export default class NoteDiseaseDtl extends Component {
                                     multiline={true}
                                     placeholder="증상을 입력해주세요"
                                     underlineColorAndroid="transparent"
-                                    onFocus={() => this.setState({symptomStyle: {borderWidth: 1, borderColor: 'gray'}})}
-                                    onBlur={() => this.setState({symptomStyle: {borderWidth: 0, borderColor: 'gray'}})}
+                                    onFocus={() => this.setState({symptomStyle: Constants.MULTI_EDIT_FOCUS_STYLE})}
+                                    onBlur={() => this.setState({symptomStyle: Constants.MULTI_EDIT_BLUR_STYLE})}
                                     onChangeText={(symptom) => this.setState({symptom})}
                                     value={this.state.symptom}
                                 ></TextInput>
@@ -198,8 +198,8 @@ export default class NoteDiseaseDtl extends Component {
                                     placeholder="영문/숫자 6~12자"
                                     autoCompleteType="off"
                                     secureTextEntry={false}
-                                    onFocus={() => this.setState({hospitalNmStyle: {borderBottomWidth: 1, borderColor: 'gray'}})}
-                                    onBlur={() => this.setState({hospitalNmStyle: {borderBottomWidth: 0, borderColor: 'gray'}})}
+                                    onFocus={() => this.setState({hospitalNmStyle: Constants.EDIT_FOCUS_STYLE})}
+                                    onBlur={() => this.setState({hospitalNmStyle: Constants.EDIT_BLUR_STYLE})}
                                     onChangeText={(hospitalNm) => this.setState({hospitalNm})}
                                     value={this.state.hospitalNm}
                                 ></Edit>
@@ -218,8 +218,8 @@ export default class NoteDiseaseDtl extends Component {
                                     multiline={true}
                                     underlineColorAndroid="transparent"
                                     placeholder="처방을 간단히 입력해주세요"
-                                    onFocus={() => this.setState({prescriptionStyle: {borderWidth: 1, borderColor: 'gray'}})}
-                                    onBlur={() => this.setState({prescriptionStyle: {borderWidth: 0, borderColor: 'gray'}})}
+                                    onFocus={() => this.setState({prescriptionStyle: Constants.MULTI_EDIT_FOCUS_STYLE})}
+                                    onBlur={() => this.setState({prescriptionStyle: Constants.MULTI_EDIT_BLUR_STYLE})}
                                     onChangeText={(prescription) => this.setState({prescription})}
                                     value={this.state.prescription}
                                 ></TextInput>
