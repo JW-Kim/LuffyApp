@@ -284,6 +284,30 @@ export default class DiaryDtl extends Component {
         });
     }
 
+    renderImageView() {
+       const {avatarSource, fileId} = this.state;
+
+       if(avatarSource === null) {
+           return;
+       } else {
+           return(
+               <View>
+                   <Image width={Dimensions.get('window').width - 20} source={this.state.avatarSource}/>
+               </View>
+           )
+       }
+
+       if(fileId === null) {
+           return;
+       } else {
+           return (
+               <View>
+                   <ImageView fileId={this.state.fileId} width={Dimensions.get('window').width - 20}></ImageView>
+               </View>
+           )
+       }
+    }
+
     render() {
         const {navigation} = this.props;
 
@@ -297,21 +321,12 @@ export default class DiaryDtl extends Component {
                 ></ModalHeader>
                 <View style={{height: Dimensions.get('window').height - 148}}>
                     <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100} enabled>
-                        <ScrollView style={{padding: 10}}>
-                            <View style={{marginBottom: 20}}>
-                                {this.state.avatarSource === null ? <Text></Text> :
-                                    <Image width={Dimensions.get('window').width - 20}
-                                           source={this.state.avatarSource}/>
-                                }
-                                {this.state.fileId === null ? <Text></Text> :
-                                    <ImageView fileId={this.state.fileId}
-                                               width={Dimensions.get('window').width - 20}></ImageView>
-                                }
-                            </View>
+                        <ScrollView style={{padding: 20}}>
+                            {this.renderImageView()}
                             <View style={styles.title}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>제목</Text></View>
                                 <View style={{paddingLeft: 50, flex: 1}}>
-                                    <TextInput style={{flex: 1}}
+                                    <TextInput style={{flex: 1, paddingLeft: 10}}
                                                onChangeText={(title) => this.setState({title})}
                                                value={this.state.title}
                                     >
@@ -321,7 +336,7 @@ export default class DiaryDtl extends Component {
                             <View style={styles.checkContent}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>내용</Text></View>
                                 <View style={{paddingLeft: 50, flex: 1}}>
-                                    <TextInput style={{flex: 1}}
+                                    <TextInput style={{flex: 1, paddingLeft: 10}}
                                                numberOfLines={10}
                                                multiline={true}
                                                onChangeText={(content) => this.setState({content})}
@@ -336,8 +351,7 @@ export default class DiaryDtl extends Component {
                                     flex: 1,
                                     flexDirection: 'row',
                                     alignItems: 'center',
-                                    paddingLeft: 50,
-                                    paddingRight: 20
+                                    paddingLeft: 10
                                 }}>
                                     <TextInput
                                         style={{width: 100}}
@@ -353,8 +367,7 @@ export default class DiaryDtl extends Component {
                                     flex: 1,
                                     flexDirection: 'row',
                                     alignItems: 'center',
-                                    paddingLeft: 50,
-                                    paddingRight: 20
+                                    paddingLeft: 10
                                 }}>
                                     <TextInput
                                         style={{width: 100}}
@@ -475,7 +488,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingLeft: 5,
-        paddingRight: 10,
         justifyContent: 'space-between'
     },
 
@@ -503,7 +515,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingLeft: 5,
-        paddingRight: 20
+        paddingRight: 20,
+        height: 60
     },
     rowTextField: {
         paddingRight: 20,

@@ -244,9 +244,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingLeft: 5,
-        paddingRight: 10,
-        justifyContent: 'space-between'
-    },
+        paddingRight: 10,    },
     textInput: {
         paddingLeft: 8,
         paddingRight: 35,

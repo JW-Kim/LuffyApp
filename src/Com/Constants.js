@@ -15,5 +15,9 @@ export default {
         fontWeight: "bold",
         yOffset: 40,
         opacity: 0.8
-    }
+    },
+    EDIT_FOCUS_STYLE: {borderBottomWidth: 1, borderColor: 'gray'},
+    EDIT_BLUR_STYLE: {borderBottomWidth: 0, borderColor: 'gray'},
+    MULTI_EDIT_FOCUS_STYLE: {borderWidth: 1, borderColor: 'gray'},
+    MULTI_EDIT_BLUR_STYLE: {borderWidth: 0, borderColor: 'gray'}
 }

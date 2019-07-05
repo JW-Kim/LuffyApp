@@ -31,7 +31,7 @@ export default class ModalHeader extends Component {
                     <Text style={styles.titleText}>{title}</Text>
                 </View>
                 <View style={{width: 80}} onPress={() => this.props.goEvent(this)}>
-                    <Text style={[styles.titleText, {textAlign: 'right'}]}>{buttonTitle}</Text>
+                    <Text style={[styles.eventText, {textAlign: 'right'}]}>{buttonTitle}</Text>
                 </View>
             </View>
         )
@@ -51,6 +51,10 @@ const styles = StyleSheet.create({
     titleText: {
         color: '#000',
         fontWeight: 'bold',
+        fontSize: 21
+    },
+    eventText: {
+        color: '#000',
         fontSize: 21
     }
 })
