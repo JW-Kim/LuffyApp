@@ -22,7 +22,7 @@ import {chkId, chkKor, chkSpecialStr, chkEmail, chkEng, chkNum} from '../../Com/
 import Toast from 'react-native-toast-native';
 import ModalStandardHeader from '../Com/ModalStandardHeader'
 import Edit from '../Com/Edit'
-import ImageView from '../ImageView.js';
+import ImageView from '../Com/ImageView.js';
 import ImagePicker from 'react-native-image-picker';
 import Icons from 'react-native-vector-icons/FontAwesome';
 

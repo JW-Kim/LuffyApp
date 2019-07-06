@@ -22,7 +22,7 @@ import _ from 'lodash'
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import Constants from '../../Com/Constants.js'
 import {getToken} from '../../Com/AuthToken.js';
-import ImageView from '../ImageView.js'
+import ImageView from '../Com/ImageView.js'
 import NoteDiary from './NoteDiary.js'
 import NoteDisease from './NoteDisease.js'
 import Header from '../Frame/Header.js'

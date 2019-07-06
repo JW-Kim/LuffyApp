@@ -10,7 +10,7 @@ import {
     ScrollView,
     AsyncStorage
 } from 'react-native';
-import ModalHeader from '../ModalHeader.js';
+import ModalHeader from '../Com/ModalHeader.js';
 import Constants from '../../Com/Constants.js';
 import {getToken} from '../../Com/AuthToken.js';
 import ModalStandardHeader from '../Com/ModalStandardHeader'

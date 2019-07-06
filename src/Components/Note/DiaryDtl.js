@@ -17,7 +17,7 @@ import {
     CheckBox
 } from 'react-native-elements'
 import Toast from 'react-native-toast-native';
-import ModalHeader from './ModalHeader'
+import ModalHeader from '../Com/ModalHeader'
 import Icons from 'react-native-vector-icons/FontAwesome';
 import Image from 'react-native-scalable-image';
 import PhotoUpload from 'react-native-photo-upload'
@@ -25,10 +25,10 @@ import ImagePicker from 'react-native-image-picker'
 import NativeModules from 'NativeModules'
 import _ from 'lodash'
 import DiaryDtlCheckBox from './DiaryDtlCheckBox.js'
-import Constants from '../Com/Constants.js'
-import {getToken} from '../Com/AuthToken.js';
-import ImageView from './ImageView.js'
-import Edit from './Com/Edit'
+import Constants from '../../Com/Constants.js'
+import {getToken} from '../../Com/AuthToken.js';
+import ImageView from '../Com/ImageView.js'
+import Edit from '../Com/Edit'
 
 const toastStyle = {
     backgroundColor: "#acacac",

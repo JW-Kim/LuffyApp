@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
 
-export default class HomeCodeTypeIcon extends Component {
+export default class CodeTypeIcon extends Component {
 
     constructor(props) {
         super(props);

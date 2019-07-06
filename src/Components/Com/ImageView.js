@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import ScalableImage from 'react-native-scalable-image';
 import RNFetchBlob from 'react-native-fetch-blob';
-import Constants from '../Com/Constants.js';
+import Constants from '../../Com/Constants.js';
 
 export default class ImageView extends Component {
     constructor(props) {

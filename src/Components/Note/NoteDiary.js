@@ -12,8 +12,8 @@ import {
 import Accordion from 'react-native-collapsible/Accordion';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import Toast from 'react-native-toast-native';
-import ImageView from '../ImageView.js'
-import HomeCodeTypeIcon from '../HomeCodeTypeIcon.js'
+import ImageView from '../Com/ImageView.js'
+import CodeTypeIcon from '../Com/CodeTypeIcon.js'
 import Constants from '../../Com/Constants.js'
 import {getToken} from '../../Com/AuthToken.js';
 
@@ -160,42 +160,42 @@ export default class NoteDiary extends Component {
                             {feelingCd == 'good' ? <Text style={styles.rowText}>좋음 </Text> : <Text></Text>}
                             {feelingCd == 'notBad' ? <Text style={styles.rowText}>보통 </Text> : <Text></Text>}
                             {feelingCd == 'bad' ? <Text style={styles.rowText}>나쁨 </Text> : <Text></Text>}
-                            <HomeCodeTypeIcon code={feelingCd}></HomeCodeTypeIcon>
+                            <CodeTypeIcon code={feelingCd}></CodeTypeIcon>
                         </View>
                         <View style={styles.rowView}>
                             <View style={styles.rowTitle}><Text style={styles.rowText}>건강</Text></View>
                             {healthCd == 'good' ? <Text style={styles.rowText}>좋음 </Text> : <Text></Text>}
                             {healthCd == 'notBad' ? <Text style={styles.rowText}>보통 </Text> : <Text></Text>}
                             {healthCd == 'bad' ? <Text style={styles.rowText}>나쁨 </Text> : <Text></Text>}
-                            <HomeCodeTypeIcon code={healthCd}></HomeCodeTypeIcon>
+                            <CodeTypeIcon code={healthCd}></CodeTypeIcon>
                         </View>
                         <View style={styles.rowView}>
                             <View style={styles.rowTitle}><Text style={styles.rowText}>열</Text></View>
                             {feverCd == 'good' ? <Text style={styles.rowText}>좋음 </Text> : <Text></Text>}
                             {feverCd == 'notBad' ? <Text style={styles.rowText}>보통 </Text> : <Text></Text>}
                             {feverCd == 'bad' ? <Text style={styles.rowText}>나쁨 </Text> : <Text></Text>}
-                            <HomeCodeTypeIcon code={feverCd}></HomeCodeTypeIcon>
+                            <CodeTypeIcon code={feverCd}></CodeTypeIcon>
                         </View>
                         <View style={styles.rowView}>
                             <View style={styles.rowTitle}><Text style={styles.rowText}>아침 식사</Text></View>
                             {breakfastCd == 'good' ? <Text style={styles.rowText}>좋음 </Text> : <Text></Text>}
                             {breakfastCd == 'notBad' ? <Text style={styles.rowText}>보통 </Text> : <Text></Text>}
                             {breakfastCd == 'bad' ? <Text style={styles.rowText}>나쁨 </Text> : <Text></Text>}
-                            <HomeCodeTypeIcon code={breakfastCd}></HomeCodeTypeIcon>
+                            <CodeTypeIcon code={breakfastCd}></CodeTypeIcon>
                         </View>
                         <View style={styles.rowView}>
                             <View style={styles.rowTitle}><Text style={styles.rowText}>점심 식사</Text></View>
                             {lunchCd == 'good' ? <Text style={styles.rowText}>좋음 </Text> : <Text></Text>}
                             {lunchCd == 'notBad' ? <Text style={styles.rowText}>보통 </Text> : <Text></Text>}
                             {lunchCd == 'bad' ? <Text style={styles.rowText}>나쁨 </Text> : <Text></Text>}
-                            <HomeCodeTypeIcon code={lunchCd}></HomeCodeTypeIcon>
+                            <CodeTypeIcon code={lunchCd}></CodeTypeIcon>
                         </View>
                         <View style={styles.rowView}>
                             <View style={styles.rowTitle}><Text style={styles.rowText}>저녁 식사</Text></View>
                             {dinnerCd == 'good' ? <Text style={styles.rowText}>좋음 </Text> : <Text></Text>}
                             {dinnerCd == 'notBad' ? <Text style={styles.rowText}>보통 </Text> : <Text></Text>}
                             {dinnerCd == 'bad' ? <Text style={styles.rowText}>나쁨 </Text> : <Text></Text>}
-                            <HomeCodeTypeIcon code={dinnerCd}></HomeCodeTypeIcon>
+                            <CodeTypeIcon code={dinnerCd}></CodeTypeIcon>
                         </View>
                         <View style={styles.rowView}>
                             <View style={styles.rowTitle}><Text style={styles.rowText}>배변</Text></View>
@@ -204,7 +204,7 @@ export default class NoteDiary extends Component {
                                 {shitCd == 'notBad' ? <Text style={styles.rowText}>보통 </Text> : <Text></Text>}
                                 {shitCd == 'bad' ? <Text style={styles.rowText}>나쁨 </Text> : <Text></Text>}
                                 ({shitDesc}) </Text>
-                            <HomeCodeTypeIcon code={shitCd}></HomeCodeTypeIcon>
+                            <CodeTypeIcon code={shitCd}></CodeTypeIcon>
                         </View>
                         <View style={{flexDirection: 'row', paddingBottom: 20}}>
                             <View style={styles.rowTitle}><Text style={styles.rowText}>수면</Text></View>

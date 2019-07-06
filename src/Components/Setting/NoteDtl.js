@@ -15,7 +15,7 @@ import {
 import {
     Button
 } from 'react-native-elements';
-import ModalHeader from '../ModalHeader.js';
+import ModalHeader from '../Com/ModalHeader.js';
 import Toast from 'react-native-toast-native';
 import Constants from '../../Com/Constants.js';
 import {getToken} from '../../Com/AuthToken.js';

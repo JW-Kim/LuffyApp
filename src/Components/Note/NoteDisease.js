@@ -12,7 +12,7 @@ import {
 import Accordion from 'react-native-collapsible/Accordion';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import Toast from 'react-native-toast-native';
-import HomeCodeTypeIcon from '../HomeCodeTypeIcon.js'
+import CodeTypeIcon from '../Com/CodeTypeIcon.js'
 import Constants from '../../Com/Constants.js'
 
 const SECTIONS = [
