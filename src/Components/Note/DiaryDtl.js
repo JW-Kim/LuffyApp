@@ -25,6 +25,7 @@ import ImagePicker from 'react-native-image-picker'
 import NativeModules from 'NativeModules'
 import _ from 'lodash'
 import DiaryDtlCheckBox from './DiaryDtlCheckBox.js'
+import DiaryDtlBtnGroup from './DiaryDtlBtnGroup.js'
 import Constants from '../../Com/Constants.js'
 import {getToken} from '../../Com/AuthToken.js';
 import ImageView from '../Com/ImageView.js'
@@ -433,22 +434,18 @@ export default class DiaryDtl extends Component {
                             </View>
                             <View style={[styles.checkContent, {height: 60}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>기분</Text></View>
-                                <DiaryDtlCheckBox code={this.state.feelingCd}
-                                                  setCode={(feelingCd) => this.setState({feelingCd})}></DiaryDtlCheckBox>
+                                <DiaryDtlBtnGroup code={this.state.feelingCd}
+                                                  setCode={(feelingCd) => this.setState({feelingCd})}></DiaryDtlBtnGroup>
                             </View>
                             <View style={[styles.checkContent, {height: 60}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>건강</Text></View>
-                                <DiaryDtlCheckBox code={this.state.healthCd}
-                                                  setCode={(healthCd) => this.setState({healthCd})}></DiaryDtlCheckBox>
+                                <DiaryDtlBtnGroup code={this.state.healthCd}
+                                                  setCode={(healthCd) => this.setState({healthCd})}></DiaryDtlBtnGroup>
                             </View>
                             <View style={[styles.checkContent, {height: 60}]}>
-                                <View style={{width: 70, alignItems: 'flex-start'}}>
-                                    <View style={styles.rowTextField}><Text style={styles.rowText}>열</Text></View>
-                                </View>
-                                <View>
-                                    <DiaryDtlCheckBox code={this.state.feverCd}
-                                                      setCode={(feverCd) => this.setState({feverCd})}></DiaryDtlCheckBox>
-                                </View>
+                                <View style={styles.rowTextField}><Text style={styles.rowText}>열</Text></View>
+                                <DiaryDtlBtnGroup code={this.state.feverCd}
+                                                  setCode={(feverCd) => this.setState({feverCd})}></DiaryDtlBtnGroup>
                             </View>
                             <View style={[styles.checkContent, {height: 60}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>아침식사</Text></View>
