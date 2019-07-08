@@ -325,7 +325,7 @@ export default class DiaryDtl extends Component {
                         <Picker
                             mode='dropdown'
                             style={{height: 60, flex: 1, color: '#000'}}
-                            onValueChange={(shitCnt) => this.setShitCnt(shitCnt)}
+                            onValueChange={(shitCnt, itemIndex) => this.setShitCnt(shitCnt)}
                             selectedValue={shitCnt} >
                             <Picker.Item label='0' value='0' />
                             <Picker.Item label='1' value='1' />
@@ -349,7 +349,7 @@ export default class DiaryDtl extends Component {
                         <Picker
                             mode='dropdown'
                             style={{height: 40, flex: 1, color: '#000'}}
-                            onValueChange={(shitCnt) => this.setShitCnt(shitCnt)}
+                            onValueChange={(shitCnt, itemIndex) => this.setShitCnt(shitCnt)}
                             selectedValue={shitCnt} >
                             <Picker.Item label='0' value='0' />
                             <Picker.Item label='1' value='1' />
