@@ -11,7 +11,8 @@ import {
     ScrollView,
     TouchableOpacity,
     KeyboardAvoidingView,
-    AsyncStorage
+    AsyncStorage,
+    Picker
 } from 'react-native';
 import {
     CheckBox
@@ -24,26 +25,11 @@ import PhotoUpload from 'react-native-photo-upload'
 import ImagePicker from 'react-native-image-picker'
 import NativeModules from 'NativeModules'
 import _ from 'lodash'
-import DiaryDtlCheckBox from './DiaryDtlCheckBox.js'
 import DiaryDtlBtnGroup from './DiaryDtlBtnGroup.js'
 import Constants from '../../Com/Constants.js'
 import {getToken} from '../../Com/AuthToken.js';
 import ImageView from '../Com/ImageView.js'
 import Edit from '../Com/Edit'
-
-const toastStyle = {
-    backgroundColor: "#acacac",
-    width: 300,
-    height: 100,
-    color: "#ffffff",
-    fontSize: 15,
-    lineHeight: 2,
-    lines: 4,
-    borderRadius: 15,
-    fontWeight: "bold",
-    yOffset: 40,
-    opacity: 0.8
-}
 
 export default class DiaryDtl extends Component {
 
@@ -51,12 +37,12 @@ export default class DiaryDtl extends Component {
         super(props);
         this.state = {
             checked: true,
-            feelingCd: null,
-            healthCd: null,
-            feverCd: null,
-            breakfastCd: null,
-            lunchCd: null,
-            dinnerCd: null,
+            feelingCd: 'good',
+            healthCd: 'good',
+            feverCd: 'good',
+            breakfastCd: 'good',
+            lunchCd: 'good',
+            dinnerCd: 'good',
             shitCd: null,
             shitCnt: '0',
             shitDesc: '',
@@ -84,7 +70,7 @@ export default class DiaryDtl extends Component {
         }
 
         let insertDiary = this.insertDiary.bind(this);
-
+        let setShitCnt = this.setShitCnt.bind(this);
     }
 
     async componentDidMount() {
@@ -113,7 +99,7 @@ export default class DiaryDtl extends Component {
                     })
                 })
                 .catch((error) => {
-                    Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+                    Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
                     this.props.navigation.navigate('Login')
                 });
         }
@@ -149,14 +135,14 @@ export default class DiaryDtl extends Component {
         }))
             .then((response) => response.json())
             .then((responseJson) => {
-                Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+                Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
                 let refreshFnc = this.props.navigation.getParam('refreshFnc');
                 refreshFnc();
                 this.props.navigation.goBack();
                 console.log(responseJson)
             })
             .catch((error) => {
-                Toast.show('정보 저장을 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+                Toast.show('정보 저장을 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
                 this.props.navigation.navigate('Login')
             });
     }
@@ -188,14 +174,14 @@ export default class DiaryDtl extends Component {
         }))
             .then((response) => response.json())
             .then((responseJson) => {
-                Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+                Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
                 let refreshFnc = this.props.navigation.getParam('refreshFnc');
                 refreshFnc();
                 this.props.navigation.goBack();
                 console.log(responseJson)
             })
             .catch((error) => {
-                Toast.show('정보 저장을 실패하였습니다.', Toast.SHORT, Toast.TOP, toastStyle);
+                Toast.show('정보 저장을 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
                 this.props.navigation.navigate('Login')
             });
     }
@@ -294,6 +280,17 @@ export default class DiaryDtl extends Component {
         });
     }
 
+    setShitCnt(shitCnt) {
+        let shitCd = '';
+        let shitDesc = '';
+        
+        if (shitCnt != '0') {
+            shitCnt = 'good';
+        }
+        
+        this.setState({shitCnt, shitCd, shitDesc});
+    }
+
     renderImageView() {
        const {avatarSource, fileId} = this.state;
 
@@ -314,6 +311,62 @@ export default class DiaryDtl extends Component {
        }
 
        return;
+    }
+    
+    renderShit() {
+        const {shitCnt, shitCd, shitDesc, shitDescStyle} = this.state;
+        
+        if(shitCnt == 0) {
+            return(
+            <View style={[styles.checkContent, {height: 60}]}>
+                <View style={styles.rowTextField}><Text style={styles.rowText}>배변</Text></View>
+                <View style={{flex: 1}}>
+                    <View style={{height: 60, flexDirection: 'row', alignItems: 'center', paddingLeft: 10}}>
+                        <Picker
+                            mode='dropdown'
+                            style={{height: 60, flex: 1, color: '#000'}}
+                            onValueChange={(shitCnt) => this.setShitCnt(shitCnt)}
+                            selectedValue={shitCnt} >
+                        </Picker>
+                        <View style={{width: 50}}><Text style={styles.rowText}>회</Text></View>
+                    </View>
+                </View>
+             </View>
+            )
+        }
+        
+        return (
+            <View style={[styles.checkContent, {height: 140, marginTop: 20, marginBottom: 20}]}>
+                <View style={styles.rowTextField}><Text style={styles.rowText}>배변</Text></View>
+                <View style={{flex: 1}}>
+                    <View style={{height: 40, flexDirection: 'row', alignItems: 'center', paddingLeft: 10}}>
+                        <Picker
+                            mode='dropdown'
+                            style={{height: 40, flex: 1, color: '#000'}}
+                            onValueChange={(shitCnt) => this.setShitCnt(shitCnt)}
+                            selectedValue={shitCnt} >
+                        </Picker>
+                        <View style={{width: 50}}><Text style={styles.rowText}>회</Text></View>
+                    </View>
+                    <DiaryDtlBtnGroup code={this.state.shitCd}
+                         setCode={(shitCd) => this.setState({shitCd})}></DiaryDtlBtnGroup>
+                    <View style={{height: 40, paddingLeft: 10}}>
+                        <Edit
+                            height="40"
+                            style={[styles.textInput, shitDescStyle]}
+                            underlineColorAndroid="transparent"
+                            placeholder="배변 설명"
+                            autoCompleteType="off"
+                            secureTextEntry={false}
+                            onFocus={() => this.setState({shitDescStyle: Constants.EDIT_FOCUS_STYLE})}
+                            onBlur={() => this.setState({shitDescStyle: Constants.EDIT_BLUR_STYLE})}
+                            onChangeText={(shitDesc) => this.setState({shitDesc})}
+                            value={this.state.shitDesc}
+                        ></Edit>
+                    </View>
+                 </View>
+            </View>
+        )
     }
 
     render() {
@@ -400,7 +453,7 @@ export default class DiaryDtl extends Component {
                                             value={this.state.height}
                                         ></Edit>
                                     </View>
-                                    <View>
+                                    <View style={{width: 50}}>
                                         <Text style={styles.rowText}>cm</Text>
                                     </View>
                                 </View>
@@ -427,7 +480,7 @@ export default class DiaryDtl extends Component {
                                             value={this.state.weight}
                                         ></Edit>
                                     </View>
-                                    <View>
+                                    <View style={{width: 50}}>
                                         <Text style={styles.rowText}>kg</Text>
                                     </View>
                                 </View>
@@ -449,64 +502,22 @@ export default class DiaryDtl extends Component {
                             </View>
                             <View style={[styles.checkContent, {height: 60}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>아침식사</Text></View>
-                                <DiaryDtlCheckBox code={this.state.breakfastCd}
-                                                  setCode={(breakfastCd) => this.setState({breakfastCd})}></DiaryDtlCheckBox>
+                                <DiaryDtlBtnGroup code={this.state.breakfastCd}
+                                                  setCode={(breakfastCd) => this.setState({breakfastCd})}></DiaryDtlBtnGroup>
                             </View>
                             <View style={[styles.checkContent, {height: 60}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>점심식사</Text></View>
-                                <DiaryDtlCheckBox code={this.state.lunchCd}
-                                                  setCode={(lunchCd) => this.setState({lunchCd})}></DiaryDtlCheckBox>
+                                <DiaryDtlBtnGroup code={this.state.lunchCd}
+                                                  setCode={(lunchCd) => this.setState({lunchCd})}></DiaryDtlBtnGroup>
                             </View>
                             <View style={[styles.checkContent, {height: 60}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>저녁식사</Text></View>
-                                <DiaryDtlCheckBox code={this.state.dinnerCd}
-                                                  setCode={(dinnerCd) => this.setState({dinnerCd})}></DiaryDtlCheckBox>
+                                <DiaryDtlBtnGroup code={this.state.dinnerCd}
+                                                  setCode={(dinnerCd) => this.setState({dinnerCd})}></DiaryDtlBtnGroup>
                             </View>
-                            <View style={[styles.checkContent, {height: 120}]}>
-                                <View style={styles.rowTextField}><Text style={styles.rowText}>배변</Text></View>
-                                <View>
-                                    <DiaryDtlCheckBox code={this.state.shitCd}
-                                                      setCode={(shitCd) => this.setState({shitCd})}></DiaryDtlCheckBox>
-                                    <View style={{
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                        paddingLeft: 10,
-                                        height: 60
-                                    }}>
-                                        <View style={{flex: 0.3}}>
-                                            <Edit
-                                                height="60"
-                                                style={[styles.textInput, shiCntStyle]}
-                                                underlineColorAndroid="transparent"
-                                                placeholder="예) 1"
-                                                autoCompleteType="off"
-                                                secureTextEntry={false}
-                                                onFocus={() => this.setState({shiCntStyle: Constants.EDIT_FOCUS_STYLE})}
-                                                onBlur={() => this.setState({shiCntStyle: Constants.EDIT_BLUR_STYLE})}
-                                                onChangeText={(shitCnt) => this.setState({shitCnt})}
-                                                value={this.state.shitCnt}
-                                            ></Edit>
-                                        </View>
-                                        <View style={{flex: 0.2}}>
-                                            <Text style={styles.rowText}>회</Text>
-                                        </View>
-                                        <View style={{flex: 0.5}}>
-                                            <Edit
-                                                height="60"
-                                                style={[styles.textInput, shitDescStyle]}
-                                                underlineColorAndroid="transparent"
-                                                placeholder="배변 설명"
-                                                autoCompleteType="off"
-                                                secureTextEntry={false}
-                                                onFocus={() => this.setState({shitDescStyle: Constants.EDIT_FOCUS_STYLE})}
-                                                onBlur={() => this.setState({shitDescStyle: Constants.EDIT_BLUR_STYLE})}
-                                                onChangeText={(shitDesc) => this.setState({shitDesc})}
-                                                value={this.state.shitDesc}
-                                            ></Edit>
-                                        </View>
-                                    </View>
-                                </View>
-                            </View>
+
+                            {this.renderShit()}
+
                             <View style={[styles.checkContent, {height: 60, marginBottom: 20}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>수면</Text></View>
                                 <View style={{flex: 0.4, flexDirection: 'row', alignItems: 'center', paddingLeft: 20}}>

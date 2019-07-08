@@ -22,6 +22,27 @@ export default class DiaryDtlBtnGroup extends Component {
         this.updateIndex = this.updateIndex.bind(this)
     }
 
+    componentDidMount() {
+        const {code} = this.props;
+
+        if(code != null) {
+            let selectedIndex = 0;
+            let selectedButtonStyle = {backgroundColor: '#33cc33'}
+
+            if(nextProps.code === 'good') {
+                selectedIndex = 0;
+                selectedButtonStyle = {backgroundColor: '#33cc33'}
+            } else if (nextProps.code === 'notBad') {
+                selectedIndex = 1;
+                selectedButtonStyle = {backgroundColor: '#ff8c00'}
+            } else if (nextProps.code === 'bad') {
+                selectedIndex = 2;
+                selectedButtonStyle = {backgroundColor: '#ff471a'}
+            }
+            this.setState({selectedIndex, selectedButtonStyle})
+        }
+    }
+
     componentWillReceiveProps(nextProps) {
         const {code} = this.props;
 
@@ -67,7 +88,7 @@ export default class DiaryDtlBtnGroup extends Component {
                       buttons={buttons}
                       innerBorderStyle={{width: 0, color: '#fff'}}
                       buttonStyle={{backgroundColor: '#fff'}}
-                      containerStyle={{height: 20, borderWidth: 0}}
+                      containerStyle={{height: 50, borderWidth: 0}}
                     />
             </View>
         )
