@@ -29,13 +29,13 @@ export default class DiaryDtlBtnGroup extends Component {
             let selectedIndex = 0;
             let selectedButtonStyle = {backgroundColor: '#33cc33'}
 
-            if(nextProps.code === 'good') {
+            if(code === 'good') {
                 selectedIndex = 0;
                 selectedButtonStyle = {backgroundColor: '#33cc33'}
-            } else if (nextProps.code === 'notBad') {
+            } else if (code === 'notBad') {
                 selectedIndex = 1;
                 selectedButtonStyle = {backgroundColor: '#ff8c00'}
-            } else if (nextProps.code === 'bad') {
+            } else if (code === 'bad') {
                 selectedIndex = 2;
                 selectedButtonStyle = {backgroundColor: '#ff471a'}
             }
