@@ -285,7 +285,7 @@ export default class DiaryDtl extends Component {
         let shitDesc = '';
         
         if (shitCnt != '0') {
-            shitCnt = 'good';
+            shitCd = 'good';
         }
         
         this.setState({shitCnt, shitCd, shitDesc});
@@ -327,6 +327,12 @@ export default class DiaryDtl extends Component {
                             style={{height: 60, flex: 1, color: '#000'}}
                             onValueChange={(shitCnt) => this.setShitCnt(shitCnt)}
                             selectedValue={shitCnt} >
+                            <Picker.Item label='0' value='0' />
+                            <Picker.Item label='1' value='1' />
+                            <Picker.Item label='2' value='2' />
+                            <Picker.Item label='3' value='3' />
+                            <Picker.Item label='4' value='4' />
+                            <Picker.Item label='5' value='5' />
                         </Picker>
                         <View style={{width: 50}}><Text style={styles.rowText}>회</Text></View>
                     </View>
@@ -345,6 +351,12 @@ export default class DiaryDtl extends Component {
                             style={{height: 40, flex: 1, color: '#000'}}
                             onValueChange={(shitCnt) => this.setShitCnt(shitCnt)}
                             selectedValue={shitCnt} >
+                            <Picker.Item label='0' value='0' />
+                            <Picker.Item label='1' value='1' />
+                            <Picker.Item label='2' value='2' />
+                            <Picker.Item label='3' value='3' />
+                            <Picker.Item label='4' value='4' />
+                            <Picker.Item label='5' value='5' />
                         </Picker>
                         <View style={{width: 50}}><Text style={styles.rowText}>회</Text></View>
                     </View>
