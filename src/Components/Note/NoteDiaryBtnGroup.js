@@ -76,7 +76,7 @@ export default class NoteDiaryBtnGroup extends Component {
                         buttons={buttons}
                         innerBorderStyle={{width: 0, color: '#fff'}}
                         buttonStyle={{backgroundColor: '#fff'}}
-                        containerStyle={{height: 50, borderWidth: 0, marginLeft: 0, marginRight: 0}}
+                        containerStyle={{height: 20, borderWidth: 0, marginLeft: 0, marginRight: 0}}
                     />
                 </View>
             </View>

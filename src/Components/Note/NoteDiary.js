@@ -209,7 +209,7 @@ export default class NoteDiary extends Component {
         }
 
         return (
-            <View style={{flex: 1, marginTop: 16, marginBottom: 16}}
+            <View style={{flex: 1, marginTop: 16, marginBottom: 16}}>
                 <View style={styles.rowView}>
                     <View style={styles.rowTitle}><Text style={styles.rowText}></Text></View>
                     <View style={{flex: 1}}><Text style={styles.rowText}>{shitCnt}회</Text></View>
