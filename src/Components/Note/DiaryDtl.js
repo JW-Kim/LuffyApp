@@ -342,7 +342,7 @@ export default class DiaryDtl extends Component {
         }
         
         return (
-            <View style={[styles.checkContent, {height: 140, marginTop: 20, marginBottom: 20}]}>
+            <View style={[styles.checkContent, {height: re140, marginTop: 20, marginBottom: 20}]}>
                 <View style={styles.rowTextField}><Text style={styles.rowText}>배변</Text></View>
                 <View style={{flex: 1}}>
                     <View style={{height: 40, flexDirection: 'row', alignItems: 'center', paddingLeft: 10}}>

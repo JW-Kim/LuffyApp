@@ -291,7 +291,11 @@ export default class Note extends Component {
                             </Picker>
                         }
                     </View>
-                    <ScrollView>
+                    <ScrollView
+                        ref={ref => this.scrollView = ref}
+                        onContentSizeChange={() => {
+                            this.scrollView.scrollTo({y: 320})
+                        }}>
                         <Calendar
                             style={{
                                 borderWidth: 1,

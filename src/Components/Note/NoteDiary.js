@@ -16,6 +16,7 @@ import ImageView from '../Com/ImageView.js'
 import CodeTypeIcon from '../Com/CodeTypeIcon.js'
 import Constants from '../../Com/Constants.js'
 import {getToken} from '../../Com/AuthToken.js';
+import NoteDiaryBtnGroup from './NoteDiaryBtnGroup';
 
 const SECTIONS = [
     {
@@ -68,17 +69,9 @@ export default class NoteDiary extends Component {
         this.props.openDiaryDtl();
     }
 
-    render() {
-        return (
-            <Accordion
-                sections={SECTIONS}
-                activeSections={this.state.activeSections}
-                renderHeader={this._renderHeader}
-                renderContent={this._renderContent}
-                onChange={this._updateSections}
-            />
-        )
-    }
+    _updateSections = activeSections => {
+        this.setState({activeSections});
+    };
 
     _renderHeader = section => {
         return (
@@ -152,64 +145,17 @@ export default class NoteDiary extends Component {
                     <Text style={styles.contentText}>
                         {content}
                     </Text>                    
-                    <View style={{marginTop: 10, marginLeft:40, marginRight:40}}>
+                    <View style={{marginTop: 24, marginLeft:40, marginRight:20}}>
                         {this.renderHeight()}
                         {this.renderWeight()}
-                        <View style={styles.rowView}>
-                            <View style={styles.rowTitle}><Text style={styles.rowText}>기분</Text></View>
-                            {feelingCd == 'good' ? <Text style={styles.rowText}>좋음 </Text> : <Text></Text>}
-                            {feelingCd == 'notBad' ? <Text style={styles.rowText}>보통 </Text> : <Text></Text>}
-                            {feelingCd == 'bad' ? <Text style={styles.rowText}>나쁨 </Text> : <Text></Text>}
-                            <CodeTypeIcon code={feelingCd}></CodeTypeIcon>
-                        </View>
-                        <View style={styles.rowView}>
-                            <View style={styles.rowTitle}><Text style={styles.rowText}>건강</Text></View>
-                            {healthCd == 'good' ? <Text style={styles.rowText}>좋음 </Text> : <Text></Text>}
-                            {healthCd == 'notBad' ? <Text style={styles.rowText}>보통 </Text> : <Text></Text>}
-                            {healthCd == 'bad' ? <Text style={styles.rowText}>나쁨 </Text> : <Text></Text>}
-                            <CodeTypeIcon code={healthCd}></CodeTypeIcon>
-                        </View>
-                        <View style={styles.rowView}>
-                            <View style={styles.rowTitle}><Text style={styles.rowText}>열</Text></View>
-                            {feverCd == 'good' ? <Text style={styles.rowText}>좋음 </Text> : <Text></Text>}
-                            {feverCd == 'notBad' ? <Text style={styles.rowText}>보통 </Text> : <Text></Text>}
-                            {feverCd == 'bad' ? <Text style={styles.rowText}>나쁨 </Text> : <Text></Text>}
-                            <CodeTypeIcon code={feverCd}></CodeTypeIcon>
-                        </View>
-                        <View style={styles.rowView}>
-                            <View style={styles.rowTitle}><Text style={styles.rowText}>아침 식사</Text></View>
-                            {breakfastCd == 'good' ? <Text style={styles.rowText}>좋음 </Text> : <Text></Text>}
-                            {breakfastCd == 'notBad' ? <Text style={styles.rowText}>보통 </Text> : <Text></Text>}
-                            {breakfastCd == 'bad' ? <Text style={styles.rowText}>나쁨 </Text> : <Text></Text>}
-                            <CodeTypeIcon code={breakfastCd}></CodeTypeIcon>
-                        </View>
-                        <View style={styles.rowView}>
-                            <View style={styles.rowTitle}><Text style={styles.rowText}>점심 식사</Text></View>
-                            {lunchCd == 'good' ? <Text style={styles.rowText}>좋음 </Text> : <Text></Text>}
-                            {lunchCd == 'notBad' ? <Text style={styles.rowText}>보통 </Text> : <Text></Text>}
-                            {lunchCd == 'bad' ? <Text style={styles.rowText}>나쁨 </Text> : <Text></Text>}
-                            <CodeTypeIcon code={lunchCd}></CodeTypeIcon>
-                        </View>
-                        <View style={styles.rowView}>
-                            <View style={styles.rowTitle}><Text style={styles.rowText}>저녁 식사</Text></View>
-                            {dinnerCd == 'good' ? <Text style={styles.rowText}>좋음 </Text> : <Text></Text>}
-                            {dinnerCd == 'notBad' ? <Text style={styles.rowText}>보통 </Text> : <Text></Text>}
-                            {dinnerCd == 'bad' ? <Text style={styles.rowText}>나쁨 </Text> : <Text></Text>}
-                            <CodeTypeIcon code={dinnerCd}></CodeTypeIcon>
-                        </View>
-                        <View style={styles.rowView}>
-                            <View style={styles.rowTitle}><Text style={styles.rowText}>배변</Text></View>
-                            <Text style={styles.rowText}>{shitCnt}회,
-                                {shitCd == 'good' ? <Text style={styles.rowText}>좋음 </Text> : <Text></Text>}
-                                {shitCd == 'notBad' ? <Text style={styles.rowText}>보통 </Text> : <Text></Text>}
-                                {shitCd == 'bad' ? <Text style={styles.rowText}>나쁨 </Text> : <Text></Text>}
-                                ({shitDesc}) </Text>
-                            <CodeTypeIcon code={shitCd}></CodeTypeIcon>
-                        </View>
-                        <View style={{flexDirection: 'row', paddingBottom: 20}}>
-                            <View style={styles.rowTitle}><Text style={styles.rowText}>수면</Text></View>
-                            <Text style={styles.rowText}>{sleepStartTime}시 ~ {sleepEndTime}시</Text>
-                        </View>
+                        <NoteDiaryBtnGroup title="기분" code={feelingCd} />
+                        <NoteDiaryBtnGroup title="건강" code={healthCd} />
+                        <NoteDiaryBtnGroup title="열" code={feverCd} />
+                        <NoteDiaryBtnGroup title="아침식사" code={breakfastCd} />
+                        <NoteDiaryBtnGroup title="점심식사" code={lunchCd} />
+                        <NoteDiaryBtnGroup title="저녁식사" code={dinnerCd} />
+                        {this.renderShit()}
+                        {this.renderSleep()}
                     </View>
                 </TouchableOpacity>
             </View>
@@ -226,7 +172,7 @@ export default class NoteDiary extends Component {
         return(
             <View style={styles.rowView}>
                 <View style={styles.rowTitle}>
-                    <Text style={styles.rowText}>키</Text>
+                    <View style={{flex: 1}}><Text style={styles.rowText}>키</Text></View>
                 </View>
                 <Text style={styles.rowText}>{height} cm</Text>
             </View>
@@ -243,16 +189,66 @@ export default class NoteDiary extends Component {
         return(
             <View style={styles.rowView}>
                 <View style={styles.rowTitle}>
-                    <Text style={styles.rowText}>몸무게</Text>
+                    <View style={{flex: 1}}><Text style={styles.rowText}>몸무게</Text></View>
                 </View>
                 <Text style={styles.rowText}>{weight} kg</Text>
             </View>
         )
     }
 
-    _updateSections = activeSections => {
-        this.setState({activeSections});
-    };
+    renderShit() {
+        const {shitCd, shitDesc, shitCnt} = this.state;
+
+        if(shitCd == 0) {
+            return (
+                <View style={styles.rowView}>
+                    <View style={styles.rowTitle}><Text style={styles.rowText}>배변</Text></View>
+                    <View style={{flex: 1}}><Text style={styles.rowText}>{shitCnt}회</Text></View>
+                </View>
+            )
+        }
+
+        return (
+            <View style={{flex: 1, marginTop: 16, marginBottom: 16}}
+                <View style={styles.rowView}>
+                    <View style={styles.rowTitle}><Text style={styles.rowText}></Text></View>
+                    <View style={{flex: 1}}><Text style={styles.rowText}>{shitCnt}회</Text></View>
+                </View>
+                <NoteDiaryBtnGroup title="배변" code={shitCd} />
+                 <View style={styles.rowView}>
+                    <View style={styles.rowTitle}><Text style={styles.rowText}></Text></View>
+                    <View style={{flex: 1}}><Text style={styles.rowText}>{shitDesc}</Text></View>
+                </View>
+            </View>
+        )
+    }
+
+    renderSleep() {
+        const {sleepStartTime, sleepEndTime} = this.state;
+
+        if(sleepStartTime == '' || sleepStartTime == null || sleepEndTime == '' || sleepEndTime == null) {
+            return;
+        }
+
+        return (
+            <View style={styles.rowView}>
+                <View style={styles.rowTitle}><Text style={styles.rowText}>수면</Text></View>
+                <View style={{flex: 1}}><Text style={styles.rowText}>{sleepStartTime} ~ {sleepEndTime}시</Text></View>
+            </View>
+        )
+    }
+
+    render() {
+        return (
+            <Accordion
+                sections={SECTIONS}
+                activeSections={this.state.activeSections}
+                renderHeader={this._renderHeader}
+                renderContent={this._renderContent}
+                onChange={this._updateSections}
+            />
+        )
+    }
 }
 
 const styles = StyleSheet.create({
@@ -263,7 +259,8 @@ const styles = StyleSheet.create({
     rowView: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingBottom: 16
+        paddingBottom: 16,
+        height: 25
     },
 
     content: {
