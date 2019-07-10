@@ -594,7 +594,7 @@ const styles = StyleSheet.create({
 
     checkContent: {
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
         justifyContent: 'space-between'
     },
 
