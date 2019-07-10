@@ -24,7 +24,7 @@ export default class ModalHeader extends Component {
             <View style={styles.mainView}>
                 <View style={{width: 80}}>
                     <TouchableOpacity onPress={() => this.close()}>
-                        <Icons name="times" color="#000" size={21}/>
+                        <Icons name="times" color="#142765" size={21}/>
                     </TouchableOpacity>
                 </View>
                 <View style={{flex: 1, alignItems: 'center'}}>
@@ -41,7 +41,7 @@ export default class ModalHeader extends Component {
 const styles = StyleSheet.create({
     mainView: {
         height: 60,
-        backgroundColor: '#ebe0eb',
+        backgroundColor: '#C2D8E9',
         alignItems: 'center',
         flexDirection: 'row',
         paddingLeft: 20,
@@ -49,12 +49,12 @@ const styles = StyleSheet.create({
     },
 
     titleText: {
-        color: '#000',
+        color: '#142765',
         fontWeight: 'bold',
         fontSize: 21
     },
     eventText: {
-        color: '#000',
+        color: '#142765',
         fontSize: 21
     }
 })

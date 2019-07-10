@@ -142,8 +142,8 @@ export default class Note extends Component {
         let selectedDiseaseList = [];
         let isEmpty = true;
 
-        const diary = {key: 'diary', color: '#33d6ff'};
-        const disease = {key: 'disease', color: 'blue'};
+        const diary = {key: 'diary', color: '#97D6C4'};
+        const disease = {key: 'disease', color: '#F4E0EF'};
 
         for (var i = 0; i < this.state.diary.length; i++) {
             if (this.state.diary[i].diaryDt == day) {
@@ -151,7 +151,7 @@ export default class Note extends Component {
                 markedDates["" + this.state.diary[i].diaryDt + ""] = {
                     dots: [diary],
                     selected: true,
-                    selectedColor: '#33d6ff'
+                    selectedColor: '#887198'
                 };
                 isEmpty = false;
 
@@ -167,7 +167,7 @@ export default class Note extends Component {
                     markedDates["" + this.state.disease[i].diseaseDt + ""] = {
                         dots: [disease],
                         selected: true,
-                        selectedColor: '#33d6ff'
+                        selectedColor: '#887198'
                     };
                     isEmpty = false;
                 } else {
@@ -190,7 +190,7 @@ export default class Note extends Component {
         }
 
         if(isEmpty) {
-            markedDates[day] = {selected: true, selectedColor: '#33d6ff'};
+            markedDates[day] = {selected: true, selectedColor: '#887198'};
         }
 
         this.setState({
@@ -299,13 +299,13 @@ export default class Note extends Component {
                         <Calendar
                             style={{
                                 borderWidth: 1,
-                                borderColor: '#ebe0eb',
-                                backgroundColor: '#ebe0eb'
+                                borderColor: '#C2D8E9',
+                                backgroundColor: '#C2D8E9'
                             }}
                             theme={{
-                                backgroundColor: '#ebe0eb',
-                                calendarBackground: '#ebe0eb',
-                                selectedDayBackgroundColor: '#b992b9',
+                                backgroundColor: '#C2D8E9',
+                                calendarBackground: '#C2D8E9',
+                                selectedDayBackgroundColor: '#142765',
                                 textDayFontSize: 16,
                                 textMonthFontSize: 16,
                                 textDayHeaderFontSize: 16

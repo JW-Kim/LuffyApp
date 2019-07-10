@@ -80,7 +80,7 @@ export default class NoteDiary extends Component {
                     flexDirection: 'column',
                     height: 60,
                     borderWidth: 1,
-                    borderColor: '#ebe0eb',
+                    borderColor: '#97D6C4',
                     justifyContent: "center"
                 }}>
                     <View style={{
@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
     content: {
         backgroundColor: '#fff',
         borderWidth: 1,
-        borderColor: '#ebe0eb',
+        borderColor: '#97D6C4',
     },
 
     rowTitle: {

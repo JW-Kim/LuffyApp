@@ -21,7 +21,7 @@ const MainStack = createBottomTabNavigator(
         initialRouteName: 'Note',
         tabBarOptions: {
             style: {
-                backgroundColor: '#ffffff',
+                backgroundColor: '#C2D8E9',
                 shadowColor: 'transparent',
                 shadowRadius: 0,
                 shadowOffset: {
@@ -32,10 +32,12 @@ const MainStack = createBottomTabNavigator(
             labelStyle: {
                 fontSize: 16,
                 //fontWeight: 'bold',
-                color: '#000',
+                //color: '#000',
                 paddingBottom: 8
             },
-            activeBackgroundColor: '#ff3399'
+            activeBackgroundColor: '#142765',
+            activeTintColor: '#fff',
+            inactiveTintColor: '#142765'
         },
         lazy: true
     }

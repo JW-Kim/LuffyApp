@@ -26,9 +26,9 @@ export default class Login extends Component {
         this.state = {
             username: '',
             password: '',
-            idStyle: {borderWidth: 1, borderColor: 'gray'},
-            passwordStyle: {borderWidth: 1, borderColor: 'gray'},
-            loginBtnStyle: {backgroundColor: 'gray', height: 70},
+            idStyle: {borderWidth: 1, borderColor: '#C2D8E9'},
+            passwordStyle: {borderWidth: 1, borderColor: '#C2D8E9'},
+            loginBtnStyle: {backgroundColor: '#C2D8E9', height: 70},
             isUsername: false,
             isPassword: false
         }
@@ -76,9 +76,9 @@ export default class Login extends Component {
                     this.setState({
                         username: '',
                         password: '',
-                        idStyle: {borderWidth: 1, borderColor: 'gray'},
-                        passwordStyle: {borderWidth: 1, borderColor: 'gray'},
-                        loginBtnStyle: {backgroundColor: 'gray', height: 70},
+                        idStyle: {borderWidth: 1, borderColor: '#C2D8E9'},
+                        passwordStyle: {borderWidth: 1, borderColor: '#C2D8E9'},
+                        loginBtnStyle: {backgroundColor: '#C2D8E9', height: 70},
                         isUsername: false,
                         isPassword: false
                     })
@@ -106,9 +106,9 @@ export default class Login extends Component {
 
         let loginBtnStyle = {};
         if (isUsername && isPassword) {
-            loginBtnStyle = {backgroundColor: '#000', height: 70};
+            loginBtnStyle = {backgroundColor: '#142765', height: 70};
         } else {
-            loginBtnStyle = {backgroundColor: 'gray', height: 70};
+            loginBtnStyle = {backgroundColor: '#C2D8E9', height: 70};
         }
 
         this.setState({username, isUsername, loginBtnStyle});
@@ -126,9 +126,9 @@ export default class Login extends Component {
 
         let loginBtnStyle = {};
         if (isUsername && isPassword) {
-            loginBtnStyle = {backgroundColor: '#000', height: 70};
+            loginBtnStyle = {backgroundColor: '#142765', height: 70};
         } else {
-            loginBtnStyle = {backgroundColor: 'gray', height: 70};
+            loginBtnStyle = {backgroundColor: '#C2D8E9', height: 70};
         }
 
         this.setState({password, isPassword, loginBtnStyle});
@@ -172,7 +172,7 @@ export default class Login extends Component {
         } else {
             return(
                 <TouchableOpacity onPress={() => this.changeId('')} style={{position: 'absolute', right: 10, bottom: -25, height: 70, width: 20}}>
-                    <Icons name="times-circle" color="gray" size={16} />
+                    <Icons name="times-circle" color="#C2D8E9" size={16} />
                 </TouchableOpacity>
             )
         }
@@ -185,7 +185,7 @@ export default class Login extends Component {
         } else {
             return(
                 <TouchableOpacity onPress={() => this.changePassword('')} style={{position: 'absolute', right: 10, bottom: -25, height: 70, width: 20}}>
-                    <Icons name="times-circle" color="gray" size={16} />
+                    <Icons name="times-circle" color="#C2D8E9" size={16} />
                 </TouchableOpacity>
             )
         }
@@ -221,13 +221,13 @@ export default class Login extends Component {
                                             onFocus={() => this.setState({
                                                 idStyle: {
                                                     borderWidth: 1,
-                                                    borderColor: '#000'
+                                                    borderColor: '#142765'
                                                 }
                                             })}
                                             onBlur={() => this.setState({
                                                 idStyle: {
                                                     borderWidth: 1,
-                                                    borderColor: 'gray'
+                                                    borderColor: '#C2D8E9'
                                                 }
                                             })}
                                             value={this.state.username}
@@ -246,13 +246,13 @@ export default class Login extends Component {
                                             onFocus={() => this.setState({
                                                 passwordStyle: {
                                                     borderWidth: 1,
-                                                    borderColor: '#000'
+                                                    borderColor: '#142765'
                                                 }
                                             })}
                                             onBlur={() => this.setState({
                                                 passwordStyle: {
                                                     borderWidth: 1,
-                                                    borderColor: 'gray'
+                                                    borderColor: '#C2D8E9'
                                                 }
                                             })}
                                             value={this.state.password}
@@ -272,7 +272,7 @@ export default class Login extends Component {
                                 </View>
                                 <View style={styles.row}>
                                     <TouchableOpacity onPress={() => this.goUserRegister()}>
-                                        <Text style={{fontSize: 14}}>회원가입</Text>
+                                        <Text style={{fontSize: 14, color: '#142765'}}>회원가입</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>

@@ -34,8 +34,8 @@ export default class NoteDtl extends Component {
             noteNm: '',
             sex: null,
             birthDt: null,
-            insertNoteDtlBtnStyle: {backgroundColor: 'gray', height: 60},
-            noteNmStyle: {borderBottomWidth: 0, borderColor: 'gray'}
+            insertNoteDtlBtnStyle: {backgroundColor: '#C2D8E9', height: 60},
+            noteNmStyle: {borderBottomWidth: 0, borderColor: '#C2D8E9'}
         }
 
         let setNote = this.setNote.bind(this);
@@ -158,8 +158,8 @@ export default class NoteDtl extends Component {
                                             placeholder="영문/숫자 10자"
                                             autoCompleteType="off"
                                             secureTextEntry={false}
-                                            onFocus={() => this.setState({noteNmStyle: {borderBottomWidth: 1, borderColor: 'gray'}})}
-                                            onBlur={() => this.setState({noteNmStyle: {borderBottomWidth: 0, borderColor: 'gray'}})}
+                                            onFocus={() => this.setState({noteNmStyle: {borderBottomWidth: 1, borderColor: '#C2D8E9'}})}
+                                            onBlur={() => this.setState({noteNmStyle: {borderBottomWidth: 0, borderColor: '#C2D8E9'}})}
                                             onChangeText={(noteNm) => this.setState({noteNm})}
                                             value={this.state.noteNm}
                                         ></Edit>
@@ -255,7 +255,8 @@ const styles = StyleSheet.create({
         paddingRight: 35,
         height: 60,
         fontSize: 16,
-        flex: 1
+        flex: 1,
+        backgroundColor: '#E6ECF0'
     },
     rowTitle: {
         fontSize: 18,

@@ -88,7 +88,7 @@ export default class DiaryDtlBtnGroup extends Component {
                       buttons={buttons}
                       innerBorderStyle={{width: 0, color: '#fff'}}
                       buttonStyle={{backgroundColor: '#fff'}}
-                      containerStyle={{height: 50, borderWidth: 0}}
+                      containerStyle={{height: 50, borderWidth: 0, marginLeft: 0, marginRight: 0}}
                     />
             </View>
         )

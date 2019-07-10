@@ -31,7 +31,7 @@ export default class NoteDiseaseDtl extends Component {
             diseaseId: this.props.navigation.getParam('diseaseId'),
             diseaseNm: '',
             hospitalNm: '',
-            saveNoteDiseaseBtnStyle: {backgroundColor: 'gray', height: 60},
+            saveNoteDiseaseBtnStyle: {backgroundColor: '#C2D8E9', height: 60},
             diseaseNmStyle: Constants.EDIT_BLUR_STYLE,
             hospitalNmStyle: Constants.EDIT_BLUR_STYLE,
             prescriptionStyle: Constants.MULTI_EDIT_BLUR_STYLE,
@@ -172,7 +172,7 @@ export default class NoteDiseaseDtl extends Component {
                                 alignItems: 'center'
                             }}>
                                 <TextInput
-                                    style={[{flex: 1, fontSize: 16}, symptomStyle]}
+                                    style={[{flex: 1, fontSize: 16, backgroundColor: '#E6ECF0'}, symptomStyle]}
                                     numberOfLines={10}
                                     multiline={true}
                                     placeholder="증상을 입력해주세요"
@@ -213,7 +213,7 @@ export default class NoteDiseaseDtl extends Component {
                                 alignItems: 'center'
                             }}>
                                 <TextInput
-                                    style={[{flex: 1, fontSize: 16}, prescriptionStyle]}
+                                    style={[{flex: 1, fontSize: 16, backgroundColor: '#E6ECF0'}, prescriptionStyle]}
                                     numberOfLines={10}
                                     multiline={true}
                                     underlineColorAndroid="transparent"
@@ -249,7 +249,8 @@ const styles = StyleSheet.create({
         paddingRight: 35,
         height: 60,
         fontSize: 16,
-        flex: 1
+        flex: 1,
+        backgroundColor: '#E6ECF0'
     },
     rowTextField: {
         paddingRight: 20,

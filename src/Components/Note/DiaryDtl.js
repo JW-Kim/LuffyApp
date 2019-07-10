@@ -318,10 +318,10 @@ export default class DiaryDtl extends Component {
         
         if(shitCnt == 0) {
             return(
-            <View style={[styles.checkContent, {height: 60}]}>
+            <View style={[styles.checkContent, {height: 60, marginTop: 10, marginBottom: 10}]}>
                 <View style={styles.rowTextField}><Text style={styles.rowText}>배변</Text></View>
                 <View style={{flex: 1}}>
-                    <View style={{height: 60, flexDirection: 'row', alignItems: 'center', paddingLeft: 10}}>
+                    <View style={{height: 60, flexDirection: 'row', alignItems: 'center'}}>
                         <Picker
                             mode='dropdown'
                             style={{height: 60, flex: 1, color: '#000'}}
@@ -334,7 +334,7 @@ export default class DiaryDtl extends Component {
                             <Picker.Item label='4' value='4' />
                             <Picker.Item label='5' value='5' />
                         </Picker>
-                        <View style={{width: 50}}><Text style={styles.rowText}>회</Text></View>
+                        <View style={{width: 50, alignItems: 'center', justifyContent: 'center'}}><Text style={styles.rowText}>회</Text></View>
                     </View>
                 </View>
              </View>
@@ -342,10 +342,10 @@ export default class DiaryDtl extends Component {
         }
         
         return (
-            <View style={[styles.checkContent, {height: re140, marginTop: 20, marginBottom: 20}]}>
+            <View style={[styles.checkContent, {height: 140, marginTop: 10, marginBottom: 10}]}>
                 <View style={styles.rowTextField}><Text style={styles.rowText}>배변</Text></View>
                 <View style={{flex: 1}}>
-                    <View style={{height: 40, flexDirection: 'row', alignItems: 'center', paddingLeft: 10}}>
+                    <View style={{height: 40, flexDirection: 'row', alignItems: 'center'}}>
                         <Picker
                             mode='dropdown'
                             style={{height: 40, flex: 1, color: '#000'}}
@@ -358,13 +358,13 @@ export default class DiaryDtl extends Component {
                             <Picker.Item label='4' value='4' />
                             <Picker.Item label='5' value='5' />
                         </Picker>
-                        <View style={{width: 50}}><Text style={styles.rowText}>회</Text></View>
+                        <View style={{width: 50, alignItems: 'center', justifyContent: 'center'}}><Text style={styles.rowText}>회</Text></View>
                     </View>
                     <DiaryDtlBtnGroup code={this.state.shitCd}
                          setCode={(shitCd) => this.setState({shitCd})}></DiaryDtlBtnGroup>
-                    <View style={{height: 40, paddingLeft: 10}}>
+                    <View style={{height: 60}}>
                         <Edit
-                            height="40"
+                            height="60"
                             style={[styles.textInput, shitDescStyle]}
                             underlineColorAndroid="transparent"
                             placeholder="배변 설명"
@@ -406,9 +406,9 @@ export default class DiaryDtl extends Component {
                     <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100} enabled>
                         <ScrollView style={{padding: 20}}>
                             {this.renderImageView()}
-                            <View style={styles.title}>
+                            <View style={[styles.checkContent, {marginBottom: 10}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>제목</Text></View>
-                                <View style={{paddingLeft: 20, flex: 1}}>
+                                <View style={{flex: 1}}>
                                     <Edit
                                         height="60"
                                         style={[styles.textInput, titleStyle]}
@@ -426,9 +426,9 @@ export default class DiaryDtl extends Component {
                             </View>
                             <View style={styles.checkContent}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>내용</Text></View>
-                                <View style={{paddingLeft: 20, flex: 1}}>
+                                <View style={{flex: 1}}>
                                     <TextInput
-                                        style={[{flex: 1, fontSize: 16}, contentStyle]}
+                                        style={[{flex: 1, fontSize: 16, backgroundColor: '#E6ECF0'}, contentStyle]}
                                         underlineColorAndroid="transparent"
                                         placeholder="내용을 입력하세요"
                                         autoCompleteType="off"
@@ -443,13 +443,12 @@ export default class DiaryDtl extends Component {
                                     </TextInput>
                                 </View>
                             </View>
-                            <View style={[styles.checkContent, {height: 60}]}>
+                            <View style={[styles.checkContent, {height: 60, marginBottom: 10, marginTop: 10}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>키</Text></View>
                                 <View style={{
                                     flex: 1,
                                     flexDirection: 'row',
-                                    alignItems: 'center',
-                                    paddingLeft: 20
+                                    alignItems: 'center'
                                 }}>
                                     <View style={{flex: 1}}>
                                         <Edit
@@ -465,18 +464,17 @@ export default class DiaryDtl extends Component {
                                             value={this.state.height}
                                         ></Edit>
                                     </View>
-                                    <View style={{width: 50}}>
+                                    <View style={{width: 50, alignItems: 'center', justifyContent: 'center'}}>
                                         <Text style={styles.rowText}>cm</Text>
                                     </View>
                                 </View>
                             </View>
-                            <View style={[styles.checkContent, {height: 60}]}>
+                            <View style={[styles.checkContent, {height: 60, marginBottom: 5}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>몸무게</Text></View>
                                 <View style={{
                                     flex: 1,
                                     flexDirection: 'row',
-                                    alignItems: 'center',
-                                    paddingLeft: 20
+                                    alignItems: 'center'
                                 }}>
                                     <View style={{flex: 1}}>
                                         <Edit
@@ -492,7 +490,7 @@ export default class DiaryDtl extends Component {
                                             value={this.state.weight}
                                         ></Edit>
                                     </View>
-                                    <View style={{width: 50}}>
+                                    <View style={{width: 50, alignItems: 'center', justifyContent: 'center'}}>
                                         <Text style={styles.rowText}>kg</Text>
                                     </View>
                                 </View>
@@ -532,37 +530,41 @@ export default class DiaryDtl extends Component {
 
                             <View style={[styles.checkContent, {height: 60, marginBottom: 20}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>수면</Text></View>
-                                <View style={{flex: 0.4, flexDirection: 'row', alignItems: 'center', paddingLeft: 20}}>
-                                    <Edit
-                                        height="60"
-                                        style={[styles.textInput, sleepStartTimeStyle]}
-                                        underlineColorAndroid="transparent"
-                                        placeholder="예) 22"
-                                        autoCompleteType="off"
-                                        secureTextEntry={false}
-                                        onFocus={() => this.setState({sleepStartTimeStyle: Constants.EDIT_FOCUS_STYLE})}
-                                        onBlur={() => this.setState({sleepStartTimeStyle: Constants.EDIT_BLUR_STYLE})}
-                                        onChangeText={(sleepStartTime) => this.setState({sleepStartTime})}
-                                        value={this.state.sleepStartTime}
-                                    >
-                                    </Edit>
-                                </View>
-                                <View style={{justifyContent: 'center'}}><Text style={{flex: 0.2}}>~</Text></View>
-                                <View style={{flex: 0.4, flexDirection: 'row', alignItems: 'center'}}>
-                                    <Edit
-                                        height="60"
-                                        style={[styles.textInput, sleepEndTimeStyle]}
-                                        underlineColorAndroid="transparent"
-                                        placeholder="예) 7"
-                                        autoCompleteType="off"
-                                        secureTextEntry={false}
-                                        onFocus={() => this.setState({sleepEndTimeStyle: Constants.EDIT_FOCUS_STYLE})}
-                                        onBlur={() => this.setState({sleepEndTimeStyle: Constants.EDIT_BLUR_STYLE})}
-                                        onChangeText={(sleepEndTime) => this.setState({sleepEndTime})}
-                                        value={this.state.sleepEndTime}
-                                    >
-                                    </Edit>
-                                    <Text style={styles.rowText}>시</Text>
+                                <View style={{flex: 1, flexDirection: 'row'}}>
+                                    <View style={{flex: 0.4, height: 60}}>
+                                        <Edit
+                                            height="60"
+                                            style={[styles.textInput, sleepStartTimeStyle]}
+                                            underlineColorAndroid="transparent"
+                                            placeholder="예) 22"
+                                            autoCompleteType="off"
+                                            secureTextEntry={false}
+                                            onFocus={() => this.setState({sleepStartTimeStyle: Constants.EDIT_FOCUS_STYLE})}
+                                            onBlur={() => this.setState({sleepStartTimeStyle: Constants.EDIT_BLUR_STYLE})}
+                                            onChangeText={(sleepStartTime) => this.setState({sleepStartTime})}
+                                            value={this.state.sleepStartTime}
+                                        >
+                                        </Edit>
+                                    </View>
+                                    <View style={{flex: 0.2, alignItems: 'center',justifyContent: 'center'}}><Text>~</Text></View>
+                                    <View style={{flex: 0.4, height: 60}}>
+                                        <Edit
+                                            height="60"
+                                            style={[styles.textInput, sleepEndTimeStyle]}
+                                            underlineColorAndroid="transparent"
+                                            placeholder="예) 7"
+                                            autoCompleteType="off"
+                                            secureTextEntry={false}
+                                            onFocus={() => this.setState({sleepEndTimeStyle: Constants.EDIT_FOCUS_STYLE})}
+                                            onBlur={() => this.setState({sleepEndTimeStyle: Constants.EDIT_BLUR_STYLE})}
+                                            onChangeText={(sleepEndTime) => this.setState({sleepEndTime})}
+                                            value={this.state.sleepEndTime}
+                                        >
+                                        </Edit>
+                                    </View>
+                                    <View style={{width: 50, alignItems: 'center', justifyContent:'center'}}>
+                                        <Text style={styles.rowText}>시</Text>
+                                    </View>
                                 </View>
                             </View>
                         </ScrollView>
@@ -592,8 +594,7 @@ const styles = StyleSheet.create({
 
     checkContent: {
         flexDirection: 'row',
-        alignItems: 'center',
-        paddingLeft: 5,
+        alignItems: 'center'
         justifyContent: 'space-between'
     },
 
@@ -620,8 +621,8 @@ const styles = StyleSheet.create({
     title: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingLeft: 5,
-        height: 60
+        height: 60,
+        paddingBottom: 10
     },
     rowTextField: {
         paddingRight: 20,
@@ -636,6 +637,7 @@ const styles = StyleSheet.create({
         paddingRight: 35,
         height: 60,
         fontSize: 16,
-        flex: 1
+        flex: 1,
+        backgroundColor: '#E6ECF0'
     },
 })

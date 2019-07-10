@@ -44,12 +44,12 @@ export default class UserRegister extends Component {
             isEmail: false,
             isEqualPwd: false,
             isCorrectPwd: false,
-            insertUserBtnStyle: {backgroundColor: 'gray', height: 60},
-            idSytle: {borderBottomWidth: 0, borderColor: 'gray'},
-            userPwdStyle: {borderBottomWidth: 0, borderColor: 'gray'},
-            userPwd2Style: {borderBottomWidth: 0, borderColor: 'gray'},
-            userNmStyle: {borderBottomWidth: 0, borderColor: 'gray'},
-            emailStyle: {borderBottomWidth: 0, borderColor: 'gray'},
+            insertUserBtnStyle: {backgroundColor: '#C2D8E9', height: 60},
+            idSytle: {borderBottomWidth: 0, borderColor: '#C2D8E9'},
+            userPwdStyle: {borderBottomWidth: 0, borderColor: '#C2D8E9'},
+            userPwd2Style: {borderBottomWidth: 0, borderColor: '#C2D8E9'},
+            userNmStyle: {borderBottomWidth: 0, borderColor: '#C2D8E9'},
+            emailStyle: {borderBottomWidth: 0, borderColor: '#C2D8E9'},
         }
 
         let insertUser = this.insertUser.bind(this);
@@ -153,9 +153,9 @@ export default class UserRegister extends Component {
         const {isUserLoginId, isUserPwd, isUserPwd2, isUserNm, isEmail, isEqualPwd} = this.state;
 
         if (isUserLoginId && isUserPwd && isUserPwd2 && isUserNm && isEmail && isEqualPwd) {
-            this.setState({insertUserBtnStyle: {backgroundColor: '#000', height: 60}})
+            this.setState({insertUserBtnStyle: {backgroundColor: '#142765', height: 60}})
         } else {
-            this.setState({insertUserBtnStyle: {backgroundColor: 'gray', height: 60}})
+            this.setState({insertUserBtnStyle: {backgroundColor: '#C2D8E9', height: 60}})
         }
     }
 
@@ -377,8 +377,8 @@ export default class UserRegister extends Component {
                                     autoCompleteType="off"
                                     secureTextEntry={false}
                                     onChangeText={(userLoginId) => this.changeUserLoginId(userLoginId)}
-                                    onFocus={() => this.setState({idSytle: {borderBottomWidth: 1, borderColor: 'gray'}})}
-                                    onBlur={() => this.setState({idSytle: {borderBottomWidth: 0, borderColor: 'gray'}})}
+                                    onFocus={() => this.setState({idSytle: {borderBottomWidth: 1, borderColor: '#C2D8E9'}})}
+                                    onBlur={() => this.setState({idSytle: {borderBottomWidth: 0, borderColor: '#C2D8E9'}})}
                                     value={userLoginId}>
                                 </Edit>
                             </View>
@@ -393,8 +393,8 @@ export default class UserRegister extends Component {
                                     autoCompleteType="password"
                                     secureTextEntry={true}
                                     onChangeText={(userPwd) => this.changeUserPwd(userPwd)}
-                                    onFocus={() => this.setState({userPwdStyle: {borderBottomWidth: 1, borderColor: 'gray'}})}
-                                    onBlur={() => this.setState({userPwdStyle: {borderBottomWidth: 0, borderColor: 'gray'}})}
+                                    onFocus={() => this.setState({userPwdStyle: {borderBottomWidth: 1, borderColor: '#C2D8E9'}})}
+                                    onBlur={() => this.setState({userPwdStyle: {borderBottomWidth: 0, borderColor: '#C2D8E9'}})}
                                     value={userPwd}>
                                 </Edit>
                             </View>
@@ -409,8 +409,8 @@ export default class UserRegister extends Component {
                                     autoCompleteType="password"
                                     secureTextEntry={true}
                                     onChangeText={(userPwd2) => this.changeUserPwd2(userPwd2)}
-                                    onFocus={() => this.setState({userPwd2Style: {borderBottomWidth: 1, borderColor: 'gray'}})}
-                                    onBlur={() => this.setState({userPwd2Style: {borderBottomWidth: 0, borderColor: 'gray'}})}
+                                    onFocus={() => this.setState({userPwd2Style: {borderBottomWidth: 1, borderColor: '#C2D8E9'}})}
+                                    onBlur={() => this.setState({userPwd2Style: {borderBottomWidth: 0, borderColor: '#C2D8E9'}})}
                                     value={userPwd2}>
                                 </Edit>
                             </View>
@@ -425,8 +425,8 @@ export default class UserRegister extends Component {
                                     autoCompleteType="off"
                                     secureTextEntry={false}
                                     onChangeText={(userNm) => this.changeUserNm(userNm)}
-                                    onFocus={() => this.setState({userNmStyle: {borderBottomWidth: 1, borderColor: 'gray'}})}
-                                    onBlur={() => this.setState({userNmStyle: {borderBottomWidth: 0, borderColor: 'gray'}})}
+                                    onFocus={() => this.setState({userNmStyle: {borderBottomWidth: 1, borderColor: '#C2D8E9'}})}
+                                    onBlur={() => this.setState({userNmStyle: {borderBottomWidth: 0, borderColor: '#C2D8E9'}})}
                                     value={userNm}>
                                 </Edit>
                             </View>
@@ -441,8 +441,8 @@ export default class UserRegister extends Component {
                                     autoCompleteType="off"
                                     secureTextEntry={false}
                                     onChangeText={(email) => this.changeEmail(email)}
-                                    onFocus={() => this.setState({emailStyle: {borderBottomWidth: 1, borderColor: 'gray'}})}
-                                    onBlur={() => this.setState({emailStyle: {borderBottomWidth: 0, borderColor: 'gray'}})}
+                                    onFocus={() => this.setState({emailStyle: {borderBottomWidth: 1, borderColor: '#C2D8E9'}})}
+                                    onBlur={() => this.setState({emailStyle: {borderBottomWidth: 0, borderColor: '#C2D8E9'}})}
                                     value={email}>
                                 </Edit>
                             </View>
@@ -473,6 +473,7 @@ export default class UserRegister extends Component {
 
 const styles = StyleSheet.create({
     mainView: {
+        paddingTop: 20,
         paddingBottom: 20,
         alignItems: 'center',
         backgroundColor: '#fff'
@@ -482,7 +483,8 @@ const styles = StyleSheet.create({
         paddingRight: 35,
         height: 60,
         fontSize: 16,
-        flex: 1
+        flex: 1,
+        backgroundColor: '#E6ECF0'
     },
     row: {
         paddingLeft: 20,

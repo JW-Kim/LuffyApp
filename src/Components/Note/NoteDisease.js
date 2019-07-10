@@ -53,7 +53,7 @@ export default class NoteDisease extends Component {
                     flexDirection: 'column',
                     height: 60,
                     borderWidth: 1,
-                    borderColor: '#ebe0eb',
+                    borderColor: '#F4E0EF',
                     justifyContent: "center"
                 }}>
                     <View style={{
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     content: {
         backgroundColor: '#fff',
         borderWidth: 1,
-        borderColor: '#ebe0eb',
+        borderColor: '#F4E0EF',
     },
 
     title: {
