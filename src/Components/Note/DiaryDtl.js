@@ -342,10 +342,10 @@ export default class DiaryDtl extends Component {
         }
         
         return (
-            <View style={[styles.checkContent, {height: 140, marginTop: 10, marginBottom: 10}]}>
+            <View style={[styles.checkContent, {height: 180, marginTop: 10, marginBottom: 10}]}>
                 <View style={styles.rowTextField}><Text style={styles.rowText}>배변</Text></View>
                 <View style={{flex: 1}}>
-                    <View style={{height: 40, flexDirection: 'row', alignItems: 'center'}}>
+                    <View style={{height: 60, flexDirection: 'row', alignItems: 'center'}}>
                         <Picker
                             mode='dropdown'
                             style={{height: 40, flex: 1, color: '#000'}}
@@ -528,7 +528,7 @@ export default class DiaryDtl extends Component {
 
                             {this.renderShit()}
 
-                            <View style={[styles.checkContent, {height: 60, marginBottom: 20}]}>
+                            <View style={[styles.checkContent, {height: 60, marginBottom: 60}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>수면</Text></View>
                                 <View style={{flex: 1, flexDirection: 'row'}}>
                                     <View style={{flex: 0.4, height: 60}}>
