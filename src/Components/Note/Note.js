@@ -310,8 +310,7 @@ export default class Note extends Component {
                                 textDayFontSize: 16,
                                 textMonthFontSize: 16,
                                 textDayHeaderFontSize: 16,
-                                arrowColor: '#142765',
-                                dayTextColor: '#000'
+                                arrowColor: '#142765'
                             }}
                             // Initially visible month. Default = Date()
                             current={this.state.calCurrentMonth}
