@@ -306,6 +306,7 @@ export default class Note extends Component {
                                 backgroundColor: '#fff',
                                 calendarBackground: '#fff',
                                 selectedDayBackgroundColor: '#1abc9c',
+                                todayTextColor: '#1abc9c',
                                 textDayFontSize: 16,
                                 textMonthFontSize: 16,
                                 textDayHeaderFontSize: 16,
