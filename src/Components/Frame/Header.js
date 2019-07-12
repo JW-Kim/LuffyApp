@@ -33,7 +33,7 @@ export default class Header extends Component {
                             defaultValue={'My'}
                             textStyle={{fontSize: 21, fontWeight: 'bold', color: '#000'}}
                             dropdownTextStyle={{fontSize: 16, color: '#000', height: 40}}
-                            dropdownStyle={{height: 80, width: 100}}
+                            dropdownStyle={{height: 80, width: 100, borderColor: '#C2D8E9'}}
                             options={['일기장', '설정']}
                             showsVerticalScrollIndicator={false}
                             onSelect={(index, value) => this.chgSetting(value)}

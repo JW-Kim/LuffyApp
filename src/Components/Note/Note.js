@@ -142,8 +142,8 @@ export default class Note extends Component {
         let selectedDiseaseList = [];
         let isEmpty = true;
 
-        const diary = {key: 'diary', color: '#97D6C4'};
-        const disease = {key: 'disease', color: '#F4E0EF'};
+        const diary = {key: 'diary', color: '#142765'};
+        const disease = {key: 'disease', color: '#C2D8E9'};
 
         for (var i = 0; i < this.state.diary.length; i++) {
             if (this.state.diary[i].diaryDt == day) {
@@ -151,7 +151,7 @@ export default class Note extends Component {
                 markedDates["" + this.state.diary[i].diaryDt + ""] = {
                     dots: [diary],
                     selected: true,
-                    selectedColor: '#887198'
+                    selectedColor: '#1abc9c'
                 };
                 isEmpty = false;
 
@@ -167,7 +167,7 @@ export default class Note extends Component {
                     markedDates["" + this.state.disease[i].diseaseDt + ""] = {
                         dots: [disease],
                         selected: true,
-                        selectedColor: '#887198'
+                        selectedColor: '#1abc9c'
                     };
                     isEmpty = false;
                 } else {
@@ -190,7 +190,7 @@ export default class Note extends Component {
         }
 
         if(isEmpty) {
-            markedDates[day] = {selected: true, selectedColor: '#887198'};
+            markedDates[day] = {selected: true, selectedColor: '#1abc9c'};
         }
 
         this.setState({
@@ -298,17 +298,19 @@ export default class Note extends Component {
                         }}>
                         <Calendar
                             style={{
-                                borderWidth: 1,
-                                borderColor: '#C2D8E9',
-                                backgroundColor: '#C2D8E9'
+                                borderBottomWidth: 1,
+                                borderColor: '#E6ECF0',
+                                backgroundColor: '#fff'
                             }}
                             theme={{
-                                backgroundColor: '#C2D8E9',
-                                calendarBackground: '#C2D8E9',
-                                selectedDayBackgroundColor: '#142765',
+                                backgroundColor: '#fff',
+                                calendarBackground: '#fff',
+                                selectedDayBackgroundColor: '#1abc9c',
                                 textDayFontSize: 16,
                                 textMonthFontSize: 16,
-                                textDayHeaderFontSize: 16
+                                textDayHeaderFontSize: 16,
+                                arrowColor: '#142765',
+                                dayTextColor: '#000'
                             }}
                             // Initially visible month. Default = Date()
                             current={this.state.calCurrentMonth}
@@ -343,9 +345,9 @@ export default class Note extends Component {
                             markedDates={this.state.markedDates}
                             markingType={'multi-dot'}
                         />
-                        {this.state.selectedDiary == null ? <View><Text></Text></View> :
+                        {this.state.selectedDiary == null ? <View style={{height: 0}}></View> :
                             (
-                                <View style={{marginTop: 10}}>
+                                <View>
                                     <NoteDiary
                                         diaryId={this.state.selectedDiary.diaryId}
                                         noteId={this.state.noteId}
@@ -359,7 +361,7 @@ export default class Note extends Component {
                                 data={this.state.selectedDiseaseList}
                                 keyExtractor={(item, index) => index.toString()}
                                 renderItem={({item}) =>
-                                    <View style={{marginTop: 10}}>
+                                    <View>
                                         <NoteDisease
                                             diseaseId={item.diseaseId}
                                             diseaseNm={item.diseaseNm}
@@ -367,7 +369,6 @@ export default class Note extends Component {
                                             hospitalNm={item.hospitalNm}
                                             prescription={item.prescription}
                                             openDiseaseDtl={this.openDiseaseDtl.bind(this)}
-
                                         ></NoteDisease>
                                     </View>
                                 }

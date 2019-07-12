@@ -164,7 +164,7 @@ export default class NoteDiseaseDtl extends Component {
                                 ></Edit>
                             </View>
                         </View>
-                        <View style={[styles.checkContent, {height: 200}]}>
+                        <View style={[styles.checkContent, {height: 180}]}>
                             <View style={styles.rowTextField}><Text style={styles.rowText}>증상</Text></View>
                             <View style={{
                                 flex: 1,
@@ -205,7 +205,7 @@ export default class NoteDiseaseDtl extends Component {
                                 ></Edit>
                             </View>
                         </View>
-                        <View style={[styles.checkContent, {flex: 1}]}>
+                        <View style={[styles.checkContent, {flex: 1, height: 180}]}>
                             <View style={styles.rowTextField}><Text style={styles.rowText}>처방</Text></View>
                             <View style={{
                                 flex: 1,
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingLeft: 5,
-        paddingRight: 10,
+        marginBottom: 10,
     },
     textInput: {
         paddingLeft: 8,

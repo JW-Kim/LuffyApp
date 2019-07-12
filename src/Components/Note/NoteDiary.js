@@ -79,8 +79,8 @@ export default class NoteDiary extends Component {
                 <View style={{
                     flexDirection: 'column',
                     height: 60,
-                    borderWidth: 1,
-                    borderColor: '#97D6C4',
+                    borderBottomWidth: 1,
+                    borderColor: '#E6ECF0',
                     justifyContent: "center"
                 }}>
                     <View style={{
@@ -92,6 +92,7 @@ export default class NoteDiary extends Component {
                                 justifyContent: "center",
                                 marginLeft: 10
                             }}>
+                                <View style={styles.rowIcon}></View>
                             </View>
                             <View style={{
                                 flexDirection: 'column',
@@ -265,8 +266,8 @@ const styles = StyleSheet.create({
 
     content: {
         backgroundColor: '#fff',
-        borderWidth: 1,
-        borderColor: '#97D6C4',
+        borderBottomWidth: 1,
+        borderColor: '#E6ECF0',
     },
 
     rowTitle: {
@@ -293,4 +294,11 @@ const styles = StyleSheet.create({
         marginTop: 32,
         fontSize: 16
     },
+    rowIcon: {
+        width: 8,
+        height: 8,
+        borderRadius: 100 / 2,
+        borderWidth: 0.5,
+        backgroundColor: '#142765'
+    }
 })

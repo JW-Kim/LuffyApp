@@ -52,8 +52,8 @@ export default class NoteDisease extends Component {
                 <View style={{
                     flexDirection: 'column',
                     height: 60,
-                    borderWidth: 1,
-                    borderColor: '#F4E0EF',
+                    borderBottomWidth: 1,
+                    borderColor: '#E6ECF0',
                     justifyContent: "center"
                 }}>
                     <View style={{
@@ -65,6 +65,7 @@ export default class NoteDisease extends Component {
                                 justifyContent: "center",
                                 marginLeft: 10
                             }}>
+                                <View style={styles.rowIcon}></View>
                             </View>
                             <View style={{
                                 flexDirection: 'column',
@@ -121,8 +122,8 @@ const styles = StyleSheet.create({
 
     content: {
         backgroundColor: '#fff',
-        borderWidth: 1,
-        borderColor: '#F4E0EF',
+        borderBottomWidth: 1,
+        borderColor: '#E6ECF0',
     },
 
     title: {
@@ -152,5 +153,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingBottom: 16
+    },
+    rowIcon: {
+        width: 8,
+        height: 8,
+        borderRadius: 100 / 2,
+        borderWidth: 0.5,
+        backgroundColor: '#C2D8E9'
     }
 })
