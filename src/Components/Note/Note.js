@@ -274,7 +274,7 @@ export default class Note extends Component {
                 <View style={{flex: 1, alignItems: 'center', marginTop: 60}}>
                     <TouchableOpacity style={{alignItems: 'center'}} onPress={() => this.openNoteDtl()}>
                         <View><Icons name="exclamation-triangle" color="#E6ECF0" size={32}/></View>
-                        <View style={{height: 60}}><Text style={styles.rowText}>pleas add diary</Text></View>
+                        <View style={{height: 60}}><Text style={styles.rowText}>등록된 일기장이 없습니다. 일기장을 등록하세요</Text></View>
                     </TouchableOpacity>
                 </View>
             )

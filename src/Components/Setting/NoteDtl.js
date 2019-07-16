@@ -225,7 +225,7 @@ export default class NoteDtl extends Component {
                     <Button
                         buttonStyle={insertNoteDtlBtnStyle}
                         containerViewStyle={{width: '100%', marginLeft: 0, marginRight: 0}}
-                        title="save"
+                        title="저장"
                         onPress={() => this.setNote()} />
                 </View>
             </View>
