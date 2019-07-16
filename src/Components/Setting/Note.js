@@ -112,8 +112,75 @@ export default class Note extends Component {
         })
     }
 
-    closePopup() {
-        this.props.navigation.goBack();
+    renderMyDiaryList() {
+        const {myNoteList} = this.state;
+
+        if(myNoteList.length == 0) {
+            return(
+                <TouchableOpacity style={{flex: 1, alignItems: 'center', paddingTop: 30}}
+                    onPress={() => this.openNoteDtl()} >
+                    <View><Icons name="exclamation-triangle" color="E6ECF0" size={32}/></View>
+                    <View style={{height: 60}}><Text style={styles.rowText}>pleas add diary</Text></View>
+                </TouchableOpacity>
+            )
+        } else {
+            return(
+                <FlatList
+                    data={myNoteList}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({item}) =>
+                        <View style={styles.noteItem}>
+                            <View style={{flex: 0.2}}>
+                                <Text>profile</Text>
+                            </View>
+                            <TouchableOpacity style={{flex: 0.8}} onPress={() => this.openNoteDtl(item.noteId)}>
+                                <Text style={styles.rowText}>{item.userNm}</Text>
+                            </TouchableOpacity>
+                            <View style={{width: 30, flexDirection: 'row', justifyContent: 'space-between', paddingRight: 20}}>
+                                <TouchableOpacity onPress={() => this.deleteMyNote(item.userId)}>
+                                    <Icons name="minus" color="#d32f2f" size={16}/>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    }
+                />
+            )
+        }
+    }
+
+    renderShareList() {
+        const {shareList} = this.state;
+
+        if(shareList.length == 0) {
+            return(
+                <View style={{flex: 1, alignItems: 'center', paddingTop: 30}}>
+                    <View><Icons name="exclamation-triangle" color="E6ECF0" size={32}/></View>
+                    <View style={{height: 60}}><Text style={styles.rowText}>No share diary</Text></View>
+                </View>
+            )
+        } else {
+            return(
+                <FlatList
+                    data={shareList}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({item}) =>
+                        <View style={styles.noteItem}>
+                            <View style={{flex: 0.2}}>
+                                <Text>profile</Text>
+                            </View>
+                            <View style={{flex: 0.8}}>
+                                <Text style={styles.rowText}>{item.userNm}</Text>
+                            </View>
+                            <View style={{width: 30, justifyContent: 'flex-end', paddingRight: 20}}>
+                                <TouchableOpacity onPress={() => this.deleteShareNote(item.noteId)}>
+                                    <Icons name="minus" color="#d32f2f" size={16}/>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    }
+                />
+            )
+        }
     }
 
     render() {
@@ -134,53 +201,14 @@ export default class Note extends Component {
                             </TouchableOpacity>
                         </View>
                         <ScrollView style={{marginTop: 8}}>
-                            <FlatList
-                                data={this.state.myNoteList}
-                                keyExtractor={(item, index) => index.toString()}
-                                renderItem={({item}) =>
-                                    <View style={styles.noteItem}>
-                                        <View style={{flex: 0.2}}>
-                                            <Text>profile</Text>
-                                        </View>
-                                        <View style={{flex: 0.8}}>
-                                            <Text style={styles.rowText}>{item.noteNm}</Text>
-                                        </View>
-                                        <View style={{width: 60, flexDirection: 'row', justifyContent: 'space-between', paddingRight: 20}}>
-                                            <TouchableOpacity onPress={() => this.openNoteDtl(item.noteId)}>
-                                                <Icons name="share-alt" color="blue" size={16}/>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity onPress={() => this.deleteMyNote(item.noteId)}>
-                                                <Icons name="minus" color="#d32f2f" size={16}/>
-                                            </TouchableOpacity>
-                                        </View>
-                                    </View>
-                                }
-                            />
+                            {this.renderMyDiaryList()}
                         </ScrollView>
                     </View>
                     <View style={{flex: 0.5, marginTop: 20}}>
                         <Text style={styles.rowTitle}>공유 일기장</Text>
 
                         <ScrollView style={{marginTop: 8}}>
-                            <FlatList
-                                data={this.state.shareList}
-                                keyExtractor={(item, index) => index.toString()}
-                                renderItem={({item}) =>
-                                    <View style={styles.noteItem}>
-                                        <View style={{flex: 0.2}}>
-                                            <Text>profile</Text>
-                                        </View>
-                                        <View style={{flex: 0.8}}>
-                                            <Text style={styles.rowText}>{item.noteNm}</Text>
-                                        </View>
-                                        <View style={{width: 30, justifyContent: 'flex-end', paddingRight: 20}}>
-                                            <TouchableOpacity onPress={() => this.deleteShareNote(item.noteId)}>
-                                                <Icons name="minus" color="#d32f2f" size={16}/>
-                                            </TouchableOpacity>
-                                        </View>
-                                    </View>
-                                }
-                            />
+                            {this.renderShareList()}
                         </ScrollView>
                     </View>
                 </View>
@@ -200,7 +228,7 @@ const styles = StyleSheet.create({
         borderTopWidth: 0.8,
         borderRightWidth: 0.8,
         borderBottomWidth: 0.8,
-        borderColor: '#ebe0eb',
+        borderColor: '#E6ECF0',
         paddingLeft: 20
     },
     rowText: {

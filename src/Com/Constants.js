@@ -19,5 +19,14 @@ export default {
     EDIT_FOCUS_STYLE: {borderBottomWidth: 1, borderColor: '#142765'},
     EDIT_BLUR_STYLE: {borderBottomWidth: 0, borderColor: '#142765'},
     MULTI_EDIT_FOCUS_STYLE: {borderWidth: 1, borderColor: '#142765'},
-    MULTI_EDIT_BLUR_STYLE: {borderWidth: 0, borderColor: '#142765'}
+    MULTI_EDIT_BLUR_STYLE: {borderWidth: 0, borderColor: '#142765'},
+    LOADING: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
 }

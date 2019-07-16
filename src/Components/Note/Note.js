@@ -20,6 +20,7 @@ import {NavigationEvents} from "react-navigation";
 import ActionButton from 'react-native-action-button';
 import _ from 'lodash'
 import IonIcons from 'react-native-vector-icons/Ionicons';
+import Icons from 'react-native-vector-icons/FontAwesome';
 import Constants from '../../Com/Constants.js'
 import {getToken} from '../../Com/AuthToken.js';
 import ImageView from '../Com/ImageView.js'
@@ -248,7 +249,7 @@ export default class Note extends Component {
     }
 
     openNoteDtl() {
-        this.props.navigate.navigate('NoteSettingDtl', {
+        this.props.navigation.navigate('NoteSettingDtl', {
             type: 'INSERT',
             refreshFnc: this.getNote.bind(this)
         })
@@ -270,9 +271,10 @@ export default class Note extends Component {
 
         if (_.isNil(note) || note.length == 0) {
             return (
-                <View style={{flex: 1}}>
-                    <TouchableOpacity onPress={() => this.openNoteDtl()}>
-                        <Text>note insert</Text>
+                <View style={{flex: 1, alignItems: 'center', marginTop: 60}}>
+                    <TouchableOpacity style={{alignItems: 'center'}} onPress={() => this.openNoteDtl()}>
+                        <View><Icons name="exclamation-triangle" color="E6ECF0" size={32}/></View>
+                        <View style={{height: 60}}><Text style={styles.rowText}>pleas add diary</Text></View>
                     </TouchableOpacity>
                 </View>
             )

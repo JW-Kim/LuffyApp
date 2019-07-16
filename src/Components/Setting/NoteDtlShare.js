@@ -92,6 +92,42 @@ export default class NoteDtlShare extends Component {
             })
     }
 
+    renderList() {
+        const {shareList} = this.state;
+
+        if(shareList.length == 0) {
+            return(
+                <TouchableOpacity style={{flex: 1, alignItems: 'center', paddingTop: 30}}
+                    onPress={() => this.openSearchUser()} >
+                    <View><Icons name="user-plus" color="E6ECF0" size={32}/></View>
+                    <View style={{height: 60}}><Text style={styles.rowText}>pleas add share man</Text></View>
+                </TouchableOpacity>
+            )
+        } else {
+            return(
+                <FlatList
+                    data={shareList}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({item}) =>
+                        <View style={styles.noteItem}>
+                            <View style={{flex: 0.2}}>
+                                <Text>profile</Text>
+                            </View>
+                            <View style={{flex: 0.8}}>
+                                <Text style={styles.rowText}>{item.userNm}</Text>
+                            </View>
+                            <View style={{width: 30, justifyContent: 'flex-end', paddingRight: 20}}>
+                                <TouchableOpacity onPress={() => this.deleteShareUser(item.userId)}>
+                                    <Icons name="minus" color="#d32f2f" size={16}/>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    }
+                />
+            )
+        }
+    }
+
     render() {
         const {noteId} = this.props;
         const {shareList} = this.state;
@@ -108,25 +144,7 @@ export default class NoteDtlShare extends Component {
                         </TouchableOpacity>
                     </View>
                     <ScrollView style={styles.shareContent}>
-                        <FlatList
-                            data={shareList}
-                            keyExtractor={(item, index) => index.toString()}
-                            renderItem={({item}) =>
-                                <View style={styles.noteItem}>
-                                    <View style={{flex: 0.2}}>
-                                        <Text>profile</Text>
-                                    </View>
-                                    <View style={{flex: 0.8}}>
-                                        <Text style={styles.rowText}>{item.userNm}</Text>
-                                    </View>
-                                    <View style={{width: 30, justifyContent: 'flex-end', paddingRight: 20}}>
-                                        <TouchableOpacity onPress={() => this.deleteShareUser(item.userId)}>
-                                            <Icons name="minus" color="#d32f2f" size={16}/>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                            }
-                        />
+                        {this.renderList()}
                     </ScrollView>
                 </View>
             </View>
@@ -137,11 +155,6 @@ export default class NoteDtlShare extends Component {
 
 const styles = StyleSheet.create({
     shareContent: {
-        borderLeftWidth: 0.8,
-        borderTopWidth: 0.8,
-        borderRightWidth: 0.8,
-        borderBottomWidth: 0.8,
-        borderColor: '#ebe0eb',
         marginTop: 8,
         marginBottom: 20,
         flex: 1
@@ -156,7 +169,7 @@ const styles = StyleSheet.create({
         borderTopWidth: 0.8,
         borderRightWidth: 0.8,
         borderBottomWidth: 0.8,
-        borderColor: '#ebe0eb',
+        borderColor: '#E6ECF0',
         paddingLeft: 20
     },
     checkContent: {
@@ -168,7 +181,7 @@ const styles = StyleSheet.create({
         borderLeftWidth: 0.8,
         borderTopWidth: 0.8,
         borderRightWidth: 0.8,
-        borderColor: '#ebe0eb'
+        borderColor: '#E6ECF0'
     },
     rowText: {
         fontSize: 16

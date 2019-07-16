@@ -8,7 +8,8 @@ import {
     StyleSheet,
     KeyboardAvoidingView,
     ScrollView,
-    Dimensions
+    Dimensions,
+    ActivityIndicator
 } from 'react-native';
 import Image from 'react-native-scalable-image';
 import {
@@ -30,7 +31,8 @@ export default class Login extends Component {
             passwordStyle: {borderWidth: 1, borderColor: '#C2D8E9'},
             loginBtnStyle: {backgroundColor: '#C2D8E9', height: 70},
             isUsername: false,
-            isPassword: false
+            isPassword: false,
+            loading: false
         }
 
         let goUserRegister = this.goUserRegister.bind(this);
@@ -69,6 +71,8 @@ export default class Login extends Component {
             return;
         }
 
+        this.setState({loading: true});
+
         fetch('http://' + Constants.HOST + ':' + Constants.PORT + '/product/login?username=' + encodeURI(this.state.username) + '&password=' + encodeURI(this.state.password))
             .then((response) => response.json())
             .then((res) => {
@@ -80,7 +84,8 @@ export default class Login extends Component {
                         passwordStyle: {borderWidth: 1, borderColor: '#C2D8E9'},
                         loginBtnStyle: {backgroundColor: '#C2D8E9', height: 70},
                         isUsername: false,
-                        isPassword: false
+                        isPassword: false,
+                        loading: false
                     })
                     this.props.navigation.navigate('Main');
                 })
@@ -192,7 +197,7 @@ export default class Login extends Component {
     }
 
     render() {
-        const {idStyle, passwordStyle, loginBtnStyle} = this.state;
+        const {idStyle, passwordStyle, loginBtnStyle, loading} = this.state;
         return (
             <View style={{flex: 1, backgroundColor: '#fff'}}>
                 <KeyboardAvoidingView style={{flex: 1, width: '100%'}} enabled>
@@ -279,6 +284,11 @@ export default class Login extends Component {
                         </View>
                     </ScrollView>
                 </KeyboardAvoidingView>
+                {loading &&
+                    <View style={Constants.LOADING}>
+                        <ActivityIndicator size='large' color="#FF69B4"/>
+                    </View>
+                 }
             </View>
         )
     }

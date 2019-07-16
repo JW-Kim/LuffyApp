@@ -52,7 +52,7 @@ export default class UserRegister extends Component {
             emailStyle: {borderBottomWidth: 0, borderColor: '#C2D8E9'},
         }
 
-        let insertUser = this.insertUser.bind(this);
+        let uploadPhoto = this.uploadPhoto.bind(this);
         let selectPhoto = this.selectPhoto.bind(this);
         let changeUserLoginId = this.changeUserLoginId.bind(this);
         let changeUserPwd = this.changeUserPwd.bind(this);
@@ -71,7 +71,36 @@ export default class UserRegister extends Component {
             })
     }
 
-    async insertUser() {
+    async uploadPhoto() {
+        const {fileId, avatarSource} = this.state;
+
+        if (_.isNil(fileId) && !_.isNil(avatarSource)) {
+            NativeModules.FileUpload.upload(await getToken({
+                uploadUrl: `http://${Constants.HOST}:${Constants.PORT}/product/file/upload`,
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json'
+                },
+                fields: {
+                    'hello': 'world'
+                },
+                files: [{
+                    name: 'image',
+                    filename: 'file',
+                    filepath: cur.state.avatarSource.uri,
+                    filetype: 'image/jpeg'
+                }]
+
+            }), function (err, result) {
+                this.insertUser(JSON.parse(result.data).data.fileId);
+            })
+
+        } else {
+            this.insertUser()
+        }
+    }
+
+    async insertUser(fileId) {
         const {userLoginId, email, userPwd, userPwd2, userNm} = this.state;
 
         if (_.isNil(userLoginId) || _.isNil(email) || _.isNil(userPwd) || _.isNil(userPwd2) || _.isNil(userNm)
@@ -100,7 +129,8 @@ export default class UserRegister extends Component {
                 userLoginId,
                 email,
                 userPwd,
-                userNm
+                userNm,
+                fileId
             })
         }))
             .then((response) => response.json())
@@ -464,7 +494,7 @@ export default class UserRegister extends Component {
                         buttonStyle={insertUserBtnStyle}
                         containerViewStyle={{width: '100%', marginLeft: 0, marginRight: 0}}
                         title='등록'
-                        onPress={() => this.insertUser()}/>
+                        onPress={() => this.uploadPhoto()}/>
             </View>
         )
     }
