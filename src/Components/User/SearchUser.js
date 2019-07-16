@@ -73,7 +73,7 @@ export default class SearchUser extends Component {
           return (
                <View style={{ flex: 1, backgroundColor: '#fff'}}>
                     <View style={{ height: 60, flexDirection: 'row', backgroundColor: '#C2D8E9'}}>
-                         <TouchableOpacity onPress={() => this.close()}
+                         <TouchableOpacity onPress={() => this.close()}>
                              <Icons name="arrow-left" color="#142765" size={21} />
                          </TouchableOpacity>
                     </View>
@@ -82,8 +82,8 @@ export default class SearchUser extends Component {
                             placeholder="type here"
                             containerStyle={{backgroundColor: '#C2D8E9', height: 60, borderBottomColor: 'transparent', borderTopColor: 'transparent'}}
                             inputStyle={{fontSize: 21, backgroundColor: '#C2D8E9', color: '#142765', height: 60, marginTop: 0, marginBottom: 0, paddingLeft: 40}}
-                            icon={{name: 'search', style={height: 60, width: 30, fontSize: 21, marginRight: 10, color: '#142765'}}}
-                            clearIcon={{name: 'clear', style={height: 60, width: 30, fontSize: 21, color: '#142765'}}}
+                            icon={{name: 'search', style:{height: 60, width: 30, fontSize: 21, marginRight: 10, color: '#142765'}}}
+                            clearIcon={{name: 'clear', style:{height: 60, width: 30, fontSize: 21, color: '#142765'}}}
                             showLoadingIcon={showLoading}
                             onChangeText={(searchVal) => this.searchUser(searchVal) }
                             onClear={() => this.searchUser('')}
