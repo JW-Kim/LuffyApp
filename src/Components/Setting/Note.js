@@ -119,7 +119,7 @@ export default class Note extends Component {
             return(
                 <TouchableOpacity style={{flex: 1, alignItems: 'center', paddingTop: 30}}
                     onPress={() => this.openNoteDtl()} >
-                    <View><Icons name="exclamation-triangle" color="E6ECF0" size={32}/></View>
+                    <View><Icons name="exclamation-triangle" color="#E6ECF0" size={32}/></View>
                     <View style={{height: 60}}><Text style={styles.rowText}>pleas add diary</Text></View>
                 </TouchableOpacity>
             )
@@ -154,7 +154,7 @@ export default class Note extends Component {
         if(shareList.length == 0) {
             return(
                 <View style={{flex: 1, alignItems: 'center', paddingTop: 30}}>
-                    <View><Icons name="exclamation-triangle" color="E6ECF0" size={32}/></View>
+                    <View><Icons name="exclamation-triangle" color="#E6ECF0" size={32}/></View>
                     <View style={{height: 60}}><Text style={styles.rowText}>No share diary</Text></View>
                 </View>
             )

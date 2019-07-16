@@ -273,7 +273,7 @@ export default class Note extends Component {
             return (
                 <View style={{flex: 1, alignItems: 'center', marginTop: 60}}>
                     <TouchableOpacity style={{alignItems: 'center'}} onPress={() => this.openNoteDtl()}>
-                        <View><Icons name="exclamation-triangle" color="E6ECF0" size={32}/></View>
+                        <View><Icons name="exclamation-triangle" color="#E6ECF0" size={32}/></View>
                         <View style={{height: 60}}><Text style={styles.rowText}>pleas add diary</Text></View>
                     </TouchableOpacity>
                 </View>

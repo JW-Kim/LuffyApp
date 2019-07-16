@@ -72,10 +72,12 @@ export default class SearchUser extends Component {
 
           return (
                <View style={{ flex: 1, backgroundColor: '#fff'}}>
-                    <View style={{ height: 60, flexDirection: 'row', backgroundColor: '#C2D8E9'}}>
-                         <TouchableOpacity onPress={() => this.close()}>
-                             <Icons name="arrow-left" color="#142765" size={21} />
-                         </TouchableOpacity>
+                    <View style={{height: 60, flexDirection: 'row', backgroundColor: '#C2D8E9'}}>
+                        <View style={{ width: 60, alignItems: 'center', justifyContent: 'center'}}>
+                            <TouchableOpacity onPress={() => this.close()}>
+                                 <Icons name="arrow-left" color="#142765" size={21} />
+                             </TouchableOpacity>
+                        </View>
                     </View>
                     <View style={{flex:1}}>
                         <SearchBar

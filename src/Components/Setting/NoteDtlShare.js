@@ -99,7 +99,7 @@ export default class NoteDtlShare extends Component {
             return(
                 <TouchableOpacity style={{flex: 1, alignItems: 'center', paddingTop: 30}}
                     onPress={() => this.openSearchUser()} >
-                    <View><Icons name="user-plus" color="E6ECF0" size={32}/></View>
+                    <View><Icons name="user-plus" color="#E6ECF0" size={32}/></View>
                     <View style={{height: 60}}><Text style={styles.rowText}>pleas add share man</Text></View>
                 </TouchableOpacity>
             )
