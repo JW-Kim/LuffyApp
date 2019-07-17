@@ -132,7 +132,7 @@ export default class Note extends Component {
                     renderItem={({item}) =>
                         <View style={styles.noteItem}>
                             <View style={{flex: 0.2}}>
-                                <Profile fileId={fileId} />
+                                <Profile fileId={item.fileId} />
                             </View>
                             <TouchableOpacity style={{flex: 0.8}} onPress={() => this.openNoteDtl(item.noteId)}>
                                 <Text style={styles.rowText}>{item.noteNm}</Text>
