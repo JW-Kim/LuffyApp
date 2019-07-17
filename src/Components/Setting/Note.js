@@ -14,6 +14,7 @@ import ModalHeader from '../Com/ModalHeader.js';
 import Constants from '../../Com/Constants.js';
 import {getToken} from '../../Com/AuthToken.js';
 import ModalStandardHeader from '../Com/ModalStandardHeader'
+import Profile from '../Com/Profile';
 import Toast from 'react-native-toast-native';
 import Icons from 'react-native-vector-icons/FontAwesome';
 import _ from 'lodash';
@@ -131,7 +132,7 @@ export default class Note extends Component {
                     renderItem={({item}) =>
                         <View style={styles.noteItem}>
                             <View style={{flex: 0.2}}>
-                                <Text>profile</Text>
+                                <Profile fileId={fileId} />
                             </View>
                             <TouchableOpacity style={{flex: 0.8}} onPress={() => this.openNoteDtl(item.noteId)}>
                                 <Text style={styles.rowText}>{item.noteNm}</Text>
@@ -166,7 +167,7 @@ export default class Note extends Component {
                     renderItem={({item}) =>
                         <View style={styles.noteItem}>
                             <View style={{flex: 0.2}}>
-                                <Text>profile</Text>
+                                <Profile fileId={item.fileId} />
                             </View>
                             <View style={{flex: 0.8}}>
                                 <Text style={styles.rowText}>{item.noteNm}</Text>

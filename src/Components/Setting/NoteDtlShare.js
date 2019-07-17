@@ -13,6 +13,7 @@ import Icons from 'react-native-vector-icons/FontAwesome';
 import Constants from '../../Com/Constants.js';
 import {getToken} from '../../Com/AuthToken.js';
 import Toast from 'react-native-toast-native';
+import Profile from '../Com/Profile';
 
 export default class NoteDtlShare extends Component {
 
@@ -111,7 +112,7 @@ export default class NoteDtlShare extends Component {
                     renderItem={({item}) =>
                         <View style={styles.noteItem}>
                             <View style={{flex: 0.2}}>
-                                <Text>profile</Text>
+                                <Profile fileId={item.fileId} />
                             </View>
                             <View style={{flex: 0.8}}>
                                 <Text style={styles.rowText}>{item.userNm}</Text>

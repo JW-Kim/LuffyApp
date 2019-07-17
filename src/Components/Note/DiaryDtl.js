@@ -296,7 +296,7 @@ export default class DiaryDtl extends Component {
 
        if(avatarSource !== null) {
            return(
-               <View>
+               <View style={{marginBottom: 20}}>
                    <Image width={Dimensions.get('window').width - 20} source={this.state.avatarSource}/>
                </View>
            )
@@ -304,7 +304,7 @@ export default class DiaryDtl extends Component {
 
        if(fileId !== null) {
            return (
-               <View>
+               <View style={{marginBottom: 20}}>
                    <ImageView fileId={this.state.fileId} width={Dimensions.get('window').width - 20}></ImageView>
                </View>
            )

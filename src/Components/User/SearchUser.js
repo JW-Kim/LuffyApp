@@ -18,6 +18,7 @@ import Icons from 'react-native-vector-icons/FontAwesome';
 import Constants from '../../Com/Constants.js';
 import { getToken } from '../../Com/AuthToken.js';
 import Toast from 'react-native-toast-native';
+import Profile from '../Com/Profile';
 
 export default class SearchUser extends Component {
      constructor(props) {
@@ -100,7 +101,7 @@ export default class SearchUser extends Component {
                                   <TouchableOpacity onPress={() => this.selectedUser(item.userId)}>
                                        <View style={styles.noteItem}>
                                             <View style={{ flex: 0.2 }}>
-                                                 <Text>profile</Text>
+                                                 <Profile fileId={item.fileId} />
                                             </View>
                                             <View style={{ flex: 0.6 }}>
                                                  <Text style={styles.rowText}>{item.userNm}</Text>

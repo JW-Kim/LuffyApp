@@ -91,7 +91,8 @@ export default class Login extends Component {
                 })
             })
             .catch((error) => {
-                console.error(error);
+                this.setState({loading: false})
+                Toast.show('id, password are incorrect', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
             });
     }
 
