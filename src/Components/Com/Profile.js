@@ -23,7 +23,7 @@ export default class Profile extends Component {
     componentWillMount() {
         var cur = this;
 
-        const (fileId) = this.props;
+        const {fileId} = this.props;
 
         AsyncStorage.getItem('access_token', (err, result) => {
             RNFetchBlob.fetch('GET', 'http://' + Constants.HOST + ':' + Constants.PORT + '/product/file/download?fileId=' + fileId, {
