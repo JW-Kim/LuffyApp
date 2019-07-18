@@ -503,7 +503,7 @@ export default class UserRegister extends Component {
         return (
             <View style={{flex: 1, backgroundColor: '#fff'}}>
                 <KeyboardAvoidingView style={{flex: 1, width: '100%'}} enabled>
-                    <ModalStandardHeader title={type === 'INSERT' ? "회원가입" : 'userInfo'} navigation={navigation}/>
+                    <ModalStandardHeader title={type === 'INSERT' ? "회원가입" : '사용자 정보'} navigation={navigation}/>
                     <ScrollView style={{backgroundColor: '#fff', height: Dimensions.get('window').height - 140}}>
                         <View style={styles.mainView}>
                             {this.renderProfileRow()}
