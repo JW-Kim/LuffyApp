@@ -43,8 +43,8 @@ export default class Setting extends Component {
                 <TouchableOpacity style={styles.row} onPress={() => this.goUserRegister()}>
                     <View style={ComCss.rowTextField}><Text style={ComCss.rowText}>User Info</Text></View>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.row} onPress={() => this.goUserRegister()}>
-                    <View style={ComCss.rowTextField}><Text style={ComCss.rowText}logout</Text></View>
+                <TouchableOpacity style={styles.row} onPress={() => this.logout()}>
+                    <View style={ComCss.rowTextField}><Text style={ComCss.rowText}>logout</Text></View>
                 </TouchableOpacity>
             </View>
         )

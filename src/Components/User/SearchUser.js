@@ -99,7 +99,7 @@ export default class SearchUser extends Component {
                              keyExtractor={(item, index) => index.toString()}
                              renderItem={({item, index}) =>
                                   <TouchableOpacity onPress={() => this.selectedUser(item.userId)}>
-                                       <View style={[styles.noteItem}, index === 0 && {borderTopWidth: 0.8, borderColor: '#E6ECF0'}]>
+                                       <View style={[styles.noteItem, index == 0 && {borderTopWidth: 0.8, borderColor: '#E6ECF0'}]}>
                                             <View style={{ flex: 0.2 }}>
                                                  <Profile fileId={item.fileId} />
                                             </View>
