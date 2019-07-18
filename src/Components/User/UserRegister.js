@@ -77,11 +77,11 @@ export default class UserRegister extends Component {
     save() {
         const {type, fileId, avatarSource} = this.state;
 
-        if(type === 'INSERT') {
+        if (type === 'INSERT') {
             this.insertUser();
 
         } else {
-            if(_.isNil(fileId) && !_.isNil(avatarSource)) {
+            if (_.isNil(fileId) && !_.isNil(avatarSource)) {
                 this.uploadPhoto();
             } else {
                 this.updateUser();
@@ -92,25 +92,25 @@ export default class UserRegister extends Component {
     async uploadPhoto() {
         const {avatarSource} = this.state;
 
-            NativeModules.FileUpload.upload(await getToken({
-                uploadUrl: `http://${Constants.HOST}:${Constants.PORT}/product/file/upload`,
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json'
-                },
-                fields: {
-                    'hello': 'world'
-                },
-                files: [{
-                    name: 'image',
-                    filename: 'file',
-                    filepath: avatarSource.uri,
-                    filetype: 'image/jpeg'
-                }]
+        NativeModules.FileUpload.upload(await getToken({
+            uploadUrl: `http://${Constants.HOST}:${Constants.PORT}/product/file/upload`,
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json'
+            },
+            fields: {
+                'hello': 'world'
+            },
+            files: [{
+                name: 'image',
+                filename: 'file',
+                filepath: avatarSource.uri,
+                filetype: 'image/jpeg'
+            }]
 
-            }), function (err, result) {
-                this.updateUser(JSON.parse(result.data).data.fileId);
-            })
+        }), function (err, result) {
+            this.updateUser(JSON.parse(result.data).data.fileId);
+        })
     }
 
     async insertUser(fileId) {
@@ -209,11 +209,11 @@ export default class UserRegister extends Component {
         const cur = this;
         let isUserLoginId = true;
 
-        if(!chkId(userLoginId) || userLoginId === '') {
+        if (!chkId(userLoginId) || userLoginId === '') {
             isUserLoginId = false;
         }
 
-        this.setState({userLoginId, isUserLoginId}, () =>{
+        this.setState({userLoginId, isUserLoginId}, () => {
             cur.checkInsertBtnStyle();
         })
     }
@@ -226,19 +226,19 @@ export default class UserRegister extends Component {
         let isEqualPwd = true;
         let isCorrectPwd = true;
 
-        if(chkKor(userPwd) || userPwd === '') {
+        if (chkKor(userPwd) || userPwd === '') {
             isUserPwd = false;
         }
 
-        if(userPwd !== userPwd2) {
+        if (userPwd !== userPwd2) {
             isEqualPwd = false;
         }
 
-        if(!(chkSpecialStr(userPwd) && chkEng(userPwd) && chkNum(userPwd) && userPwd.length >= 6 && userPwd.length <= 12 )) {
+        if (!(chkSpecialStr(userPwd) && chkEng(userPwd) && chkNum(userPwd) && userPwd.length >= 6 && userPwd.length <= 12 )) {
             isCorrectPwd = false;
         }
 
-        this.setState({userPwd, isUserPwd, isEqualPwd, isCorrectPwd}, () =>{
+        this.setState({userPwd, isUserPwd, isEqualPwd, isCorrectPwd}, () => {
             cur.checkInsertBtnStyle();
         })
     }
@@ -250,15 +250,15 @@ export default class UserRegister extends Component {
         let isUserPwd2 = true;
         let isEqualPwd = true;
 
-        if(chkKor(userPwd2) || userPwd2 === '') {
+        if (chkKor(userPwd2) || userPwd2 === '') {
             isUserPwd2 = false;
         }
 
-        if(userPwd !== userPwd2) {
+        if (userPwd !== userPwd2) {
             isEqualPwd = false;
         }
 
-        this.setState({userPwd2, isUserPwd2, isEqualPwd}, () =>{
+        this.setState({userPwd2, isUserPwd2, isEqualPwd}, () => {
             cur.checkInsertBtnStyle();
         })
     }
@@ -267,11 +267,11 @@ export default class UserRegister extends Component {
         const cur = this;
         let isUserNm = true;
 
-        if(chkSpecialStr(userNm) || userNm === '') {
+        if (chkSpecialStr(userNm) || userNm === '') {
             isUserNm = false;
         }
 
-        this.setState({userNm, isUserNm}, () =>{
+        this.setState({userNm, isUserNm}, () => {
             cur.checkInsertBtnStyle();
         })
     }
@@ -280,11 +280,11 @@ export default class UserRegister extends Component {
         const cur = this;
         let isEmail = true;
 
-        if(!chkEmail(email) || email === '') {
+        if (!chkEmail(email) || email === '') {
             isEmail = false;
         }
 
-        this.setState({email, isEmail}, () =>{
+        this.setState({email, isEmail}, () => {
             cur.checkInsertBtnStyle();
         })
     }
@@ -292,90 +292,90 @@ export default class UserRegister extends Component {
     renderIdCheckText() {
         const {userLoginId, isUserLoginId} = this.state;
 
-        if(userLoginId !== '' && !isUserLoginId) {
+        if (userLoginId !== '' && !isUserLoginId) {
             return (
                 <View style={styles.checkTextView}>
-                    <Icons name="exclamation-circle" color="#d32f2f" size={14} />
-                    <Text style={styles.checkText}>id는영문자, 숫자만 가능합니다.</Text>
+                    <Icons name="exclamation-circle" color="#d32f2f" size={14}/>
+                    <Text style={styles.checkText}>id는 영문자, 숫자만 가능합니다.</Text>
                 </View>
             )
         }
 
-        return(<View><Text></Text></View>)
+        return (<View><Text></Text></View>)
     }
 
     renderPwCheckText() {
         const {userPwd, isUserPwd, isCorrectPwd} = this.state;
 
-        if(userPwd !== '' && !isUserPwd) {
+        if (userPwd !== '' && !isUserPwd) {
             return (
                 <View style={styles.checkTextView}>
-                    <Icons name="exclamation-circle" color="#d32f2f" size={14} />
+                    <Icons name="exclamation-circle" color="#d32f2f" size={14}/>
                     <Text style={styles.checkText}>PASSWORD는 영문자, 숫자, 특수문자만 가능합니다.</Text>
                 </View>
             )
-        } else if(userPwd !== '' && !isCorrectPwd) {
+        } else if (userPwd !== '' && !isCorrectPwd) {
             return (
                 <View style={styles.checkTextView}>
-                    <Icons name="exclamation-circle" color="#d32f2f" size={14} />
+                    <Icons name="exclamation-circle" color="#d32f2f" size={14}/>
                     <Text style={styles.checkText}>PW 조건을 확인하시기 바랍니다.</Text>
                 </View>
             )
         }
 
-        return(<View><Text></Text></View>)
+        return (<View><Text></Text></View>)
     }
 
     renderPw2CheckText() {
         const {userPwd, userPwd2, isUserPwd2, isEqualPwd} = this.state;
 
-        if(userPwd2 !== '' && !isUserPwd2) {
+        if (userPwd2 !== '' && !isUserPwd2) {
             return (
                 <View style={styles.checkTextView}>
-                    <Icons name="exclamation-circle" color="#d32f2f" size={14} />
+                    <Icons name="exclamation-circle" color="#d32f2f" size={14}/>
                     <Text style={styles.checkText}>PASSWORD는 영문자, 숫자, 특수문자만 가능합니다.</Text>
                 </View>
             )
-        } else if(!isEqualPwd && !(userPwd === '' && userPwd2 === '')) {
+        } else if (!isEqualPwd && !(userPwd === '' && userPwd2 === '')) {
             return (
                 <View style={styles.checkTextView}>
-                    <Icons name="exclamation-circle" color="#d32f2f" size={14} />
+                    <Icons name="exclamation-circle" color="#d32f2f" size={14}/>
                     <Text style={styles.checkText}>패스워드가 일치하지 않습니다.</Text>
                 </View>
             )
         }
 
-        return(<View><Text></Text></View>)
+        return (<View><Text></Text></View>)
     }
 
     renderUserNmCheckText() {
         const {userNm, isUserNm} = this.state;
 
-        if(userNm !== '' && !isUserNm) {
+        if (userNm !== '' && !isUserNm) {
             return (
                 <View style={styles.checkTextView}>
-                    <Icons name="exclamation-circle" color="#d32f2f" size={14} />
+                    <Icons name="exclamation-circle" color="#d32f2f" size={14}/>
                     <Text style={styles.checkText}>이름은 한글, 영문자만 가능합니다.</Text>
                 </View>
             )
         }
 
-        return(<View><Text></Text></View>)
+        return (<View><Text></Text></View>)
     }
 
     renderEmailCheckText() {
         const {email, isEmail} = this.state;
 
-        if(email !== '' && !isEmail) {
+        if (email !== '' && !isEmail) {
             return (
                 <View style={styles.checkTextView}>
-                    <Icons name="exclamation-circle" color="#d32f2f" size={14} />
+                    <Icons name="exclamation-circle" color="#d32f2f" size={14}/>
                     <Text style={styles.checkText}>이메일 형식이 맞지 않습니다.</Text>
                 </View>
             )
         }
 
-        return(<View><Text></Text></View>)
+        return (<View><Text></Text></View>)
     }
 
     renderProfile() {
@@ -394,52 +394,52 @@ export default class UserRegister extends Component {
     renderProfileRow() {
         const {type} = this.state;
 
-        if(type === 'INSERT') {
+        if (type === 'INSERT') {
             return;
         }
 
-        return(
-                            <View style={styles.profile}>
-                                <View style={styles.profileImage} onPress={() => this.selectPhoto()}>
-                                    {this.renderProfile()}
-                                </View>
-                                <View style={styles.selectPhotoRow}>
-                                    <TouchableOpacity onPress={() => this.selectPhoto()}>
-                                        <Text style={{fontSize: 14}}>selectPhoto</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
+        return (
+            <View style={styles.profile}>
+                <View style={styles.profileImage} onPress={() => this.selectPhoto()}>
+                    {this.renderProfile()}
+                </View>
+                <View style={styles.selectPhotoRow}>
+                    <TouchableOpacity onPress={() => this.selectPhoto()}>
+                        <Text style={{fontSize: 14}}>사진 선택</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
         )
     }
 
     renderIdRow() {
         const {type, idStyle, userLoginId} = this.state;
 
-        if(type === 'UPDATE') {
-                                   <View style={styles.row}>
-                                        <View style={styles.rowTextField}><Text style={styles.rowText}>아이디</Text></View>
-                                        <View></View>
-                                    </View>
+        if (type === 'UPDATE') {
+            <View style={styles.row}>
+                <View style={styles.rowTextField}><Text style={styles.rowText}>아이디</Text></View>
+                <View></View>
+            </View>
         }
 
         return (
             <View style={{width: '100%'}}>
-                           <View style={styles.row}>
-                                <View style={styles.rowTextField}><Text style={styles.rowText}>아이디</Text></View>
-                                <Edit
-                                    height="60"
-                                    style={[styles.textInput, idStyle]}
-                                    underlineColorAndroid="transparent"
-                                    placeholder="영문/숫자 6~12자"
-                                    autoCompleteType="off"
-                                    secureTextEntry={false}
-                                    onChangeText={(userLoginId) => this.changeUserLoginId(userLoginId)}
-                                    onFocus={() => this.setState({idStyle: {borderBottomWidth: 1, borderColor: '#C2D8E9'}})}
-                                    onBlur={() => this.setState({idStyle: {borderBottomWidth: 0, borderColor: '#C2D8E9'}})}
-                                    value={userLoginId}>
-                                </Edit>
-                            </View>
-                            {this.renderIdCheckText()}
+                <View style={styles.row}>
+                    <View style={styles.rowTextField}><Text style={styles.rowText}>아이디</Text></View>
+                    <Edit
+                        height="60"
+                        style={[styles.textInput, idStyle]}
+                        underlineColorAndroid="transparent"
+                        placeholder="영문/숫자 6~12자"
+                        autoCompleteType="off"
+                        secureTextEntry={false}
+                        onChangeText={(userLoginId) => this.changeUserLoginId(userLoginId)}
+                        onFocus={() => this.setState({idStyle: {borderBottomWidth: 1, borderColor: '#C2D8E9'}})}
+                        onBlur={() => this.setState({idStyle: {borderBottomWidth: 0, borderColor: '#C2D8E9'}})}
+                        value={userLoginId}>
+                    </Edit>
+                </View>
+                {this.renderIdCheckText()}
             </View>
         )
     }
@@ -447,44 +447,44 @@ export default class UserRegister extends Component {
     renderPasswordRow() {
         const {type, userPwdStyle, userPwd2Style, userPwd, userPwd2} = this.state;
 
-        if(type === 'UPDATE') {
+        if (type === 'UPDATE') {
             return;
         }
 
         return (
             <View style={{width: '100%'}}>
-                            <View style={styles.row}>
-                                <View style={styles.rowTextField}><Text style={styles.rowText}>비밀번호</Text></View>
-                                <Edit
-                                    height="60"
-                                    style={[styles.textInput, userPwdStyle]}
-                                    underlineColorAndroid="transparent"
-                                    placeholder="영문/숫자/특수기호 조합 6~12자"
-                                    autoCompleteType="password"
-                                    secureTextEntry={true}
-                                    onChangeText={(userPwd) => this.changeUserPwd(userPwd)}
-                                    onFocus={() => this.setState({userPwdStyle: {borderBottomWidth: 1, borderColor: '#C2D8E9'}})}
-                                    onBlur={() => this.setState({userPwdStyle: {borderBottomWidth: 0, borderColor: '#C2D8E9'}})}
-                                    value={userPwd}>
-                                </Edit>
-                            </View>
-                            {this.renderPwCheckText()}
-                            <View style={styles.row}>
-                                <View style={styles.rowTextField}><Text style={styles.rowText}>비밀번호 확인</Text></View>
-                                <Edit
-                                    height="60"
-                                    style={[styles.textInput, userPwd2Style]}
-                                    underlineColorAndroid="transparent"
-                                    placeholder="비밀번호 확인"
-                                    autoCompleteType="password"
-                                    secureTextEntry={true}
-                                    onChangeText={(userPwd2) => this.changeUserPwd2(userPwd2)}
-                                    onFocus={() => this.setState({userPwd2Style: {borderBottomWidth: 1, borderColor: '#C2D8E9'}})}
-                                    onBlur={() => this.setState({userPwd2Style: {borderBottomWidth: 0, borderColor: '#C2D8E9'}})}
-                                    value={userPwd2}>
-                                </Edit>
-                            </View>
-                            {this.renderPw2CheckText()}
+                <View style={styles.row}>
+                    <View style={styles.rowTextField}><Text style={styles.rowText}>비밀번호</Text></View>
+                    <Edit
+                        height="60"
+                        style={[styles.textInput, userPwdStyle]}
+                        underlineColorAndroid="transparent"
+                        placeholder="영문/숫자/특수기호 조합 6~12자"
+                        autoCompleteType="password"
+                        secureTextEntry={true}
+                        onChangeText={(userPwd) => this.changeUserPwd(userPwd)}
+                        onFocus={() => this.setState({userPwdStyle: {borderBottomWidth: 1, borderColor: '#C2D8E9'}})}
+                        onBlur={() => this.setState({userPwdStyle: {borderBottomWidth: 0, borderColor: '#C2D8E9'}})}
+                        value={userPwd}>
+                    </Edit>
+                </View>
+                {this.renderPwCheckText()}
+                <View style={styles.row}>
+                    <View style={styles.rowTextField}><Text style={styles.rowText}>비밀번호 확인</Text></View>
+                    <Edit
+                        height="60"
+                        style={[styles.textInput, userPwd2Style]}
+                        underlineColorAndroid="transparent"
+                        placeholder="비밀번호 확인"
+                        autoCompleteType="password"
+                        secureTextEntry={true}
+                        onChangeText={(userPwd2) => this.changeUserPwd2(userPwd2)}
+                        onFocus={() => this.setState({userPwd2Style: {borderBottomWidth: 1, borderColor: '#C2D8E9'}})}
+                        onBlur={() => this.setState({userPwd2Style: {borderBottomWidth: 0, borderColor: '#C2D8E9'}})}
+                        value={userPwd2}>
+                    </Edit>
+                </View>
+                {this.renderPw2CheckText()}
             </View>
         )
     }
@@ -519,8 +519,18 @@ export default class UserRegister extends Component {
                                     autoCompleteType="off"
                                     secureTextEntry={false}
                                     onChangeText={(userNm) => this.changeUserNm(userNm)}
-                                    onFocus={() => this.setState({userNmStyle: {borderBottomWidth: 1, borderColor: '#C2D8E9'}})}
-                                    onBlur={() => this.setState({userNmStyle: {borderBottomWidth: 0, borderColor: '#C2D8E9'}})}
+                                    onFocus={() => this.setState({
+                                        userNmStyle: {
+                                            borderBottomWidth: 1,
+                                            borderColor: '#C2D8E9'
+                                        }
+                                    })}
+                                    onBlur={() => this.setState({
+                                        userNmStyle: {
+                                            borderBottomWidth: 0,
+                                            borderColor: '#C2D8E9'
+                                        }
+                                    })}
                                     value={userNm}>
                                 </Edit>
                             </View>
@@ -535,8 +545,18 @@ export default class UserRegister extends Component {
                                     autoCompleteType="off"
                                     secureTextEntry={false}
                                     onChangeText={(email) => this.changeEmail(email)}
-                                    onFocus={() => this.setState({emailStyle: {borderBottomWidth: 1, borderColor: '#C2D8E9'}})}
-                                    onBlur={() => this.setState({emailStyle: {borderBottomWidth: 0, borderColor: '#C2D8E9'}})}
+                                    onFocus={() => this.setState({
+                                        emailStyle: {
+                                            borderBottomWidth: 1,
+                                            borderColor: '#C2D8E9'
+                                        }
+                                    })}
+                                    onBlur={() => this.setState({
+                                        emailStyle: {
+                                            borderBottomWidth: 0,
+                                            borderColor: '#C2D8E9'
+                                        }
+                                    })}
                                     value={email}>
                                 </Edit>
                             </View>
@@ -544,11 +564,11 @@ export default class UserRegister extends Component {
                         </View>
                     </ScrollView>
                 </KeyboardAvoidingView>
-                    <Button
-                        buttonStyle={insertUserBtnStyle}
-                        containerViewStyle={{width: '100%', marginLeft: 0, marginRight: 0}}
-                        title='등록'
-                        onPress={() => this.save()}/>
+                <Button
+                    buttonStyle={insertUserBtnStyle}
+                    containerViewStyle={{width: '100%', marginLeft: 0, marginRight: 0}}
+                    title='등록'
+                    onPress={() => this.save()}/>
             </View>
         )
     }

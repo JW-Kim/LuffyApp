@@ -39,12 +39,12 @@ export default class Setting extends Component {
 
         return (
             <View style={{flex: 1, backgroundColor: '#fff'}}>
-                <ModalStandardHeader title="setting" navigation={navigation} />
+                <ModalStandardHeader title="설정" navigation={navigation} />
                 <TouchableOpacity style={styles.row} onPress={() => this.goUserRegister()}>
-                    <View style={ComCss.rowTextField}><Text style={ComCss.rowText}>User Info</Text></View>
+                    <View style={ComCss.rowTextField}><Text style={ComCss.rowText}>사용자 정보</Text></View>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.row} onPress={() => this.logout()}>
-                    <View style={ComCss.rowTextField}><Text style={ComCss.rowText}>logout</Text></View>
+                    <View style={ComCss.rowTextField}><Text style={ComCss.rowText}>로그아웃</Text></View>
                 </TouchableOpacity>
             </View>
         )
