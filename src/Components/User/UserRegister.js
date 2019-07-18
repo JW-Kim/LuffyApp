@@ -25,11 +25,14 @@ import Edit from '../Com/Edit'
 import ImageView from '../Com/ImageView.js';
 import ImagePicker from 'react-native-image-picker';
 import Icons from 'react-native-vector-icons/FontAwesome';
+import NativeModules from 'NativeModules';
 
 export default class UserRegister extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            type: this.props.navigation.getParam('type'),
+            userId: this.props.navigation.getParam('userId'),
             userLoginId: '',
             userPwd: '',
             userPwd2: '',
@@ -45,14 +48,14 @@ export default class UserRegister extends Component {
             isEqualPwd: false,
             isCorrectPwd: false,
             insertUserBtnStyle: {backgroundColor: '#C2D8E9', height: 60},
-            idSytle: {borderBottomWidth: 0, borderColor: '#C2D8E9'},
+            idStyle: {borderBottomWidth: 0, borderColor: '#C2D8E9'},
             userPwdStyle: {borderBottomWidth: 0, borderColor: '#C2D8E9'},
             userPwd2Style: {borderBottomWidth: 0, borderColor: '#C2D8E9'},
             userNmStyle: {borderBottomWidth: 0, borderColor: '#C2D8E9'},
             emailStyle: {borderBottomWidth: 0, borderColor: '#C2D8E9'},
         }
 
-        let uploadPhoto = this.uploadPhoto.bind(this);
+        let save = this.save.bind(this);
         let selectPhoto = this.selectPhoto.bind(this);
         let changeUserLoginId = this.changeUserLoginId.bind(this);
         let changeUserPwd = this.changeUserPwd.bind(this);
@@ -71,10 +74,24 @@ export default class UserRegister extends Component {
             })
     }
 
-    async uploadPhoto() {
-        const {fileId, avatarSource} = this.state;
+    save() {
+        const {type, fileId, avatarSource} = this.state;
 
-        if (_.isNil(fileId) && !_.isNil(avatarSource)) {
+        if(type === 'INSERT') {
+            this.insertUser();
+
+        } else {
+            if(_.isNil(fileId) && !_.isNil(avatarSource)) {
+                this.uploadPhoto();
+            } else {
+                this.updateUser();
+            }
+        }
+    }
+
+    async uploadPhoto() {
+        const {avatarSource} = this.state;
+
             NativeModules.FileUpload.upload(await getToken({
                 uploadUrl: `http://${Constants.HOST}:${Constants.PORT}/product/file/upload`,
                 method: 'POST',
@@ -87,17 +104,13 @@ export default class UserRegister extends Component {
                 files: [{
                     name: 'image',
                     filename: 'file',
-                    filepath: cur.state.avatarSource.uri,
+                    filepath: avatarSource.uri,
                     filetype: 'image/jpeg'
                 }]
 
             }), function (err, result) {
-                this.insertUser(JSON.parse(result.data).data.fileId);
+                this.updateUser(JSON.parse(result.data).data.fileId);
             })
-
-        } else {
-            this.insertUser()
-        }
     }
 
     async insertUser(fileId) {
@@ -129,8 +142,7 @@ export default class UserRegister extends Component {
                 userLoginId,
                 email,
                 userPwd,
-                userNm,
-                fileId
+                userNm
             })
         }))
             .then((response) => response.json())
@@ -142,6 +154,10 @@ export default class UserRegister extends Component {
                 Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
                 this.props.navigation.navigate('Login')
             })
+    }
+
+    updateUser(fileId) {
+
     }
 
     selectPhoto() {
@@ -375,44 +391,68 @@ export default class UserRegister extends Component {
         return (<Text></Text>)
     }
 
-    render() {
-        const {navigation} = this.props;
-        const {
-            userLoginId,
-            userPwd,
-            userPwd2,
-            userNm,
-            email,
-            insertUserBtnStyle,
-            idSytle,
-            userPwdStyle,
-            userPwd2Style,
-            userNmStyle,
-            emailStyle
-        } = this.state;
+    renderProfileRow() {
+        const {type} = this.state;
+
+        if(type === 'INSERT') {
+            return;
+        }
+
+        return(
+                            <View style={styles.profile}>
+                                <View style={styles.profileImage} onPress={() => this.selectPhoto()}>
+                                    {this.renderProfile()}
+                                </View>
+                                <View style={styles.selectPhotoRow}>
+                                    <TouchableOpacity onPress={() => this.selectPhoto()}>
+                                        <Text style={{fontSize: 14}}>selectPhoto</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+        )
+    }
+
+    renderIdRow() {
+        const {type, idStyle, userLoginId} = this.state;
+
+        if(type === 'UPDATE') {
+                                   <View style={styles.row}>
+                                        <View style={styles.rowTextField}><Text style={styles.rowText}>아이디</Text></View>
+                                        <View></View>
+                                    </View>
+        }
 
         return (
-            <View style={{flex: 1, backgroundColor: '#fff'}}>
-                <KeyboardAvoidingView style={{flex: 1, width: '100%'}} enabled>
-                    <ModalStandardHeader title="회원가입" navigation={navigation}/>
-                    <ScrollView style={{backgroundColor: '#fff', height: Dimensions.get('window').height - 140}}>
-                        <View style={styles.mainView}>
-                            <View style={styles.row}>
+            <View style={{width: '100%'}}>
+                           <View style={styles.row}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>아이디</Text></View>
                                 <Edit
                                     height="60"
-                                    style={[styles.textInput, idSytle]}
+                                    style={[styles.textInput, idStyle]}
                                     underlineColorAndroid="transparent"
                                     placeholder="영문/숫자 6~12자"
                                     autoCompleteType="off"
                                     secureTextEntry={false}
                                     onChangeText={(userLoginId) => this.changeUserLoginId(userLoginId)}
-                                    onFocus={() => this.setState({idSytle: {borderBottomWidth: 1, borderColor: '#C2D8E9'}})}
-                                    onBlur={() => this.setState({idSytle: {borderBottomWidth: 0, borderColor: '#C2D8E9'}})}
+                                    onFocus={() => this.setState({idStyle: {borderBottomWidth: 1, borderColor: '#C2D8E9'}})}
+                                    onBlur={() => this.setState({idStyle: {borderBottomWidth: 0, borderColor: '#C2D8E9'}})}
                                     value={userLoginId}>
                                 </Edit>
                             </View>
                             {this.renderIdCheckText()}
+            </View>
+        )
+    }
+
+    renderPasswordRow() {
+        const {type, userPwdStyle, userPwd2Style, userPwd, userPwd2} = this.state;
+
+        if(type === 'UPDATE') {
+            return;
+        }
+
+        return (
+            <View style={{width: '100%'}}>
                             <View style={styles.row}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>비밀번호</Text></View>
                                 <Edit
@@ -445,6 +485,30 @@ export default class UserRegister extends Component {
                                 </Edit>
                             </View>
                             {this.renderPw2CheckText()}
+            </View>
+        )
+    }
+
+    render() {
+        const {navigation} = this.props;
+        const {
+            type,
+            userNm,
+            email,
+            insertUserBtnStyle,
+            userNmStyle,
+            emailStyle
+        } = this.state;
+
+        return (
+            <View style={{flex: 1, backgroundColor: '#fff'}}>
+                <KeyboardAvoidingView style={{flex: 1, width: '100%'}} enabled>
+                    <ModalStandardHeader title={type === 'INSERT' ? "회원가입" : 'userInfo'} navigation={navigation}/>
+                    <ScrollView style={{backgroundColor: '#fff', height: Dimensions.get('window').height - 140}}>
+                        <View style={styles.mainView}>
+                            {this.renderProfileRow()}
+                            {this.renderIdRow()}
+                            {this.renderPasswordRow()}
                             <View style={styles.row}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>이름</Text></View>
                                 <Edit
@@ -477,16 +541,6 @@ export default class UserRegister extends Component {
                                 </Edit>
                             </View>
                             {this.renderEmailCheckText()}
-                            <View style={styles.profile}>
-                                <View style={styles.profileImage} onPress={() => this.selectPhoto()}>
-                                    {this.renderProfile()}
-                                </View>
-                                <View style={styles.selectPhotoRow}>
-                                    <TouchableOpacity onPress={() => this.selectPhoto()}>
-                                        <Text style={{fontSize: 14}}>selectPhoto</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
                         </View>
                     </ScrollView>
                 </KeyboardAvoidingView>
@@ -494,7 +548,7 @@ export default class UserRegister extends Component {
                         buttonStyle={insertUserBtnStyle}
                         containerViewStyle={{width: '100%', marginLeft: 0, marginRight: 0}}
                         title='등록'
-                        onPress={() => this.uploadPhoto()}/>
+                        onPress={() => this.save()}/>
             </View>
         )
     }

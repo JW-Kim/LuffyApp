@@ -121,7 +121,7 @@ export default class Note extends Component {
                 <TouchableOpacity style={{flex: 1, alignItems: 'center', paddingTop: 30}}
                     onPress={() => this.openNoteDtl()} >
                     <View><Icons name="exclamation-triangle" color="#E6ECF0" size={32}/></View>
-                    <View style={{height: 60}}><Text style={styles.rowText}>등록된 일기장이 없습니다. 일기장을 등록하세요</Text></View>
+                    <View style={{height: 60}}><Text style={[styles.rowText, {color: '#E6ECF0'}]}>등록된 일기장이 없습니다. 일기장을 등록하세요</Text></View>
                 </TouchableOpacity>
             )
         } else {
@@ -129,8 +129,8 @@ export default class Note extends Component {
                 <FlatList
                     data={myNoteList}
                     keyExtractor={(item, index) => index.toString()}
-                    renderItem={({item}) =>
-                        <View style={styles.noteItem}>
+                    renderItem={({item, index}) =>
+                        <View style={[styles.noteItem, index == 0 && {borderTopWidth: 0.8, borderColor: '#E6ECF0'}]}>
                             <View style={{flex: 0.2}}>
                                 <Profile fileId={item.fileId} />
                             </View>
@@ -156,7 +156,7 @@ export default class Note extends Component {
             return(
                 <View style={{flex: 1, alignItems: 'center', paddingTop: 30}}>
                     <View><Icons name="exclamation-triangle" color="#E6ECF0" size={32}/></View>
-                    <View style={{height: 60}}><Text style={styles.rowText}>공유된 일기장이 없습니다.</Text></View>
+                    <View style={{height: 60}}><Text style={[styles.rowText, {color: '#E6ECF0'}]}>공유된 일기장이 없습니다.</Text></View>
                 </View>
             )
         } else {
@@ -164,8 +164,8 @@ export default class Note extends Component {
                 <FlatList
                     data={shareList}
                     keyExtractor={(item, index) => index.toString()}
-                    renderItem={({item}) =>
-                        <View style={styles.noteItem}>
+                    renderItem={({item, index}) =>
+                        <View style={[styles.noteItem, index == 0 && {borderTopWidth: 0.8, borderColor: '#E6ECF0'}]}>
                             <View style={{flex: 0.2}}>
                                 <Profile fileId={item.fileId} />
                             </View>
@@ -225,9 +225,6 @@ const styles = StyleSheet.create({
         height: 60,
         alignItems: 'center',
         justifyContent: 'space-between',
-        borderLeftWidth: 0.8,
-        borderTopWidth: 0.8,
-        borderRightWidth: 0.8,
         borderBottomWidth: 0.8,
         borderColor: '#E6ECF0',
         paddingLeft: 20

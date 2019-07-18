@@ -97,9 +97,9 @@ export default class SearchUser extends Component {
                         <FlatList
                              data={userList}
                              keyExtractor={(item, index) => index.toString()}
-                             renderItem={({item}) =>
+                             renderItem={({item, index}) =>
                                   <TouchableOpacity onPress={() => this.selectedUser(item.userId)}>
-                                       <View style={styles.noteItem}>
+                                       <View style={[styles.noteItem}, index === 0 && {borderTopWidth: 0.8, borderColor: '#E6ECF0'}]>
                                             <View style={{ flex: 0.2 }}>
                                                  <Profile fileId={item.fileId} />
                                             </View>
@@ -131,9 +131,6 @@ const styles = StyleSheet.create({
         height: 60,
         alignItems: 'center',
         justifyContent: 'space-between',
-        borderLeftWidth: 0.8,
-        borderTopWidth: 0.8,
-        borderRightWidth: 0.8,
         borderBottomWidth: 0.8,
         borderColor: '#E6ECF0',
         paddingLeft: 20

@@ -101,7 +101,7 @@ export default class NoteDtlShare extends Component {
                 <TouchableOpacity style={{flex: 1, alignItems: 'center', paddingTop: 30}}
                     onPress={() => this.openSearchUser()} >
                     <View><Icons name="user-plus" color="#E6ECF0" size={32}/></View>
-                    <View style={{height: 60}}><Text style={styles.rowText}>일기장을 공유할 사람을 등록하세요.</Text></View>
+                    <View style={{height: 60}}><Text style={[styles.rowText, {color: '#E6ECF0'}]}>일기장을 공유할 사람을 등록하세요.</Text></View>
                 </TouchableOpacity>
             )
         } else {
@@ -109,8 +109,8 @@ export default class NoteDtlShare extends Component {
                 <FlatList
                     data={shareList}
                     keyExtractor={(item, index) => index.toString()}
-                    renderItem={({item}) =>
-                        <View style={styles.noteItem}>
+                    renderItem={({item, index}) =>
+                        <View style={[styles.noteItem, index == 0 && {borderTopWidth: 0.8, borderColor: '#E6ECF0'}]}>
                             <View style={{flex: 0.2}}>
                                 <Profile fileId={item.fileId} />
                             </View>
@@ -166,9 +166,6 @@ const styles = StyleSheet.create({
         height: 60,
         alignItems: 'center',
         justifyContent: 'space-between',
-        borderLeftWidth: 0.8,
-        borderTopWidth: 0.8,
-        borderRightWidth: 0.8,
         borderBottomWidth: 0.8,
         borderColor: '#E6ECF0',
         paddingLeft: 20
@@ -179,9 +176,7 @@ const styles = StyleSheet.create({
         paddingLeft: 5,
         paddingRight: 10,
         justifyContent: 'space-between',
-        borderLeftWidth: 0.8,
         borderTopWidth: 0.8,
-        borderRightWidth: 0.8,
         borderColor: '#E6ECF0'
     },
     rowText: {
