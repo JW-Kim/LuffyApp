@@ -255,12 +255,6 @@ export default class UserRegister extends Component {
                 this.setState({insertUserBtnStyle: {backgroundColor: '#C2D8E9', height: 60}})
             }
         }
-
-        if (isUserLoginId && isUserPwd && isUserPwd2 && isUserNm && isEmail && isEqualPwd) {
-            this.setState({insertUserBtnStyle: {backgroundColor: '#142765', height: 60}})
-        } else {
-            this.setState({insertUserBtnStyle: {backgroundColor: '#C2D8E9', height: 60}})
-        }
     }
 
     changeUserLoginId(userLoginId) {
