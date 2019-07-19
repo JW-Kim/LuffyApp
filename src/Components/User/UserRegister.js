@@ -64,6 +64,29 @@ export default class UserRegister extends Component {
         let changeEmail = this.changeEmail.bind(this);
     }
 
+    componentWillMount() {
+        const {type}} = this.state;
+
+        if(type === 'UPDATE') {
+            this.getUserInfo();
+        }
+    }
+
+    async getUserInfo() {
+        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/user/info`, await getToken())
+            .then((response) => response.json())
+            .then((res) => {
+                this.setState({
+                    userLoginId: res.data.userLoginId,
+                    userNm: res.data.userNm,
+                    email: res.data.email,
+                    fileId: res.data.fileId,
+                    isUserNm: true,
+                    isEmail: true
+                })
+            })
+    }
+
     async selectUserExist() {
         const {userLoginId, email} = this.state;
 
@@ -157,7 +180,28 @@ export default class UserRegister extends Component {
     }
 
     updateUser(fileId) {
+        const {userId, email, userNm} = this.state;
 
+        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/user/${userId}`, await getToken({
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email,
+                userNm,
+                fileId
+            })
+        }))
+            .then((response) => response.json())
+            .then((res) => {
+                Toast.show('note share', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                this.props.navigation.goBack();
+            })
+            .catch((error) => {
+                Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                this.props.navigation.navigate('Login')
+            })
     }
 
     selectPhoto() {
@@ -196,7 +240,21 @@ export default class UserRegister extends Component {
     }
 
     checkInsertBtnStyle() {
-        const {isUserLoginId, isUserPwd, isUserPwd2, isUserNm, isEmail, isEqualPwd} = this.state;
+        const {type, isUserLoginId, isUserPwd, isUserPwd2, isUserNm, isEmail, isEqualPwd} = this.state;
+
+        if(type === 'INSERT') {
+            if (isUserLoginId && isUserPwd && isUserPwd2 && isUserNm && isEmail && isEqualPwd) {
+                this.setState({insertUserBtnStyle: {backgroundColor: '#142765', height: 60}})
+            } else {
+                this.setState({insertUserBtnStyle: {backgroundColor: '#C2D8E9', height: 60}})
+            }
+        } else {
+            if (isUserNm && isEmail) {
+                this.setState({insertUserBtnStyle: {backgroundColor: '#142765', height: 60}})
+            } else {
+                this.setState({insertUserBtnStyle: {backgroundColor: '#C2D8E9', height: 60}})
+            }
+        }
 
         if (isUserLoginId && isUserPwd && isUserPwd2 && isUserNm && isEmail && isEqualPwd) {
             this.setState({insertUserBtnStyle: {backgroundColor: '#142765', height: 60}})
@@ -392,23 +450,23 @@ export default class UserRegister extends Component {
     }
 
     renderProfileRow() {
-        const {type} = this.state;
+        const {type, userNm} = this.state;
 
         if (type === 'INSERT') {
             return;
         }
 
         return (
-            <View style={styles.profile}>
+            <TouchableOpacity style={styles.profile} onPress={() => this.selectPhoto()}>
                 <View style={styles.profileImage} onPress={() => this.selectPhoto()}>
                     {this.renderProfile()}
                 </View>
                 <View style={styles.selectPhotoRow}>
-                    <TouchableOpacity onPress={() => this.selectPhoto()}>
-                        <Text style={{fontSize: 14}}>사진 선택</Text>
-                    </TouchableOpacity>
+                    <View>
+                        <Text style={styles.rowText}>{userNm}</Text>
+                    </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     }
 
@@ -416,10 +474,14 @@ export default class UserRegister extends Component {
         const {type, idStyle, userLoginId} = this.state;
 
         if (type === 'UPDATE') {
-            <View style={styles.row}>
-                <View style={styles.rowTextField}><Text style={styles.rowText}>아이디</Text></View>
-                <View></View>
-            </View>
+            return (
+                <View style={{width: '100%'}}>
+                    <View style={styles.row}>
+                        <View style={styles.rowTextField}><Text style={styles.rowText}>아이디</Text></View>
+                        <View style={{flex: 1}}><Text style={styles.rowText}>{userLoginId}</Text></View>
+                    </View>
+                </View>
+            )
         }
 
         return (
