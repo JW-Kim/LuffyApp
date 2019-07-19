@@ -65,7 +65,7 @@ export default class UserRegister extends Component {
     }
 
     componentWillMount() {
-        const {type}} = this.state;
+        const {type} = this.state;
 
         if(type === 'UPDATE') {
             this.getUserInfo();
@@ -179,7 +179,7 @@ export default class UserRegister extends Component {
             })
     }
 
-    updateUser(fileId) {
+    async updateUser(fileId) {
         const {userId, email, userNm} = this.state;
 
         fetch(`http://${Constants.HOST}:${Constants.PORT}/product/user/${userId}`, await getToken({
