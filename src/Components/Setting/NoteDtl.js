@@ -35,7 +35,8 @@ export default class NoteDtl extends Component {
             sex: null,
             birthDt: null,
             insertNoteDtlBtnStyle: {backgroundColor: '#C2D8E9', height: 60},
-            noteNmStyle: {borderBottomWidth: 0, borderColor: '#C2D8E9'}
+            noteNmStyle: {borderBottomWidth: 0, borderColor: '#C2D8E9'},
+            shareList: []
         }
 
         let setNote = this.setNote.bind(this);
@@ -75,6 +76,8 @@ export default class NoteDtl extends Component {
 
 
     async insertNote() {
+        const {shareList} = this.state;
+
         fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note`, await getToken({
             method: 'POST',
             headers: {
@@ -83,16 +86,16 @@ export default class NoteDtl extends Component {
             body: JSON.stringify({
                 noteNm: this.state.noteNm == null ? '' : this.state.noteNm,
                 sex: this.state.sex == null ? '' : this.state.sex,
-                birthDt: this.state.birthDt == null ? '' : this.state.birthDt
+                birthDt: this.state.birthDt == null ? '' : this.state.birthDt,
+                shareList
             })
         }))
             .then((response) => response.json())
-            .then((responseJson) => {
+            .then((res) => {
                 Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
                 let refreshFnc = this.props.navigation.getParam('refreshFnc');
                 refreshFnc();
                 this.props.navigation.goBack();
-                console.log(responseJson)
             })
             .catch((error) => {
                 Toast.show('정보 저장을 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
@@ -132,7 +135,7 @@ export default class NoteDtl extends Component {
 
     render() {
         const {navigation} = this.props;
-        const {noteId, insertNoteDtlBtnStyle, noteNmStyle} = this.state;
+        const {noteId, insertNoteDtlBtnStyle, noteNmStyle, type} = this.state;
 
         return (
             <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -218,7 +221,7 @@ export default class NoteDtl extends Component {
                                 </View>
                             </KeyboardAvoidingView>
                         </View>
-                        <NoteDtlShare noteId={noteId} navigation={this.props.navigation}/>
+                        <NoteDtlShare noteId={noteId} navigation={this.props.navigation} type={type} setShareList={(shareList) => this.setState({shareList})} />
                     </View>
                 </View>
                 <View style={{height:60}}>

@@ -14,6 +14,7 @@ import Constants from '../../Com/Constants.js';
 import {getToken} from '../../Com/AuthToken.js';
 import Toast from 'react-native-toast-native';
 import Profile from '../Com/Profile';
+import _ from 'lodash'
 
 export default class NoteDtlShare extends Component {
 
@@ -48,20 +49,30 @@ export default class NoteDtlShare extends Component {
     }
 
     async deleteShareUser(userId) {
-        const {noteId} = this.props;
+        const {noteId, type, setShareList} = this.props;
+        const {shareList} = this.state;
 
-        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/${noteId}/share/user?userId=${userId}`, await getToken({
-            method: 'DELETE'
-        }))
-            .then((response) => response.json())
-            .then((res) => {
-                this.getShareNoteList()
-                Toast.show('note delete', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
-            })
-            .catch((error) => {
-                Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
-                this.props.navigation.navigate('Login')
-            })
+        if(type === 'UPDATE') {
+            fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/${noteId}/share/user?userId=${userId}`, await getToken({
+                method: 'DELETE'
+            }))
+                .then((response) => response.json())
+                .then((res) => {
+                    this.getShareNoteList()
+                    Toast.show('note delete', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                })
+                .catch((error) => {
+                    Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                    this.props.navigation.navigate('Login')
+                })
+
+        } else {
+            const {shareList} = this.state;
+            let tmpShareList = _.reject(shareList, {userId});
+
+            this.setState({shareList: tmpShareList});
+            setShareList(shareList);
+        }
     }
 
     openSearchUser() {
@@ -70,27 +81,40 @@ export default class NoteDtlShare extends Component {
         })
     }
 
-    async insertShareUser(userId) {
-        const {noteId} = this.props;
+    async insertShareUser(userId, userNm, fileId) {
+        const {noteId, type, setShareList} = this.props;
+        const {shareList} = this.state;
 
-        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/${noteId}/share/user`, await getToken({
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                userId: userId
-            })
-        }))
-            .then((response) => response.json())
-            .then((res) => {
-                this.getShareNoteList()
-                Toast.show('note share', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
-            })
-            .catch((error) => {
-                Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
-                this.props.navigation.navigate('Login')
-            })
+        if(type === 'UPDATE') {
+            fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/${noteId}/share/user`, await getToken({
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userId: userId
+                })
+            }))
+                .then((response) => response.json())
+                .then((res) => {
+                    this.getShareNoteList()
+                    Toast.show('note share', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                })
+                .catch((error) => {
+                    Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                    this.props.navigation.navigate('Login')
+                })
+
+        } else {
+            const {shareList} = this.state;
+            let tmpShareList = _.clone(shareList);
+            const share = {userId, userNm, fileId};
+
+            tmpShareList.push(share);
+
+            this.setState({shareList: tmpShareList});
+            setShareList(tmpShareList);
+        }
     }
 
     renderList() {

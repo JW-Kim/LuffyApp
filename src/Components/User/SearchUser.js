@@ -62,9 +62,9 @@ export default class SearchUser extends Component {
          this.props.navigation.goBack();
      }
 
-     selectedUser(userId) {
+     selectedUser(userId, userNm, fileId) {
           let insertShareUser = this.props.navigation.getParam('insertShareUser');
-          insertShareUser(userId);
+          insertShareUser(userId, userNm, fileId);
           this.props.navigation.goBack();
      }
 
@@ -98,7 +98,7 @@ export default class SearchUser extends Component {
                              data={userList}
                              keyExtractor={(item, index) => index.toString()}
                              renderItem={({item, index}) =>
-                                  <TouchableOpacity onPress={() => this.selectedUser(item.userId)}>
+                                  <TouchableOpacity onPress={() => this.selectedUser(item.userId, item.userNm, item.fileId)}>
                                        <View style={[styles.noteItem, index == 0 && {borderTopWidth: 0.8, borderColor: '#E6ECF0'}]}>
                                             <View style={{ flex: 0.2 }}>
                                                  <Profile fileId={item.fileId} />
