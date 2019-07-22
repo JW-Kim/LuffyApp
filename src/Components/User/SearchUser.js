@@ -81,7 +81,7 @@ export default class SearchUser extends Component {
                         </View>
                         <View style={{flex:1}}>
                             <SearchBar
-                                placeholder="type here"
+                                placeholder="검색어를 입력하세요."
                                 containerStyle={{backgroundColor: '#C2D8E9', height: 60, borderBottomColor: 'transparent', borderTopColor: 'transparent'}}
                                 inputStyle={{fontSize: 21, backgroundColor: '#C2D8E9', color: '#142765', height: 60, marginTop: 0, marginBottom: 0, paddingLeft: 40}}
                                 icon={{name: 'search', style:{height: 60, width: 30, fontSize: 21, marginRight: 10, color: '#142765'}}}

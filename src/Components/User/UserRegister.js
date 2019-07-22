@@ -47,6 +47,7 @@ export default class UserRegister extends Component {
             isEmail: false,
             isEqualPwd: false,
             isCorrectPwd: false,
+            isProfile: false,
             insertUserBtnStyle: {backgroundColor: '#C2D8E9', height: 60},
             idStyle: {borderBottomWidth: 0, borderColor: '#C2D8E9'},
             userPwdStyle: {borderBottomWidth: 0, borderColor: '#C2D8E9'},
@@ -82,7 +83,8 @@ export default class UserRegister extends Component {
                     email: res.data.email,
                     fileId: res.data.fileId,
                     isUserNm: true,
-                    isEmail: true
+                    isEmail: true,
+                    isProfile: true,
                 })
             })
     }
@@ -113,6 +115,7 @@ export default class UserRegister extends Component {
     }
 
     async uploadPhoto() {
+        var cur = this;
         const {avatarSource} = this.state;
 
         NativeModules.FileUpload.upload(await getToken({
@@ -132,7 +135,7 @@ export default class UserRegister extends Component {
             }]
 
         }), function (err, result) {
-            this.updateUser(JSON.parse(result.data).data.fileId);
+            cur.updateUser(JSON.parse(result.data).data.fileId);
         })
     }
 
@@ -195,7 +198,7 @@ export default class UserRegister extends Component {
         }))
             .then((response) => response.json())
             .then((res) => {
-                Toast.show('note share', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                Toast.show('프로필이 업로드 되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
                 this.props.navigation.goBack();
             })
             .catch((error) => {
@@ -205,6 +208,7 @@ export default class UserRegister extends Component {
     }
 
     selectPhoto() {
+        var cur = this;
         const options = {
             quality: 1.0,
             maxWidth: 500,
@@ -233,14 +237,17 @@ export default class UserRegister extends Component {
                 this.setState({
                     avatarSource: source,
                     base64: response.data,
-                    fileId: null
-                });
+                    fileId: null,
+                    isProfile: true
+                }, () => {
+                     cur.checkInsertBtnStyle();
+                 })
             }
         });
     }
 
     checkInsertBtnStyle() {
-        const {type, isUserLoginId, isUserPwd, isUserPwd2, isUserNm, isEmail, isEqualPwd} = this.state;
+        const {type, isUserLoginId, isUserPwd, isUserPwd2, isUserNm, isEmail, isEqualPwd, isProfile} = this.state;
 
         if(type === 'INSERT') {
             if (isUserLoginId && isUserPwd && isUserPwd2 && isUserNm && isEmail && isEqualPwd) {
@@ -249,7 +256,7 @@ export default class UserRegister extends Component {
                 this.setState({insertUserBtnStyle: {backgroundColor: '#C2D8E9', height: 60}})
             }
         } else {
-            if (isUserNm && isEmail) {
+            if (isUserNm && isEmail && isProfile) {
                 this.setState({insertUserBtnStyle: {backgroundColor: '#142765', height: 60}})
             } else {
                 this.setState({insertUserBtnStyle: {backgroundColor: '#C2D8E9', height: 60}})

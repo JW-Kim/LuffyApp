@@ -80,7 +80,7 @@ export default class Note extends Component {
             .then((response) => response.json())
             .then((res) => {
                 this.getMyNoteList();
-                Toast.show('note delete', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                Toast.show('일기장을 삭제하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
 
             })
             .catch((error) => {
@@ -96,7 +96,7 @@ export default class Note extends Component {
             .then((response) => response.json())
             .then((res) => {
                 this.getShareNoteList();
-                Toast.show('note delete', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                Toast.show('일기장을 삭제하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
 
             })
             .catch((error) => {
@@ -138,7 +138,7 @@ export default class Note extends Component {
                                 <Text style={styles.rowText}>{item.noteNm}</Text>
                             </TouchableOpacity>
                             <View style={{width: 30, flexDirection: 'row', justifyContent: 'space-between', paddingRight: 20}}>
-                                <TouchableOpacity onPress={() => this.deleteMyNote(item.userId)}>
+                                <TouchableOpacity onPress={() => this.deleteMyNote(item.noteId)}>
                                     <Icons name="minus" color="#d32f2f" size={16}/>
                                 </TouchableOpacity>
                             </View>
