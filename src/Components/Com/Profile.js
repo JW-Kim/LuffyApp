@@ -44,6 +44,33 @@ export default class Profile extends Component {
         })
     }
 
+    componentWillReceiveProps(nextProps) {
+        var cur = this;
+
+        const {fileId} = this.props;
+
+        if(nextProps.fileId != fileId) {
+            AsyncStorage.getItem('access_token', (err, result) => {
+                RNFetchBlob.fetch('GET', 'http://' + Constants.HOST + ':' + Constants.PORT + '/product/file/download?fileId=' + nextProps.fileId, {
+                    'Authorization': 'Bearer ' + result
+                })
+                // when response status code is 200
+                    .then((res) => {
+                        let base64Str = res.base64();
+                        let imageBase64 = 'data:image/jpeg;base64,' + base64Str;
+                        cur.setState({
+                            base64Str: imageBase64
+                        })
+                    })
+                    .catch((errorMessage, statusCode) => {
+
+                    })
+
+            })
+        }
+
+    }
+
     render() {
         const { fileId } = this.props;
         const {base64Str} = this.state;

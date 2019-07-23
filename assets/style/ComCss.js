@@ -16,4 +16,12 @@ export default {
     rowText: {
         fontSize: 16
     },
+    activeBtn: {
+        backgroundColor: '#142765',
+        height: 60
+    },
+    inActiveBtn: {
+        backgroundColor: '#C2D8E9',
+        height: 60
+    }
 }

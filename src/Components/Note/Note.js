@@ -27,7 +27,7 @@ import ImageView from '../Com/ImageView.js'
 import NoteDiary from './NoteDiary.js'
 import NoteDisease from './NoteDisease.js'
 import Header from '../Frame/Header.js'
-
+import Profile from '../Com/Profile';
 import Toast from 'react-native-toast-native';
 
 export default class Note extends Component {
@@ -40,6 +40,7 @@ export default class Note extends Component {
         this.state = {
             note: [],
             noteId: null,
+            fileId: null,
             selectedDay: null,
             calCurrentMonth: null
         }
@@ -77,6 +78,7 @@ export default class Note extends Component {
                         cur.setState({
                             note: res.data,
                             noteId: res.data[0].noteId,
+                            fileId: res.data[0].fileId,
                             selectedDay: day,
                             calCurrentMonth: day,
                             diaryDt: diaryDt
@@ -241,8 +243,13 @@ export default class Note extends Component {
 
 
     changeNote(noteId) {
+        const {note} = this.state;
+
+        const nt = _.find(note, {noteId});
+
         this.setState({
-            noteId: noteId
+            noteId: noteId,
+            fileId: nt.fileId
         }, () => {
             this.getNote();
         })
@@ -267,7 +274,7 @@ export default class Note extends Component {
     }
 
     renderNote() {
-        const {note} = this.state;
+        const {note, fileId} = this.state;
 
         if (_.isNil(note) || note.length == 0) {
             return (
@@ -283,14 +290,22 @@ export default class Note extends Component {
                 <View style={{flex: 1}}>
                     <View style={{marginTop: 10, marginLeft: 15, height: 50}}>
                         {this.state.note == null ? <Text></Text> :
-                            <Picker
-                                mode='dropdown'
-                                selectedValue={this.state.noteId}
-                                style={{height: 50, width: 200, color: '#000'}}
-                                onValueChange={(itemValue, itemIndex) => this.changeNote(itemValue)}
-                            >
-                                {this.renderNoteList()}
-                            </Picker>
+                            <View style={{width: '100%', flexDirection: 'row', alignItems: 'center'}}>
+                                <View style={{width: 50, alignItems: 'center'}}>
+                                    <Profile fileId={fileId} />
+                                </View>
+                                <View style={{flex: 1, justifyContent: 'center'}}>
+                                    <Picker
+                                        mode='dropdown'
+                                        selectedValue={this.state.noteId}
+                                        style={{height: 50, width: 200, color: '#000'}}
+                                        onValueChange={(itemValue, itemIndex) => this.changeNote(itemValue)}
+                                    >
+                                        {this.renderNoteList()}
+                                    </Picker>
+                                </View>
+                            </View>
+
                         }
                     </View>
                     <ScrollView
