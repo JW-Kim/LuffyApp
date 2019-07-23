@@ -86,7 +86,7 @@ export default class NoteDtl extends Component {
     async setNote() {
         const {fileId, avatarSource, type} = this.state;
 
-        if(_.isNil(fileId) && !.isNil(avatarSource)) {
+        if(_.isNil(fileId) && !_.isNil(avatarSource)) {
             await this.uploadPhoto();
         }
 
