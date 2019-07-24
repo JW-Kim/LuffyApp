@@ -459,10 +459,17 @@ export default class Note extends Component {
                 <View style={{backgroundColor: 'white', padding: 10, flex: 1}}>
                     <NavigationEvents
                         onWillFocus={payload => {
-                            this.setState({noteId: null}, () => {
-                                this.getNote()
-                            });
+                            console.log('willFocus', payload)
+                            this.getNote()
                         }}
+                        onDidFocus={payload => console.log('did focus',payload)}
+                        onWillBlur={payload => {
+                            console.log('willBlur', payload)
+                            if(payload.action.routeName === "NoteSetting"){
+                                this.setState({noteId: null});
+                            }
+                        }}
+                        onDidBlur={payload => console.log('did blur',payload)}
                     />
                     {this.renderNote()}
                 </View>
