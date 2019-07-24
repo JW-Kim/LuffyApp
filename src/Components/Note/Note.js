@@ -8,7 +8,9 @@ import {
     ActivityIndicator,
     TouchableOpacity,
     ScrollView,
-    FlatList
+    FlatList,
+    BackHandler,
+    ToastAndroid
 } from 'react-native';
 import {
     Calendar,
@@ -56,8 +58,31 @@ export default class Note extends Component {
             dayNamesShort: ['일', '월', '화', '수', '목', '금', '토']
         };
 
-
         LocaleConfig.defaultLocale = 'kr';
+
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+    }
+
+    componentWillUnMount() {
+        this.exitApp = false;
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+    }
+
+    handleBackButton = () => {
+        if (this.exitApp == undefined || !this.exitApp) {
+            ToastAndroid.show('If you press back button one more , the app will exit', ToastAndroid.SHORT);
+            this.exitApp = true;
+
+            this.timeout = setTimeout(() => {
+                this.exitApp = false;
+            }, 2000)
+
+        } else {
+            clearTimeout(this.timeout);
+            BackHandler.exitApp();
+        }
+
+        return true;
     }
 
     async getNote() {
@@ -434,7 +459,9 @@ export default class Note extends Component {
                 <View style={{backgroundColor: 'white', padding: 10, flex: 1}}>
                     <NavigationEvents
                         onWillFocus={payload => {
-                            this.getNote()
+                            this.setState({noteId: null}, () => {
+                                this.getNote()
+                            });
                         }}
                     />
                     {this.renderNote()}
