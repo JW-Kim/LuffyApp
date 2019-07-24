@@ -190,7 +190,6 @@ export default class NoteDtl extends Component {
             }]
 
         }), function (err, result) {
-            console.log('upload', err, result, JSON.parse(result.data).data.fileId)
             cur.setState({fileId: JSON.parse(result.data).data.fileId});
 
             if (type == 'INSERT') {
