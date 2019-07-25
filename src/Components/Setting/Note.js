@@ -137,9 +137,9 @@ export default class Note extends Component {
                             <TouchableOpacity style={{flex: 0.8}} onPress={() => this.openNoteDtl(item.noteId)}>
                                 <Text style={styles.rowText}>{item.noteNm}</Text>
                             </TouchableOpacity>
-                            <View style={{width: 30, flexDirection: 'row', justifyContent: 'space-between', paddingRight: 20}}>
+                            <View style={{width: 30, flexDirection: 'row', justifyContent: 'flex-end', marginRight: 7}}>
                                 <TouchableOpacity onPress={() => this.deleteMyNote(item.noteId)}>
-                                    <Icons name="minus" color="#d32f2f" size={16}/>
+                                    <Icons name="minus-circle" color="#d32f2f" size={21}/>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -172,9 +172,9 @@ export default class Note extends Component {
                             <View style={{flex: 0.8}}>
                                 <Text style={styles.rowText}>{item.noteNm}</Text>
                             </View>
-                            <View style={{width: 30, justifyContent: 'flex-end', paddingRight: 20}}>
+                            <View style={{width: 30, justifyContent: 'flex-end', flexDirection: 'row', marginRight: 7}}>
                                 <TouchableOpacity onPress={() => this.deleteShareNote(item.noteId)}>
-                                    <Icons name="minus" color="#d32f2f" size={16}/>
+                                    <Icons name="minus-circle" color="#d32f2f" size={21}/>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -198,7 +198,7 @@ export default class Note extends Component {
                             <TouchableOpacity style={{width: 30, justifyContent: 'flex-end', alignItems: 'center'}}
                                               onPress={() => this.openNoteDtl()}
                             >
-                                <Icons name='plus' color='#00cc00' size={18}/>
+                                <Icons name='plus-circle' color='#4caf50' size={21}/>
                             </TouchableOpacity>
                         </View>
                         <ScrollView style={{marginTop: 8}}>

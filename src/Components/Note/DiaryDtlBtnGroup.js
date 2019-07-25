@@ -27,17 +27,17 @@ export default class DiaryDtlBtnGroup extends Component {
 
         if(code != null) {
             let selectedIndex = 0;
-            let selectedButtonStyle = {backgroundColor: '#33cc33'}
+            let selectedButtonStyle = {backgroundColor: '#4caf50'}
 
             if(code === 'good') {
                 selectedIndex = 0;
-                selectedButtonStyle = {backgroundColor: '#33cc33'}
+                selectedButtonStyle = {backgroundColor: '#4caf50'}
             } else if (code === 'notBad') {
                 selectedIndex = 1;
-                selectedButtonStyle = {backgroundColor: '#ff8c00'}
+                selectedButtonStyle = {backgroundColor: '#f9a825'}
             } else if (code === 'bad') {
                 selectedIndex = 2;
-                selectedButtonStyle = {backgroundColor: '#ff471a'}
+                selectedButtonStyle = {backgroundColor: '#d32f2f'}
             }
             this.setState({selectedIndex, selectedButtonStyle})
         }
@@ -48,17 +48,17 @@ export default class DiaryDtlBtnGroup extends Component {
 
         if(nextProps.code != code && nextProps.code != '' && nextProps.code != null) {
             let selectedIndex = 0;
-            let selectedButtonStyle = {backgroundColor: '#33cc33'}
+            let selectedButtonStyle = {backgroundColor: '#4caf50'}
 
             if(nextProps.code === 'good') {
                 selectedIndex = 0;
-                selectedButtonStyle = {backgroundColor: '#33cc33'}
+                selectedButtonStyle = {backgroundColor: '#4caf50'}
             } else if (nextProps.code === 'notBad') {
                 selectedIndex = 1;
-                selectedButtonStyle = {backgroundColor: '#ff8c00'}
+                selectedButtonStyle = {backgroundColor: '#f9a825'}
             } else if (nextProps.code === 'bad') {
                 selectedIndex = 2;
-                selectedButtonStyle = {backgroundColor: '#ff471a'}
+                selectedButtonStyle = {backgroundColor: '#d32f2f'}
             }
             this.setState({selectedIndex, selectedButtonStyle})
         }

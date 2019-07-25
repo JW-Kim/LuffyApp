@@ -84,18 +84,18 @@ export default class NoteDtl extends Component {
     }
 
     async setNote() {
-        const {fileId, avatarSource, type} = this.state;
-
+        const {avatarSource, type} = this.state;
+        let fileId = null;
         if(_.isNil(fileId) && !_.isNil(avatarSource)) {
             await this.uploadPhoto();
-        }
 
-        if (this.state.type == 'INSERT') {
-            this.insertNote();
+        } else {
+            if (this.state.type == 'INSERT') {
+                this.insertNote();
 
-        } else if (this.state.type == 'UPDATE') {
-            this.updateNote();
-
+            } else if (this.state.type == 'UPDATE') {
+                this.updateNote();
+            }
         }
     }
 
@@ -137,7 +137,7 @@ export default class NoteDtl extends Component {
 
     async updateNote() {
         const {noteId, fileId, isNoteNm, isSex, isBirthDt, isProfile} = this.state;
-
+        console.log('updateNote', fileId)
         if(!(isNoteNm || isSex || isBirthDt || isProfile)) {
             Toast.show('all input', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
             return;
@@ -171,7 +171,7 @@ export default class NoteDtl extends Component {
 
     async uploadPhoto() {
         var cur = this;
-        const {avatarSource} = this.state;
+        const {avatarSource, type} = this.state;
 
         NativeModules.FileUpload.upload(await getToken({
             uploadUrl: `http://${Constants.HOST}:${Constants.PORT}/product/file/upload`,
@@ -191,7 +191,13 @@ export default class NoteDtl extends Component {
 
         }), function (err, result) {
             cur.setState({fileId: JSON.parse(result.data).data.fileId});
-            return JSON.parse(result.data).data.fileId;
+
+            if (type == 'INSERT') {
+                cur.insertNote();
+
+            } else if (type == 'UPDATE') {
+                cur.updateNote();
+            }
         })
     }
 

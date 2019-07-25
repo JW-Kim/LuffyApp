@@ -141,9 +141,9 @@ export default class NoteDtlShare extends Component {
                             <View style={{flex: 0.8}}>
                                 <Text style={styles.rowText}>{item.userNm}</Text>
                             </View>
-                            <View style={{width: 30, justifyContent: 'flex-end', paddingRight: 20}}>
+                            <View style={{width: 30, justifyContent: 'flex-end', flexDirection: 'row', marginRight: 7}}>
                                 <TouchableOpacity onPress={() => this.deleteShareUser(item.userId)}>
-                                    <Icons name="minus" color="#d32f2f" size={16}/>
+                                    <Icons name="minus-circle" color="#d32f2f" size={21}/>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -165,7 +165,7 @@ export default class NoteDtlShare extends Component {
                         <TouchableOpacity style={{width: 30, justifyContent: 'flex-end', alignItems: 'center'}}
                                           onPress={() => this.openSearchUser()}
                         >
-                            <Icons name='plus' color='#00cc00' size={16}/>
+                            <Icons name='plus-circle' color='#4caf50' size={21}/>
                         </TouchableOpacity>
                     </View>
                     <ScrollView style={styles.shareContent}>
