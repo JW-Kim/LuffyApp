@@ -342,7 +342,7 @@ export default class DiaryDtl extends Component {
         }
         
         return (
-            <View style={[styles.checkContent, {height: 180, marginTop: 10, marginBottom: 10}]}>
+            <View style={[styles.checkContent, {height: 160, marginTop: 10, marginBottom: 10}]}>
                 <View style={styles.rowTextField}><Text style={styles.rowText}>배변</Text></View>
                 <View style={{flex: 1}}>
                     <View style={{height: 60, flexDirection: 'row', alignItems: 'center'}}>
@@ -426,7 +426,7 @@ export default class DiaryDtl extends Component {
                             </View>
                             <View style={styles.checkContent}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>내용</Text></View>
-                                <View style={{flex: 1}}>
+                                <View style={{flex: 1, fontSize: 16, paddingLeft: 8}}>
                                     <TextInput
                                         style={[{flex: 1, fontSize: 16, backgroundColor: '#E6ECF0'}, contentStyle]}
                                         underlineColorAndroid="transparent"
@@ -495,32 +495,32 @@ export default class DiaryDtl extends Component {
                                     </View>
                                 </View>
                             </View>
-                            <View style={[styles.checkContent, {height: 60}]}>
+                            <View style={[styles.checkContent, {height: 40}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>기분</Text></View>
                                 <DiaryDtlBtnGroup code={this.state.feelingCd}
                                                   setCode={(feelingCd) => this.setState({feelingCd})}></DiaryDtlBtnGroup>
                             </View>
-                            <View style={[styles.checkContent, {height: 60}]}>
+                            <View style={[styles.checkContent, {height: 40}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>건강</Text></View>
                                 <DiaryDtlBtnGroup code={this.state.healthCd}
                                                   setCode={(healthCd) => this.setState({healthCd})}></DiaryDtlBtnGroup>
                             </View>
-                            <View style={[styles.checkContent, {height: 60}]}>
+                            <View style={[styles.checkContent, {height: 40}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>열</Text></View>
                                 <DiaryDtlBtnGroup code={this.state.feverCd}
                                                   setCode={(feverCd) => this.setState({feverCd})}></DiaryDtlBtnGroup>
                             </View>
-                            <View style={[styles.checkContent, {height: 60}]}>
+                            <View style={[styles.checkContent, {height: 40}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>아침식사</Text></View>
                                 <DiaryDtlBtnGroup code={this.state.breakfastCd}
                                                   setCode={(breakfastCd) => this.setState({breakfastCd})}></DiaryDtlBtnGroup>
                             </View>
-                            <View style={[styles.checkContent, {height: 60}]}>
+                            <View style={[styles.checkContent, {height: 40}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>점심식사</Text></View>
                                 <DiaryDtlBtnGroup code={this.state.lunchCd}
                                                   setCode={(lunchCd) => this.setState({lunchCd})}></DiaryDtlBtnGroup>
                             </View>
-                            <View style={[styles.checkContent, {height: 60}]}>
+                            <View style={[styles.checkContent, {height: 40}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>저녁식사</Text></View>
                                 <DiaryDtlBtnGroup code={this.state.dinnerCd}
                                                   setCode={(dinnerCd) => this.setState({dinnerCd})}></DiaryDtlBtnGroup>
@@ -637,7 +637,6 @@ const styles = StyleSheet.create({
         paddingRight: 35,
         height: 60,
         fontSize: 16,
-        flex: 1,
-        backgroundColor: '#E6ECF0'
+        flex: 1
     },
 })

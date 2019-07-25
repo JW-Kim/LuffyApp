@@ -77,7 +77,7 @@ export default class DiaryDtlBtnGroup extends Component {
     }
 
     render() {
-        const buttons = [{ element: DiaryDtlBtnGroupGoodIcon }, { element: DiaryDtlBtnGroupNotBadIcon }, { element: DiaryDtlBtnGroupBadIcon }]
+        const buttons = ['', '', '']
         const { selectedIndex, selectedButtonStyle } = this.state
         return (
             <View style={{flex: 1}}>
@@ -86,9 +86,9 @@ export default class DiaryDtlBtnGroup extends Component {
                       selectedIndex={selectedIndex}
                       selectedButtonStyle={selectedButtonStyle}
                       buttons={buttons}
-                      innerBorderStyle={{width: 0, color: '#fff'}}
-                      buttonStyle={{backgroundColor: '#fff'}}
-                      containerStyle={{height: 50, borderWidth: 0, marginLeft: 0, marginRight: 0}}
+                      innerBorderStyle={{width: 3, color: '#fff'}}
+                      buttonStyle={{backgroundColor: '#F0F6FA'}}
+                      containerStyle={{height: 30, borderWidth: 0, marginLeft: 0, marginRight: 0}}
                     />
             </View>
         )

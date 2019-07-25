@@ -87,6 +87,8 @@ export default class Note extends Component {
 
     async getNote() {
         var cur = this;
+        this.setState({loading: true});
+
         let today = new Date();
         let dd = today.getDate() < 10 ? '0' + today.getDate() : today.getDate();
         let mm = today.getMonth() < 10 ? '0' + (today.getMonth() + 1) : today.getMonth() + 1;
@@ -117,9 +119,6 @@ export default class Note extends Component {
                     this.props.navigation.navigate('Login')
                 });
         } else {
-            this.setState({
-                loading: true
-            })
             this.getMonthDiary(month);
         }
     }
@@ -138,6 +137,8 @@ export default class Note extends Component {
                         diary: res.data
                     })
                     this.getMonthDisease(month);
+                } else {
+                    this.setState({loading: false});
                 }
             })
             .catch((error) => {
