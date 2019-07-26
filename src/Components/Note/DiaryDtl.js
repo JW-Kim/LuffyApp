@@ -74,6 +74,8 @@ export default class DiaryDtl extends Component {
     }
 
     async componentDidMount() {
+        const {noteId, diaryDt} = this.state;
+
         if (this.state.type == 'UPDATE') {
             fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/${this.state.diaryId}`, await getToken())
                 .then((response) => response.json())
@@ -96,6 +98,19 @@ export default class DiaryDtl extends Component {
                         fileId: res.data.fileId,
                         weight: res.data.weight + '',
                         height: res.data.height + ''
+                    })
+                })
+                .catch((error) => {
+                    Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                    this.props.navigation.navigate('Login')
+                });
+        } else {
+            fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/preInfo/${noteId}?diaryDt=${diaryDt}`, await getToken())
+                .then((response) => response.json())
+                .then((res) => {
+                    this.setState({
+                        weight: res.data.weight == null ? '' : res.data.weight + '',
+                        height: res.data.weight == null ? '' : res.data.height + ''
                     })
                 })
                 .catch((error) => {
