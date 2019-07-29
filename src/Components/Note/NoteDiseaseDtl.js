@@ -172,7 +172,7 @@ export default class NoteDiseaseDtl extends Component {
                                 alignItems: 'center'
                             }}>
                                 <TextInput
-                                    style={[{flex: 1, fontSize: 16, backgroundColor: '#E6ECF0'}, symptomStyle]}
+                                    style={[{flex: 1, fontSize: 16, paddingLeft: 8}, symptomStyle]}
                                     numberOfLines={10}
                                     multiline={true}
                                     placeholder="증상을 입력해주세요"
@@ -213,7 +213,7 @@ export default class NoteDiseaseDtl extends Component {
                                 alignItems: 'center'
                             }}>
                                 <TextInput
-                                    style={[{flex: 1, fontSize: 16, backgroundColor: '#E6ECF0'}, prescriptionStyle]}
+                                    style={[{flex: 1, fontSize: 16, paddingLeft: 8}, prescriptionStyle]}
                                     numberOfLines={10}
                                     multiline={true}
                                     underlineColorAndroid="transparent"
@@ -249,8 +249,7 @@ const styles = StyleSheet.create({
         paddingRight: 35,
         height: 60,
         fontSize: 16,
-        flex: 1,
-        backgroundColor: '#E6ECF0'
+        flex: 1
     },
     rowTextField: {
         paddingRight: 20,

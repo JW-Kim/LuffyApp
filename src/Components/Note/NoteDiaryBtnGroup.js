@@ -88,7 +88,6 @@ const styles = StyleSheet.create({
     rowView: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingBottom: 16,
         height: 25
     },
     rowTitle: {

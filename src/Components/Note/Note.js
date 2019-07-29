@@ -44,10 +44,13 @@ export default class Note extends Component {
             noteId: null,
             fileId: null,
             selectedDay: null,
-            calCurrentMonth: null
+            calCurrentMonth: null,
+            diaryInsertActionYn: true
         }
 
         let openNoteDtl = this.openNoteDtl.bind(this);
+        let removeBackEvent = this.removeBackEvent.bind(this);
+        let addBackEvent = this.addBackEvent.bind(this);
     }
 
     componentDidMount() {
@@ -60,10 +63,18 @@ export default class Note extends Component {
 
         LocaleConfig.defaultLocale = 'kr';
 
-        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+        this.addBackEvent();
     }
 
     componentWillUnMount() {
+
+    }
+
+    addBackEvent() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+    }
+
+    removeBackEvent() {
         this.exitApp = false;
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
     }
@@ -170,6 +181,7 @@ export default class Note extends Component {
         let selectedDiary = null;
         let selectedDiseaseList = [];
         let isEmpty = true;
+        let diaryInsertActionYn = true;
 
         const diary = {key: 'diary', color: '#142765'};
         const disease = {key: 'disease', color: '#C2D8E9'};
@@ -183,7 +195,7 @@ export default class Note extends Component {
                     selectedColor: '#1abc9c'
                 };
                 isEmpty = false;
-
+                diaryInsertActionYn = false;
             } else {
                 markedDates["" + this.state.diary[i].diaryDt + ""] = {dots: [diary]};
             }
@@ -228,7 +240,8 @@ export default class Note extends Component {
             selectedDiary: selectedDiary,
             selectedDiseaseList: selectedDiseaseList,
             diaryDt: day,
-            loading: false
+            loading: false,
+            diaryInsertActionYn
         })
     }
 
@@ -300,7 +313,7 @@ export default class Note extends Component {
     }
 
     renderNote() {
-        const {note, fileId} = this.state;
+        const {note, fileId, diaryInsertActionYn} = this.state;
 
         if (_.isNil(note) || note.length == 0) {
             return (
@@ -420,7 +433,7 @@ export default class Note extends Component {
 
                     </ScrollView>
 
-                    <ActionButton buttonColor="rgba(231,76,60,1)" offsetY={40}>
+                    <ActionButton buttonColor="rgba(231,76,60,1)" offsetY={10} offsetX={10}>
                         <ActionButton.Item buttonColor='#1abc9c' title="질병 작성"
                                            onPress={() => this.props.navigation.navigate('NoteDiseaseDtl', {
                                                type: 'INSERT',
@@ -431,15 +444,17 @@ export default class Note extends Component {
                             <IonIcons name="md-create" style={styles.actionButtonIcon}/>
                         </ActionButton.Item>
 
-                        <ActionButton.Item buttonColor='#1abc9c' title="다이어리 작성"
+                        {diaryInsertActionYn &&
+                            <ActionButton.Item buttonColor='#1abc9c' title="다이어리 작성"
                                            onPress={() => this.props.navigation.navigate('DiaryDtl', {
                                                type: 'INSERT',
                                                noteId: this.state.noteId,
                                                diaryDt: this.state.diaryDt,
                                                refreshFnc: this.getNote.bind(this)
                                            })}>
-                            <IonIcons name="md-create" style={styles.actionButtonIcon}/>
-                        </ActionButton.Item>
+                                <IonIcons name="md-create" style={styles.actionButtonIcon}/>
+                            </ActionButton.Item>
+                        }
                     </ActionButton>
                     {this.state.loading &&
                     <View style={styles.loading}>
@@ -461,11 +476,14 @@ export default class Note extends Component {
                     <NavigationEvents
                         onWillFocus={payload => {
                             console.log('willFocus', payload)
+                            this.addBackEvent();
                             this.getNote()
                         }}
                         onDidFocus={payload => console.log('did focus',payload)}
                         onWillBlur={payload => {
                             console.log('willBlur', payload)
+                            this.removeBackEvent();
+
                             if(payload.action.routeName === "NoteSetting"){
                                 this.setState({noteId: null});
                             }

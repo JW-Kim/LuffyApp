@@ -8,7 +8,8 @@ import {
     FlatList,
     TouchableOpacity,
     ScrollView,
-    AsyncStorage
+    AsyncStorage,
+    Alert
 } from 'react-native';
 import ModalHeader from '../Com/ModalHeader.js';
 import Constants from '../../Com/Constants.js';
@@ -29,8 +30,8 @@ export default class Note extends Component {
         }
 
         let openNoteDtl = this.openNoteDtl.bind(this);
-        let deleteMyNote = this.deleteMyNote.bind(this);
-        let deleteShareNote = this.deleteShareNote.bind(this);
+        let confirmDelMyNote = this.confirmDelMyNote.bind(this);
+        let confirmDelShareNote = this.confirmDelShareNote.bind(this);
     }
 
     componentWillMount() {
@@ -73,6 +74,10 @@ export default class Note extends Component {
             });
     }
 
+    confirmDelMyNote(noteId) {
+        Alert.alert('', 'do you delete ?', [{text: 'confirm', onPress: () => this.deleteMyNote(noteId)}, {text: 'cancel', style: 'cancel'}], {cancelable: false});
+    }
+
     async deleteMyNote(noteId) {
         fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/${noteId}`, await getToken({
             method: 'DELETE'
@@ -87,6 +92,10 @@ export default class Note extends Component {
                 Toast.show('note delete 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
                 this.props.navigation.navigate('Login')
             });
+    }
+
+    confirmDelShareNote(noteId) {
+        Alert.alert('', 'do you delete ?', [{text: 'confirm', onPress: () => this.deleteShareNote(noteId)}, {text: 'cancel', style: 'cancel'}], {cancelable: false});
     }
 
     async deleteShareNote(noteId) {
@@ -138,7 +147,7 @@ export default class Note extends Component {
                                 <Text style={styles.rowText}>{item.noteNm}</Text>
                             </TouchableOpacity>
                             <View style={{width: 30, flexDirection: 'row', justifyContent: 'flex-end', marginRight: 7}}>
-                                <TouchableOpacity onPress={() => this.deleteMyNote(item.noteId)}>
+                                <TouchableOpacity onPress={() => this.confirmDelMyNote(item.noteId)}>
                                     <Icons name="minus-circle" color="#d32f2f" size={21}/>
                                 </TouchableOpacity>
                             </View>
@@ -173,7 +182,7 @@ export default class Note extends Component {
                                 <Text style={styles.rowText}>{item.noteNm}</Text>
                             </View>
                             <View style={{width: 30, justifyContent: 'flex-end', flexDirection: 'row', marginRight: 7}}>
-                                <TouchableOpacity onPress={() => this.deleteShareNote(item.noteId)}>
+                                <TouchableOpacity onPress={() => this.confirmDelShareNote(item.noteId)}>
                                     <Icons name="minus-circle" color="#d32f2f" size={21}/>
                                 </TouchableOpacity>
                             </View>

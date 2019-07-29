@@ -7,7 +7,8 @@ import {
     ScrollView,
     FlatList,
     TouchableOpacity,
-    StyleSheet
+    StyleSheet,
+    Alert
 } from 'react-native';
 import Icons from 'react-native-vector-icons/FontAwesome';
 import Constants from '../../Com/Constants.js';
@@ -24,7 +25,7 @@ export default class NoteDtlShare extends Component {
             shareList: []
         }
 
-        let deleteShareUser = this.deleteShareUser.bind(this);
+        let confirmDelShareNote = this.confirmDelShareNote.bind(this);
         let openSearchUser = this.openSearchUser.bind(this);
     }
 
@@ -46,6 +47,10 @@ export default class NoteDtlShare extends Component {
                 Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
                 this.props.navigation.navigate('Login')
             })
+    }
+
+    confirmDelShareNote(noteId) {
+        Alert.alert('', 'do you delete ?', [{text: 'confirm', onPress: () => this.deleteShareNote(noteId)}, {text: 'cancel', style: 'cancel'}], {cancelable: false});
     }
 
     async deleteShareUser(userId) {
@@ -142,7 +147,7 @@ export default class NoteDtlShare extends Component {
                                 <Text style={styles.rowText}>{item.userNm}</Text>
                             </View>
                             <View style={{width: 30, justifyContent: 'flex-end', flexDirection: 'row', marginRight: 7}}>
-                                <TouchableOpacity onPress={() => this.deleteShareUser(item.userId)}>
+                                <TouchableOpacity onPress={() => this.confirmDelShareNote(item.userId)}>
                                     <Icons name="minus-circle" color="#d32f2f" size={21}/>
                                 </TouchableOpacity>
                             </View>

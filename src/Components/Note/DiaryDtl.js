@@ -441,9 +441,9 @@ export default class DiaryDtl extends Component {
                             </View>
                             <View style={styles.checkContent}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>내용</Text></View>
-                                <View style={{flex: 1, fontSize: 16, paddingLeft: 8}}>
+                                <View style={{flex: 1, fontSize: 16}}>
                                     <TextInput
-                                        style={[{flex: 1, fontSize: 16, backgroundColor: '#E6ECF0'}, contentStyle]}
+                                        style={[{flex: 1, fontSize: 16, paddingLeft: 8}, contentStyle]}
                                         underlineColorAndroid="transparent"
                                         placeholder="내용을 입력하세요"
                                         autoCompleteType="off"

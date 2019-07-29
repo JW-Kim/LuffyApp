@@ -175,7 +175,7 @@ export default class NoteDiary extends Component {
                 <View style={styles.rowTitle}>
                     <View style={{flex: 1}}><Text style={styles.rowText}>키</Text></View>
                 </View>
-                <Text style={styles.rowText}>{height} cm</Text>
+                <View style={{flex: 1}}><Text style={styles.rowText}>{height} cm</Text></View>
             </View>
         )
     }
@@ -192,7 +192,7 @@ export default class NoteDiary extends Component {
                 <View style={styles.rowTitle}>
                     <View style={{flex: 1}}><Text style={styles.rowText}>몸무게</Text></View>
                 </View>
-                <Text style={styles.rowText}>{weight} kg</Text>
+                <View style={{flex: 1}}><Text style={styles.rowText}>{weight} kg</Text></View>
             </View>
         )
     }
@@ -260,7 +260,6 @@ const styles = StyleSheet.create({
     rowView: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingBottom: 16,
         height: 25
     },
 
@@ -268,6 +267,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         borderBottomWidth: 1,
         borderColor: '#E6ECF0',
+        paddingBottom: 50
     },
 
     rowTitle: {

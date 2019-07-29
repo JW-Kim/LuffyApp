@@ -44,7 +44,7 @@ export default class NoteDtl extends Component {
             sex: null,
             birthDt: null,
             insertNoteDtlBtnStyle: ComCss.inActiveBtn,
-            noteNmStyle: {borderBottomWidth: 0, borderColor: '#C2D8E9'},
+            noteNmStyle: Constants.EDIT_BLUR_STYLE,
             shareList: [],
             fileId: null,
             avatarSource: null,
@@ -357,8 +357,8 @@ export default class NoteDtl extends Component {
                                             placeholder="영문/숫자 10자"
                                             autoCompleteType="off"
                                             secureTextEntry={false}
-                                            onFocus={() => this.setState({noteNmStyle: {borderBottomWidth: 1, borderColor: '#C2D8E9'}})}
-                                            onBlur={() => this.setState({noteNmStyle: {borderBottomWidth: 0, borderColor: '#C2D8E9'}})}
+                                            onFocus={() => this.setState({noteNmStyle: Constants.EDIT_FOCUS_STYLE})}
+                                            onBlur={() => this.setState({noteNmStyle: Constants.EDIT_BLUR_STYLE})}
                                             onChangeText={(noteNm) => this.changeNoteNm(noteNm)}
                                             value={this.state.noteNm}
                                         ></Edit>
@@ -453,8 +453,7 @@ const styles = StyleSheet.create({
         paddingRight: 35,
         height: 60,
         fontSize: 16,
-        flex: 1,
-        backgroundColor: '#E6ECF0'
+        flex: 1
     },
     rowTitle: {
         fontSize: 18,
