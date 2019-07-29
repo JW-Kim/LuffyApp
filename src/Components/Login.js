@@ -74,23 +74,31 @@ export default class Login extends Component {
         this.setState({loading: true});
 
         fetch('http://' + Constants.HOST + ':' + Constants.PORT + '/product/login?username=' + encodeURI(this.state.username) + '&password=' + encodeURI(this.state.password))
-            .then((response) => response.json())
-            .then((res) => {
-                AsyncStorage.setItem('access_token', res.data, (err, result) => {
-                    this.setState({
-                        username: '',
-                        password: '',
-                        idStyle: {borderWidth: 1, borderColor: '#C2D8E9'},
-                        passwordStyle: {borderWidth: 1, borderColor: '#C2D8E9'},
-                        loginBtnStyle: {backgroundColor: '#C2D8E9', height: 70},
-                        isUsername: false,
-                        isPassword: false,
-                        loading: false
-                    })
-                    this.props.navigation.navigate('Main');
-                })
+            .then((response) => {
+                if(response.ok) {
+                    response.json()
+                        .then((res) => {
+                            AsyncStorage.setItem('access_token', res.data, (err, result) => {
+                                this.setState({
+                                    username: '',
+                                    password: '',
+                                    idStyle: {borderWidth: 1, borderColor: '#C2D8E9'},
+                                    passwordStyle: {borderWidth: 1, borderColor: '#C2D8E9'},
+                                    loginBtnStyle: {backgroundColor: '#C2D8E9', height: 70},
+                                    isUsername: false,
+                                    isPassword: false,
+                                    loading: false
+                                })
+                                this.props.navigation.navigate('Main');
+                            })
+                        })
+                } else {
+                     this.setState({loading: false})
+                     Toast.show('id, password are incorrect', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                }
             })
             .catch((error) => {
+                console.error(error)
                 this.setState({loading: false})
                 Toast.show('id, password are incorrect', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
             });
