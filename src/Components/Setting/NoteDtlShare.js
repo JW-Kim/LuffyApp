@@ -30,7 +30,11 @@ export default class NoteDtlShare extends Component {
     }
 
     async componentWillMount() {
-        this.getShareNoteList();
+        const {type} = this.props;
+
+        if(type === 'UPDATE') {
+            this.getShareNoteList();
+        }
     }
 
     async getShareNoteList() {
