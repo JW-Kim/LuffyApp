@@ -13,7 +13,10 @@ import Accordion from 'react-native-collapsible/Accordion';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import Toast from 'react-native-toast-native';
 import CodeTypeIcon from '../Com/CodeTypeIcon.js'
-import Constants from '../../Com/Constants.js'
+import Constants from '../../Com/Constants.js';
+import {getToken} from '../../Com/AuthToken.js';
+import Menu, { MenuItem, MenuDivider  } from 'react-native-material-menu';
+import Icons from 'react-native-vector-icons/FontAwesome';
 
 const SECTIONS = [
     {
@@ -23,15 +26,52 @@ const SECTIONS = [
 ];
 
 export default class NoteDisease extends Component {
+    _menu = null;
+
     constructor(props) {
         super(props);
         this.state = {
             activeSections: []
         }
+
+        let openDiseaseDtl = this.openDiseaseDtl.bind(this);
+        let deleteDisease = this.deleteDisease.bind(this);
     }
 
     openDiseaseDtl() {
+        this.hideMenu();
         this.props.openDiseaseDtl(this.props.diseaseId);
+    }
+
+    async deleteDisease() {
+        const {diseaseId, refreshFnc} = this.props;
+
+        this.hideMenu();
+
+        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/disease/${diseaseId}`, await getToken({
+            method: 'DELETE'
+        }))
+            .then((response) => response.json())
+            .then((res) => {
+                Toast.show('일기장을 삭제하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                refreshFnc();
+            })
+            .catch((error) => {
+                Toast.show('disease delete 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                this.props.navigation.navigate('Login')
+            });
+    }
+
+    setMenuRef = ref => {
+        this._menu = ref;
+    }
+
+    hideMenu = () => {
+        this._menu.hide();
+    }
+
+    showMenu = () => {
+        this._menu.show();
     }
 
     render() {
@@ -90,7 +130,15 @@ export default class NoteDisease extends Component {
     _renderContent = section => {
         return (
             <View style={styles.content}>
-                <TouchableOpacity activeOpacity={0.9} onPress={() => this.openDiseaseDtl()}>
+                    <View style={{flexDirection: 'row', height: 24, justifyContent: 'flex-end', paddingRight: 20}}>
+                        <Menu
+                            ref={this.setMenuRef}
+                            button={<Text onPress={this.showMenu}><Icons name="ellipsis-h" color="#142765" size={24}/></Text>}
+                        >
+                            <MenuItem onPress={() => this.openDiseaseDtl()}>modify</MenuItem>
+                            <MenuItem onPress={() => this.deleteDisease()}>delete</MenuItem>
+                        </Menu>
+                    </View>
                     <View style={{margin: 20}}>
                         <View style={styles.rowView}>
                             <View style={styles.rowTitle}><Text style={styles.rowText}>증상</Text></View>
@@ -105,7 +153,6 @@ export default class NoteDisease extends Component {
                             <View style={{flex: 1}}><Text style={styles.rowText}>{this.props.prescription}</Text></View>
                         </View>
                     </View>
-                </TouchableOpacity>
             </View>
         );
     };

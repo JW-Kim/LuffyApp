@@ -51,6 +51,7 @@ export default class Note extends Component {
         let openNoteDtl = this.openNoteDtl.bind(this);
         let removeBackEvent = this.removeBackEvent.bind(this);
         let addBackEvent = this.addBackEvent.bind(this);
+        let getNote = this.getNote.bind(this);
     }
 
     componentDidMount() {
@@ -313,7 +314,7 @@ export default class Note extends Component {
     }
 
     renderNote() {
-        const {note, fileId, diaryInsertActionYn} = this.state;
+        const {note, fileId, diaryInsertActionYn, selectedDay} = this.state;
 
         if (_.isNil(note) || note.length == 0) {
             return (
@@ -410,6 +411,7 @@ export default class Note extends Component {
                                         title={this.state.selectedDiary.title}
                                         fileId={this.state.selectedDiary.fileId}
                                         openDiaryDtl={this.openDiaryDtl.bind(this)}
+                                        refreshFnc={() => this.getNote()}
                                     ></NoteDiary>
                                 </View>)}
                         {this.state.selectedDiseaseList == null ? <View><Text></Text></View> :
@@ -425,6 +427,7 @@ export default class Note extends Component {
                                             hospitalNm={item.hospitalNm}
                                             prescription={item.prescription}
                                             openDiseaseDtl={this.openDiseaseDtl.bind(this)}
+                                            refreshFnc={() => this.getNote()}
                                         ></NoteDisease>
                                     </View>
                                 }
@@ -433,6 +436,7 @@ export default class Note extends Component {
 
                     </ScrollView>
 
+                    {selectedDay != null &&
                     <ActionButton buttonColor="rgba(231,76,60,1)" offsetY={10} offsetX={10}>
                         <ActionButton.Item buttonColor='#1abc9c' title="질병 작성"
                                            onPress={() => this.props.navigation.navigate('NoteDiseaseDtl', {
@@ -456,6 +460,7 @@ export default class Note extends Component {
                             </ActionButton.Item>
                         }
                     </ActionButton>
+                    }
                     {this.state.loading &&
                     <View style={styles.loading}>
                         <ActivityIndicator size='large' color="#FF69B4"/>

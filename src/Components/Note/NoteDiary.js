@@ -11,12 +11,14 @@ import {
 } from 'react-native';
 import Accordion from 'react-native-collapsible/Accordion';
 import IonIcons from 'react-native-vector-icons/Ionicons';
+import Icons from 'react-native-vector-icons/FontAwesome';
 import Toast from 'react-native-toast-native';
 import ImageView from '../Com/ImageView.js'
 import CodeTypeIcon from '../Com/CodeTypeIcon.js'
 import Constants from '../../Com/Constants.js'
 import {getToken} from '../../Com/AuthToken.js';
 import NoteDiaryBtnGroup from './NoteDiaryBtnGroup';
+import Menu, { MenuItem, MenuDivider  } from 'react-native-material-menu';
 
 const SECTIONS = [
     {
@@ -26,6 +28,9 @@ const SECTIONS = [
 ];
 
 export default class NoteDiary extends Component {
+
+    _menu = null;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -33,6 +38,9 @@ export default class NoteDiary extends Component {
             height: 0,
             weight: 0
         }
+
+        let deleteDiary = this.deleteDiary.bind(this);
+        let openDiaryDtl = this.openDiaryDtl.bind(this);
     }
 
     async componentWillMount() {
@@ -66,12 +74,44 @@ export default class NoteDiary extends Component {
     }
 
     openDiaryDtl() {
+        this.hideMenu();
         this.props.openDiaryDtl();
+    }
+
+    async deleteDiary() {
+        const {diaryId, refreshFnc} = this.props;
+
+        this.hideMenu();
+
+        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/${diaryId}`, await getToken({
+            method: 'DELETE'
+        }))
+            .then((response) => response.json())
+            .then((res) => {
+                Toast.show('일기장을 삭제하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                refreshFnc();
+            })
+            .catch((error) => {
+                Toast.show('diary delete 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                this.props.navigation.navigate('Login')
+            });
     }
 
     _updateSections = activeSections => {
         this.setState({activeSections});
     };
+
+    setMenuRef = ref => {
+        this._menu = ref;
+    }
+
+    hideMenu = () => {
+        this._menu.hide();
+    }
+
+    showMenu = () => {
+        this._menu.show();
+    }
 
     _renderHeader = section => {
         return (
@@ -139,14 +179,22 @@ export default class NoteDiary extends Component {
     
         return (
             <View style={styles.content}>
-                <TouchableOpacity activeOpacity={0.9} onPress={() => this.openDiaryDtl()}>
                     <View>
                         <ImageView fileId={fileId} width={Dimensions.get('window').width - 30}/>
                     </View>
                     <Text style={styles.contentText}>
                         {content}
-                    </Text>                    
-                    <View style={{marginTop: 24, marginLeft:40, marginRight:20}}>
+                    </Text>
+                    <View style={{flexDirection: 'row', height: 24, justifyContent: 'flex-end', paddingRight: 20}}>
+                        <Menu
+                            ref={this.setMenuRef}
+                            button={<Text onPress={this.showMenu}><Icons name="ellipsis-h" color="#142765" size={24}/></Text>}
+                        >
+                            <MenuItem onPress={() => this.openDiaryDtl()}>modify</MenuItem>
+                            <MenuItem onPress={() => this.deleteDiary()}>delete</MenuItem>
+                        </Menu>
+                    </View>
+                    <View style={{marginTop: 16, marginLeft:40, marginRight:20}}>
                         {this.renderHeight()}
                         {this.renderWeight()}
                         <NoteDiaryBtnGroup title="기분" code={feelingCd} />
@@ -158,7 +206,6 @@ export default class NoteDiary extends Component {
                         {this.renderShit()}
                         {this.renderSleep()}
                     </View>
-                </TouchableOpacity>
             </View>
         );
     };
