@@ -53,11 +53,11 @@ export default class NoteDisease extends Component {
         }))
             .then((response) => response.json())
             .then((res) => {
-                Toast.show('일기장을 삭제하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                Toast.show('질병기록을 삭제하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
                 refreshFnc();
             })
             .catch((error) => {
-                Toast.show('disease delete 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                Toast.show('질병기록 삭제를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
                 this.props.navigation.navigate('Login')
             });
     }
@@ -130,16 +130,16 @@ export default class NoteDisease extends Component {
     _renderContent = section => {
         return (
             <View style={styles.content}>
-                    <View style={{flexDirection: 'row', height: 24, justifyContent: 'flex-end', paddingRight: 20}}>
+                    <View style={{flexDirection: 'row', height: 24, justifyContent: 'flex-end', paddingRight: 20, marginTop: 20}}>
                         <Menu
                             ref={this.setMenuRef}
-                            button={<Text onPress={this.showMenu}><Icons name="ellipsis-h" color="#142765" size={24}/></Text>}
+                            button={<Text onPress={this.showMenu}>     <Icons name="ellipsis-h" color="#142765" size={24}/></Text>}
                         >
-                            <MenuItem onPress={() => this.openDiseaseDtl()}>modify</MenuItem>
-                            <MenuItem onPress={() => this.deleteDisease()}>delete</MenuItem>
+                            <MenuItem onPress={() => this.openDiseaseDtl()}>수정하기</MenuItem>
+                            <MenuItem onPress={() => this.deleteDisease()}>삭제하기</MenuItem>
                         </Menu>
                     </View>
-                    <View style={{margin: 20}}>
+                    <View style={{marginRight: 20, marginLeft: 20, marginBottom: 20, marginTop: 16}}>
                         <View style={styles.rowView}>
                             <View style={styles.rowTitle}><Text style={styles.rowText}>증상</Text></View>
                             <View style={{flex: 1}}><Text style={styles.rowText}>{this.props.symptom}</Text></View>

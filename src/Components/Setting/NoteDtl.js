@@ -320,7 +320,7 @@ export default class NoteDtl extends Component {
                 </View>
                 <View style={styles.selectPhotoRow}>
                     <View>
-                        <Text style={styles.rowText}>select Photo</Text>
+                        <Text style={styles.rowText}>사진 선택</Text>
                     </View>
                 </View>
             </TouchableOpacity>

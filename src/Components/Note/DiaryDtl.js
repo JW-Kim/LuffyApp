@@ -441,7 +441,7 @@ export default class DiaryDtl extends Component {
                             </View>
                             <View style={styles.checkContent}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>내용</Text></View>
-                                <View style={{flex: 1, fontSize: 16}}>
+                                <View style={{flex: 1}}>
                                     <TextInput
                                         style={[{flex: 1, fontSize: 16, paddingLeft: 8}, contentStyle]}
                                         underlineColorAndroid="transparent"

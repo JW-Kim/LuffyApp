@@ -438,7 +438,7 @@ export default class Note extends Component {
 
                     {selectedDay != null &&
                     <ActionButton buttonColor="rgba(231,76,60,1)" offsetY={10} offsetX={10}>
-                        <ActionButton.Item buttonColor='#1abc9c' title="질병 작성"
+                        <ActionButton.Item buttonColor='#1abc9c' title="질병 기록"
                                            onPress={() => this.props.navigation.navigate('NoteDiseaseDtl', {
                                                type: 'INSERT',
                                                noteId: this.state.noteId,
@@ -449,7 +449,7 @@ export default class Note extends Component {
                         </ActionButton.Item>
 
                         {diaryInsertActionYn &&
-                            <ActionButton.Item buttonColor='#1abc9c' title="다이어리 작성"
+                            <ActionButton.Item buttonColor='#1abc9c' title="일기 작성"
                                            onPress={() => this.props.navigation.navigate('DiaryDtl', {
                                                type: 'INSERT',
                                                noteId: this.state.noteId,

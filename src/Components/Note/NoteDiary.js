@@ -185,13 +185,13 @@ export default class NoteDiary extends Component {
                     <Text style={styles.contentText}>
                         {content}
                     </Text>
-                    <View style={{flexDirection: 'row', height: 24, justifyContent: 'flex-end', paddingRight: 20}}>
+                    <View style={{flexDirection: 'row', height: 24, justifyContent: 'flex-end', paddingRight: 20, marginTop: 20}}>
                         <Menu
                             ref={this.setMenuRef}
-                            button={<Text onPress={this.showMenu}><Icons name="ellipsis-h" color="#142765" size={24}/></Text>}
+                            button={<Text onPress={this.showMenu}>    <Icons name="ellipsis-h" color="#142765" size={24}/></Text>}
                         >
-                            <MenuItem onPress={() => this.openDiaryDtl()}>modify</MenuItem>
-                            <MenuItem onPress={() => this.deleteDiary()}>delete</MenuItem>
+                            <MenuItem onPress={() => this.openDiaryDtl()}>수정하기</MenuItem>
+                            <MenuItem onPress={() => this.deleteDiary()}>삭제하기</MenuItem>
                         </Menu>
                     </View>
                     <View style={{marginTop: 16, marginLeft:40, marginRight:20}}>

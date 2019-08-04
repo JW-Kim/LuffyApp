@@ -7,7 +7,6 @@ buildscript {
             url 'https://maven.google.com/'
             name 'Google'
         }
-        google()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.2'
@@ -38,15 +37,4 @@ ext {
     compileSdkVersion = 26
     targetSdkVersion = 26
     supportLibVersion = "26.1.0"
-}
-
-subprojects {
-    afterEvaluate {project ->
-        if (project.hasProperty("android")) {
-            android {
-                compileSdkVersion 26
-                buildToolsVersion '26.0.3'
-            }
-        }
-    }
 }
