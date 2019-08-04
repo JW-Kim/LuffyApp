@@ -94,13 +94,13 @@ export default class Login extends Component {
                         })
                 } else {
                      this.setState({loading: false})
-                     Toast.show('id, password are incorrect', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                     Toast.show('아이디, 비밀번호가 일치하지 않습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
                 }
             })
             .catch((error) => {
                 console.error(error)
                 this.setState({loading: false})
-                Toast.show('id, password are incorrect', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                Toast.show('아이디, 비밀번호가 일치하지 않습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
             });
     }
 
