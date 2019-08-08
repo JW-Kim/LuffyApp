@@ -25,6 +25,7 @@ import ModalStandardHeader from '../Com/ModalStandardHeader'
 import Edit from '../Com/Edit';
 import DatePicker from 'react-native-datepicker';
 import NoteDtlShare from './NoteDtlShare.js';
+import NoteDtlCfg from './NoteDtlCfg';
 import ImageView from '../Com/ImageView.js';
 import ImagePicker from 'react-native-image-picker';
 import Icons from 'react-native-vector-icons/FontAwesome';
@@ -46,15 +47,18 @@ export default class NoteDtl extends Component {
             insertNoteDtlBtnStyle: ComCss.inActiveBtn,
             noteNmStyle: Constants.EDIT_BLUR_STYLE,
             shareList: [],
+            noteCfgList: [],
             fileId: null,
             avatarSource: null,
             isNoteNm: false,
             isSex: false,
             isBirthDt: false,
-            isProfile: false
+            isProfile: false,
+            isNoteCfgList: false
         }
 
         let setNote = this.setNote.bind(this);
+        let checkInsertBtnStyle = this.checkInsertBtnStyle.bind(this);
     }
 
     async componentWillMount() {
@@ -101,7 +105,7 @@ export default class NoteDtl extends Component {
 
 
     async insertNote() {
-        const {shareList, fileId, isNoteNm, isBirthDt} = this.state;
+        const {shareList, fileId, isNoteNm, isBirthDt, noteCfgList} = this.state;
 
         if(!isNoteNm || !isBirthDt) {
             Toast.show('all input', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
@@ -118,7 +122,8 @@ export default class NoteDtl extends Component {
                 sex: this.state.sex == null ? '' : this.state.sex,
                 birthDt: this.state.birthDt == null ? '' : this.state.birthDt,
                 shareList,
-                fileId
+                fileId,
+                noteCfgList
             })
         }))
             .then((response) => response.json())
@@ -136,7 +141,7 @@ export default class NoteDtl extends Component {
 
 
     async updateNote() {
-        const {noteId, fileId, isNoteNm, isSex, isBirthDt, isProfile} = this.state;
+        const {noteId, fileId, isNoteNm, isSex, isBirthDt, isProfile, noteCfgList} = this.state;
         console.log('updateNote', fileId)
         if(!(isNoteNm || isSex || isBirthDt || isProfile)) {
             Toast.show('all input', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
@@ -152,7 +157,8 @@ export default class NoteDtl extends Component {
                 noteNm: this.state.noteNm == null ? '' : this.state.noteNm,
                 sex: this.state.sex == null ? '' : this.state.sex,
                 birthDt: this.state.birthDt == null ? '' : this.state.birthDt,
-                fileId
+                fileId,
+                noteCfgList
             })
         }))
             .then((response) => response.json())
@@ -202,7 +208,7 @@ export default class NoteDtl extends Component {
     }
 
     checkInsertBtnStyle() {
-        const {type, isNoteNm, isSex, isBirthDt, isProfile} = this.state;
+        const {type, isNoteNm, isSex, isBirthDt, isProfile, isNoteCfgList} = this.state;
 
         if(type === 'INSERT') {
             if (isNoteNm && isBirthDt) {
@@ -211,7 +217,7 @@ export default class NoteDtl extends Component {
                 this.setState({insertNoteDtlBtnStyle: ComCss.inActiveBtn})
             }
         } else {
-            if (isNoteNm || isSex || isBirthDt || isProfile) {
+            if (isNoteNm || isSex || isBirthDt || isProfile || isNoteCfgList) {
                 this.setState({insertNoteDtlBtnStyle: ComCss.activeBtn})
             } else {
                 this.setState({insertNoteDtlBtnStyle: ComCss.inActiveBtn})
@@ -417,6 +423,11 @@ export default class NoteDtl extends Component {
                                 </View>
                             </KeyboardAvoidingView>
                         </View>
+                        <NoteDtlCfg
+                            navigation={this.props.navigation}
+                            type={type}
+                            noteId={noteId}
+                            setNoteCfgList={(noteCfgList) => this.setState({noteCfgList, isNoteCfgList: true}, () => {this.checkInsertBtnStyle()})} />
                         <NoteDtlShare noteId={noteId} navigation={this.props.navigation} type={type} setShareList={(shareList) => this.setState({shareList})} />
                     </View>
                 </ScrollView>

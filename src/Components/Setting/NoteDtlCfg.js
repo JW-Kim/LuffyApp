@@ -1,0 +1,127 @@
+import React, {
+    Component
+} from 'react';
+import {
+    StyleSheet,
+    View,
+    Text,
+    ToastAndroid,
+    FlatList
+} from 'react-native';
+import Accordion from 'react-native-collapsible/Accordion';
+import NoteDtlCfgBtnGroup from './NoteDtlCfgBtnGroup';
+import Icons from 'react-native-vector-icons/FontAwesome';
+import Constants from '../../Com/Constants.js'
+import {getToken} from '../../Com/AuthToken.js';
+import _ from 'lodash';
+
+const SECTIONS = [
+    {
+        title: 'First',
+        content: 'Lorem ipsum...',
+    }
+];
+
+export default class NoteDtlCfg extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            activeSections: [],
+            noteCfgList: []
+        }
+
+        let setNoteCfgStatCd = this.setNoteCfgStatCd.bind(this);
+    }
+
+    componentDidMount() {
+        this.getNoteCfg();
+    }
+
+    async getNoteCfg() {
+        const cur = this;
+        const {type, noteId, setNoteCfgStatCd} = this.props;
+
+        let tempNoteId = '';
+
+        if(type === 'UPDATE') {
+            tempNoteId = noteId;
+        }
+
+        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/cfg?noteId=${noteId}`, await getToken())
+            .then((response) => response.json())
+            .then((res) => {
+                cur.setState({
+                    noteCfgList: res.data
+                })
+                setNoteCfgStatCd(res.data)
+            })
+            .catch((error) => {
+                ToastAndroid.show('정보 조회를 실패하였습니다.', ToastAndroid.SHORT);
+                cur.props.navigation.navigate('Login')
+            })
+    }
+
+    setNoteCfgStatCd(index, noteCfgStatCd) {
+        const {setNoteCfgList} = this.props;
+        const {noteCfgList} = this.state;
+
+        let tmpNoteCfgList = _.clone(noteCfgList);
+        tmpNoteCfgList[index].noteCfgStatCd = noteCfgStatCd;
+
+        this.setState({noteCfgList: tmpNoteCfgList});
+        setNoteCfgList(tmpNoteCfgList);
+    }
+
+    renderHeader = section => {
+        return (
+            <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 32}}>
+                <View style={{marginLeft: 20}}>
+                    <Text style={styles.rowTitle}>note setting</Text>
+                </View>
+                <View style={{alignItems: 'center', marginRight: 20}}>
+                    <Icons name="angle-down" color="000" size={24}/>
+                </View>
+            </View>
+        )
+    }
+
+    renderContent = section => {
+        const {noteCfgList} = this.state;
+
+        return (
+            <View style={{marginLeft: 28, marginRight: 20, marginTop: 8}}>
+                <FlatList
+                    data={noteCfgList}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({item, index}) =>
+                        <NoteDtlCfgBtnGroup title={item.noteCfgCdVal} noteCfgStatCd={item.noteCfgStatCd} setNoteCfgStatCd={(noteCfgStatCd) => this.setNoteCfgStatCd(index, noteCfgStatCd)} />
+                    }
+                />
+            </View>
+        )
+    }
+
+    updateSections = activeSections => {
+        this.setState({activeSections});
+    }
+
+    render() {
+        const {activeSections} = this.state;
+
+        return (
+            <Accordion
+                sections={SECTIONS}
+                activeSections={activeSections}
+                renderHeader={this.renderHeader}
+                renderContent={this.renderContent}
+                onChange={this.updateSections} />
+        )
+    }
+}
+
+const styles = StyleSheet.create({
+    rowTitle: {
+        fontSize: 18,
+        fontWeight: 'bold'
+    }
+})
