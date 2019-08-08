@@ -39,7 +39,7 @@ export default class NoteDtlCfg extends Component {
 
     async getNoteCfg() {
         const cur = this;
-        const {type, noteId, setNoteCfgStatCd} = this.props;
+        const {type, noteId, setNoteCfgList} = this.props;
 
         let tempNoteId = '';
 
@@ -47,13 +47,13 @@ export default class NoteDtlCfg extends Component {
             tempNoteId = noteId;
         }
 
-        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/cfg?noteId=${noteId}`, await getToken())
+        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/cfg?noteId=${tempNoteId}`, await getToken())
             .then((response) => response.json())
             .then((res) => {
                 cur.setState({
                     noteCfgList: res.data
                 })
-                setNoteCfgStatCd(res.data)
+                setNoteCfgList(res.data)
             })
             .catch((error) => {
                 ToastAndroid.show('정보 조회를 실패하였습니다.', ToastAndroid.SHORT);

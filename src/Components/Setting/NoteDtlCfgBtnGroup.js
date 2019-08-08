@@ -53,7 +53,7 @@ export default class NoteDtlCfgBtnGroup extends Component {
         return (
             <View style={styles.rowView}>
                 <View style={styles.rowTitle}><Text style={styles.rowText}>{title}</Text></View>
-                <View>
+                <View style={{flex: 1}}>
                     <ButtonGroup
                       onPress={this.updateIndex}
                       selectedIndex={selectedIndex}
