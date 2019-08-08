@@ -427,7 +427,7 @@ export default class NoteDtl extends Component {
                             navigation={this.props.navigation}
                             type={type}
                             noteId={noteId}
-                            setNoteCfgList={(noteCfgList) => this.setState({noteCfgList, isNoteCfgList: true}, () => {this.checkInsertBtnStyle()})} />
+                            setNoteCfgList={(noteCfgList, isNoteCfgList) => this.setState({noteCfgList, isNoteCfgList}, () => {if(isNoteCfgList){this.checkInsertBtnStyle()}})} />
                         <NoteDtlShare noteId={noteId} navigation={this.props.navigation} type={type} setShareList={(shareList) => this.setState({shareList})} />
                     </View>
                 </ScrollView>

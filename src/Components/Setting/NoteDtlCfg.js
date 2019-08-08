@@ -53,7 +53,7 @@ export default class NoteDtlCfg extends Component {
                 cur.setState({
                     noteCfgList: res.data
                 })
-                setNoteCfgList(res.data)
+                setNoteCfgList(res.data, false)
             })
             .catch((error) => {
                 ToastAndroid.show('정보 조회를 실패하였습니다.', ToastAndroid.SHORT);
@@ -69,7 +69,7 @@ export default class NoteDtlCfg extends Component {
         tmpNoteCfgList[index].noteCfgStatCd = noteCfgStatCd;
 
         this.setState({noteCfgList: tmpNoteCfgList});
-        setNoteCfgList(tmpNoteCfgList);
+        setNoteCfgList(tmpNoteCfgList, true);
     }
 
     renderHeader = section => {
