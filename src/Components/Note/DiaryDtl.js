@@ -56,6 +56,7 @@ export default class DiaryDtl extends Component {
             diaryId: this.props.navigation.getParam('diaryId'),
             noteId: this.props.navigation.getParam('noteId'),
             diaryDt: this.props.navigation.getParam('diaryDt'),
+            noteCfgList: this.props.navigation.getParam('noteCfgList'),
             fileId: null,
             height: '',
             weight: '',
@@ -329,7 +330,11 @@ export default class DiaryDtl extends Component {
     }
     
     renderShit() {
-        const {shitCnt, shitCd, shitDesc, shitDescStyle} = this.state;
+        const {shitCnt, shitCd, shitDesc, shitDescStyle, noteCfgList} = this.state;
+
+        if(_.find(noteCfgList, {noteCfgCd: 'SHIT_CD', noteCfgStatCd: 'N'})) {
+            return;
+        }
         
         if(shitCnt == 0) {
             return(
@@ -406,7 +411,8 @@ export default class DiaryDtl extends Component {
             shiCntStyle,
             shitDescStyle,
             sleepStartTimeStyle,
-            sleepEndTimeStyle
+            sleepEndTimeStyle,
+            noteCfgList
         } = this.state;
 
         return (
@@ -458,6 +464,7 @@ export default class DiaryDtl extends Component {
                                     </TextInput>
                                 </View>
                             </View>
+                            { _.find(noteCfgList, {noteCfgCd: 'HEIGHT', noteCfgStatCd: 'Y'}) &&
                             <View style={[styles.checkContent, {height: 60, marginBottom: 10, marginTop: 10}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>키</Text></View>
                                 <View style={{
@@ -484,6 +491,8 @@ export default class DiaryDtl extends Component {
                                     </View>
                                 </View>
                             </View>
+                            }
+                            { _.find(noteCfgList, {noteCfgCd: 'WEIGHT', noteCfgStatCd: 'Y'}) &&
                             <View style={[styles.checkContent, {height: 60, marginBottom: 5}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>몸무게</Text></View>
                                 <View style={{
@@ -510,39 +519,51 @@ export default class DiaryDtl extends Component {
                                     </View>
                                 </View>
                             </View>
+                            }
+                            { _.find(noteCfgList, {noteCfgCd: 'FEELING_CD', noteCfgStatCd: 'Y'}) &&
                             <View style={[styles.checkContent, {height: 40}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>기분</Text></View>
                                 <DiaryDtlBtnGroup code={this.state.feelingCd}
                                                   setCode={(feelingCd) => this.setState({feelingCd})}></DiaryDtlBtnGroup>
                             </View>
+                            }
+                            { _.find(noteCfgList, {noteCfgCd: 'HEALTH_CD', noteCfgStatCd: 'Y'}) &&
                             <View style={[styles.checkContent, {height: 40}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>건강</Text></View>
                                 <DiaryDtlBtnGroup code={this.state.healthCd}
                                                   setCode={(healthCd) => this.setState({healthCd})}></DiaryDtlBtnGroup>
                             </View>
+                            }
+                            { _.find(noteCfgList, {noteCfgCd: 'FEVER_CD', noteCfgStatCd: 'Y'}) &&
                             <View style={[styles.checkContent, {height: 40}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>열</Text></View>
                                 <DiaryDtlBtnGroup code={this.state.feverCd}
                                                   setCode={(feverCd) => this.setState({feverCd})}></DiaryDtlBtnGroup>
                             </View>
+                            }
+                            { _.find(noteCfgList, {noteCfgCd: 'BREAKFAST_CD', noteCfgStatCd: 'Y'}) &&
                             <View style={[styles.checkContent, {height: 40}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>아침식사</Text></View>
                                 <DiaryDtlBtnGroup code={this.state.breakfastCd}
                                                   setCode={(breakfastCd) => this.setState({breakfastCd})}></DiaryDtlBtnGroup>
                             </View>
+                            }
+                            { _.find(noteCfgList, {noteCfgCd: 'LUNCH_CD', noteCfgStatCd: 'Y'}) &&
                             <View style={[styles.checkContent, {height: 40}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>점심식사</Text></View>
                                 <DiaryDtlBtnGroup code={this.state.lunchCd}
                                                   setCode={(lunchCd) => this.setState({lunchCd})}></DiaryDtlBtnGroup>
                             </View>
+                            }
+                            { _.find(noteCfgList, {noteCfgCd: 'DINNER_CD', noteCfgStatCd: 'Y'}) &&
                             <View style={[styles.checkContent, {height: 40}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>저녁식사</Text></View>
                                 <DiaryDtlBtnGroup code={this.state.dinnerCd}
                                                   setCode={(dinnerCd) => this.setState({dinnerCd})}></DiaryDtlBtnGroup>
                             </View>
-
+                            }
                             {this.renderShit()}
-
+                            { _.find(noteCfgList, {noteCfgCd: 'SLEEP_CD', noteCfgStatCd: 'Y'}) &&
                             <View style={[styles.checkContent, {height: 60, marginBottom: 60}]}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>수면</Text></View>
                                 <View style={{flex: 1, flexDirection: 'row'}}>
@@ -582,6 +603,7 @@ export default class DiaryDtl extends Component {
                                     </View>
                                 </View>
                             </View>
+                            }
                         </ScrollView>
                     </KeyboardAvoidingView>
                 </View>

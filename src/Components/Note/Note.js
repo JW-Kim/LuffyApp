@@ -45,7 +45,8 @@ export default class Note extends Component {
             fileId: null,
             selectedDay: null,
             calCurrentMonth: null,
-            diaryInsertActionYn: true
+            diaryInsertActionYn: true,
+            noteCfgList: []
         }
 
         let openNoteDtl = this.openNoteDtl.bind(this);
@@ -98,7 +99,9 @@ export default class Note extends Component {
     }
 
     async getNote() {
-        var cur = this;
+        const cur = this;
+        const {noteId} = this.state;
+
         this.setState({loading: true});
 
         let today = new Date();
@@ -124,14 +127,17 @@ export default class Note extends Component {
                         }, () => {
                             cur.getMonthDiary(month);
                         })
+
+                        cur.getNoteCfg(res.data[0].noteId);
                     }
                 })
                 .catch((error) => {
                     Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
-                    this.props.navigation.navigate('Login')
+                    cur.props.navigation.navigate('Login')
                 });
         } else {
-            this.getMonthDiary(month);
+            cur.getMonthDiary(month);
+            cur.getNoteCfg(noteId);
         }
     }
 
@@ -174,6 +180,22 @@ export default class Note extends Component {
             .catch((error) => {
                 Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
                 this.props.navigation.navigate('Login')
+            });
+    }
+
+    async getNoteCfg(noteId) {
+        const cur = this;
+
+        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/cfg?noteId=${noteId}`, await getToken())
+            .then((response) => response.json())
+            .then((res) => {
+                cur.setState({
+                    noteCfgList: res.data
+                })
+            })
+            .catch((error) => {
+                Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                cur.props.navigation.navigate('Login')
             });
     }
 
@@ -260,6 +282,8 @@ export default class Note extends Component {
     }
 
     openDiaryDtl() {
+        const {noteCfgList} = this.state;
+
         this.setState({
             selectedDiary: null
         })
@@ -267,7 +291,8 @@ export default class Note extends Component {
             type: 'UPDATE',
             diaryId: this.state.selectedDiary.diaryId,
             noteId: this.state.noteId,
-            refreshFnc: this.getNote.bind(this)
+            refreshFnc: this.getNote.bind(this),
+            noteCfgList: noteCfgList
         })
     }
 
@@ -314,7 +339,7 @@ export default class Note extends Component {
     }
 
     renderNote() {
-        const {note, fileId, diaryInsertActionYn, selectedDay} = this.state;
+        const {note, fileId, diaryInsertActionYn, selectedDay, noteCfgList} = this.state;
 
         if (_.isNil(note) || note.length == 0) {
             return (
@@ -412,6 +437,7 @@ export default class Note extends Component {
                                         fileId={this.state.selectedDiary.fileId}
                                         openDiaryDtl={this.openDiaryDtl.bind(this)}
                                         refreshFnc={() => this.getNote()}
+                                        noteCfgList={noteCfgList}
                                     ></NoteDiary>
                                 </View>)}
                         {this.state.selectedDiseaseList == null ? <View><Text></Text></View> :

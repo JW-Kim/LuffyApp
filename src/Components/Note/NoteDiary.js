@@ -19,6 +19,7 @@ import Constants from '../../Com/Constants.js'
 import {getToken} from '../../Com/AuthToken.js';
 import NoteDiaryBtnGroup from './NoteDiaryBtnGroup';
 import Menu, { MenuItem, MenuDivider  } from 'react-native-material-menu';
+import _ from 'lodash';
 
 const SECTIONS = [
     {
@@ -158,7 +159,7 @@ export default class NoteDiary extends Component {
     };
 
     _renderContent = section => {
-        const {fileId} = this.props;
+        const {fileId, noteCfgList} = this.props;
         
         const {
             content,
@@ -197,12 +198,12 @@ export default class NoteDiary extends Component {
                     <View style={{marginTop: 16, marginLeft:40, marginRight:20}}>
                         {this.renderHeight()}
                         {this.renderWeight()}
-                        <NoteDiaryBtnGroup title="기분" code={feelingCd} />
-                        <NoteDiaryBtnGroup title="건강" code={healthCd} />
-                        <NoteDiaryBtnGroup title="열" code={feverCd} />
-                        <NoteDiaryBtnGroup title="아침식사" code={breakfastCd} />
-                        <NoteDiaryBtnGroup title="점심식사" code={lunchCd} />
-                        <NoteDiaryBtnGroup title="저녁식사" code={dinnerCd} />
+                        {_.find(noteCfgList, {noteCfgCd: 'FEELING_CD', noteCfgStatCd: 'Y'}) && <NoteDiaryBtnGroup title="기분" code={feelingCd} />}
+                        {_.find(noteCfgList, {noteCfgCd: 'HEALTH_CD', noteCfgStatCd: 'Y'}) && <NoteDiaryBtnGroup title="건강" code={healthCd} />}
+                        {_.find(noteCfgList, {noteCfgCd: 'FEVER_CD', noteCfgStatCd: 'Y'}) && <NoteDiaryBtnGroup title="열" code={feverCd} />}
+                        {_.find(noteCfgList, {noteCfgCd: 'BREAKFAST_CD', noteCfgStatCd: 'Y'}) && <NoteDiaryBtnGroup title="아침식사" code={breakfastCd} />}
+                        {_.find(noteCfgList, {noteCfgCd: 'LUNCH_CD', noteCfgStatCd: 'Y'}) && <NoteDiaryBtnGroup title="점심식사" code={lunchCd} />}
+                        {_.find(noteCfgList, {noteCfgCd: 'DINNER_CD', noteCfgStatCd: 'Y'}) && <NoteDiaryBtnGroup title="저녁식사" code={dinnerCd} />}
                         {this.renderShit()}
                         {this.renderSleep()}
                     </View>
@@ -211,16 +212,17 @@ export default class NoteDiary extends Component {
     };
 
     renderHeight() {
+        const {noteCfgList} = this.props;
         const {height} = this.state;
 
-        if(height == null || height == 0) {
+        if(height == null || height == 0 || !_.find(noteCfgList, {noteCfgCd: 'HEIGHT', noteCfgStatCd: 'Y'})) {
             return;
         }
 
         return(
             <View style={styles.rowView}>
                 <View style={styles.rowTitle}>
-                    <View style={{flex: 1}}><Text style={styles.rowText}>키</Text></View>
+                    <View style={{flex: 1, justifyContent: 'center'}}><Text style={styles.rowText}>키</Text></View>
                 </View>
                 <View style={{flex: 1}}><Text style={styles.rowText}>{height} cm</Text></View>
             </View>
@@ -228,16 +230,17 @@ export default class NoteDiary extends Component {
     }
 
     renderWeight() {
+        const {noteCfgList} = this.props;
         const {weight} = this.state;
 
-        if(weight == null || weight == 0) {
+        if(weight == null || weight == 0 || !_.find(noteCfgList, {noteCfgCd: 'WEIGHT', noteCfgStatCd: 'Y'})) {
             return;
         }
 
         return(
             <View style={styles.rowView}>
                 <View style={styles.rowTitle}>
-                    <View style={{flex: 1}}><Text style={styles.rowText}>몸무게</Text></View>
+                    <View style={{flex: 1, justifyContent: 'center'}}><Text style={styles.rowText}>몸무게</Text></View>
                 </View>
                 <View style={{flex: 1}}><Text style={styles.rowText}>{weight} kg</Text></View>
             </View>
@@ -245,7 +248,12 @@ export default class NoteDiary extends Component {
     }
 
     renderShit() {
+        const {noteCfgList} = this.props;
         const {shitCd, shitDesc, shitCnt} = this.state;
+
+        if(_.find(noteCfgList, {noteCfgCd: 'SHIT_CD', noteCfgStatCd: 'Y'})) {
+            return;
+        }
 
         if(shitCd == 0) {
             return (
@@ -272,9 +280,10 @@ export default class NoteDiary extends Component {
     }
 
     renderSleep() {
+        const {noteCfgList} = this.props;
         const {sleepStartTime, sleepEndTime} = this.state;
 
-        if(sleepStartTime == '' || sleepStartTime == null || sleepEndTime == '' || sleepEndTime == null) {
+        if(sleepStartTime == '' || sleepStartTime == null || sleepEndTime == '' || sleepEndTime == null || !_.find(noteCfgList, {noteCfgCd: 'SLEEP_CD', noteCfgStatCd: 'Y'})) {
             return;
         }
 
