@@ -79,7 +79,7 @@ export default class NoteDtlCfg extends Component {
                     <Text style={styles.rowTitle}>노트 설정</Text>
                 </View>
                 <View style={{alignItems: 'center', marginRight: 20}}>
-                    <Icons name="angle-down" color="000" size={24}/>
+                    <Icons name="angle-down" color="#000" size={24}/>
                 </View>
             </View>
         )
