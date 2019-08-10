@@ -76,7 +76,7 @@ export default class NoteDtlCfg extends Component {
         return (
             <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 32}}>
                 <View style={{marginLeft: 20}}>
-                    <Text style={styles.rowTitle}>note setting</Text>
+                    <Text style={styles.rowTitle}>노트 설정</Text>
                 </View>
                 <View style={{alignItems: 'center', marginRight: 20}}>
                     <Icons name="angle-down" color="000" size={24}/>

@@ -48,7 +48,7 @@ export default class NoteDtlCfgBtnGroup extends Component {
     render() {
         const {setNoteCfgStatCd, title} = this.props;
         const {selectedIndex} = this.state;
-        const buttons = ['user', 'unuse']
+        const buttons = ['사용', '미사용']
 
         return (
             <View style={styles.rowView}>

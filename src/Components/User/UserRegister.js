@@ -144,18 +144,16 @@ export default class UserRegister extends Component {
 
         if (_.isNil(userLoginId) || _.isNil(email) || _.isNil(userPwd) || _.isNil(userPwd2) || _.isNil(userNm)
             || userLoginId === '' || email === '' || userPwd === '' || userPwd2 === '' || userNm === '') {
-            Toast.show('all input', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
             return;
         }
 
         if (userPwd !== userPwd2) {
-            Toast.show('not equal', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
             return;
         }
 
         const res = await this.selectUserExist();
         if (res) {
-            Toast.show('exist user', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+            Toast.show('동일한 ID가 존재합니다', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
             return;
         }
 
@@ -173,11 +171,11 @@ export default class UserRegister extends Component {
         }))
             .then((response) => response.json())
             .then((res) => {
-                Toast.show('note share', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                Toast.show('사용자가 등록되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
                 this.props.navigation.goBack();
             })
             .catch((error) => {
-                Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                Toast.show('사용자 등록을 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
                 this.props.navigation.navigate('Login')
             })
     }
@@ -198,11 +196,11 @@ export default class UserRegister extends Component {
         }))
             .then((response) => response.json())
             .then((res) => {
-                Toast.show('프로필이 업로드 되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                Toast.show('사용자가 수정되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
                 this.props.navigation.goBack();
             })
             .catch((error) => {
-                Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                Toast.show('사용자 수정을 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
                 this.props.navigation.navigate('Login')
             })
     }
@@ -618,7 +616,7 @@ export default class UserRegister extends Component {
                 <Button
                     buttonStyle={insertUserBtnStyle}
                     containerViewStyle={{width: '100%', marginLeft: 0, marginRight: 0}}
-                    title='등록'
+                    title='저장'
                     onPress={() => this.save()}/>
             </View>
         )
