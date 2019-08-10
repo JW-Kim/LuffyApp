@@ -480,7 +480,8 @@ export default class Note extends Component {
                                                type: 'INSERT',
                                                noteId: this.state.noteId,
                                                diaryDt: this.state.diaryDt,
-                                               refreshFnc: this.getNote.bind(this)
+                                               refreshFnc: this.getNote.bind(this),
+                                               noteCfgList: noteCfgList
                                            })}>
                                 <IonIcons name="md-create" style={styles.actionButtonIcon}/>
                             </ActionButton.Item>
