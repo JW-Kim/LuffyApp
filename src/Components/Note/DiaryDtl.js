@@ -332,7 +332,7 @@ export default class DiaryDtl extends Component {
     renderShit() {
         const {shitCnt, shitCd, shitDesc, shitDescStyle, noteCfgList} = this.state;
 
-        if(_.find(noteCfgList, {noteCfgCd: 'SHIT_CD', noteCfgStatCd: 'N'})) {
+        if(!_.find(noteCfgList, {noteCfgCd: 'SHIT_CD', noteCfgStatCd: 'Y'})) {
             return;
         }
         

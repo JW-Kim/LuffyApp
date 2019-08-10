@@ -251,7 +251,7 @@ export default class NoteDiary extends Component {
         const {noteCfgList} = this.props;
         const {shitCd, shitDesc, shitCnt} = this.state;
 
-        if(_.find(noteCfgList, {noteCfgCd: 'SHIT_CD', noteCfgStatCd: 'Y'})) {
+        if(!_.find(noteCfgList, {noteCfgCd: 'SHIT_CD', noteCfgStatCd: 'Y'})) {
             return;
         }
 
