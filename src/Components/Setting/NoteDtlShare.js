@@ -26,7 +26,7 @@ export default class NoteDtlShare extends Component {
             shareList: []
         }
 
-        let confirmDelShareNote = this.confirmDelShareNote.bind(this);
+        let confirmDelShareUser = this.confirmDelShareUser.bind(this);
         let openSearchUser = this.openSearchUser.bind(this);
     }
 
@@ -61,8 +61,8 @@ export default class NoteDtlShare extends Component {
             });
     }
 
-    confirmDelShareNote(noteId) {
-        Alert.alert('', 'do you delete ?', [{text: 'confirm', onPress: () => this.deleteShareNote(noteId)}, {text: 'cancel', style: 'cancel'}], {cancelable: false});
+    confirmDelShareUser(userId) {
+        Alert.alert('', 'do you delete ?', [{text: 'confirm', onPress: () => this.deleteShareUser(userId)}, {text: 'cancel', style: 'cancel'}], {cancelable: false});
     }
 
     async deleteShareUser(userId) {
@@ -77,8 +77,8 @@ export default class NoteDtlShare extends Component {
                     if(response.ok) {
                         response.json()
                             .then((res) => {
-                	    this.getShareNoteList()
-                	    ToastAndroid.show('note delete.', ToastAndroid.SHORT);
+                	            this.getShareNoteList()
+                	            ToastAndroid.show('note delete.', ToastAndroid.SHORT);
                             })
                     } else {
                         ToastAndroid.show('Failed.', ToastAndroid.SHORT);
@@ -173,7 +173,7 @@ export default class NoteDtlShare extends Component {
                                 <Text style={styles.rowText}>{item.userNm}</Text>
                             </View>
                             <View style={{width: 30, justifyContent: 'flex-end', flexDirection: 'row', marginRight: 7}}>
-                                <TouchableOpacity onPress={() => this.confirmDelShareNote(item.userId)}>
+                                <TouchableOpacity onPress={() => this.confirmDelShareUser(item.userId)}>
                                     <Icons name="minus-circle" color="#d32f2f" size={21}/>
                                 </TouchableOpacity>
                             </View>
