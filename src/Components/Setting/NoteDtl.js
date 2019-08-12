@@ -12,7 +12,8 @@ import {
     AsyncStorage,
     Picker,
     Image,
-    TouchableOpacity
+    TouchableOpacity,
+    ToastAndroid
 } from 'react-native';
 import {
     Button
@@ -65,23 +66,29 @@ export default class NoteDtl extends Component {
         const {noteId, type} = this.state;
         if (this.props.navigation.getParam('type') == 'UPDATE') {
             fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/${noteId}`, await getToken())
-                .then((response) => response.json())
-                .then((res) => {
-                    console.log('res', res)
-                    this.setState({
-                        noteNm: res.data.noteNm,
-                        sex: res.data.sex,
-                        birthDt: res.data.birthDt,
-                        fileId: res.data.fileId,
-                        avatarSource: null,
-                        isNoteNm: true,
-                        isSex: true,
-                        isBirthDt: true,
-                        isProfile: true
-                    })
+                .then((response) => {
+                    if(response.ok) {
+                        response.json()
+                            .then((res) => {
+                	            this.setState({
+                                    noteNm: res.data.noteNm,
+                                    sex: res.data.sex,
+                                    birthDt: res.data.birthDt,
+                                    fileId: res.data.fileId,
+                                    avatarSource: null,
+                                    isNoteNm: true,
+                                    isSex: true,
+                                    isBirthDt: true,
+                                    isProfile: true
+                                })
+                            })
+                    } else {
+                        ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                        this.props.navigation.navigate('Login')
+                    }
                 })
                 .catch((error) => {
-                    Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
                 });
         }
@@ -126,15 +133,22 @@ export default class NoteDtl extends Component {
                 noteCfgList
             })
         }))
-            .then((response) => response.json())
-            .then((res) => {
-                Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
-                let refreshFnc = this.props.navigation.getParam('refreshFnc');
-                refreshFnc();
-                this.props.navigation.goBack();
+            .then((response) => {
+                if(response.ok) {
+                    response.json()
+                        .then((res) => {
+            	            Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                            let refreshFnc = this.props.navigation.getParam('refreshFnc');
+                            refreshFnc();
+                            this.props.navigation.goBack();
+                        })
+                } else {
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    this.props.navigation.navigate('Login')
+                }
             })
             .catch((error) => {
-                Toast.show('정보 저장을 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });
     }
@@ -161,16 +175,22 @@ export default class NoteDtl extends Component {
                 noteCfgList
             })
         }))
-            .then((response) => response.json())
-            .then((responseJson) => {
-                Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
-                let refreshFnc = this.props.navigation.getParam('refreshFnc');
-                refreshFnc();
-                this.props.navigation.goBack();
-                console.log(responseJson)
+            .then((response) => {
+                if(response.ok) {
+                    response.json()
+                        .then((res) => {
+            	    Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                            let refreshFnc = this.props.navigation.getParam('refreshFnc');
+                            refreshFnc();
+                            this.props.navigation.goBack();
+                        })
+                } else {
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    this.props.navigation.navigate('Login')
+                }
             })
             .catch((error) => {
-                Toast.show('정보 저장을 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });
     }

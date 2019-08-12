@@ -48,17 +48,24 @@ export default class NoteDtlCfg extends Component {
         }
 
         fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/cfg?noteId=${tempNoteId}`, await getToken())
-            .then((response) => response.json())
-            .then((res) => {
-                cur.setState({
-                    noteCfgList: res.data
-                })
-                setNoteCfgList(res.data, false)
+            .then((response) => {
+                if(response.ok) {
+                    response.json()
+                        .then((res) => {
+            	    cur.setState({
+                                noteCfgList: res.data
+                            })
+                            setNoteCfgList(res.data, false)
+                        })
+                } else {
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    this.props.navigation.navigate('Login')
+                }
             })
             .catch((error) => {
-                ToastAndroid.show('정보 조회를 실패하였습니다.', ToastAndroid.SHORT);
-                cur.props.navigation.navigate('Login')
-            })
+                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                this.props.navigation.navigate('Login')
+            });
     }
 
     setNoteCfgStatCd(index, noteCfgStatCd) {

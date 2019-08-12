@@ -10,7 +10,8 @@ import {
     TouchableOpacity,
     KeyboardAvoidingView,
     Image,
-    Dimensions
+    Dimensions,
+    ToastAndroid
 } from 'react-native';
 import {
     Button
@@ -75,28 +76,46 @@ export default class UserRegister extends Component {
 
     async getUserInfo() {
         fetch(`http://${Constants.HOST}:${Constants.PORT}/product/user/info`, await getToken())
-            .then((response) => response.json())
-            .then((res) => {
-                this.setState({
-                    userLoginId: res.data.userLoginId,
-                    userNm: res.data.userNm,
-                    email: res.data.email,
-                    fileId: res.data.fileId,
-                    isUserNm: true,
-                    isEmail: true,
-                    isProfile: true,
-                })
+            .then((response) => {
+                if(response.ok) {
+                    response.json()
+                        .then((res) => {
+            	            this.setState({
+                                userLoginId: res.data.userLoginId,
+                                userNm: res.data.userNm,
+                                email: res.data.email,
+                                fileId: res.data.fileId,
+                                isUserNm: true,
+                                isEmail: true,
+                                isProfile: true,
+                            })
+                        })
+                } else {
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                }
             })
+            .catch((error) => {
+                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+            });
     }
 
     async selectUserExist() {
         const {userLoginId, email} = this.state;
 
         return fetch(`http://${Constants.HOST}:${Constants.PORT}/product/user/selectUserExist?userLoginId=${userLoginId}&email=${email}`, await getToken())
-            .then((response) => response.json())
-            .then((res) => {
-                return res.data
+            .then((response) => {
+                if(response.ok) {
+                    response.json()
+                        .then((res) => {
+            	    return res.data
+                        })
+                } else {
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                }
             })
+            .catch((error) => {
+                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+            });
     }
 
     save() {
@@ -169,15 +188,22 @@ export default class UserRegister extends Component {
                 userNm
             })
         }))
-            .then((response) => response.json())
-            .then((res) => {
-                Toast.show('사용자가 등록되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
-                this.props.navigation.goBack();
+            .then((response) => {
+                if(response.ok) {
+                    response.json()
+                        .then((res) => {
+            	            ToastAndroid.show('사용자가 등록되었습니다.', ToastAndroid.SHORT);
+                            this.props.navigation.goBack();
+                        })
+                } else {
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    this.props.navigation.navigate('Login')
+                }
             })
             .catch((error) => {
-                Toast.show('사용자 등록을 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
-            })
+            });
     }
 
     async updateUser(fileId) {
@@ -194,15 +220,22 @@ export default class UserRegister extends Component {
                 fileId
             })
         }))
-            .then((response) => response.json())
-            .then((res) => {
-                Toast.show('사용자가 수정되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
-                this.props.navigation.goBack();
+            .then((response) => {
+                if(response.ok) {
+                    response.json()
+                        .then((res) => {
+            	            ToastAndroid.show('사용자가 수정되었습니다.', ToastAndroid.SHORT);
+                            this.props.navigation.goBack();
+                        })
+                } else {
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    this.props.navigation.navigate('Login')
+                }
             })
             .catch((error) => {
-                Toast.show('사용자 수정을 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
-            })
+            });
     }
 
     selectPhoto() {

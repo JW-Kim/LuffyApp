@@ -8,7 +8,8 @@ import {
     FlatList,
     TouchableOpacity,
     StyleSheet,
-    Alert
+    Alert,
+    ToastAndroid
 } from 'react-native';
 import Icons from 'react-native-vector-icons/FontAwesome';
 import Constants from '../../Com/Constants.js';
@@ -41,16 +42,23 @@ export default class NoteDtlShare extends Component {
         const {noteId} = this.props;
 
         fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/${noteId}/share/user`, await getToken())
-            .then((response) => response.json())
-            .then((res) => {
-                this.setState({
-                    shareList: res.data
-                })
+            .then((response) => {
+                if(response.ok) {
+                    response.json()
+                        .then((res) => {
+            	            this.setState({
+                                shareList: res.data
+                            })
+                        })
+                } else {
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    this.props.navigation.navigate('Login')
+                }
             })
             .catch((error) => {
-                Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
-            })
+            });
     }
 
     confirmDelShareNote(noteId) {
@@ -65,15 +73,22 @@ export default class NoteDtlShare extends Component {
             fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/${noteId}/share/user?userId=${userId}`, await getToken({
                 method: 'DELETE'
             }))
-                .then((response) => response.json())
-                .then((res) => {
-                    this.getShareNoteList()
-                    Toast.show('note delete', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                .then((response) => {
+                    if(response.ok) {
+                        response.json()
+                            .then((res) => {
+                	    this.getShareNoteList()
+                	    ToastAndroid.show('note delete.', ToastAndroid.SHORT);
+                            })
+                    } else {
+                        ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                        this.props.navigation.navigate('Login')
+                    }
                 })
                 .catch((error) => {
-                    Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
-                })
+                });
 
         } else {
             const {shareList} = this.state;
@@ -104,15 +119,22 @@ export default class NoteDtlShare extends Component {
                     userId: userId
                 })
             }))
-                .then((response) => response.json())
-                .then((res) => {
-                    this.getShareNoteList()
-                    Toast.show('note share', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                .then((response) => {
+                    if(response.ok) {
+                        response.json()
+                            .then((res) => {
+                	    this.getShareNoteList()
+                	    ToastAndroid.show('note share.', ToastAndroid.SHORT);
+                            })
+                    } else {
+                        ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                        this.props.navigation.navigate('Login')
+                    }
                 })
                 .catch((error) => {
-                    Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
-                })
+                });
 
         } else {
             const {shareList} = this.state;

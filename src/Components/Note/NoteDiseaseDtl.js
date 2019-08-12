@@ -9,7 +9,8 @@ import {
     TextInput,
     StyleSheet,
     Dimensions,
-    AsyncStorage
+    AsyncStorage,
+    ToastAndroid
 } from 'react-native';
 import {
     Button
@@ -44,17 +45,24 @@ export default class NoteDiseaseDtl extends Component {
     async componentWillMount() {
         if (this.state.type == 'UPDATE') {
             fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/disease/${this.state.diseaseId}`, await getToken())
-                .then((response) => response.json())
-                .then((res) => {
-                    this.setState({
-                        diseaseNm: res.data.diseaseNm,
-                        symptom: res.data.symptom,
-                        hospitalNm: res.data.hospitalNm,
-                        prescription: res.data.prescription
-                    })
+                .then((response) => {
+                    if(response.ok) {
+                        response.json()
+                            .then((res) => {
+                	            this.setState({
+                                    diseaseNm: res.data.diseaseNm,
+                                    symptom: res.data.symptom,
+                                    hospitalNm: res.data.hospitalNm,
+                                    prescription: res.data.prescription
+                                })
+                            })
+                    } else {
+                        ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                        this.props.navigation.navigate('Login')
+                    }
                 })
                 .catch((error) => {
-                    Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
                 });
         }
@@ -89,16 +97,22 @@ export default class NoteDiseaseDtl extends Component {
 
             })
         }))
-            .then((response) => response.json())
-            .then((responseJson) => {
-                Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
-                let refreshFnc = this.props.navigation.getParam('refreshFnc');
-                refreshFnc();
-                this.props.navigation.goBack();
-                console.log(responseJson)
+            .then((response) => {
+                if(response.ok) {
+                    response.json()
+                        .then((res) => {
+            	            Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                            let refreshFnc = this.props.navigation.getParam('refreshFnc');
+                            refreshFnc();
+                            this.props.navigation.goBack();
+                        })
+                } else {
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    this.props.navigation.navigate('Login')
+                }
             })
             .catch((error) => {
-                Toast.show('정보 저장을 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });
     }
@@ -120,16 +134,22 @@ export default class NoteDiseaseDtl extends Component {
 
             })
         }))
-            .then((response) => response.json())
-            .then((responseJson) => {
-                Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
-                let refreshFnc = this.props.navigation.getParam('refreshFnc');
-                refreshFnc();
-                this.props.navigation.goBack();
-                console.log(responseJson)
+            .then((response) => {
+                if(response.ok) {
+                    response.json()
+                        .then((res) => {
+            	            Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                            let refreshFnc = this.props.navigation.getParam('refreshFnc');
+                            refreshFnc();
+                            this.props.navigation.goBack();
+                        })
+                } else {
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    this.props.navigation.navigate('Login')
+                }
             })
             .catch((error) => {
-                Toast.show('정보 저장을 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });
     }

@@ -9,7 +9,8 @@ import {
     TouchableOpacity,
     ScrollView,
     AsyncStorage,
-    Alert
+    Alert,
+    ToastAndroid
 } from 'react-native';
 import ModalHeader from '../Com/ModalHeader.js';
 import Constants from '../../Com/Constants.js';
@@ -41,35 +42,48 @@ export default class Note extends Component {
 
     async getMyNoteList() {
         fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/my`, await getToken())
-            .then((response) => response.json())
-            .then((res) => {
-                this.setState({
-                    myNoteList: res.data
+            .then((response) => {
+                if(response.ok) {
+                    response.json()
+                        .then((res) => {
+            	            this.setState({
+                                myNoteList: res.data
 
-                }, () => {
+                            }, () => {
 
-                })
+                            })
+                        })
+                } else {
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    this.props.navigation.navigate('Login')
+                }
             })
             .catch((error) => {
-                Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
-            });
-    }
+            });    }
 
 
     async getShareNoteList() {
         fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/share`, await getToken())
-            .then((response) => response.json())
-            .then((res) => {
-                this.setState({
-                    shareList: res.data
+            .then((response) => {
+                if(response.ok) {
+                    response.json()
+                        .then((res) => {
+            	            this.setState({
+                                shareList: res.data
 
-                }, () => {
+                            }, () => {
 
-                })
+                            })
+                        })
+                } else {
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    this.props.navigation.navigate('Login')
+                }
             })
             .catch((error) => {
-                Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });
     }
@@ -82,14 +96,19 @@ export default class Note extends Component {
         fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/${noteId}`, await getToken({
             method: 'DELETE'
         }))
-            .then((response) => response.json())
-            .then((res) => {
-                this.getMyNoteList();
-                Toast.show('일기장을 삭제하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
-
+            .then((response) => {
+                if(response.ok) {
+                    response.json()
+                        .then((res) => {
+            	            this.getMyNoteList();
+                            Toast.show('일기장을 삭제하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);            })
+                } else {
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    this.props.navigation.navigate('Login')
+                }
             })
             .catch((error) => {
-                Toast.show('note delete 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });
     }
@@ -102,14 +121,20 @@ export default class Note extends Component {
         fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/share/${noteId}`, await getToken({
             method: 'DELETE'
         }))
-            .then((response) => response.json())
-            .then((res) => {
-                this.getShareNoteList();
-                Toast.show('일기장을 삭제하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
-
+            .then((response) => {
+                if(response.ok) {
+                    response.json()
+                        .then((res) => {
+            	            this.getShareNoteList();
+                            Toast.show('일기장을 삭제하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                        })
+                } else {
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    this.props.navigation.navigate('Login')
+                }
             })
             .catch((error) => {
-                Toast.show('note delete 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });
     }

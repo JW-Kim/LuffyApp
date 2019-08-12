@@ -7,7 +7,8 @@ import {
     StyleSheet,
     Text,
     TouchableOpacity,
-    Dimensions
+    Dimensions,
+    ToastAndroid
 } from 'react-native';
 import Accordion from 'react-native-collapsible/Accordion';
 import IonIcons from 'react-native-vector-icons/Ionicons';
@@ -46,32 +47,38 @@ export default class NoteDiary extends Component {
 
     async componentWillMount() {
         fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/${this.props.diaryId}`, await getToken())
-            .then((response) => response.json())
-            .then((res) => {
-                console.log('res', res)
-                this.setState({
-                    feelingCd: res.data.feelingCd,
-                    healthCd: res.data.healthCd,
-                    feverCd: res.data.feverCd,
-                    breakfastCd: res.data.breakfastCd,
-                    lunchCd: res.data.lunchCd,
-                    dinnerCd: res.data.dinnerCd,
-                    shitCd: res.data.shitCd,
-                    shitCnt: res.data.shitCnt,
-                    shitDesc: res.data.shitDesc,
-                    sleepStartTime: res.data.sleepStartTime,
-                    sleepEndTime: res.data.sleepEndTime,
-                    title: res.data.title,
-                    content: res.data.content,
-                    fileId: res.data.fileId,
-                    weight: res.data.weight + '',
-                    height: res.data.height + ''
-                })
+            .then((response) => {
+                if(response.ok) {
+                    response.json()
+                        .then((res) => {
+            	            this.setState({
+                                feelingCd: res.data.feelingCd,
+                                healthCd: res.data.healthCd,
+                                feverCd: res.data.feverCd,
+                                breakfastCd: res.data.breakfastCd,
+                                lunchCd: res.data.lunchCd,
+                                dinnerCd: res.data.dinnerCd,
+                                shitCd: res.data.shitCd,
+                                shitCnt: res.data.shitCnt,
+                                shitDesc: res.data.shitDesc,
+                                sleepStartTime: res.data.sleepStartTime,
+                                sleepEndTime: res.data.sleepEndTime,
+                                title: res.data.title,
+                                content: res.data.content,
+                                fileId: res.data.fileId,
+                                weight: res.data.weight + '',
+                                height: res.data.height + ''
+                            })
+                        })
+                } else {
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    this.props.navigation.navigate('Login')
+                }
             })
             .catch((error) => {
-                Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
-            })
+            });
     }
 
     openDiaryDtl() {
@@ -87,13 +94,20 @@ export default class NoteDiary extends Component {
         fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/${diaryId}`, await getToken({
             method: 'DELETE'
         }))
-            .then((response) => response.json())
-            .then((res) => {
-                Toast.show('일기장을 삭제하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
-                refreshFnc();
+            .then((response) => {
+                if(response.ok) {
+                    response.json()
+                        .then((res) => {
+            	            Toast.show('일기장을 삭제하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                            refreshFnc();
+                        })
+                } else {
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    this.props.navigation.navigate('Login')
+                }
             })
             .catch((error) => {
-                Toast.show('diary delete 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });
     }

@@ -114,26 +114,33 @@ export default class Note extends Component {
 
         if (_.isNil(this.state.noteId)) {
             fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note`, await getToken())
-                .then((response) => response.json())
-                .then((res) => {
-                    if (res.data.length !== 0) {
-                        cur.setState({
-                            note: res.data,
-                            noteId: res.data[0].noteId,
-                            fileId: res.data[0].fileId,
-                            selectedDay: day,
-                            calCurrentMonth: day,
-                            diaryDt: diaryDt
-                        }, () => {
-                            cur.getMonthDiary(month);
-                        })
+                .then((response) => {
+                    if(response.ok) {
+                        response.json()
+                            .then((res) => {
+                	            if (res.data.length !== 0) {
+                                    cur.setState({
+                                        note: res.data,
+                                        noteId: res.data[0].noteId,
+                                        fileId: res.data[0].fileId,
+                                        selectedDay: day,
+                                        calCurrentMonth: day,
+                                        diaryDt: diaryDt
+                                    }, () => {
+                                        cur.getMonthDiary(month);
+                                    })
 
-                        cur.getNoteCfg(res.data[0].noteId);
+                                    cur.getNoteCfg(res.data[0].noteId);
+                                }
+                            })
+                    } else {
+                        ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                        this.props.navigation.navigate('Login')
                     }
                 })
                 .catch((error) => {
-                    Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
-                    cur.props.navigation.navigate('Login')
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    this.props.navigation.navigate('Login')
                 });
         } else {
             cur.getMonthDiary(month);
@@ -148,37 +155,51 @@ export default class Note extends Component {
         })
 
         fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/month?noteId=${this.state.noteId}'&diaryMonth=${month}`, await getToken())
-            .then((response) => response.json())
-            .then((res) => {
-                if (!(_.isNil(res.data) || res.data == null)) {
-                    this.setState({
-                        diary: res.data
-                    })
-                    this.getMonthDisease(month);
+            .then((response) => {
+                if(response.ok) {
+                    response.json()
+                        .then((res) => {
+            	            if (!(_.isNil(res.data) || res.data == null)) {
+                                this.setState({
+                                    diary: res.data
+                                })
+                                this.getMonthDisease(month);
+                            } else {
+                                this.setState({loading: false});
+                            }
+                        })
                 } else {
-                    this.setState({loading: false});
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    this.props.navigation.navigate('Login')
                 }
             })
             .catch((error) => {
-                Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });
     }
 
     async getMonthDisease(month) {
         fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/diseaseMonth?noteId=${this.state.noteId}&diseaseMonth=${month}`, await getToken())
-            .then((response) => response.json())
-            .then((res) => {
-                if (!(_.isNil(res.data) || res.data == null)) {
-                    this.setState({
-                        disease: res.data
-                    })
+            .then((response) => {
+                if(response.ok) {
+                    response.json()
+                        .then((res) => {
+            	            if (!(_.isNil(res.data) || res.data == null)) {
+                                this.setState({
+                                    disease: res.data
+                                })
 
-                    this.setMarkedDate(this.state.selectedDay)
+                                this.setMarkedDate(this.state.selectedDay)
+                            }
+                        })
+                } else {
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    this.props.navigation.navigate('Login')
                 }
             })
             .catch((error) => {
-                Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });
     }
@@ -187,15 +208,22 @@ export default class Note extends Component {
         const cur = this;
 
         fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/cfg?noteId=${noteId}`, await getToken())
-            .then((response) => response.json())
-            .then((res) => {
-                cur.setState({
-                    noteCfgList: res.data
-                })
+            .then((response) => {
+                if(response.ok) {
+                    response.json()
+                        .then((res) => {
+            	            cur.setState({
+                                noteCfgList: res.data
+                            })
+                        })
+                } else {
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    this.props.navigation.navigate('Login')
+                }
             })
             .catch((error) => {
-                Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
-                cur.props.navigation.navigate('Login')
+                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                this.props.navigation.navigate('Login')
             });
     }
 

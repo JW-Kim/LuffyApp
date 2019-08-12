@@ -8,7 +8,8 @@ import {
     FlatList,
     TouchableOpacity,
     StyleSheet,
-    TextInput
+    TextInput,
+    ToastAndroid
 } from 'react-native';
 import {
      Button,
@@ -45,17 +46,24 @@ export default class SearchUser extends Component {
           this.setState({searchVal, showLoading: true});
 
           fetch(`http://${Constants.HOST}:${Constants.PORT}/product/user/search?searchVal=${searchVal}`, await getToken())
-               .then((response) => response.json())
-               .then((res) => {
-                    this.setState({
-                         userList: res.data,
-                         showLoading: false
-                    })
+               .then((response) => {
+                   if(response.ok) {
+                       response.json()
+                           .then((res) => {
+               	                this.setState({
+                                    userList: res.data,
+                                    showLoading: false
+                               })
+                           })
+                   } else {
+                       ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                       this.props.navigation.navigate('Login')
+                   }
                })
                .catch((error) => {
-                    Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
-                    this.props.navigation.navigate('Login')
-               })
+                   ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                   this.props.navigation.navigate('Login')
+               });
      }
 
      close() {

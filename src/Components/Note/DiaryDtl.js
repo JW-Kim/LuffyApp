@@ -12,7 +12,8 @@ import {
     TouchableOpacity,
     KeyboardAvoidingView,
     AsyncStorage,
-    Picker
+    Picker,
+    ToastAndroid
 } from 'react-native';
 import {
     CheckBox
@@ -79,43 +80,56 @@ export default class DiaryDtl extends Component {
 
         if (this.state.type == 'UPDATE') {
             fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/${this.state.diaryId}`, await getToken())
-                .then((response) => response.json())
-                .then((res) => {
-                    console.log('res', res)
-                    this.setState({
-                        feelingCd: res.data.feelingCd,
-                        healthCd: res.data.healthCd,
-                        feverCd: res.data.feverCd,
-                        breakfastCd: res.data.breakfastCd,
-                        lunchCd: res.data.lunchCd,
-                        dinnerCd: res.data.dinnerCd,
-                        shitCd: res.data.shitCd,
-                        shitCnt: res.data.shitCnt,
-                        shitDesc: res.data.shitDesc,
-                        sleepStartTime: res.data.sleepStartTime,
-                        sleepEndTime: res.data.sleepEndTime,
-                        title: res.data.title,
-                        content: res.data.content,
-                        fileId: res.data.fileId,
-                        weight: res.data.weight + '',
-                        height: res.data.height + ''
-                    })
+                .then((response) => {
+                    if(response.ok) {
+                        response.json()
+                            .then((res) => {
+                	            this.setState({
+                                    feelingCd: res.data.feelingCd,
+                                    healthCd: res.data.healthCd,
+                                    feverCd: res.data.feverCd,
+                                    breakfastCd: res.data.breakfastCd,
+                                    lunchCd: res.data.lunchCd,
+                                    dinnerCd: res.data.dinnerCd,
+                                    shitCd: res.data.shitCd,
+                                    shitCnt: res.data.shitCnt,
+                                    shitDesc: res.data.shitDesc,
+                                    sleepStartTime: res.data.sleepStartTime,
+                                    sleepEndTime: res.data.sleepEndTime,
+                                    title: res.data.title,
+                                    content: res.data.content,
+                                    fileId: res.data.fileId,
+                                    weight: res.data.weight + '',
+                                    height: res.data.height + ''
+                                })
+                            })
+                    } else {
+                        ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                        this.props.navigation.navigate('Login')
+                    }
                 })
                 .catch((error) => {
-                    Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
                 });
         } else {
             fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/preInfo/${noteId}?diaryDt=${diaryDt}`, await getToken())
-                .then((response) => response.json())
-                .then((res) => {
-                    this.setState({
-                        weight: res.data.weight == null ? '' : res.data.weight + '',
-                        height: res.data.weight == null ? '' : res.data.height + ''
-                    })
+                .then((response) => {
+                    if(response.ok) {
+                        response.json()
+                            .then((res) => {
+                	            this.setState({
+                                    weight: res.data.weight == null ? '' : res.data.weight + '',
+                                    height: res.data.weight == null ? '' : res.data.height + ''
+                                })
+                            })
+                    } else {
+                        ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                        this.props.navigation.navigate('Login')
+                    }
                 })
                 .catch((error) => {
-                    Toast.show('정보 조회를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
                 });
         }
@@ -149,16 +163,22 @@ export default class DiaryDtl extends Component {
                 weight: this.state.weight == '' ? 0 : this.state.weight
             })
         }))
-            .then((response) => response.json())
-            .then((responseJson) => {
-                Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
-                let refreshFnc = this.props.navigation.getParam('refreshFnc');
-                refreshFnc();
-                this.props.navigation.goBack();
-                console.log(responseJson)
+            .then((response) => {
+                if(response.ok) {
+                    response.json()
+                        .then((res) => {
+            	            Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                            let refreshFnc = this.props.navigation.getParam('refreshFnc');
+                            refreshFnc();
+                            this.props.navigation.goBack();
+                        })
+                } else {
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    this.props.navigation.navigate('Login')
+                }
             })
             .catch((error) => {
-                Toast.show('정보 저장을 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });
     }
@@ -188,16 +208,22 @@ export default class DiaryDtl extends Component {
                 weight: this.state.weight == null ? 0 : this.state.weight
             })
         }))
-            .then((response) => response.json())
-            .then((responseJson) => {
-                Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
-                let refreshFnc = this.props.navigation.getParam('refreshFnc');
-                refreshFnc();
-                this.props.navigation.goBack();
-                console.log(responseJson)
+            .then((response) => {
+                if(response.ok) {
+                    response.json()
+                        .then((res) => {
+            	            Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                            let refreshFnc = this.props.navigation.getParam('refreshFnc');
+                            refreshFnc();
+                            this.props.navigation.goBack();
+                        })
+                } else {
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    this.props.navigation.navigate('Login')
+                }
             })
             .catch((error) => {
-                Toast.show('정보 저장을 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });
     }

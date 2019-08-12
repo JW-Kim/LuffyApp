@@ -7,7 +7,8 @@ import {
     StyleSheet,
     Text,
     TouchableOpacity,
-    Dimensions
+    Dimensions,
+    ToastAndroid
 } from 'react-native';
 import Accordion from 'react-native-collapsible/Accordion';
 import IonIcons from 'react-native-vector-icons/Ionicons';
@@ -51,13 +52,20 @@ export default class NoteDisease extends Component {
         fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/disease/${diseaseId}`, await getToken({
             method: 'DELETE'
         }))
-            .then((response) => response.json())
-            .then((res) => {
-                Toast.show('질병기록을 삭제하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
-                refreshFnc();
+            .then((response) => {
+                if(response.ok) {
+                    response.json()
+                        .then((res) => {
+            	            Toast.show('질병기록을 삭제하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                            refreshFnc();
+                        })
+                } else {
+                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    this.props.navigation.navigate('Login')
+                }
             })
             .catch((error) => {
-                Toast.show('질병기록 삭제를 실패하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });
     }
