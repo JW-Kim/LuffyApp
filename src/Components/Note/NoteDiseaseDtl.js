@@ -57,12 +57,12 @@ export default class NoteDiseaseDtl extends Component {
                                 })
                             })
                     } else {
-                        ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                        ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                         this.props.navigation.navigate('Login')
                     }
                 })
                 .catch((error) => {
-                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
                 });
         }
@@ -107,12 +107,12 @@ export default class NoteDiseaseDtl extends Component {
                             this.props.navigation.goBack();
                         })
                 } else {
-                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    ToastAndroid.show('등록을 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
                 }
             })
             .catch((error) => {
-                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                ToastAndroid.show('등록을 실패하였습니다.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });
     }
@@ -144,12 +144,12 @@ export default class NoteDiseaseDtl extends Component {
                             this.props.navigation.goBack();
                         })
                 } else {
-                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    ToastAndroid.show('수정을 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
                 }
             })
             .catch((error) => {
-                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                ToastAndroid.show('수정을 실패하였습니다.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });
     }

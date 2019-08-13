@@ -54,12 +54,12 @@ export default class Note extends Component {
                             })
                         })
                 } else {
-                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
                 }
             })
             .catch((error) => {
-                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });    }
 
@@ -78,18 +78,18 @@ export default class Note extends Component {
                             })
                         })
                 } else {
-                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
                 }
             })
             .catch((error) => {
-                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });
     }
 
     confirmDelMyNote(noteId) {
-        Alert.alert('', 'do you delete ?', [{text: 'confirm', onPress: () => this.deleteMyNote(noteId)}, {text: 'cancel', style: 'cancel'}], {cancelable: false});
+        Alert.alert('', '삭제하시겠습니까?', [{text: '확인', onPress: () => this.deleteMyNote(noteId)}, {text: '취소', style: 'cancel'}], {cancelable: false});
     }
 
     async deleteMyNote(noteId) {
@@ -104,18 +104,18 @@ export default class Note extends Component {
                             ToastAndroid.show('일기장을 삭제하였습니다.', ToastAndroid.SHORT);
                         })
                 } else {
-                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    ToastAndroid.show('삭제를 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
                 }
             })
             .catch((error) => {
-                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                ToastAndroid.show('삭제를 실패하였습니다.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });
     }
 
     confirmDelShareNote(noteId) {
-        Alert.alert('', 'do you delete ?', [{text: 'confirm', onPress: () => this.deleteShareNote(noteId)}, {text: 'cancel', style: 'cancel'}], {cancelable: false});
+        Alert.alert('', '삭제하시겠습니까?', [{text: '확인', onPress: () => this.deleteShareNote(noteId)}, {text: '취소', style: 'cancel'}], {cancelable: false});
     }
 
     async deleteShareNote(noteId) {
@@ -130,12 +130,12 @@ export default class Note extends Component {
             	            ToastAndroid.show('일기장을 삭제하였습니다.', ToastAndroid.SHORT);
                         })
                 } else {
-                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    ToastAndroid.show('삭제를 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
                 }
             })
             .catch((error) => {
-                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                ToastAndroid.show('삭제를 실패하였습니다.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });
     }

@@ -51,18 +51,18 @@ export default class NoteDtlShare extends Component {
                             })
                         })
                 } else {
-                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
                 }
             })
             .catch((error) => {
-                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });
     }
 
     confirmDelShareUser(userId) {
-        Alert.alert('', 'do you delete ?', [{text: 'confirm', onPress: () => this.deleteShareUser(userId)}, {text: 'cancel', style: 'cancel'}], {cancelable: false});
+        Alert.alert('', '삭제하시겠습니까?', [{text: '확인', onPress: () => this.deleteShareUser(userId)}, {text: '취소', style: 'cancel'}], {cancelable: false});
     }
 
     async deleteShareUser(userId) {
@@ -78,15 +78,15 @@ export default class NoteDtlShare extends Component {
                         response.json()
                             .then((res) => {
                 	            this.getShareNoteList()
-                	            ToastAndroid.show('note delete.', ToastAndroid.SHORT);
+                	            ToastAndroid.show('공유자가 삭제되었습니다.', ToastAndroid.SHORT);
                             })
                     } else {
-                        ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                        ToastAndroid.show('삭제를 실패하였습니다.', ToastAndroid.SHORT);
                         this.props.navigation.navigate('Login')
                     }
                 })
                 .catch((error) => {
-                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    ToastAndroid.show('삭제를 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
                 });
 
@@ -124,15 +124,15 @@ export default class NoteDtlShare extends Component {
                         response.json()
                             .then((res) => {
                 	    this.getShareNoteList()
-                	    ToastAndroid.show('note share.', ToastAndroid.SHORT);
+                	    ToastAndroid.show('공유 되었습니다.', ToastAndroid.SHORT);
                             })
                     } else {
-                        ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                        ToastAndroid.show('공유를 실패하였습니다.', ToastAndroid.SHORT);
                         this.props.navigation.navigate('Login')
                     }
                 })
                 .catch((error) => {
-                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    ToastAndroid.show('공유를 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
                 });
 

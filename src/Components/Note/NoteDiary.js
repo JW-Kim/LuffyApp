@@ -71,12 +71,12 @@ export default class NoteDiary extends Component {
                             })
                         })
                 } else {
-                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
                 }
             })
             .catch((error) => {
-                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });
     }
@@ -102,12 +102,12 @@ export default class NoteDiary extends Component {
                             refreshFnc();
                         })
                 } else {
-                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    ToastAndroid.show('삭제를 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
                 }
             })
             .catch((error) => {
-                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                ToastAndroid.show('삭제를 실패하였습니다.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });
     }

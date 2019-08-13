@@ -67,7 +67,7 @@ export default class Login extends Component {
         }
 
         if (username === '' || password === '') {
-            ToastAndroid.show('put in username, password.', ToastAndroid.SHORT);
+            ToastAndroid.show('아이디, 패스워드를 입력하세요.', ToastAndroid.SHORT);
             return;
         }
 

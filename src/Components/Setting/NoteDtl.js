@@ -83,12 +83,12 @@ export default class NoteDtl extends Component {
                                 })
                             })
                     } else {
-                        ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                        ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                         this.props.navigation.navigate('Login')
                     }
                 })
                 .catch((error) => {
-                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
                 });
         }
@@ -115,7 +115,7 @@ export default class NoteDtl extends Component {
         const {shareList, fileId, isNoteNm, isBirthDt, noteCfgList} = this.state;
 
         if(!isNoteNm || !isBirthDt) {
-            ToastAndroid.show('all input.', ToastAndroid.SHORT);
+            ToastAndroid.show('노트명과 출생일을 입력해주세요.', ToastAndroid.SHORT);
             return;
         }
 
@@ -143,12 +143,12 @@ export default class NoteDtl extends Component {
                             this.props.navigation.goBack();
                         })
                 } else {
-                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    ToastAndroid.show('등록을 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
                 }
             })
             .catch((error) => {
-                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                ToastAndroid.show('등록을 실패하였습니다.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });
     }
@@ -158,7 +158,7 @@ export default class NoteDtl extends Component {
         const {noteId, fileId, isNoteNm, isSex, isBirthDt, isProfile, noteCfgList} = this.state;
         console.log('updateNote', fileId)
         if(!(isNoteNm || isSex || isBirthDt || isProfile)) {
-            ToastAndroid.show('all input.', ToastAndroid.SHORT);
+            ToastAndroid.show('노트명과 출생일을 입력해주세요.', ToastAndroid.SHORT);
             return;
         }
 
@@ -185,12 +185,12 @@ export default class NoteDtl extends Component {
                             this.props.navigation.goBack();
                         })
                 } else {
-                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    ToastAndroid.show('수정을 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
                 }
             })
             .catch((error) => {
-                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                ToastAndroid.show('수정을 실패하였습니다.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });
     }

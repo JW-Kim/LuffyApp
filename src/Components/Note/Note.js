@@ -83,7 +83,7 @@ export default class Note extends Component {
 
     handleBackButton = () => {
         if (this.exitApp == undefined || !this.exitApp) {
-            ToastAndroid.show('If you press back button one more , the app will exit', ToastAndroid.SHORT);
+            ToastAndroid.show('뒤로 가기 버튼을 한번 더 누르면 앱이 종료됩니다.', ToastAndroid.SHORT);
             this.exitApp = true;
 
             this.timeout = setTimeout(() => {
@@ -134,12 +134,12 @@ export default class Note extends Component {
                                 }
                             })
                     } else {
-                        ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                        ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                         this.props.navigation.navigate('Login')
                     }
                 })
                 .catch((error) => {
-                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
                 });
         } else {
@@ -169,12 +169,12 @@ export default class Note extends Component {
                             }
                         })
                 } else {
-                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
                 }
             })
             .catch((error) => {
-                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });
     }
@@ -194,12 +194,12 @@ export default class Note extends Component {
                             }
                         })
                 } else {
-                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
                 }
             })
             .catch((error) => {
-                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });
     }
@@ -217,12 +217,12 @@ export default class Note extends Component {
                             })
                         })
                 } else {
-                    ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                    ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
                 }
             })
             .catch((error) => {
-                ToastAndroid.show('Failed.', ToastAndroid.SHORT);
+                ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                 this.props.navigation.navigate('Login')
             });
     }
