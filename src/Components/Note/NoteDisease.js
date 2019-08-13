@@ -95,6 +95,8 @@ export default class NoteDisease extends Component {
     }
 
     _renderHeader = section => {
+        const {activeSections} = this.state;
+
         return (
             <View style={styles.header}>
                 <View style={{
@@ -107,27 +109,40 @@ export default class NoteDisease extends Component {
                     <View style={{
                         flexDirection: 'row'
                     }}>
-                        <View style={{flex: 1, flexDirection: 'row'}}>
-                            <View style={{
-                                flexDirection: 'column',
-                                justifyContent: "center",
-                                marginLeft: 10
-                            }}>
-                                <View style={styles.rowIcon}></View>
-                            </View>
-                            <View style={{
-                                flexDirection: 'column',
-                                justifyContent: "center",
-                                marginLeft: 10,
-                                marginRight: 10
-                            }}>
-                                <Text style={{
-                                    fontSize: 18,
-                                    fontWeight: "bold"
+                        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                            <View style={{flexDirection: 'row'}}>
+                                <View style={{
+                                    flexDirection: 'column',
+                                    justifyContent: "center",
+                                    marginLeft: 10
                                 }}>
-                                    {this.props.diseaseNm}
-                                </Text>
+                                    <View style={styles.rowIcon}></View>
+                                </View>
+                                <View style={{
+                                    flexDirection: 'column',
+                                    justifyContent: "center",
+                                    marginLeft: 10,
+                                    marginRight: 10
+                               }}>
+                                    <Text style={{
+                                        fontSize: 18,
+                                        fontWeight: "bold"
+                                    }}>
+                                        {this.props.diseaseNm}
+                                    </Text>
+                                </View>
                             </View>
+                            {activeSections.length > 0 &&
+                            <View style={{flexDirection: 'row', justifyContent: 'flex-end', paddingRight: 20}}>
+                                <Menu
+                                    ref={this.setMenuRef}
+                                    button={<Text onPress={this.showMenu}>     <Icons name="ellipsis-h" color="#142765" size={24}/></Text>}
+                                >
+                                    <MenuItem onPress={() => this.openDiseaseDtl()}>수정하기</MenuItem>
+                                    <MenuItem onPress={() => this.deleteDisease()}>삭제하기</MenuItem>
+                                </Menu>
+                            </View>
+                            }
                         </View>
                     </View>
                 </View>
@@ -138,15 +153,6 @@ export default class NoteDisease extends Component {
     _renderContent = section => {
         return (
             <View style={styles.content}>
-                    <View style={{flexDirection: 'row', height: 24, justifyContent: 'flex-end', paddingRight: 20, marginTop: 20}}>
-                        <Menu
-                            ref={this.setMenuRef}
-                            button={<Text onPress={this.showMenu}>     <Icons name="ellipsis-h" color="#142765" size={24}/></Text>}
-                        >
-                            <MenuItem onPress={() => this.openDiseaseDtl()}>수정하기</MenuItem>
-                            <MenuItem onPress={() => this.deleteDisease()}>삭제하기</MenuItem>
-                        </Menu>
-                    </View>
                     <View style={{marginRight: 20, marginLeft: 20, marginBottom: 20, marginTop: 16}}>
                         <View style={styles.rowView}>
                             <View style={styles.rowTitle}><Text style={styles.rowText}>증상</Text></View>
