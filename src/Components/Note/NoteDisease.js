@@ -56,7 +56,7 @@ export default class NoteDisease extends Component {
                 if(response.ok) {
                     response.json()
                         .then((res) => {
-            	            Toast.show('질병기록을 삭제하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                            ToastAndroid.show('질병기록을 삭제하였습니다.', ToastAndroid.SHORT);
                             refreshFnc();
                         })
                 } else {

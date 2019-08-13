@@ -172,7 +172,7 @@ export default class UserRegister extends Component {
 
         const res = await this.selectUserExist();
         if (res) {
-            Toast.show('동일한 ID가 존재합니다', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+            ToastAndroid.show('동일한 ID가 존재합니다.', ToastAndroid.SHORT);
             return;
         }
 

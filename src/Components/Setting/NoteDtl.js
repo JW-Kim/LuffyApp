@@ -115,7 +115,7 @@ export default class NoteDtl extends Component {
         const {shareList, fileId, isNoteNm, isBirthDt, noteCfgList} = this.state;
 
         if(!isNoteNm || !isBirthDt) {
-            Toast.show('all input', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+            ToastAndroid.show('all input.', ToastAndroid.SHORT);
             return;
         }
 
@@ -137,7 +137,7 @@ export default class NoteDtl extends Component {
                 if(response.ok) {
                     response.json()
                         .then((res) => {
-            	            Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                            ToastAndroid.show('저장되었습니다.', ToastAndroid.SHORT);
                             let refreshFnc = this.props.navigation.getParam('refreshFnc');
                             refreshFnc();
                             this.props.navigation.goBack();
@@ -158,7 +158,7 @@ export default class NoteDtl extends Component {
         const {noteId, fileId, isNoteNm, isSex, isBirthDt, isProfile, noteCfgList} = this.state;
         console.log('updateNote', fileId)
         if(!(isNoteNm || isSex || isBirthDt || isProfile)) {
-            Toast.show('all input', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+            ToastAndroid.show('all input.', ToastAndroid.SHORT);
             return;
         }
 
@@ -179,7 +179,7 @@ export default class NoteDtl extends Component {
                 if(response.ok) {
                     response.json()
                         .then((res) => {
-            	    Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                            ToastAndroid.show('저장되었습니다.', ToastAndroid.SHORT);
                             let refreshFnc = this.props.navigation.getParam('refreshFnc');
                             refreshFnc();
                             this.props.navigation.goBack();

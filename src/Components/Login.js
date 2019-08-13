@@ -67,7 +67,7 @@ export default class Login extends Component {
         }
 
         if (username === '' || password === '') {
-            Toast.show('put in username, password', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+            ToastAndroid.show('put in username, password.', ToastAndroid.SHORT);
             return;
         }
 
@@ -94,13 +94,13 @@ export default class Login extends Component {
                         })
                 } else {
                      this.setState({loading: false})
-                     Toast.show('아이디, 비밀번호가 일치하지 않습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                     ToastAndroid.show('아이디, 비밀번호가 일치하지 않습니다.', ToastAndroid.SHORT);
                 }
             })
             .catch((error) => {
                 console.error(error)
                 this.setState({loading: false})
-                Toast.show('아이디, 비밀번호가 일치하지 않습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                ToastAndroid.show('아이디, 비밀번호가 일치하지 않습니다.', ToastAndroid.SHORT);
             });
     }
 

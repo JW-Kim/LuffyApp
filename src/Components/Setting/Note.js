@@ -101,7 +101,8 @@ export default class Note extends Component {
                     response.json()
                         .then((res) => {
             	            this.getMyNoteList();
-                            Toast.show('일기장을 삭제하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);            })
+                            ToastAndroid.show('일기장을 삭제하였습니다.', ToastAndroid.SHORT);
+                        })
                 } else {
                     ToastAndroid.show('Failed.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
@@ -126,7 +127,7 @@ export default class Note extends Component {
                     response.json()
                         .then((res) => {
             	            this.getShareNoteList();
-                            Toast.show('일기장을 삭제하였습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+            	            ToastAndroid.show('일기장을 삭제하였습니다.', ToastAndroid.SHORT);
                         })
                 } else {
                     ToastAndroid.show('Failed.', ToastAndroid.SHORT);

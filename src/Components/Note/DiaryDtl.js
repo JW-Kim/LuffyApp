@@ -167,7 +167,7 @@ export default class DiaryDtl extends Component {
                 if(response.ok) {
                     response.json()
                         .then((res) => {
-            	            Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                            ToastAndroid.show('저장되었습니다.', ToastAndroid.SHORT);
                             let refreshFnc = this.props.navigation.getParam('refreshFnc');
                             refreshFnc();
                             this.props.navigation.goBack();
@@ -212,7 +212,7 @@ export default class DiaryDtl extends Component {
                 if(response.ok) {
                     response.json()
                         .then((res) => {
-            	            Toast.show('저장되었습니다.', Toast.SHORT, Toast.TOP, Constants.TOAST_STYLE);
+                            ToastAndroid.show('저장되었습니다.', ToastAndroid.SHORT);
                             let refreshFnc = this.props.navigation.getParam('refreshFnc');
                             refreshFnc();
                             this.props.navigation.goBack();
