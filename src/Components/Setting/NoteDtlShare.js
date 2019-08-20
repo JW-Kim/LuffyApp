@@ -13,10 +13,11 @@ import {
 } from 'react-native';
 import Icons from 'react-native-vector-icons/FontAwesome';
 import Constants from '../../Com/Constants.js';
-import {getToken} from '../../Com/AuthToken.js';
+import {getToken, getTokenJson} from '../../Com/AuthToken.js';
 import Toast from 'react-native-toast-native';
 import Profile from '../Com/Profile';
-import _ from 'lodash'
+import _ from 'lodash';
+import RNFetchBlob from 'react-native-fetch-blob';
 
 export default class NoteDtlShare extends Component {
 
@@ -41,15 +42,18 @@ export default class NoteDtlShare extends Component {
     async getShareNoteList() {
         const {noteId} = this.props;
 
-        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/${noteId}/share/user`, await getToken())
+        RNFetchBlob.config({
+            trusty: true
+        })
+            .fetch('GET', `${Constants.DOMAIN}/product/note/${noteId}/share/user`, await getTokenJson())
             .then((response) => {
-                if(response.ok) {
-                    response.json()
-                        .then((res) => {
-            	            this.setState({
-                                shareList: res.data
-                            })
-                        })
+                let status = response.info().status;
+
+                if (status == 200) {
+                    let res = response.json();
+                    this.setState({
+                        shareList: res.data
+                    })
                 } else {
                     ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
@@ -70,16 +74,17 @@ export default class NoteDtlShare extends Component {
         const {shareList} = this.state;
 
         if(type === 'UPDATE') {
-            fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/${noteId}/share/user?userId=${userId}`, await getToken({
-                method: 'DELETE'
-            }))
+            RNFetchBlob.config({
+                trusty: true
+            })
+                .fetch('DELETE', `${Constants.DOMAIN}/product/note/${noteId}/share/user?userId=${userId}`, await getTokenJson())
                 .then((response) => {
-                    if(response.ok) {
-                        response.json()
-                            .then((res) => {
-                	            this.getShareNoteList()
-                	            ToastAndroid.show('공유자가 삭제되었습니다.', ToastAndroid.SHORT);
-                            })
+                    let status = response.info().status;
+
+                    if (status == 200) {
+                        let res = response.json();
+                        this.getShareNoteList()
+                        ToastAndroid.show('공유자가 삭제되었습니다.', ToastAndroid.SHORT);
                     } else {
                         ToastAndroid.show('삭제를 실패하였습니다.', ToastAndroid.SHORT);
                         this.props.navigation.navigate('Login')
@@ -110,22 +115,22 @@ export default class NoteDtlShare extends Component {
         const {shareList} = this.state;
 
         if(type === 'UPDATE') {
-            fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/${noteId}/share/user`, await getToken({
-                method: 'POST',
-                headers: {
+            RNFetchBlob.config({
+                trusty: true
+            })
+                .fetch('POST', `${Constants.DOMAIN}/product/note/${noteId}/share/user`, await getTokenJson({
                     'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
+                }),
+                JSON.stringify({
                     userId: userId
-                })
-            }))
+                }))
                 .then((response) => {
-                    if(response.ok) {
-                        response.json()
-                            .then((res) => {
+                    let status = response.info().status;
+
+                    if (status == 200) {
+                        let res = response.json();
                 	    this.getShareNoteList()
                 	    ToastAndroid.show('공유 되었습니다.', ToastAndroid.SHORT);
-                            })
                     } else {
                         ToastAndroid.show('공유를 실패하였습니다.', ToastAndroid.SHORT);
                         this.props.navigation.navigate('Login')

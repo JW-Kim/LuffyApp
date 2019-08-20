@@ -9,9 +9,6 @@ import {
     ButtonGroup
 } from 'react-native-elements';
 import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
-import DiaryDtlBtnGroupGoodIcon from './DiaryDtlBtnGroupGoodIcon'
-import DiaryDtlBtnGroupNotBadIcon from './DiaryDtlBtnGroupNotBadIcon'
-import DiaryDtlBtnGroupBadIcon from './DiaryDtlBtnGroupBadIcon'
 
 export default class DiaryDtlBtnGroup extends Component {
 
