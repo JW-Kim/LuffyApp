@@ -21,6 +21,22 @@ function getToken(options){
     })
 }
 
+function getTokenJson(options){
+    return new Promise(resolve => {
+         AsyncStorage.getItem('access_token', (err, result) => {
+             const FetchOptions = {
+                 'Authorization': `Bearer ${result}`
+             }
+
+             if(options !== null && options !== undefined && options.headers !== null && options.headers !== undefined){
+                options.Authorization = `Bearer ${result}`;
+             }
+
+            resolve(Object.assign(FetchOptions, options));
+         })
+    })
+}
 
 
-export { getToken }
+
+export { getToken, getTokenJson }

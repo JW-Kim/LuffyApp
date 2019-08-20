@@ -3,6 +3,7 @@ export default {
     PORT : '8006'*/
     HOST : '58.141.217.20',
     PORT : '8080',
+    DOMAIN : 'https://luffy0321.iptime.org',
     TOAST_STYLE : {
         backgroundColor: "#acacac",
         width: 300,

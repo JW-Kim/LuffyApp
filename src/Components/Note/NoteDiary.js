@@ -178,7 +178,7 @@ export default class NoteDiary extends Component {
                         </View>
                         }
                         { activeSections.length == 0 && fileId != null &&
-                        <View style={{width: 60, width: 60, backgroundColor:'#000', justifyContent: 'center'}}>
+                        <View style={{height: 60, width: 60, backgroundColor:'#000', justifyContent: 'center'}}>
                             <ImageView fileId={this.props.fileId} width={60}/>
                         </View>
                         }

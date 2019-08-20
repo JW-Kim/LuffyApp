@@ -9,7 +9,8 @@ import {
     KeyboardAvoidingView,
     ScrollView,
     Dimensions,
-    ActivityIndicator
+    ActivityIndicator,
+    ToastAndroid
 } from 'react-native';
 import Image from 'react-native-scalable-image';
 import {
@@ -20,6 +21,7 @@ import _ from 'lodash';
 import Constants from '../Com/Constants.js';
 import Toast from 'react-native-toast-native';
 import Icons from 'react-native-vector-icons/FontAwesome';
+import RNFetchBlob from 'react-native-fetch-blob';
 
 export default class Login extends Component {
     constructor(props) {
@@ -73,28 +75,32 @@ export default class Login extends Component {
 
         this.setState({loading: true});
 
-        fetch('http://' + Constants.HOST + ':' + Constants.PORT + '/product/login?username=' + encodeURI(this.state.username) + '&password=' + encodeURI(this.state.password))
+        RNFetchBlob.config({
+            trusty: true
+        })
+            .fetch('GET', `${Constants.DOMAIN}/product/login?username=${encodeURI(this.state.username)}&password=${encodeURI(this.state.password)}`)
             .then((response) => {
-                if(response.ok) {
-                    response.json()
-                        .then((res) => {
-                            AsyncStorage.setItem('access_token', res.data, (err, result) => {
-                                this.setState({
-                                    username: '',
-                                    password: '',
-                                    idStyle: {borderWidth: 1, borderColor: '#C2D8E9'},
-                                    passwordStyle: {borderWidth: 1, borderColor: '#C2D8E9'},
-                                    loginBtnStyle: {backgroundColor: '#C2D8E9', height: 70},
-                                    isUsername: false,
-                                    isPassword: false,
-                                    loading: false
-                                })
-                                this.props.navigation.navigate('Main');
-                            })
+                let status = response.info().status;
+
+                if (status == 200) {
+                    let res = response.json();
+                    AsyncStorage.setItem('access_token', res.data, (err, result) => {
+                        this.setState({
+                            username: '',
+                            password: '',
+                            idStyle: {borderWidth: 1, borderColor: '#C2D8E9'},
+                            passwordStyle: {borderWidth: 1, borderColor: '#C2D8E9'},
+                            loginBtnStyle: {backgroundColor: '#C2D8E9', height: 70},
+                            isUsername: false,
+                            isPassword: false,
+                            loading: false
                         })
+                        this.props.navigation.navigate('Main');
+                    })
+
                 } else {
-                     this.setState({loading: false})
-                     ToastAndroid.show('아이디, 비밀번호가 일치하지 않습니다.', ToastAndroid.SHORT);
+                    this.setState({loading: false})
+                    ToastAndroid.show('아이디, 비밀번호가 일치하지 않습니다.', ToastAndroid.SHORT);
                 }
             })
             .catch((error) => {
@@ -182,24 +188,27 @@ export default class Login extends Component {
         const {username} = this.state;
 
         if (username === '') {
-            return(<View></View>)
+            return (<View></View>)
         } else {
-            return(
-                <TouchableOpacity onPress={() => this.changeId('')} style={{position: 'absolute', right: 10, bottom: -25, height: 70, width: 20}}>
-                    <Icons name="times-circle" color="#C2D8E9" size={16} />
+            return (
+                <TouchableOpacity onPress={() => this.changeId('')}
+                                  style={{position: 'absolute', right: 10, bottom: -25, height: 70, width: 20}}>
+                    <Icons name="times-circle" color="#C2D8E9" size={16}/>
                 </TouchableOpacity>
             )
         }
     }
+
     renderPwClear() {
         const {password} = this.state;
 
         if (password === '') {
-            return(<View></View>)
+            return (<View></View>)
         } else {
-            return(
-                <TouchableOpacity onPress={() => this.changePassword('')} style={{position: 'absolute', right: 10, bottom: -25, height: 70, width: 20}}>
-                    <Icons name="times-circle" color="#C2D8E9" size={16} />
+            return (
+                <TouchableOpacity onPress={() => this.changePassword('')}
+                                  style={{position: 'absolute', right: 10, bottom: -25, height: 70, width: 20}}>
+                    <Icons name="times-circle" color="#C2D8E9" size={16}/>
                 </TouchableOpacity>
             )
         }
@@ -294,10 +303,10 @@ export default class Login extends Component {
                     </ScrollView>
                 </KeyboardAvoidingView>
                 {loading &&
-                    <View style={Constants.LOADING}>
-                        <ActivityIndicator size='large' color="#FF69B4"/>
-                    </View>
-                 }
+                <View style={Constants.LOADING}>
+                    <ActivityIndicator size='large' color="#FF69B4"/>
+                </View>
+                }
             </View>
         )
     }
@@ -305,7 +314,7 @@ export default class Login extends Component {
 
 const styles = StyleSheet.create({
     mainView: {
-        height: Dimensions.get('window').height-'10px',
+        height: Dimensions.get('window').height - '10px',
         padding: 20,
         backgroundColor: '#fff',
     },

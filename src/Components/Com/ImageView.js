@@ -23,7 +23,10 @@ export default class ImageView extends Component {
 
         var cur = this;
         AsyncStorage.getItem('access_token', (err, result) => {
-            RNFetchBlob.fetch('GET', 'http://' + Constants.HOST + ':' + Constants.PORT + '/product/file/download?fileId=' + this.props.fileId, {
+            RNFetchBlob.config({
+                trusty: true
+            })
+            .fetch('GET', `${Constants.DOMAIN}/product/file/download?fileId=${this.props.fileId}`, {
                 'Authorization': 'Bearer ' + result
             })
             // when response status code is 200

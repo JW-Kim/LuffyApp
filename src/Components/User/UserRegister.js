@@ -18,7 +18,7 @@ import {
 } from 'react-native-elements';
 import _ from 'lodash';
 import Constants from '../../Com/Constants.js';
-import {getToken} from '../../Com/AuthToken.js';
+import {getToken, getTokenJson} from '../../Com/AuthToken.js';
 import {chkId, chkKor, chkSpecialStr, chkEmail, chkEng, chkNum} from '../../Com/ComService.js';
 import Toast from 'react-native-toast-native';
 import ModalStandardHeader from '../Com/ModalStandardHeader'
@@ -27,6 +27,7 @@ import ImageView from '../Com/ImageView.js';
 import ImagePicker from 'react-native-image-picker';
 import Icons from 'react-native-vector-icons/FontAwesome';
 import NativeModules from 'NativeModules';
+import RNFetchBlob from 'react-native-fetch-blob';
 
 export default class UserRegister extends Component {
     constructor(props) {
@@ -69,27 +70,30 @@ export default class UserRegister extends Component {
     componentWillMount() {
         const {type} = this.state;
 
-        if(type === 'UPDATE') {
+        if (type === 'UPDATE') {
             this.getUserInfo();
         }
     }
 
     async getUserInfo() {
-        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/user/info`, await getToken())
+        RNFetchBlob.config({
+            trusty: true
+        })
+            .fetch('GET', `${Constants.DOMAIN}/product/user/info`, await getTokenJson())
             .then((response) => {
-                if(response.ok) {
-                    response.json()
-                        .then((res) => {
-            	            this.setState({
-                                userLoginId: res.data.userLoginId,
-                                userNm: res.data.userNm,
-                                email: res.data.email,
-                                fileId: res.data.fileId,
-                                isUserNm: true,
-                                isEmail: true,
-                                isProfile: true,
-                            })
-                        })
+                let status = response.info().status;
+
+                if (status == 200) {
+                    let res = response.json();
+                    this.setState({
+                        userLoginId: res.data.userLoginId,
+                        userNm: res.data.userNm,
+                        email: res.data.email,
+                        fileId: res.data.fileId,
+                        isUserNm: true,
+                        isEmail: true,
+                        isProfile: true,
+                    })
                 } else {
                     ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                 }
@@ -102,13 +106,16 @@ export default class UserRegister extends Component {
     async selectUserExist() {
         const {userLoginId, email} = this.state;
 
-        return fetch(`http://${Constants.HOST}:${Constants.PORT}/product/user/selectUserExist?userLoginId=${userLoginId}&email=${email}`, await getToken())
+        return RNFetchBlob.config({
+            trusty: true
+        })
+            .fetch('GET', `${Constants.DOMAIN}/product/user/selectUserExist?userLoginId=${userLoginId}&email=${email}`)
             .then((response) => {
-                if(response.ok) {
-                    response.json()
-                        .then((res) => {
-            	            return res.data
-                        })
+                let status = response.info().status;
+
+                if (status == 200) {
+                    let res = response.json();
+                    return res.data
                 } else {
                     ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                 }
@@ -176,25 +183,25 @@ export default class UserRegister extends Component {
             return;
         }
 
-        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/user`, await getToken({
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                userLoginId,
-                email,
-                userPwd,
-                userNm
-            })
-        }))
+        RNFetchBlob.config({
+            trusty: true
+        })
+            .fetch('POST', `${Constants.DOMAIN}/product/user`, await getTokenJson({
+                    'Content-Type': 'application/json'
+                }),
+                JSON.stringify({
+                    userLoginId,
+                    email,
+                    userPwd,
+                    userNm
+                }))
             .then((response) => {
-                if(response.ok) {
-                    response.json()
-                        .then((res) => {
-            	            ToastAndroid.show('사용자가 등록되었습니다.', ToastAndroid.SHORT);
-                            this.props.navigation.goBack();
-                        })
+                let status = response.info().status;
+
+                if (status == 200) {
+                    let res = response.json();
+                    ToastAndroid.show('사용자가 등록되었습니다.', ToastAndroid.SHORT);
+                    this.props.navigation.goBack();
                 } else {
                     ToastAndroid.show('등록을 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
@@ -209,24 +216,23 @@ export default class UserRegister extends Component {
     async updateUser(fileId) {
         const {userId, email, userNm} = this.state;
 
-        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/user/${userId}`, await getToken({
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+        RNFetchBlob.config({
+            trusty: true
+        })
+        .fetch('POST', `${Constants.DOMAIN}/product/user/${userId}`, await getTokenJson({
+               'Content-Type': 'application/json'
+            }),
+            JSON.stringify({
                 email,
                 userNm,
                 fileId
-            })
-        }))
-            .then((response) => {
-                if(response.ok) {
-                    response.json()
-                        .then((res) => {
-            	            ToastAndroid.show('사용자가 수정되었습니다.', ToastAndroid.SHORT);
-                            this.props.navigation.goBack();
-                        })
+            }))
+           .then((response) => {
+               let status = response.info().status;
+
+               if (status == 200) {
+                    ToastAndroid.show('사용자가 수정되었습니다.', ToastAndroid.SHORT);
+                    this.props.navigation.goBack();
                 } else {
                     ToastAndroid.show('수정을 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
@@ -271,8 +277,8 @@ export default class UserRegister extends Component {
                     fileId: null,
                     isProfile: true
                 }, () => {
-                     cur.checkInsertBtnStyle();
-                 })
+                    cur.checkInsertBtnStyle();
+                })
             }
         });
     }
@@ -280,7 +286,7 @@ export default class UserRegister extends Component {
     checkInsertBtnStyle() {
         const {type, isUserLoginId, isUserPwd, isUserPwd2, isUserNm, isEmail, isEqualPwd, isProfile} = this.state;
 
-        if(type === 'INSERT') {
+        if (type === 'INSERT') {
             if (isUserLoginId && isUserPwd && isUserPwd2 && isUserNm && isEmail && isEqualPwd) {
                 this.setState({insertUserBtnStyle: {backgroundColor: '#142765', height: 60}})
             } else {
