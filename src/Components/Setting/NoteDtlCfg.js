@@ -12,8 +12,9 @@ import Accordion from 'react-native-collapsible/Accordion';
 import NoteDtlCfgBtnGroup from './NoteDtlCfgBtnGroup';
 import Icons from 'react-native-vector-icons/FontAwesome';
 import Constants from '../../Com/Constants.js'
-import {getToken} from '../../Com/AuthToken.js';
+import {getToken, getTokenJson} from '../../Com/AuthToken.js';
 import _ from 'lodash';
+import RNFetchBlob from 'react-native-fetch-blob';
 
 const SECTIONS = [
     {
@@ -47,16 +48,19 @@ export default class NoteDtlCfg extends Component {
             tempNoteId = noteId;
         }
 
-        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/cfg?noteId=${tempNoteId}`, await getToken())
+        RNFetchBlob.config({
+            trusty: true
+        })
+            .fetch('GET', `${Constants.DOMAIN}/product/note/cfg?noteId=${tempNoteId}`, await getTokenJson())
             .then((response) => {
-                if(response.ok) {
-                    response.json()
-                        .then((res) => {
-            	            cur.setState({
-                                noteCfgList: res.data
-                            })
-                            setNoteCfgList(res.data, false)
-                        })
+                let status = response.info().status;
+
+                if (status == 200) {
+                    let res = response.json();
+                    cur.setState({
+                        noteCfgList: res.data
+                    })
+                    setNoteCfgList(res.data, false)
                 } else {
                     ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')

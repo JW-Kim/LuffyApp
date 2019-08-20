@@ -14,12 +14,13 @@ import {
 } from 'react-native';
 import ModalHeader from '../Com/ModalHeader.js';
 import Constants from '../../Com/Constants.js';
-import {getToken} from '../../Com/AuthToken.js';
+import {getToken, getTokenJson} from '../../Com/AuthToken.js';
 import ModalStandardHeader from '../Com/ModalStandardHeader'
 import Profile from '../Com/Profile';
 import Toast from 'react-native-toast-native';
 import Icons from 'react-native-vector-icons/FontAwesome';
 import _ from 'lodash';
+import RNFetchBlob from 'react-native-fetch-blob';
 
 export default class Note extends Component {
 
@@ -41,18 +42,18 @@ export default class Note extends Component {
     }
 
     async getMyNoteList() {
-        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/my`, await getToken())
+        RNFetchBlob.config({
+            trusty: true
+        })
+            .fetch('GET', `${Constants.DOMAIN}/product/note/my`, await getTokenJson())
             .then((response) => {
-                if(response.ok) {
-                    response.json()
-                        .then((res) => {
-            	            this.setState({
-                                myNoteList: res.data
+                let status = response.info().status;
 
-                            }, () => {
-
-                            })
-                        })
+                if (status == 200) {
+                    let res = response.json();
+                    this.setState({
+                        myNoteList: res.data
+                    })
                 } else {
                     ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
@@ -65,18 +66,18 @@ export default class Note extends Component {
 
 
     async getShareNoteList() {
-        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/share`, await getToken())
+        RNFetchBlob.config({
+            trusty: true
+        })
+            .fetch('GET', `${Constants.DOMAIN}/product/note/share`, await getTokenJson())
             .then((response) => {
-                if(response.ok) {
-                    response.json()
-                        .then((res) => {
-            	            this.setState({
-                                shareList: res.data
+                let status = response.info().status;
 
-                            }, () => {
-
-                            })
-                        })
+                if (status == 200) {
+                    let res = response.json();
+                    this.setState({
+                        shareList: res.data
+                    })
                 } else {
                     ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
@@ -93,16 +94,17 @@ export default class Note extends Component {
     }
 
     async deleteMyNote(noteId) {
-        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/${noteId}`, await getToken({
-            method: 'DELETE'
-        }))
+        RNFetchBlob.config({
+            trusty: true
+        })
+            .fetch('DELETE', `${Constants.DOMAIN}/product/note/${noteId}`, await getTokenJson())
             .then((response) => {
-                if(response.ok) {
-                    response.json()
-                        .then((res) => {
-            	            this.getMyNoteList();
-                            ToastAndroid.show('일기장을 삭제하였습니다.', ToastAndroid.SHORT);
-                        })
+                let status = response.info().status;
+
+                if (status == 200) {
+                    let res = response.json();
+                    this.getMyNoteList();
+                    ToastAndroid.show('일기장을 삭제하였습니다.', ToastAndroid.SHORT);
                 } else {
                     ToastAndroid.show('삭제를 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
@@ -119,16 +121,17 @@ export default class Note extends Component {
     }
 
     async deleteShareNote(noteId) {
-        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/share/${noteId}`, await getToken({
-            method: 'DELETE'
-        }))
+        RNFetchBlob.config({
+            trusty: true
+        })
+            .fetch('DELETE', `${Constants.DOMAIN}/product/note/share/${noteId}`, await getTokenJson())
             .then((response) => {
-                if(response.ok) {
-                    response.json()
-                        .then((res) => {
-            	            this.getShareNoteList();
-            	            ToastAndroid.show('일기장을 삭제하였습니다.', ToastAndroid.SHORT);
-                        })
+                let status = response.info().status;
+
+               if (status == 200) {
+                   let res = response.json();
+                    this.getShareNoteList();
+                    ToastAndroid.show('일기장을 삭제하였습니다.', ToastAndroid.SHORT);
                 } else {
                     ToastAndroid.show('삭제를 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
