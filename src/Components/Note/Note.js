@@ -24,13 +24,14 @@ import _ from 'lodash'
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/FontAwesome';
 import Constants from '../../Com/Constants.js'
-import {getToken} from '../../Com/AuthToken.js';
+import {getToken, getTokenJson} from '../../Com/AuthToken.js';
 import ImageView from '../Com/ImageView.js'
 import NoteDiary from './NoteDiary.js'
 import NoteDisease from './NoteDisease.js'
 import Header from '../Frame/Header.js'
 import Profile from '../Com/Profile';
 import Toast from 'react-native-toast-native';
+import RNFetchBlob from 'react-native-fetch-blob';
 
 export default class Note extends Component {
     static navigationOptions = {
@@ -113,26 +114,29 @@ export default class Note extends Component {
         let diaryDt = yyyy + '-' + mm + '-' + dd;
 
         if (_.isNil(this.state.noteId)) {
-            fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note`, await getToken())
+            RNFetchBlob.config({
+                trusty: true
+            })
+                .fetch('GET', `${Constants.DOMAIN}/product/note`, await getTokenJson())
                 .then((response) => {
-                    if(response.ok) {
-                        response.json()
-                            .then((res) => {
-                	            if (res.data.length !== 0) {
-                                    cur.setState({
-                                        note: res.data,
-                                        noteId: res.data[0].noteId,
-                                        fileId: res.data[0].fileId,
-                                        selectedDay: day,
-                                        calCurrentMonth: day,
-                                        diaryDt: diaryDt
-                                    }, () => {
-                                        cur.getMonthDiary(month);
-                                    })
+                    let status = response.info().status;
 
-                                    cur.getNoteCfg(res.data[0].noteId);
-                                }
+                    if (status == 200) {
+                        let res = response.json();
+                        if (res.data.length !== 0) {
+                            cur.setState({
+                                note: res.data,
+                                noteId: res.data[0].noteId,
+                                fileId: res.data[0].fileId,
+                                selectedDay: day,
+                                calCurrentMonth: day,
+                                diaryDt: diaryDt
+                            }, () => {
+                                cur.getMonthDiary(month);
                             })
+
+                            cur.getNoteCfg(res.data[0].noteId);
+                        }
                     } else {
                         ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                         this.props.navigation.navigate('Login')
@@ -154,20 +158,23 @@ export default class Note extends Component {
             calCurrentMonth: new Date(monthArr[1] + '/' + '01' + '/' + monthArr[0])
         })
 
-        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/month?noteId=${this.state.noteId}'&diaryMonth=${month}`, await getToken())
+        RNFetchBlob.config({
+            trusty: true
+        })
+            .fetch('GET', `${Constants.DOMAIN}/product/diary/month?noteId=${this.state.noteId}&diaryMonth=${month}`, await getTokenJson())
             .then((response) => {
-                if(response.ok) {
-                    response.json()
-                        .then((res) => {
-            	            if (!(_.isNil(res.data) || res.data == null)) {
-                                this.setState({
-                                    diary: res.data
-                                })
-                                this.getMonthDisease(month);
-                            } else {
-                                this.setState({loading: false});
-                            }
+                let status = response.info().status;
+
+                if (status == 200) {
+                    let res = response.json();
+                    if (!(_.isNil(res.data) || res.data == null)) {
+                        this.setState({
+                            diary: res.data
                         })
+                        this.getMonthDisease(month);
+                    } else {
+                        this.setState({loading: false});
+                    }
                 } else {
                     ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
@@ -180,19 +187,22 @@ export default class Note extends Component {
     }
 
     async getMonthDisease(month) {
-        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/diseaseMonth?noteId=${this.state.noteId}&diseaseMonth=${month}`, await getToken())
+        RNFetchBlob.config({
+            trusty: true
+        })
+            .fetch('GET', `${Constants.DOMAIN}/product/diary/diseaseMonth?noteId=${this.state.noteId}&diseaseMonth=${month}`, await getTokenJson())
             .then((response) => {
-                if(response.ok) {
-                    response.json()
-                        .then((res) => {
-            	            if (!(_.isNil(res.data) || res.data == null)) {
-                                this.setState({
-                                    disease: res.data
-                                })
+                let status = response.info().status;
 
-                                this.setMarkedDate(this.state.selectedDay)
-                            }
+                if (status == 200) {
+                    let res = response.json();
+                    if (!(_.isNil(res.data) || res.data == null)) {
+                        this.setState({
+                            disease: res.data
                         })
+
+                        this.setMarkedDate(this.state.selectedDay)
+                    }
                 } else {
                     ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
@@ -207,15 +217,18 @@ export default class Note extends Component {
     async getNoteCfg(noteId) {
         const cur = this;
 
-        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/note/cfg?noteId=${noteId}`, await getToken())
+        RNFetchBlob.config({
+            trusty: true
+        })
+            .fetch('GET', `${Constants.DOMAIN}/product/note/cfg?noteId=${noteId}`, await getTokenJson())
             .then((response) => {
-                if(response.ok) {
-                    response.json()
-                        .then((res) => {
-            	            cur.setState({
-                                noteCfgList: res.data
-                            })
-                        })
+                let status = response.info().status;
+
+                if (status == 200) {
+                    let res = response.json();
+                    cur.setState({
+                        noteCfgList: res.data
+                    })
                 } else {
                     ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')

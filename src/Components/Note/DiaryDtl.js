@@ -28,9 +28,10 @@ import NativeModules from 'NativeModules'
 import _ from 'lodash'
 import DiaryDtlBtnGroup from './DiaryDtlBtnGroup.js'
 import Constants from '../../Com/Constants.js'
-import {getToken} from '../../Com/AuthToken.js';
+import {getToken, getTokenJson} from '../../Com/AuthToken.js';
 import ImageView from '../Com/ImageView.js'
 import Edit from '../Com/Edit'
+import RNFetchBlob from 'react-native-fetch-blob';
 
 export default class DiaryDtl extends Component {
 
@@ -79,29 +80,32 @@ export default class DiaryDtl extends Component {
         const {noteId, diaryDt} = this.state;
 
         if (this.state.type == 'UPDATE') {
-            fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/${this.state.diaryId}`, await getToken())
+            RNFetchBlob.config({
+                trusty: true
+            })
+                .fetch('GET', `${Constants.DOMAIN}/product/diary/${this.state.diaryId}`, await getTokenJson())
                 .then((response) => {
-                    if(response.ok) {
-                        response.json()
-                            .then((res) => {
-                	            this.setState({
-                                    feelingCd: res.data.feelingCd,
-                                    healthCd: res.data.healthCd,
-                                    feverCd: res.data.feverCd,
-                                    breakfastCd: res.data.breakfastCd,
-                                    lunchCd: res.data.lunchCd,
-                                    dinnerCd: res.data.dinnerCd,
-                                    shitCd: res.data.shitCd,
-                                    shitCnt: res.data.shitCnt,
-                                    shitDesc: res.data.shitDesc,
-                                    sleepStartTime: res.data.sleepStartTime,
-                                    sleepEndTime: res.data.sleepEndTime,
-                                    title: res.data.title,
-                                    content: res.data.content,
-                                    fileId: res.data.fileId,
-                                    weight: res.data.weight + '',
-                                    height: res.data.height + ''
-                                })
+                    let status = response.info().status;
+
+                    if (status == 200) {
+                        let res = response.json();
+                            this.setState({
+                                feelingCd: res.data.feelingCd,
+                                healthCd: res.data.healthCd,
+                                feverCd: res.data.feverCd,
+                                breakfastCd: res.data.breakfastCd,
+                                lunchCd: res.data.lunchCd,
+                                dinnerCd: res.data.dinnerCd,
+                                shitCd: res.data.shitCd,
+                                shitCnt: res.data.shitCnt,
+                                shitDesc: res.data.shitDesc,
+                                sleepStartTime: res.data.sleepStartTime,
+                                sleepEndTime: res.data.sleepEndTime,
+                                title: res.data.title,
+                                content: res.data.content,
+                                fileId: res.data.fileId,
+                                weight: res.data.weight + '',
+                                height: res.data.height + ''
                             })
                     } else {
                         ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
@@ -113,16 +117,19 @@ export default class DiaryDtl extends Component {
                     this.props.navigation.navigate('Login')
                 });
         } else {
-            fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/preInfo/${noteId}?diaryDt=${diaryDt}`, await getToken())
+            RNFetchBlob.config({
+                trusty: true
+            })
+                .fetch('GET', `${Constants.DOMAIN}/product/diary/preInfo/${noteId}?diaryDt=${diaryDt}`, await getTokenJson())
                 .then((response) => {
-                    if(response.ok) {
-                        response.json()
-                            .then((res) => {
-                	            this.setState({
-                                    weight: res.data.weight == null ? '' : res.data.weight + '',
-                                    height: res.data.weight == null ? '' : res.data.height + ''
-                                })
-                            })
+                    let status = response.info().status;
+
+                    if (status == 200) {
+                        let res = response.json();
+                        this.setState({
+                            weight: res.data.weight == null ? '' : res.data.weight + '',
+                            height: res.data.weight == null ? '' : res.data.height + ''
+                        })
                     } else {
                         ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                         this.props.navigation.navigate('Login')
@@ -137,12 +144,13 @@ export default class DiaryDtl extends Component {
 
     async insertDiaryInfo(fileId) {
         //2.파일 정보
-        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary`, await getToken({
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+        RNFetchBlob.config({
+           trusty: true
+        })
+            .fetch('POST', `${Constants.DOMAIN}/product/diary`, await getTokenJson({
+               'Content-Type': 'application/json'
+            }),
+            JSON.stringify({
                 feelingCd: this.state.feelingCd == null ? '' : this.state.feelingCd,
                 healthCd: this.state.healthCd == null ? '' : this.state.healthCd,
                 feverCd: this.state.feverCd == null ? '' : this.state.feverCd,
@@ -161,17 +169,16 @@ export default class DiaryDtl extends Component {
                 diaryDt: this.state.diaryDt == null ? null : this.state.diaryDt,
                 height: this.state.height == '' ? 0 : this.state.height,
                 weight: this.state.weight == '' ? 0 : this.state.weight
-            })
-        }))
+            }))
             .then((response) => {
-                if(response.ok) {
-                    response.json()
-                        .then((res) => {
-                            ToastAndroid.show('저장되었습니다.', ToastAndroid.SHORT);
-                            let refreshFnc = this.props.navigation.getParam('refreshFnc');
-                            refreshFnc();
-                            this.props.navigation.goBack();
-                        })
+                let status = response.info().status;
+
+                if (status == 200) {
+                    let res = response.json();
+                    ToastAndroid.show('저장되었습니다.', ToastAndroid.SHORT);
+                    let refreshFnc = this.props.navigation.getParam('refreshFnc');
+                    refreshFnc();
+                    this.props.navigation.goBack();
                 } else {
                     ToastAndroid.show('등록을 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
@@ -184,12 +191,13 @@ export default class DiaryDtl extends Component {
     }
 
     async updateDiaryInfo(fileId) {
-        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/${this.state.diaryId}`, await getToken({
-            method: 'POST',
-            headers: {
+        RNFetchBlob.config({
+            trusty: true
+        })
+        .fetch('POST', `${Constants.DOMAIN}/product/diary/${this.state.diaryId}`, await getTokenJson({
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+            }),
+            JSON.stringify({
                 feelingCd: this.state.feelingCd == null ? '' : this.state.feelingCd,
                 healthCd: this.state.healthCd == null ? '' : this.state.healthCd,
                 feverCd: this.state.feverCd == null ? '' : this.state.feverCd,
@@ -206,17 +214,16 @@ export default class DiaryDtl extends Component {
                 fileId: fileId == null ? null : fileId,
                 height: this.state.height == null ? 0 : this.state.height,
                 weight: this.state.weight == null ? 0 : this.state.weight
-            })
-        }))
+            }))
             .then((response) => {
-                if(response.ok) {
-                    response.json()
-                        .then((res) => {
-                            ToastAndroid.show('저장되었습니다.', ToastAndroid.SHORT);
-                            let refreshFnc = this.props.navigation.getParam('refreshFnc');
-                            refreshFnc();
-                            this.props.navigation.goBack();
-                        })
+                let status = response.info().status;
+
+                if (status == 200) {
+                    let res = response.json();
+                    ToastAndroid.show('저장되었습니다.', ToastAndroid.SHORT);
+                    let refreshFnc = this.props.navigation.getParam('refreshFnc');
+                    refreshFnc();
+                    this.props.navigation.goBack();
                 } else {
                     ToastAndroid.show('수정을 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')

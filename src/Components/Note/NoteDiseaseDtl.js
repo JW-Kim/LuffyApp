@@ -18,9 +18,10 @@ import {
 import ModalHeader from '../Com/ModalHeader.js'
 import Toast from 'react-native-toast-native';
 import Constants from '../../Com/Constants.js';
-import {getToken} from '../../Com/AuthToken.js';
+import {getToken, getTokenJson} from '../../Com/AuthToken.js';
 import ModalStandardHeader from '../Com/ModalStandardHeader'
 import Edit from '../Com/Edit'
+import RNFetchBlob from 'react-native-fetch-blob';
 
 export default class NoteDiseaseDtl extends Component {
 
@@ -44,18 +45,21 @@ export default class NoteDiseaseDtl extends Component {
 
     async componentWillMount() {
         if (this.state.type == 'UPDATE') {
-            fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/disease/${this.state.diseaseId}`, await getToken())
+            RNFetchBlob.config({
+                trusty: true
+            })
+                .fetch('GET', `${Constants.DOMAIN}/product/diary/disease/${this.state.diseaseId}`, await getTokenJson())
                 .then((response) => {
-                    if(response.ok) {
-                        response.json()
-                            .then((res) => {
-                	            this.setState({
-                                    diseaseNm: res.data.diseaseNm,
-                                    symptom: res.data.symptom,
-                                    hospitalNm: res.data.hospitalNm,
-                                    prescription: res.data.prescription
-                                })
-                            })
+                    let status = response.info().status;
+
+                    if (status == 200) {
+                        let res = response.json();
+                        this.setState({
+                            diseaseNm: res.data.diseaseNm,
+                            symptom: res.data.symptom,
+                            hospitalNm: res.data.hospitalNm,
+                            prescription: res.data.prescription
+                        })
                     } else {
                         ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
                         this.props.navigation.navigate('Login')
@@ -82,30 +86,29 @@ export default class NoteDiseaseDtl extends Component {
 
 
     async insertDisease() {
-        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/disease`, await getToken({
-            method: 'POST',
-            headers: {
+        RNFetchBlob.config({
+            trusty: true
+        })
+            .fetch('POST', `${Constants.DOMAIN}/product/diary/disease`, await getTokenJson({
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+            }),
+            JSON.stringify({
                 noteId: this.state.noteId == null ? '' : this.state.noteId,
                 diseaseDt: this.state.diseaseDt == null ? '' : this.state.diseaseDt,
                 diseaseNm: this.state.diseaseNm == null ? '' : this.state.diseaseNm,
                 symptom: this.state.symptom == null ? '' : this.state.symptom,
                 hospitalNm: this.state.hospitalNm == null ? '' : this.state.hospitalNm,
                 prescription: this.state.prescription == null ? '' : this.state.prescription,
-
-            })
-        }))
+            }))
             .then((response) => {
-                if(response.ok) {
-                    response.json()
-                        .then((res) => {
-                            ToastAndroid.show('저장되었습니다.', ToastAndroid.SHORT);
-                            let refreshFnc = this.props.navigation.getParam('refreshFnc');
-                            refreshFnc();
-                            this.props.navigation.goBack();
-                        })
+                let status = response.info().status;
+
+                if (status == 200) {
+                    let res = response.json();
+                    ToastAndroid.show('저장되었습니다.', ToastAndroid.SHORT);
+                    let refreshFnc = this.props.navigation.getParam('refreshFnc');
+                    refreshFnc();
+                    this.props.navigation.goBack();
                 } else {
                     ToastAndroid.show('등록을 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
@@ -119,30 +122,29 @@ export default class NoteDiseaseDtl extends Component {
 
 
     async updateDisease() {
-        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/disease/${this.state.diseaseId}`, await getToken({
-            method: 'POST',
-            headers: {
+        RNFetchBlob.config({
+            trusty: true
+        })
+            .fetch('POST', `${Constants.DOMAIN}/product/diary/disease/${this.state.diseaseId}`, await getTokenJson({
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+            }),
+            JSON.stringify({
                 noteId: this.state.noteId == null ? '' : this.state.noteId,
                 diseaseDt: this.state.diseaseDt == null ? '' : this.state.diseaseDt,
                 diseaseNm: this.state.diseaseNm == null ? '' : this.state.diseaseNm,
                 symptom: this.state.symptom == null ? '' : this.state.symptom,
                 hospitalNm: this.state.hospitalNm == null ? '' : this.state.hospitalNm,
                 prescription: this.state.prescription == null ? '' : this.state.prescription,
-
-            })
-        }))
+            }))
             .then((response) => {
-                if(response.ok) {
-                    response.json()
-                        .then((res) => {
-                            ToastAndroid.show('저장되었습니다.', ToastAndroid.SHORT);
-                            let refreshFnc = this.props.navigation.getParam('refreshFnc');
-                            refreshFnc();
-                            this.props.navigation.goBack();
-                        })
+                let status = response.info().status;
+
+                if (status == 200) {
+                    let res = response.json();
+                    ToastAndroid.show('저장되었습니다.', ToastAndroid.SHORT);
+                    let refreshFnc = this.props.navigation.getParam('refreshFnc');
+                    refreshFnc();
+                    this.props.navigation.goBack();
                 } else {
                     ToastAndroid.show('수정을 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')

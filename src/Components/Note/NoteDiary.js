@@ -17,10 +17,11 @@ import Toast from 'react-native-toast-native';
 import ImageView from '../Com/ImageView.js'
 import CodeTypeIcon from '../Com/CodeTypeIcon.js'
 import Constants from '../../Com/Constants.js'
-import {getToken} from '../../Com/AuthToken.js';
+import {getToken, getTokenJson} from '../../Com/AuthToken.js';
 import NoteDiaryBtnGroup from './NoteDiaryBtnGroup';
 import Menu, { MenuItem, MenuDivider  } from 'react-native-material-menu';
 import _ from 'lodash';
+import RNFetchBlob from 'react-native-fetch-blob';
 
 const SECTIONS = [
     {
@@ -46,29 +47,32 @@ export default class NoteDiary extends Component {
     }
 
     async componentWillMount() {
-        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/${this.props.diaryId}`, await getToken())
+        RNFetchBlob.config({
+            trusty: true
+        })
+            .fetch('GET', `${Constants.DOMAIN}/product/diary/${this.props.diaryId}`, await getTokenJson())
             .then((response) => {
-                if(response.ok) {
-                    response.json()
-                        .then((res) => {
-            	            this.setState({
-                                feelingCd: res.data.feelingCd,
-                                healthCd: res.data.healthCd,
-                                feverCd: res.data.feverCd,
-                                breakfastCd: res.data.breakfastCd,
-                                lunchCd: res.data.lunchCd,
-                                dinnerCd: res.data.dinnerCd,
-                                shitCd: res.data.shitCd,
-                                shitCnt: res.data.shitCnt,
-                                shitDesc: res.data.shitDesc,
-                                sleepStartTime: res.data.sleepStartTime,
-                                sleepEndTime: res.data.sleepEndTime,
-                                title: res.data.title,
-                                content: res.data.content,
-                                fileId: res.data.fileId,
-                                weight: res.data.weight + '',
-                                height: res.data.height + ''
-                            })
+                let status = response.info().status;
+
+                if (status == 200) {
+                    let res = response.json();
+                        this.setState({
+                            feelingCd: res.data.feelingCd,
+                            healthCd: res.data.healthCd,
+                            feverCd: res.data.feverCd,
+                            breakfastCd: res.data.breakfastCd,
+                            lunchCd: res.data.lunchCd,
+                            dinnerCd: res.data.dinnerCd,
+                            shitCd: res.data.shitCd,
+                            shitCnt: res.data.shitCnt,
+                            shitDesc: res.data.shitDesc,
+                            sleepStartTime: res.data.sleepStartTime,
+                            sleepEndTime: res.data.sleepEndTime,
+                            title: res.data.title,
+                            content: res.data.content,
+                            fileId: res.data.fileId,
+                            weight: res.data.weight + '',
+                            height: res.data.height + ''
                         })
                 } else {
                     ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
@@ -91,16 +95,17 @@ export default class NoteDiary extends Component {
 
         this.hideMenu();
 
-        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/${diaryId}`, await getToken({
-            method: 'DELETE'
-        }))
+        RNFetchBlob.config({
+            trusty: true
+        })
+            .fetch('DELETE', `${Constants.DOMAIN}/product/diary/${diaryId}`, await getTokenJson())
             .then((response) => {
-                if(response.ok) {
-                    response.json()
-                        .then((res) => {
-                            ToastAndroid.show('일기장을 삭제하였습니다.', ToastAndroid.SHORT);
-                            refreshFnc();
-                        })
+                let status = response.info().status;
+
+                if (status == 200) {
+                    let res = response.json();
+                    ToastAndroid.show('일기장을 삭제하였습니다.', ToastAndroid.SHORT);
+                    refreshFnc();
                 } else {
                     ToastAndroid.show('삭제를 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')

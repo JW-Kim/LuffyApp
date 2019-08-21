@@ -1,7 +1,7 @@
 export default {
 /*    HOST : '70.30.207.203',
     PORT : '8006'*/
-    HOST : '58.141.217.20',
+    HOST : 'luffy0321.iptime.org',
     PORT : '8080',
     DOMAIN : 'https://luffy0321.iptime.org',
     TOAST_STYLE : {

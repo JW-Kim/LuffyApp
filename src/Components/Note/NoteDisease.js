@@ -15,9 +15,10 @@ import IonIcons from 'react-native-vector-icons/Ionicons';
 import Toast from 'react-native-toast-native';
 import CodeTypeIcon from '../Com/CodeTypeIcon.js'
 import Constants from '../../Com/Constants.js';
-import {getToken} from '../../Com/AuthToken.js';
+import {getToken, getTokenJson} from '../../Com/AuthToken.js';
 import Menu, { MenuItem, MenuDivider  } from 'react-native-material-menu';
 import Icons from 'react-native-vector-icons/FontAwesome';
+import RNFetchBlob from 'react-native-fetch-blob';
 
 const SECTIONS = [
     {
@@ -49,16 +50,17 @@ export default class NoteDisease extends Component {
 
         this.hideMenu();
 
-        fetch(`http://${Constants.HOST}:${Constants.PORT}/product/diary/disease/${diseaseId}`, await getToken({
-            method: 'DELETE'
-        }))
+        RNFetchBlob.config({
+            trusty: true
+        })
+            .fetch('DELETE', `${Constants.DOMAIN}}/product/diary/disease/${diseaseId}`, await getTokenJson())
             .then((response) => {
-                if(response.ok) {
-                    response.json()
-                        .then((res) => {
-                            ToastAndroid.show('질병기록을 삭제하였습니다.', ToastAndroid.SHORT);
-                            refreshFnc();
-                        })
+                let status = response.info().status;
+
+                if (status == 200) {
+                    let res = response.json();
+                    ToastAndroid.show('질병기록을 삭제하였습니다.', ToastAndroid.SHORT);
+                                                     refreshFnc();
                 } else {
                     ToastAndroid.show('삭제를 실패하였습니다.', ToastAndroid.SHORT);
                     this.props.navigation.navigate('Login')
