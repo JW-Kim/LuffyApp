@@ -19,25 +19,26 @@ export default class Edit extends Component {
 
     renderInputValClear() {
         const {value, onChangeText, height} = this.props;
-        const style = {position: 'absolute', right: 10, bottom: Number(-((Number(height) / 2) - 10)), height: Number(height), width: 20}
+        const style = {position: 'absolute', right: 0, alignItems: 'center', justifyContent: 'center', height: Number(height), width: 40}
 
         if (value === '') {
             return(<View></View>)
         } else {
             return(
                 <TouchableOpacity onPress={() => onChangeText('')} style={style}>
-                    <Icons name="times-circle" color="gray" size={16} />
+                    <Icons name="times-circle" color="gray" size={21} />
                 </TouchableOpacity>
             )
         }
     }
 
     render() {
-        const {style, underlineColorAndroid, placeholder, onChangeText, onFocus, onBlur, value, autoCompleteType, secureTextEntry} = this.props;
+        const {style, underlineColorAndroid, placeholder, onChangeText, onFocus, onBlur, value, autoCompleteType, secureTextEntry, onRef} = this.props;
 
         return (
             <View style={{flex: 1}}>
                 <TextInput
+                    ref={(input) => onRef(input)}
                     style={style}
                     underlineColorAndroid={underlineColorAndroid}
                     placeholder={placeholder}

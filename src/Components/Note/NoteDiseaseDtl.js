@@ -158,7 +158,7 @@ export default class NoteDiseaseDtl extends Component {
 
     render() {
         const {navigation} = this.props;
-        const {saveNoteDiseaseBtnStyle, diseaseNmStyle, hospitalNmStyle, prescriptionStyle, symptomStyle} = this.state;
+        const {saveNoteDiseaseBtnStyle, diseaseNmStyle, hospitalNmStyle, prescriptionStyle, symptomStyle, symptom, hospitalNm, prescription} = this.state;
 
         return (
             <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -173,6 +173,7 @@ export default class NoteDiseaseDtl extends Component {
                                 alignItems: 'center'
                             }}>
                                 <Edit
+                                    onRef={(input) => { this.diseaseNmTextInput = input; }}
                                     style={[styles.textInput, diseaseNmStyle]}
                                     height="60"
                                     underlineColorAndroid="transparent"
@@ -180,7 +181,11 @@ export default class NoteDiseaseDtl extends Component {
                                     autoCompleteType="off"
                                     secureTextEntry={false}
                                     onFocus={() => this.setState({diseaseNmStyle: Constants.EDIT_FOCUS_STYLE})}
-                                    onBlur={() => this.setState({diseaseNmStyle: Constants.EDIT_BLUR_STYLE})}
+                                    onBlur={() => {this.setState({diseaseNmStyle: Constants.EDIT_BLUR_STYLE})
+                                        if(symptom == null || symptom == '') {
+                                            this.symptomTextInput.focus();
+                                        }
+                                    }}
                                     onChangeText={(diseaseNm) => this.setState({diseaseNm})}
                                     value={this.state.diseaseNm}
                                 ></Edit>
@@ -194,13 +199,18 @@ export default class NoteDiseaseDtl extends Component {
                                 alignItems: 'center'
                             }}>
                                 <TextInput
+                                    ref={(input) => { this.symptomTextInput = input; }}
                                     style={[{flex: 1, fontSize: 16, paddingLeft: 8}, symptomStyle]}
                                     numberOfLines={10}
                                     multiline={true}
                                     placeholder="증상을 입력해주세요"
                                     underlineColorAndroid="transparent"
                                     onFocus={() => this.setState({symptomStyle: Constants.MULTI_EDIT_FOCUS_STYLE})}
-                                    onBlur={() => this.setState({symptomStyle: Constants.MULTI_EDIT_BLUR_STYLE})}
+                                    onBlur={() => {this.setState({symptomStyle: Constants.MULTI_EDIT_BLUR_STYLE})
+                                        if(hospitalNm == null || hospitalNm == '') {
+                                            this.hospitalNmTextInput.focus();
+                                        }
+                                    }}
                                     onChangeText={(symptom) => this.setState({symptom})}
                                     value={this.state.symptom}
                                 ></TextInput>
@@ -214,6 +224,7 @@ export default class NoteDiseaseDtl extends Component {
                                 alignItems: 'center'
                             }}>
                                 <Edit
+                                    onRef={(input) => { this.hospitalNmTextInput = input; }}
                                     style={[styles.textInput, hospitalNmStyle]}
                                     height="60"
                                     underlineColorAndroid="transparent"
@@ -221,7 +232,11 @@ export default class NoteDiseaseDtl extends Component {
                                     autoCompleteType="off"
                                     secureTextEntry={false}
                                     onFocus={() => this.setState({hospitalNmStyle: Constants.EDIT_FOCUS_STYLE})}
-                                    onBlur={() => this.setState({hospitalNmStyle: Constants.EDIT_BLUR_STYLE})}
+                                    onBlur={() => {this.setState({hospitalNmStyle: Constants.EDIT_BLUR_STYLE})
+                                        if(prescription == null || prescription == '') {
+                                            this.prescriptionTextInput.focus();
+                                        }
+                                    }}
                                     onChangeText={(hospitalNm) => this.setState({hospitalNm})}
                                     value={this.state.hospitalNm}
                                 ></Edit>
@@ -235,6 +250,7 @@ export default class NoteDiseaseDtl extends Component {
                                 alignItems: 'center'
                             }}>
                                 <TextInput
+                                    ref={(input) => { this.prescriptionTextInput = input; }}
                                     style={[{flex: 1, fontSize: 16, paddingLeft: 8}, prescriptionStyle]}
                                     numberOfLines={10}
                                     multiline={true}

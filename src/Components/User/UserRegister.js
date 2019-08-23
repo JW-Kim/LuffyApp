@@ -527,6 +527,7 @@ export default class UserRegister extends Component {
                 <View style={styles.row}>
                     <View style={styles.rowTextField}><Text style={styles.rowText}>아이디</Text></View>
                     <Edit
+                        onRef={(input) => { this.idTextInput = input; }}
                         height="60"
                         style={[styles.textInput, idStyle]}
                         underlineColorAndroid="transparent"
@@ -535,7 +536,7 @@ export default class UserRegister extends Component {
                         secureTextEntry={false}
                         onChangeText={(userLoginId) => this.changeUserLoginId(userLoginId)}
                         onFocus={() => this.setState({idStyle: Constants.EDIT_FOCUS_STYLE})}
-                        onBlur={() => this.setState({idStyle: Constants.EDIT_BLUR_STYLE})}
+                        onBlur={() => {this.setState({idStyle: Constants.EDIT_BLUR_STYLE}); this.pwTextInput.focus();}}
                         value={userLoginId}>
                     </Edit>
                 </View>
@@ -556,6 +557,7 @@ export default class UserRegister extends Component {
                 <View style={styles.row}>
                     <View style={styles.rowTextField}><Text style={styles.rowText}>비밀번호</Text></View>
                     <Edit
+                        onRef={(input) => { this.pwTextInput = input; }}
                         height="60"
                         style={[styles.textInput, userPwdStyle]}
                         underlineColorAndroid="transparent"
@@ -564,7 +566,7 @@ export default class UserRegister extends Component {
                         secureTextEntry={true}
                         onChangeText={(userPwd) => this.changeUserPwd(userPwd)}
                         onFocus={() => this.setState({userPwdStyle: Constants.EDIT_FOCUS_STYLE})}
-                        onBlur={() => this.setState({userPwdStyle: Constants.EDIT_BLUR_STYLE})}
+                        onBlur={() => {this.setState({userPwdStyle: Constants.EDIT_BLUR_STYLE}); this.rePwTextInput.focus()}}
                         value={userPwd}>
                     </Edit>
                 </View>
@@ -572,6 +574,7 @@ export default class UserRegister extends Component {
                 <View style={styles.row}>
                     <View style={styles.rowTextField}><Text style={styles.rowText}>비밀번호 확인</Text></View>
                     <Edit
+                        onRef={(input) => { this.rePwTextInput = input; }}
                         height="60"
                         style={[styles.textInput, userPwd2Style]}
                         underlineColorAndroid="transparent"
@@ -580,7 +583,7 @@ export default class UserRegister extends Component {
                         secureTextEntry={true}
                         onChangeText={(userPwd2) => this.changeUserPwd2(userPwd2)}
                         onFocus={() => this.setState({userPwd2Style: Constants.EDIT_FOCUS_STYLE})}
-                        onBlur={() => this.setState({userPwd2Style: Constants.EDIT_BLUR_STYLE})}
+                        onBlur={() => {this.setState({userPwd2Style: Constants.EDIT_BLUR_STYLE}); this.userNmTextInput.focus(); }}
                         value={userPwd2}>
                     </Edit>
                 </View>
@@ -612,6 +615,7 @@ export default class UserRegister extends Component {
                             <View style={styles.row}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>이름</Text></View>
                                 <Edit
+                                    onRef={(input) => { this.userNmTextInput = input; }}
                                     height="60"
                                     style={[styles.textInput, userNmStyle]}
                                     underlineColorAndroid="transparent"
@@ -622,9 +626,12 @@ export default class UserRegister extends Component {
                                     onFocus={() => this.setState({
                                         userNmStyle: Constants.EDIT_FOCUS_STYLE
                                     })}
-                                    onBlur={() => this.setState({
-                                        userNmStyle: Constants.EDIT_BLUR_STYLE
-                                    })}
+                                    onBlur={() => {
+                                        this.setState({
+                                            userNmStyle: Constants.EDIT_BLUR_STYLE
+                                        });
+                                        this.emailTextInput.focus();
+                                    }}
                                     value={userNm}>
                                 </Edit>
                             </View>
@@ -632,6 +639,7 @@ export default class UserRegister extends Component {
                             <View style={styles.row}>
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>email</Text></View>
                                 <Edit
+                                    onRef={(input) => { this.emailTextInput = input; }}
                                     height="60"
                                     style={[styles.textInput, emailStyle]}
                                     underlineColorAndroid="transparent"

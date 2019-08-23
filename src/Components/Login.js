@@ -31,7 +31,7 @@ export default class Login extends Component {
             password: '',
             idStyle: {borderWidth: 1, borderColor: '#C2D8E9'},
             passwordStyle: {borderWidth: 1, borderColor: '#C2D8E9'},
-            loginBtnStyle: {backgroundColor: '#C2D8E9', height: 70},
+            loginBtnStyle: {backgroundColor: '#C2D8E9', height: 72},
             isUsername: false,
             isPassword: false,
             loading: false
@@ -126,9 +126,9 @@ export default class Login extends Component {
 
         let loginBtnStyle = {};
         if (isUsername && isPassword) {
-            loginBtnStyle = {backgroundColor: '#142765', height: 70};
+            loginBtnStyle = {backgroundColor: '#142765', height: 72};
         } else {
-            loginBtnStyle = {backgroundColor: '#C2D8E9', height: 70};
+            loginBtnStyle = {backgroundColor: '#C2D8E9', height: 72};
         }
 
         this.setState({username, isUsername, loginBtnStyle});
@@ -146,9 +146,9 @@ export default class Login extends Component {
 
         let loginBtnStyle = {};
         if (isUsername && isPassword) {
-            loginBtnStyle = {backgroundColor: '#142765', height: 70};
+            loginBtnStyle = {backgroundColor: '#142765', height: 72};
         } else {
-            loginBtnStyle = {backgroundColor: '#C2D8E9', height: 70};
+            loginBtnStyle = {backgroundColor: '#C2D8E9', height: 72};
         }
 
         this.setState({password, isPassword, loginBtnStyle});
@@ -160,7 +160,7 @@ export default class Login extends Component {
         if (username !== '' && !isUsername) {
             return (
                 <View style={styles.checkTextView}>
-                    <Icons name="exclamation-circle" color="#d32f2f" size={14}/>
+                    <Icons name="exclamation-circle" color="#d32f2f" size={16}/>
                     <Text style={styles.checkText}>id는 영문자, 숫자만 가능합니다.</Text>
                 </View>
             )
@@ -175,7 +175,7 @@ export default class Login extends Component {
         if (password !== '' && !isPassword) {
             return (
                 <View style={styles.checkTextView}>
-                    <Icons name="exclamation-circle" color="#d32f2f" size={14}/>
+                    <Icons name="exclamation-circle" color="#d32f2f" size={16}/>
                     <Text style={styles.checkText}>pw는 영문자, 숫자, 특수문자만 가능합니다.</Text>
                 </View>
             )
@@ -192,8 +192,8 @@ export default class Login extends Component {
         } else {
             return (
                 <TouchableOpacity onPress={() => this.changeId('')}
-                                  style={{position: 'absolute', right: 10, bottom: -25, height: 70, width: 20}}>
-                    <Icons name="times-circle" color="#C2D8E9" size={16}/>
+                                  style={{position: 'absolute', right: 0, alignItems: 'center', justifyContent: 'center', height: 72, width: 20}}>
+                    <Icons name="times-circle" color="#C2D8E9" size={21}/>
                 </TouchableOpacity>
             )
         }
@@ -207,8 +207,8 @@ export default class Login extends Component {
         } else {
             return (
                 <TouchableOpacity onPress={() => this.changePassword('')}
-                                  style={{position: 'absolute', right: 10, bottom: -25, height: 70, width: 20}}>
-                    <Icons name="times-circle" color="#C2D8E9" size={16}/>
+                                  style={{position: 'absolute', right: 0, alignItems: 'center', justifyContent: 'center', height: 70, width: 20}}>
+                    <Icons name="times-circle" color="#C2D8E9" size={21}/>
                 </TouchableOpacity>
             )
         }
@@ -227,7 +227,7 @@ export default class Login extends Component {
                                     alignItems: 'center'
                                 }}>
                                     <Image
-                                        style={{width: 50}}
+                                        style={{width: 48}}
                                         source={require('../../assets/images/logo3.png')}
                                     />
                                 </View>
@@ -247,12 +247,15 @@ export default class Login extends Component {
                                                     borderColor: '#142765'
                                                 }
                                             })}
-                                            onBlur={() => this.setState({
-                                                idStyle: {
-                                                    borderWidth: 1,
-                                                    borderColor: '#C2D8E9'
-                                                }
-                                            })}
+                                            onBlur={() => {
+                                                this.setState({
+                                                    idStyle: {
+                                                        borderWidth: 1,
+                                                        borderColor: '#C2D8E9'
+                                                    }
+                                                })
+                                                this.pwTextInput.focus();
+                                            }}
                                             value={this.state.username}
                                         />
                                         {this.renderIdClear()}
@@ -260,6 +263,7 @@ export default class Login extends Component {
                                     {this.renderIdCheckText()}
                                     <View style={styles.row}>
                                         <TextInput
+                                            ref={(input) => {this.pwTextInput = input; }}
                                             style={[styles.textInput, passwordStyle]}
                                             underlineColorAndroid="transparent"
                                             placeholder="비밀번호"
@@ -295,7 +299,7 @@ export default class Login extends Component {
                                 </View>
                                 <View style={styles.row}>
                                     <TouchableOpacity onPress={() => this.goUserRegister()}>
-                                        <Text style={{fontSize: 14, color: '#142765'}}>회원가입</Text>
+                                        <Text style={{fontSize: 16, color: '#142765'}}>회원가입</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -321,21 +325,21 @@ const styles = StyleSheet.create({
 
     textInput: {
         paddingLeft: 8,
-        paddingRight: 35,
-        height: 70,
+        paddingRight: 36,
+        height: 72,
         flex: 1,
         fontSize: 16
     },
 
     row: {
         flexDirection: 'row',
-        height: 70,
+        height: 72,
         marginBottom: 8,
         justifyContent: 'center'
     },
 
     rowTextField: {
-        width: 50,
+        width: 52,
         justifyContent: 'center'
     },
 
@@ -355,7 +359,7 @@ const styles = StyleSheet.create({
 
     checkText: {
         marginLeft: 8,
-        fontSize: 14,
+        fontSize: 16,
         color: '#d32f2f'
     }
 })

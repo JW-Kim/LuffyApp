@@ -380,6 +380,7 @@ export default class NoteDtl extends Component {
                                         alignItems: 'center'
                                     }}>
                                         <Edit
+                                            onRef={(input) => { this.noteNmTextInput = input; }}
                                             height="60"
                                             style={[styles.textInput, noteNmStyle]}
                                             underlineColorAndroid="transparent"

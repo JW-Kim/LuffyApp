@@ -417,6 +417,7 @@ export default class DiaryDtl extends Component {
                          setCode={(shitCd) => this.setState({shitCd})}></DiaryDtlBtnGroup>
                     <View style={{height: 60}}>
                         <Edit
+                            onRef={(input) => { this.shitDescTextInput = input; }}
                             height="60"
                             style={[styles.textInput, shitDescStyle]}
                             underlineColorAndroid="transparent"
@@ -464,6 +465,7 @@ export default class DiaryDtl extends Component {
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>제목</Text></View>
                                 <View style={{flex: 1}}>
                                     <Edit
+                                        onRef={(input) => { this.titleTextInput = input; }}
                                         height="60"
                                         style={[styles.textInput, titleStyle]}
                                         underlineColorAndroid="transparent"
@@ -507,6 +509,7 @@ export default class DiaryDtl extends Component {
                                 }}>
                                     <View style={{flex: 1}}>
                                         <Edit
+                                            onRef={(input) => { this.heightTextInput = input; }}
                                             height="60"
                                             style={[styles.textInput, heightStyle]}
                                             underlineColorAndroid="transparent"
@@ -535,6 +538,7 @@ export default class DiaryDtl extends Component {
                                 }}>
                                     <View style={{flex: 1}}>
                                         <Edit
+                                            onRef={(input) => { this.weightTextInput = input; }}
                                             height="60"
                                             style={[styles.textInput, weightStyle]}
                                             underlineColorAndroid="transparent"
@@ -602,6 +606,7 @@ export default class DiaryDtl extends Component {
                                 <View style={{flex: 1, flexDirection: 'row'}}>
                                     <View style={{flex: 0.4, height: 60}}>
                                         <Edit
+                                            onRef={(input) => { this.sleepStartTimeTextInput = input; }}
                                             height="60"
                                             style={[styles.textInput, sleepStartTimeStyle]}
                                             underlineColorAndroid="transparent"
@@ -618,6 +623,7 @@ export default class DiaryDtl extends Component {
                                     <View style={{flex: 0.2, alignItems: 'center',justifyContent: 'center'}}><Text>~</Text></View>
                                     <View style={{flex: 0.4, height: 60}}>
                                         <Edit
+                                            onRef={(input) => { this.sleepEndTimeTextInput = input; }}
                                             height="60"
                                             style={[styles.textInput, sleepEndTimeStyle]}
                                             underlineColorAndroid="transparent"
