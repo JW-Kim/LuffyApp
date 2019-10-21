@@ -107,7 +107,7 @@ export default class Note extends Component {
 
         let today = new Date();
         let dd = today.getDate() < 10 ? '0' + today.getDate() : today.getDate();
-        let mm = today.getMonth() < 10 ? '0' + (today.getMonth() + 1) : today.getMonth() + 1;
+        let mm = today.getMonth() < 9 ? '0' + (today.getMonth() + 1) : today.getMonth() + 1;
         let yyyy = today.getFullYear();
         let month = yyyy + '-' + mm;
         let day = new Date(mm + '/' + dd + '/' + yyyy);

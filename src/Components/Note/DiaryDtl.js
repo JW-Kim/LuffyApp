@@ -62,6 +62,10 @@ export default class DiaryDtl extends Component {
             fileId: null,
             height: '',
             weight: '',
+            heightInt: '',
+            heightDecimal: '',
+            weightInt: '',
+            weightDecimal: '',
             titleStyle: Constants.EDIT_BLUR_STYLE,
             contentStyle: Constants.MULTI_EDIT_BLUR_STYLE,
             heightStyle: Constants.EDIT_BLUR_STYLE,
@@ -105,7 +109,11 @@ export default class DiaryDtl extends Component {
                                 content: res.data.content,
                                 fileId: res.data.fileId,
                                 weight: res.data.weight + '',
-                                height: res.data.height + ''
+                                height: res.data.height + '',
+                                heightInt: (res.data.height+'').split('.')[0],
+                                heightDecimal: (res.data.height+'').split('.')[1],
+                                weightInt: (res.data.weight+'').split('.')[0],
+                                weightDecimal: (res.data.weight+'').split('.')[1],
                             })
                     } else {
                         ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
@@ -128,7 +136,11 @@ export default class DiaryDtl extends Component {
                         let res = response.json();
                         this.setState({
                             weight: res.data.weight == null ? '' : res.data.weight + '',
-                            height: res.data.weight == null ? '' : res.data.height + ''
+                            height: res.data.weight == null ? '' : res.data.height + '',
+                            heightInt: (res.data.height+'').split('.')[0],
+                            heightDecimal: (res.data.height+'').split('.')[1],
+                            weightInt: (res.data.weight+'').split('.')[0],
+                            weightDecimal: (res.data.weight+'').split('.')[1],
                         })
                     } else {
                         ToastAndroid.show('조회를 실패하였습니다.', ToastAndroid.SHORT);
@@ -380,12 +392,7 @@ export default class DiaryDtl extends Component {
                             style={{height: 60, flex: 1, color: '#000'}}
                             onValueChange={(shitCnt, itemIndex) => this.setShitCnt(shitCnt)}
                             selectedValue={shitCnt} >
-                            <Picker.Item label='0' value='0' />
-                            <Picker.Item label='1' value='1' />
-                            <Picker.Item label='2' value='2' />
-                            <Picker.Item label='3' value='3' />
-                            <Picker.Item label='4' value='4' />
-                            <Picker.Item label='5' value='5' />
+                        {this.renderSleepPicker(0,10)}
                         </Picker>
                         <View style={{width: 50, alignItems: 'center', justifyContent: 'center'}}><Text style={styles.rowText}>회</Text></View>
                     </View>
@@ -404,12 +411,7 @@ export default class DiaryDtl extends Component {
                             style={{height: 40, flex: 1, color: '#000'}}
                             onValueChange={(shitCnt, itemIndex) => this.setShitCnt(shitCnt)}
                             selectedValue={shitCnt} >
-                            <Picker.Item label='0' value='0' />
-                            <Picker.Item label='1' value='1' />
-                            <Picker.Item label='2' value='2' />
-                            <Picker.Item label='3' value='3' />
-                            <Picker.Item label='4' value='4' />
-                            <Picker.Item label='5' value='5' />
+                            {this.renderSleepPicker(0,10)}
                         </Picker>
                         <View style={{width: 50, alignItems: 'center', justifyContent: 'center'}}><Text style={styles.rowText}>회</Text></View>
                     </View>
@@ -433,6 +435,15 @@ export default class DiaryDtl extends Component {
                  </View>
             </View>
         )
+    }
+
+    renderSleepPicker = (startIndex, endIndex) => {
+        let sleepPicker = []
+        for (let i=startIndex; i<=endIndex; i++) {
+            sleepPicker.push(<Picker.Item label={i+''} value={i+''} />);
+        }
+
+        return sleepPicker;
     }
 
     render() {
@@ -507,19 +518,41 @@ export default class DiaryDtl extends Component {
                                     flexDirection: 'row',
                                     alignItems: 'center'
                                 }}>
-                                    <View style={{flex: 1}}>
+                                    <View style={{flex: 0.5}}>
                                         <Edit
                                             onRef={(input) => { this.heightTextInput = input; }}
                                             height="60"
                                             style={[styles.textInput, heightStyle]}
+                                            maxLength={3}
+                                            keyboardType="number-pad"
                                             underlineColorAndroid="transparent"
                                             placeholder="숫자만 입력하세요"
                                             autoCompleteType="off"
                                             secureTextEntry={false}
                                             onFocus={() => this.setState({heightStyle: Constants.EDIT_FOCUS_STYLE})}
                                             onBlur={() => this.setState({heightStyle: Constants.EDIT_BLUR_STYLE})}
-                                            onChangeText={(height) => this.setState({height})}
-                                            value={this.state.height}
+                                            onChangeText={(heightInt) => this.setState({heightInt, height: `${heightInt}.${this.state.heightDecimal}`})}
+                                            value={this.state.heightInt}
+                                        ></Edit>
+                                    </View>
+                                    <View style={{width: 20, justifyContent: 'flex-end'}}>
+                                        <Text style={{fontSize: 16}}>.</Text>
+                                    </View>
+                                    <View style={{flex: 0.5}}>
+                                        <Edit
+                                            onRef={(input) => { this.heightTextInput = input; }}
+                                            height="60"
+                                            style={[styles.textInput, heightStyle]}
+                                            maxLength={2}
+                                            keyboardType="number-pad"
+                                            underlineColorAndroid="transparent"
+                                            placeholder="숫자만 입력하세요"
+                                            autoCompleteType="off"
+                                            secureTextEntry={false}
+                                            onFocus={() => this.setState({heightStyle: Constants.EDIT_FOCUS_STYLE})}
+                                            onBlur={() => this.setState({heightStyle: Constants.EDIT_BLUR_STYLE})}
+                                            onChangeText={(heightDecimal) => this.setState({heightDecimal, height: `${heightInt}.${this.state.heightDecimal}`})}
+                                            value={this.state.heightDecimal}
                                         ></Edit>
                                     </View>
                                     <View style={{width: 50, alignItems: 'center', justifyContent: 'center'}}>
@@ -536,19 +569,41 @@ export default class DiaryDtl extends Component {
                                     flexDirection: 'row',
                                     alignItems: 'center'
                                 }}>
-                                    <View style={{flex: 1}}>
+                                    <View style={{flex: 0.5}}>
                                         <Edit
                                             onRef={(input) => { this.weightTextInput = input; }}
                                             height="60"
                                             style={[styles.textInput, weightStyle]}
+                                            maxLength={3}
+                                            keyboardType="number-pad"
                                             underlineColorAndroid="transparent"
                                             placeholder="숫자만 입력하세요"
                                             autoCompleteType="off"
                                             secureTextEntry={false}
                                             onFocus={() => this.setState({weightStyle: Constants.EDIT_FOCUS_STYLE})}
                                             onBlur={() => this.setState({weightStyle: Constants.EDIT_BLUR_STYLE})}
-                                            onChangeText={(weight) => this.setState({weight})}
-                                            value={this.state.weight}
+                                            onChangeText={(weightInt) => this.setState({weightInt, weight: `${weightInt}.${this.state.weightDecimal}`})}
+                                            value={this.state.weightInt}
+                                        ></Edit>
+                                    </View>
+                                    <View style={{width: 20, justifyContent: 'flex-end'}}>
+                                        <Text style={{fontSize: 16}}>.</Text>
+                                    </View>
+                                    <View style={{flex: 0.5}}>
+                                        <Edit
+                                            onRef={(input) => { this.weightTextInput = input; }}
+                                            height="60"
+                                            style={[styles.textInput, weightStyle]}
+                                            maxLength={2}
+                                            keyboardType="number-pad"
+                                            underlineColorAndroid="transparent"
+                                            placeholder="숫자만 입력하세요"
+                                            autoCompleteType="off"
+                                            secureTextEntry={false}
+                                            onFocus={() => this.setState({heightStyle: Constants.EDIT_FOCUS_STYLE})}
+                                            onBlur={() => this.setState({heightStyle: Constants.EDIT_BLUR_STYLE})}
+                                            onChangeText={(weightDecimal) => this.setState({weightDecimal, weight: `${weightInt}.${this.state.weightDecimal}`})}
+                                            value={this.state.weightDecimal}
                                         ></Edit>
                                     </View>
                                     <View style={{width: 50, alignItems: 'center', justifyContent: 'center'}}>
@@ -605,37 +660,23 @@ export default class DiaryDtl extends Component {
                                 <View style={styles.rowTextField}><Text style={styles.rowText}>수면</Text></View>
                                 <View style={{flex: 1, flexDirection: 'row'}}>
                                     <View style={{flex: 0.4, height: 60}}>
-                                        <Edit
-                                            onRef={(input) => { this.sleepStartTimeTextInput = input; }}
-                                            height="60"
-                                            style={[styles.textInput, sleepStartTimeStyle]}
-                                            underlineColorAndroid="transparent"
-                                            placeholder="예) 22"
-                                            autoCompleteType="off"
-                                            secureTextEntry={false}
-                                            onFocus={() => this.setState({sleepStartTimeStyle: Constants.EDIT_FOCUS_STYLE})}
-                                            onBlur={() => this.setState({sleepStartTimeStyle: Constants.EDIT_BLUR_STYLE})}
-                                            onChangeText={(sleepStartTime) => this.setState({sleepStartTime})}
-                                            value={this.state.sleepStartTime}
-                                        >
-                                        </Edit>
+                                        <Picker
+                                            mode="dropdown"
+                                            style={{height: 40, flex: 1, color: '#000'}}
+                                            onValueChange={(sleepStartTime, itemIndex) => thi.setState({sleepStartTime})}
+                                            selectedValue={this.state.sleepStartTime} >
+                                            {this.renderSleepPicker(18, 24)}
+                                        </Picker>
                                     </View>
                                     <View style={{flex: 0.2, alignItems: 'center',justifyContent: 'center'}}><Text>~</Text></View>
                                     <View style={{flex: 0.4, height: 60}}>
-                                        <Edit
-                                            onRef={(input) => { this.sleepEndTimeTextInput = input; }}
-                                            height="60"
-                                            style={[styles.textInput, sleepEndTimeStyle]}
-                                            underlineColorAndroid="transparent"
-                                            placeholder="예) 7"
-                                            autoCompleteType="off"
-                                            secureTextEntry={false}
-                                            onFocus={() => this.setState({sleepEndTimeStyle: Constants.EDIT_FOCUS_STYLE})}
-                                            onBlur={() => this.setState({sleepEndTimeStyle: Constants.EDIT_BLUR_STYLE})}
-                                            onChangeText={(sleepEndTime) => this.setState({sleepEndTime})}
-                                            value={this.state.sleepEndTime}
-                                        >
-                                        </Edit>
+                                        <Picker
+                                            mode="dropdown"
+                                            style={{height: 40, flex: 1, color: '#000'}}
+                                            onValueChange={(sleepEndTime, itemIndex) => thi.setState({sleepEndTime})}
+                                            selectedValue={this.state.sleepEndTime} >
+                                            {this.renderSleepPicker(1, 18)}
+                                        </Picker>
                                     </View>
                                     <View style={{width: 50, alignItems: 'center', justifyContent:'center'}}>
                                         <Text style={styles.rowText}>시</Text>

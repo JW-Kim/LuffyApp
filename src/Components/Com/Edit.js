@@ -33,13 +33,15 @@ export default class Edit extends Component {
     }
 
     render() {
-        const {style, underlineColorAndroid, placeholder, onChangeText, onFocus, onBlur, value, autoCompleteType, secureTextEntry, onRef} = this.props;
+        const {style, underlineColorAndroid, placeholder, onChangeText, onFocus, onBlur, value, autoCompleteType, secureTextEntry, onRef, maxLength, keyboardType} = this.props;
 
         return (
             <View style={{flex: 1}}>
                 <TextInput
                     ref={(input) => onRef(input)}
                     style={style}
+                    maxLength={maxLength == null ? 100 : maxLength}
+                    keyboardType={keyboardType == null ? 'default' : keyboardType}
                     underlineColorAndroid={underlineColorAndroid}
                     placeholder={placeholder}
                     autoCompleteType={autoCompleteType}
