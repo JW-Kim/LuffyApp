@@ -551,7 +551,7 @@ export default class DiaryDtl extends Component {
                                             secureTextEntry={false}
                                             onFocus={() => this.setState({heightStyle: Constants.EDIT_FOCUS_STYLE})}
                                             onBlur={() => this.setState({heightStyle: Constants.EDIT_BLUR_STYLE})}
-                                            onChangeText={(heightDecimal) => this.setState({heightDecimal, height: `${heightInt}.${this.state.heightDecimal}`})}
+                                            onChangeText={(heightDecimal) => this.setState({heightDecimal, height: `${this.state.heightInt}.${heightDecimal}`})}
                                             value={this.state.heightDecimal}
                                         ></Edit>
                                     </View>
@@ -602,7 +602,7 @@ export default class DiaryDtl extends Component {
                                             secureTextEntry={false}
                                             onFocus={() => this.setState({heightStyle: Constants.EDIT_FOCUS_STYLE})}
                                             onBlur={() => this.setState({heightStyle: Constants.EDIT_BLUR_STYLE})}
-                                            onChangeText={(weightDecimal) => this.setState({weightDecimal, weight: `${weightInt}.${this.state.weightDecimal}`})}
+                                            onChangeText={(weightDecimal) => this.setState({weightDecimal, weight: `${this.state.weightInt}.${weightDecimal}`})}
                                             value={this.state.weightDecimal}
                                         ></Edit>
                                     </View>
