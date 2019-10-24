@@ -192,7 +192,7 @@ export default class Login extends Component {
         } else {
             return (
                 <TouchableOpacity onPress={() => this.changeId('')}
-                                  style={{position: 'absolute', right: 0, alignItems: 'center', justifyContent: 'center', height: 72, width: 20}}>
+                                  style={{position: 'absolute', right: 0, alignItems: 'center', justifyContent: 'center', height: 72, width: 40}}>
                     <Icons name="times-circle" color="#C2D8E9" size={21}/>
                 </TouchableOpacity>
             )
@@ -207,7 +207,7 @@ export default class Login extends Component {
         } else {
             return (
                 <TouchableOpacity onPress={() => this.changePassword('')}
-                                  style={{position: 'absolute', right: 0, alignItems: 'center', justifyContent: 'center', height: 70, width: 20}}>
+                                  style={{position: 'absolute', right: 0, alignItems: 'center', justifyContent: 'center', height: 70, width: 40}}>
                     <Icons name="times-circle" color="#C2D8E9" size={21}/>
                 </TouchableOpacity>
             )

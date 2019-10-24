@@ -32,6 +32,7 @@ import {getToken, getTokenJson} from '../../Com/AuthToken.js';
 import ImageView from '../Com/ImageView.js'
 import Edit from '../Com/Edit'
 import RNFetchBlob from 'react-native-fetch-blob';
+import {getTodayDt} from '../../Com/ComService.js';
 
 export default class DiaryDtl extends Component {
 
@@ -174,7 +175,7 @@ export default class DiaryDtl extends Component {
                 shitDesc: this.state.shitDesc == null ? '' : this.state.shitDesc,
                 sleepStartTime: this.state.sleepStartTime == null ? '' : this.state.sleepStartTime,
                 sleepEndTime: this.state.sleepEndTime == null ? '' : this.state.sleepEndTime,
-                title: this.state.title == null ? '' : this.state.title,
+                title: _.isNil(this.state.title) || this.state.title == '' ? getTodayDt() : this.state.title,
                 content: this.state.content == null ? '' : this.state.content,
                 fileId: fileId == null ? null : fileId,
                 noteId: this.state.noteId == null ? '' : this.state.noteId,
@@ -221,7 +222,7 @@ export default class DiaryDtl extends Component {
                 shitDesc: this.state.shitDesc == null ? '' : this.state.shitDesc,
                 sleepStartTime: this.state.sleepStartTime == null ? '' : this.state.sleepStartTime,
                 sleepEndTime: this.state.sleepEndTime == null ? '' : this.state.sleepEndTime,
-                title: this.state.title == null ? '' : this.state.title,
+                title: _.isNil(this.state.title) || this.state.title == '' ? getTodayDt() : this.state.title,
                 content: this.state.content == null ? '' : this.state.content,
                 fileId: fileId == null ? null : fileId,
                 height: this.state.height == null ? 0 : this.state.height,
@@ -518,7 +519,7 @@ export default class DiaryDtl extends Component {
                                     flexDirection: 'row',
                                     alignItems: 'center'
                                 }}>
-                                    <View style={{flex: 0.5}}>
+                                    <View style={{flex: 0.6}}>
                                         <Edit
                                             onRef={(input) => { this.heightTextInput = input; }}
                                             height="60"
@@ -535,10 +536,10 @@ export default class DiaryDtl extends Component {
                                             value={this.state.heightInt}
                                         ></Edit>
                                     </View>
-                                    <View style={{width: 20, justifyContent: 'flex-end'}}>
-                                        <Text style={{fontSize: 16}}>.</Text>
+                                    <View style={{width: 20, justifyContent: 'flex-end', alignItems: 'center'}}>
+                                        <Text style={{fontSize: 16, fontWeight: 'bold'}}>.</Text>
                                     </View>
-                                    <View style={{flex: 0.5}}>
+                                    <View style={{flex: 0.4}}>
                                         <Edit
                                             onRef={(input) => { this.heightTextInput = input; }}
                                             height="60"
@@ -569,7 +570,7 @@ export default class DiaryDtl extends Component {
                                     flexDirection: 'row',
                                     alignItems: 'center'
                                 }}>
-                                    <View style={{flex: 0.5}}>
+                                    <View style={{flex: 0.6}}>
                                         <Edit
                                             onRef={(input) => { this.weightTextInput = input; }}
                                             height="60"
@@ -586,10 +587,10 @@ export default class DiaryDtl extends Component {
                                             value={this.state.weightInt}
                                         ></Edit>
                                     </View>
-                                    <View style={{width: 20, justifyContent: 'flex-end'}}>
-                                        <Text style={{fontSize: 16}}>.</Text>
+                                    <View style={{width: 20, justifyContent: 'flex-end', alignItems: 'center'}}>
+                                        <Text style={{fontSize: 16, fontWeight: 'bold'}}>.</Text>
                                     </View>
-                                    <View style={{flex: 0.5}}>
+                                    <View style={{flex: 0.4}}>
                                         <Edit
                                             onRef={(input) => { this.weightTextInput = input; }}
                                             height="60"

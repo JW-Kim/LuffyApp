@@ -15,6 +15,7 @@ import {
 import {
     Button
 } from 'react-native-elements';
+import _ from 'lodash';
 import ModalHeader from '../Com/ModalHeader.js'
 import Toast from 'react-native-toast-native';
 import Constants from '../../Com/Constants.js';
@@ -22,6 +23,7 @@ import {getToken, getTokenJson} from '../../Com/AuthToken.js';
 import ModalStandardHeader from '../Com/ModalStandardHeader'
 import Edit from '../Com/Edit'
 import RNFetchBlob from 'react-native-fetch-blob';
+import {getTodayDt} from '../../Com/ComService.js';
 
 export default class NoteDiseaseDtl extends Component {
 
@@ -95,7 +97,7 @@ export default class NoteDiseaseDtl extends Component {
             JSON.stringify({
                 noteId: this.state.noteId == null ? '' : this.state.noteId,
                 diseaseDt: this.state.diseaseDt == null ? '' : this.state.diseaseDt,
-                diseaseNm: this.state.diseaseNm == null ? '' : this.state.diseaseNm,
+                diseaseNm: _.isNil(this.state.diseaseNm) || this.state.diseaseNm == '' ? getTodayDt() : this.state.diseaseNm,
                 symptom: this.state.symptom == null ? '' : this.state.symptom,
                 hospitalNm: this.state.hospitalNm == null ? '' : this.state.hospitalNm,
                 prescription: this.state.prescription == null ? '' : this.state.prescription,
@@ -131,7 +133,7 @@ export default class NoteDiseaseDtl extends Component {
             JSON.stringify({
                 noteId: this.state.noteId == null ? '' : this.state.noteId,
                 diseaseDt: this.state.diseaseDt == null ? '' : this.state.diseaseDt,
-                diseaseNm: this.state.diseaseNm == null ? '' : this.state.diseaseNm,
+                diseaseNm: _.isNil(this.state.diseaseNm) || this.state.diseaseNm == '' ? getTodayDt() : this.state.diseaseNm,
                 symptom: this.state.symptom == null ? '' : this.state.symptom,
                 hospitalNm: this.state.hospitalNm == null ? '' : this.state.hospitalNm,
                 prescription: this.state.prescription == null ? '' : this.state.prescription,

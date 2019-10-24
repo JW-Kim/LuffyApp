@@ -53,7 +53,7 @@ export default class NoteDisease extends Component {
         RNFetchBlob.config({
             trusty: true
         })
-            .fetch('DELETE', `${Constants.DOMAIN}}/product/diary/disease/${diseaseId}`, await getTokenJson())
+            .fetch('DELETE', `${Constants.DOMAIN}/product/diary/disease/${diseaseId}`, await getTokenJson())
             .then((response) => {
                 let status = response.info().status;
 
